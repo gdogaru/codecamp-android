@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:paddingBottom="3dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="3dp">
+
+    <TextView
+        android:id="@+id/sessionName"
+        style="@style/session_item_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Android made simple" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/sessionTime"
+            style="@style/session_item_time"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="10:30" />
+
+        <TextView
+            android:id="@+id/sessionPlace"
+            style="@style/session_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:text="sala napoli" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/sessionSpeaker"
+        style="@style/session_item_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Gabriel Dogaru" />
+
+</LinearLayout>

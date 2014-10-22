@@ -1,0 +1,73 @@
+<resources>
+    <style name="title_bar">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:background">@drawable/title_background</item>
+    </style>
+    <style name="field_label" parent="text">
+        <item name="android:paddingTop">5dp</item>
+    </style>
+
+    <style name="session_item_title">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/header_2</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <style name="session_item_time">
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textColor">@color/sec_list_item</item>
+    </style>
+
+    <style name="text">
+        <item name="android:textSize">@dimen/text_size</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="header_1">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/header_1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="header_2">
+        <item name="android:textSize">@dimen/header_2</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="user_input">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="sessionRatingBar" parent="@android:style/Widget.RatingBar">
+        <item name="android:minHeight">40dip</item>
+        <item name="android:maxHeight">40dip</item>
+    </style>
+
+    <style name="description" parent="field_label">
+        <item name="android:textStyle">italic</item>
+    </style>
+
+
+    <style name="FeedbackDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowTitleStyle">@style/FeedbackDialogTitle</item>
+    </style>
+
+    <style name="FeedbackDialogTitle" parent="@android:style/TextAppearance.DialogWindowTitle">
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="DialogWindowTitle">
+        <item name="android:maxLines">1</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.DialogWindowTitle</item>
+    </style>
+
+</resources>

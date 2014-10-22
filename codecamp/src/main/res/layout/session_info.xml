@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:paddingTop="5dp">
+    <LinearLayout android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                  android:padding="10dp">
+        <TextView android:id="@+id/sessionTitle"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  style="@style/header_1"
+                  android:text="title"/>
+        <TextView android:id="@+id/sessionTime"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  style="@style/field_label"
+                  android:text="13.06.09 - 14.06.09"/>
+
+
+        <LinearLayout android:id="@+id/sessionTrackLayout"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      style="@style/field_label"
+                      android:text="@string/track"/>
+            <TextView android:id="@+id/sessionTrack"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      style="@style/field_label"
+                      android:paddingTop="0dp"
+                      android:paddingLeft="3dp"
+                      android:text="track"/>
+        </LinearLayout>
+
+        <TextView android:id="@+id/sessionDescription"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  style="@style/description"
+                  android:text="description sd"/>
+
+        <LinearLayout android:id="@+id/speakerLayoutOuter"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:orientation="vertical">
+            <TextView android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="@string/speakers"
+                      style="@style/header_2"
+                      android:paddingTop="10dp"
+                      android:paddingBottom="5dp"/>
+            <LinearLayout android:id="@+id/speakerLayout"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:orientation="vertical">
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Codecamp</string>
+
+    <!--tab-->
+    <string name="overview">Overview</string>
+    <string name="tracks">Tracks</string>
+    <string name="sessions">Sessions</string>
+    <string name="about">About</string>
+    <string name="name">Name:</string>
+    <string name="company">Company:</string>
+    <string name="email">Email:</string>
+    <string name="technology">Technology:</string>
+    <string name="years_experience">Years Of Experience:</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
+    <string name="email_policy">Use my email:</string>
+    <string name="complete_all">Please complete all the fields.</string>
+    <string name="track">Track:</string>
+    <string name="speakers">Speakers:</string>
+    <string name="comments">Comments:</string>
+    <string name="refresh_data">Refresh Event Data</string>
+
+    <string name="all_tracks">All Tracks</string>
+    <string name="select_track">Select Track</string>
+    <string name="track_tell">Track: %s</string>
+    <string name="set">Set</string>
+    <string name="calendar">Calendar</string>
+
+    <string-array name="technologies">
+        <item>Java</item>
+        <item>.NET</item>
+        <item>C++</item>
+        <item>Php</item>
+        <item>Ruby</item>
+        <item>Java Script</item>
+        <item>HTML</item>
+        <item>Testing</item>
+        <item>Project Management</item>
+        <item>Business Analysis</item>
+        <item>Other (please specify below)</item>
+    </string-array>
+
+    <string-array name="experiences">
+        <item>Student/no working experience</item>
+        <item>&lt;= 2 years</item>
+        <item>&gt; 2 years AND &lt;= 5 years</item>
+        <item>&gt; 5 years AND &lt;=9 years</item>
+        <item>&gt;= 10 years</item>
+    </string-array>
+
+    <string-array name="email_policy">
+        <item>Yes</item>
+        <item>No</item>
+        <item>I dont care</item>
+    </string-array>
+
+    <string name="server_registering">%1$d from %2$d</string>
+    <string name="server_registered"></string>
+    <string name="server_register_error"></string>
+    <string name="ok">Ok</string>
+    <string name="server_unregistered">Unregistered from server</string>
+    <string name="server_unregister_error">Server unregister error</string>
+    <string name="gcm_error">GCM error %1$s</string>
+    <string name="gcm_deleted">Push Notification Deleted</string>
+    <string name="gcm_recoverable_error">GCM Recoverable error %1$s</string>
+    <string name="day1">Day 1</string>
+    <string name="day2">Day 2</string>
+    <string name="notification_title">Codecamp Update</string>
+    <string name="copyright">- app by Gabriel Dogaru, gabrieldogaru.com</string>
+</resources>
