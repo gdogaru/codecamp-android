@@ -21,6 +21,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,26 +49,25 @@ import java.text.SimpleDateFormat;
  */
 public class OverviewTabFragment extends Fragment {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMMM yyyy ");
-   
+
     TextView eventTitle;
-   
+
     TextView eventDate;
-   
+
     TextView eventLength;
-   
+
     TextView eventDescription;
-   
+
     TextView location;
-   
+
     TextView locationNotes;
-   
+
     LinearLayout mapLayout;
     private MapFragment mapview;
     private Overview overview;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         return inflater.inflate(R.layout.overview_fragment, container, false);
     }
 
@@ -91,13 +91,14 @@ public class OverviewTabFragment extends Fragment {
 //        ConnectivityManager connectivityManager = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 //        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
 //        if (activeNetworkInfo != null) {
-        if(ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
+        if (ConnectionResult.SUCCESS == GooglePlayServicesUtil.isGooglePlayServicesAvailable(getActivity())) {
             mapLayout.setVisibility(View.VISIBLE);
-            setMap();
+
         }
 //        } else {
 //            mapLayout.setVisibility(View.GONE);
 //        }
+        setMap();
     }
 
     public void readOverview() {
@@ -109,7 +110,7 @@ public class OverviewTabFragment extends Fragment {
         }
     }
 
-//    @UiThread
+    //    @UiThread
     public void printData(Overview overview) {
         eventTitle.setText(overview.getTitle());
         eventDescription.setText(overview.getDescription());
@@ -131,14 +132,12 @@ public class OverviewTabFragment extends Fragment {
 
     private void setMap() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
         mapview = new MapFragment();
-
         transaction.add(R.id.mapLayout, mapview);
         transaction.commit();
 
 
-        centerMap();
+//        centerMap();
 
 //
 //        try {
@@ -153,7 +152,13 @@ public class OverviewTabFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                centerMap();
+            }
+        }, 500);
     }
 
     private void centerMap() {

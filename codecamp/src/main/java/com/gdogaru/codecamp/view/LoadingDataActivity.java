@@ -16,22 +16,30 @@
 
 package com.gdogaru.codecamp.view;
 
-
-import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.gdogaru.codecamp.R;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
-public class HeaderFragment extends Fragment {
+public class LoadingDataActivity extends CodecampActivity {
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.header_fragment, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.loading_data);
+        if(getActionBar()!= null) {
+            getActionBar().hide();
+        }
+
+    }
+
+    public static void startTop(Context context){
+        Intent intent = new Intent(context, LoadingDataActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

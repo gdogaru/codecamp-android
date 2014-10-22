@@ -3,14 +3,18 @@ package com.gdogaru.codecamp;
 import android.app.Application;
 import android.util.Log;
 
+import com.gdogaru.codecamp.db.DatabaseHelper;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.path.android.jobqueue.JobManager;
 import com.path.android.jobqueue.config.Configuration;
 import com.path.android.jobqueue.log.CustomLogger;
+
+import de.greenrobot.event.EventBus;
 
 /**
  */
@@ -21,12 +25,17 @@ public class CodecampApplication extends Application {
     private CodecampClient codecampClient;
 
     private JobManager jobManager;
+    private DatabaseHelper dbHelper;
+    EventBus eventBus;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
         configureJobManager();
+        dbHelper = OpenHelperManager.getHelper(instance, DatabaseHelper.class);
+        eventBus = new EventBus();
+        getTracker();
     }
 
     synchronized public Tracker getTracker() {
@@ -89,5 +98,14 @@ public class CodecampApplication extends Application {
 
     public static CodecampApplication instance() {
         return instance;
+    }
+
+
+    public DatabaseHelper getDbHelper() {
+        return dbHelper;
+    }
+
+    public EventBus getEventBus() {
+        return eventBus;
     }
 }

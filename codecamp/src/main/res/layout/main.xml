@@ -4,11 +4,6 @@
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <fragment android:id="@+id/myFragment"
-        android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:name="com.gdogaru.codecamp.view.HeaderFragment"/>
-
     <com.viewpagerindicator.TitlePageIndicator
         android:id="@+id/titles"
         android:layout_width="fill_parent"

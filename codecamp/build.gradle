@@ -12,12 +12,12 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file('certificate/codecamp2-debug-key.keystore')
-            storePassword "C0decamp"
-            keyAlias "codecamp2"
-            keyPassword "C0decamp"
-        }
+//        debug {
+//            storeFile file('certificate/codecamp2-debug-key.keystore')
+//            storePassword "C0decamp"
+//            keyAlias "codecamp2"
+//            keyPassword "C0decamp"
+//        }
 
         release {
             storeFile file('certificate/codecamp2-release-key.keystore')
@@ -30,7 +30,7 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.release
-            runProguard true
+            runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
@@ -52,9 +52,11 @@ android {
 }
 
 dependencies {
+    compile project(':viewpager')
     compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
     compile 'com.google.code.gson:gson:2.2.4'
     compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'de.greenrobot:eventbus:2.2.1'
     compile('com.path:android-priority-jobqueue:1.1.2') {
         exclude group: 'com.google.android', module: 'android'
     }

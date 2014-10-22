@@ -90,3 +90,12 @@
 
 -keep class com.gdogaru.codecamp.model.** {*;}
 -keep class com.gdogaru.codecamp.db.** {*;}
+
+#greenbus
+-keepclassmembers class ** {
+    public void onEvent*(**);
+}
+
+
+#-keep class com.path.android.jobqueue.** {*;}
+#-keep interface com.path.android.jobqueue.** {*;}

@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ExpandedSessionsInfoActivity extends Activity {
+public class ExpandedSessionsInfoActivity extends CodecampActivity {
 
     private static final String TRACK_ID = "trackID";
     private static final String SESSION_ID = "sessionId";

@@ -31,13 +31,13 @@ import android.view.MenuItem;
 import com.gdogaru.codecamp.CodecampApplication;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.svc.CodecampClient;
-import com.gdogaru.codecamp.svc.DataProcessorTask;
+import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
+import com.gdogaru.codecamp.util.AnalyticsHelper;
 import com.gdogaru.codecamp.view.calendar.CalendarFragment;
-import com.google.android.gms.analytics.GoogleAnalytics;
 import com.viewpagerindicator.TitlePageIndicator;
 
 
-public class MainActivity extends Activity {
+public class MainActivity extends CodecampActivity {
 
 
     CodecampClient codecampClient;
@@ -54,17 +54,6 @@ public class MainActivity extends Activity {
         codecampClient = ((CodecampApplication) getApplication()).getCodecampClient();
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        GoogleAnalytics.getInstance(this).reportActivityStart(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        GoogleAnalytics.getInstance(this).reportActivityStop(this);
-    }
 
 
     public void initViews() {
@@ -95,7 +84,7 @@ public class MainActivity extends Activity {
     }
 
     private void refreshData() {
-        new DataProcessorTask(this, codecampClient).execute();
+        CodecampApplication.instance().getJobManager().addJob(new UpdateDataJob());
     }
 
     @Override

@@ -16,24 +16,23 @@
 
 package com.gdogaru.codecamp.view;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
 import com.gdogaru.codecamp.CodecampApplication;
 import com.gdogaru.codecamp.R;
-import com.gdogaru.codecamp.prefs.UpdatePrefsUtil;
 import com.gdogaru.codecamp.svc.CodecampClient;
-import com.gdogaru.codecamp.svc.DataProcessorTask;
+import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
+import com.gdogaru.codecamp.svc.jobs.UpdatePrefHelper;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
-public class SplashScreenActivity extends Activity {
+public class SplashScreenActivity extends CodecampActivity {
     public static final int TWO_WEEKS_MILLIS = 1209600000;
     private static final long ONE_DAY_MILLIS = 86400000;
-    private static final double SPLASH_TIME = 0.5; //in seconds
+    private static final double SPLASH_TIME = 0.3; //in seconds
     private static final int USER_DATA_CODE = 1;
 
     CodecampClient codecampClient;
@@ -42,7 +41,10 @@ public class SplashScreenActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splashscreen);
-        codecampClient = ((CodecampApplication)getApplication()).getCodecampClient();
+        codecampClient = ((CodecampApplication) getApplication()).getCodecampClient();
+        if (getActionBar() != null) {
+            getActionBar().hide();
+        }
     }
 
     @Override
@@ -56,14 +58,18 @@ public class SplashScreenActivity extends Activity {
     }
 
     private void triggerNextActivity() {
+        if (UpdatePrefHelper.isUpdating()) {
+            LoadingDataActivity.startTop(this);
+            finish();
+            return;
+        }
         new Handler().postDelayed(new Runnable() {
             public void run() {
 
                 SplashScreenActivity context = SplashScreenActivity.this;
-                long lastUpdated = UpdatePrefsUtil.getLastUpdated(context);
-                if (lastUpdated == 0
-                        || System.currentTimeMillis() - lastUpdated > ONE_DAY_MILLIS) {
-                    new DataProcessorTask(context, codecampClient).execute();
+                long lastUpdated = UpdatePrefHelper.getLastUpdated();
+                if (lastUpdated == 0 || System.currentTimeMillis() - lastUpdated > ONE_DAY_MILLIS) {
+                    CodecampApplication.instance().getJobManager().addJobInBackground(new UpdateDataJob());
                 } else {
                     startNextActivity();
                 }
@@ -73,12 +79,6 @@ public class SplashScreenActivity extends Activity {
 
     private void startNextActivity() {
         startMainActivity();
-//        if (!userPrefs.name().get().isEmpty()) {
-//            startMainActivity();
-//        } else {
-//            Intent intent = UserDataActivity_.intent(this).get();
-//            startActivityForResult(intent, USER_DATA_CODE);
-//        }
     }
 
     private void startMainActivity() {

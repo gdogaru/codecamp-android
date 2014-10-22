@@ -20,6 +20,7 @@
     <string name="speakers">Speakers:</string>
     <string name="comments">Comments:</string>
     <string name="refresh_data">Refresh Event Data</string>
+    <string name="no_internet">Codecamp could not refresh, no internet</string>
 
     <string name="all_tracks">All Tracks</string>
     <string name="select_track">Select Track</string>

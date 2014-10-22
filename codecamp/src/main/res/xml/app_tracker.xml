@@ -3,22 +3,43 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="TypographyDashes">
 
-    <!--  The following value should be replaced with correct property id. -->
-    <string name="ga_trackingId">UA-44149325-5</string>
+    <!--Replace placeholder ID with your tracking ID-->
+    <string name="ga_trackingId">UA-55962279-1</string>
 
-    <!-- Enable automatic Activity measurement -->
+    <!--Enable Activity tracking-->
     <bool name="ga_autoActivityTracking">true</bool>
 
+    <!--Enable automatic exception tracking-->
     <bool name="ga_reportUncaughtExceptions">true</bool>
 
-    <!-- Percentage of events to include in reports -->
-    <string name="ga_sampleFrequency">100.0</string>
+    <screenName name="com.gdogaru.codecamp.view.SplashScreenActivity">
+        SplashScreen
+    </screenName>
 
-    <!-- How long a session exists before giving up -->
-    <integer name="ga_sessionTimeout">30</integer>
+    <screenName name="com.gdogaru.codecamp.view.LoadingDataActivity">
+        Loading Data
+    </screenName>
 
+    <screenName name="com.gdogaru.codecamp.view.MainActivity">
+        Main
+    </screenName>
 
-    <screenName name="com.elitesem.calculator.MainActivity">Main Screen</screenName>
+    <screenName name="com.gdogaru.codecamp.view.ExpandedSessionsInfoActivity">
+        Session Info
+    </screenName>
+
+    <screenName name="com.gdogaru.codecamp.view.AboutTabFragment">
+        About
+    </screenName>
+    <screenName name="com.gdogaru.codecamp.view.OverviewTabFragment">
+        Overview
+    </screenName>
+    <screenName name="com.gdogaru.codecamp.view.SessionInfoFragment">
+        Session Info Fragment
+    </screenName>
+    <screenName name="com.gdogaru.codecamp.view.calendar.CalendarFragment">
+        Calendar
+    </screenName>
 
 
 </resources>
