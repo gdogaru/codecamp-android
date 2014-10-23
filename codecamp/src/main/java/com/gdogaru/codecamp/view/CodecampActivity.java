@@ -1,10 +1,13 @@
 package com.gdogaru.codecamp.view;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.gdogaru.codecamp.CodecampApplication;
+import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.svc.jobs.DataLoadingEvent;
 import com.google.android.gms.analytics.GoogleAnalytics;
 
@@ -51,7 +54,29 @@ public class CodecampActivity extends Activity {
         startActivity(intent);
     }
 
-//    public void onEventMainThread(NoInternetEvent event) {
+    //    public void onEventMainThread(NoInternetEvent event) {
 //        Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
 //    }
+    public void setChildActionBar(int textid) {
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowTitleEnabled(true);
+            actionBar.setTitle(textid);
+            actionBar.setIcon(R.drawable.icon_transparent);
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                this.finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

@@ -63,6 +63,7 @@ public class ExpandedSessionsInfoActivity extends CodecampActivity {
         trackSelector = (TrackSelectorFragment) getFragmentManager().findFragmentById(R.id.trackSelector);
 
         initViews();
+        setChildActionBar(R.string.session_info);
     }
 
     @Override

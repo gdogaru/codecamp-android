@@ -69,4 +69,5 @@
     <string name="day2">Day 2</string>
     <string name="notification_title">Codecamp Update</string>
     <string name="copyright">- app by Gabriel Dogaru, gabrieldogaru.com</string>
+    <string name="session_info">Session Info</string>
 </resources>

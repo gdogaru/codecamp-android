@@ -23,6 +23,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class CalendarFragment extends Fragment {
 
@@ -37,21 +39,51 @@ public class CalendarFragment extends Fragment {
     ArrayList<Integer> sessIds = new ArrayList<Integer>();
     private int offset;
     private Calendar calendar;
-
+    Timer currentTimer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return new Calendar(getActivity());
+//        ZoomView zv = new ZoomView(getActivity());
+        calendar = new Calendar(getActivity());
+//        zv.addView(calendar);
+        return calendar;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        calendar = (Calendar) view;
+//        calendar = (Calendar) view;
 //        scrollView = (ScrollView) view.findViewById(R.id.scrollView);
         init();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        currentTimer = new Timer();
+        currentTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                java.util.Calendar cal = GregorianCalendar.getInstance();
+//                cal.set(2014, java.util.Calendar.OCTOBER, 25, 17, 25, 10);
+                final Date currentTime = cal.getTime();
+                calendar.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        calendar.updateCurrentTime(currentTime);
+                    }
+                });
+            }
+        }, 10000, 10000);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (currentTimer != null) {
+            currentTimer.cancel();
+        }
+    }
 
     public void init() {
         DatabaseHelper dbHelper = OpenHelperManager.getHelper(getActivity(), DatabaseHelper.class);
@@ -79,7 +111,7 @@ public class CalendarFragment extends Fragment {
         initSessionIds(sessions);
 
         java.util.Calendar cal = GregorianCalendar.getInstance();
-//        cal.set(2014, java.util.Calendar.OCTOBER, 25, 16, 45, 10);
+//        cal.set(2014, java.util.Calendar.OCTOBER, 25, 17, 5, 10);
         Date currentTime = cal.getTime();
 
 //        Calendar calendar = new Calendar(getActivity());

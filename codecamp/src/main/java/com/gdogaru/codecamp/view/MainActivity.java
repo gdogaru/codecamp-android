@@ -27,12 +27,12 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.gdogaru.codecamp.CodecampApplication;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
-import com.gdogaru.codecamp.util.AnalyticsHelper;
 import com.gdogaru.codecamp.view.calendar.CalendarFragment;
 import com.viewpagerindicator.TitlePageIndicator;
 
@@ -55,12 +55,19 @@ public class MainActivity extends CodecampActivity {
     }
 
 
-
     public void initViews() {
-        viewPager = (ViewPager) findViewById(R.id.viewPager);
-        titles = (TitlePageIndicator) findViewById(R.id.titles);
-        viewPager.setAdapter(new TabsAdapter(getFragmentManager(), this));
-        titles.setViewPager(viewPager);
+        findViewById(R.id.calendar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, CalendarActivity.class));
+            }
+        });
+        findViewById(R.id.sessions).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SessionListActivity.class));
+            }
+        });
     }
 
     @Override
@@ -112,7 +119,7 @@ public class MainActivity extends CodecampActivity {
         }
 
         @Override
-        public Fragment getItem( int position) {
+        public Fragment getItem(int position) {
             switch (position) {
                 case 0:
                     return new OverviewTabFragment();

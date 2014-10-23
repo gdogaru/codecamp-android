@@ -16,8 +16,8 @@
     <!-- App receives GCM messages. -->
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <!--<uses-permission android:name="android.permission.GET_ACCOUNTS"/>-->
+    <!--<uses-permission android:name="android.permission.WAKE_LOCK"/>-->
 
 
     <permission android:name="com.gdogaru.codecamp.permission.MAPS_RECEIVE"
@@ -45,6 +45,8 @@
 
         <activity android:name=".view.LoadingDataActivity"/>
         <activity android:name=".view.MainActivity"/>
+        <activity android:name=".view.CalendarActivity"/>
+        <activity android:name=".view.SessionListActivity"/>
         <activity android:name=".view.ExpandedSessionsInfoActivity"/>
 
         <!--<activity android:name=".view.calendar.CalendarActivity_">-->

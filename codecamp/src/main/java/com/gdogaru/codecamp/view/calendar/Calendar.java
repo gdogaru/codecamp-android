@@ -2,13 +2,15 @@ package com.gdogaru.codecamp.view.calendar;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
@@ -16,7 +18,16 @@ import android.widget.TextView;
 
 import com.gdogaru.codecamp.R;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
+import java.util.TimeZone;
 
 
 public class Calendar extends ScrollView {
@@ -25,8 +36,8 @@ public class Calendar extends ScrollView {
     private static final long MILLIS_IN_MINUTE = 60000;
     private static final long MILLIS_IN_DAY = 86400000;
     private static final long MILLIS_IN_HOUR = 3600000;
-    private final double PX_PER_MINUTE;
-    private final int HOUR_BAR_WIDTH;
+    private double PX_PER_MINUTE;
+    private int HOUR_BAR_WIDTH;
     private final Activity context;
     private List<DisplayEvent> events = new ArrayList<DisplayEvent>();
     private Date startDate;
@@ -34,34 +45,41 @@ public class Calendar extends ScrollView {
     private long dateDiff;
     private EventListener eventListener;
     private Date currentTime;
-
+    private int maxInRow = 1;
     RelativeLayout parent;
+    RelativeLayout hourParent;
+    private LinearLayout currentTimeLayout;
 
     public Calendar(Context context) {
         super(context);
         this.context = (Activity) context;
-        HOUR_BAR_WIDTH = dptopx(15);
-        PX_PER_MINUTE = dptopx(1.7);
+        initSizes();
         addParent();
 
+
         drawEvents();
+//        initZoom();
 
-        setOnTouchListener(new OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//        setOnTouchListener(new OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View view, MotionEvent motionEvent) {
+//                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+//
+//                }
+//                return false;
+//            }
+//        });
+    }
 
-                }
-                return false;
-            }
-        });
+    private void initSizes() {
+        HOUR_BAR_WIDTH = dptopx(15);
+        PX_PER_MINUTE = dptopx(1.9);
     }
 
     public Calendar(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = (Activity) context;
-        HOUR_BAR_WIDTH = dptopx(15);
-        PX_PER_MINUTE = dptopx(1.7);
+        initSizes();
         addParent();
         drawEvents();
     }
@@ -69,20 +87,31 @@ public class Calendar extends ScrollView {
     public Calendar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         this.context = (Activity) context;
-        HOUR_BAR_WIDTH = dptopx(15);
-        PX_PER_MINUTE = dptopx(1.7);
+        initSizes();
         addParent();
     }
 
     void addParent() {
         parent = new RelativeLayout(context);
+        hourParent = new RelativeLayout(context);
+        LinearLayout linearLayout = new LinearLayout(context);
+
         ScrollView.LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        addView(parent, lp);
+        addView(linearLayout, lp);
+        linearLayout.addView(hourParent);
+        HorizontalScrollView hz = new HorizontalScrollView(context);
+        linearLayout.addView(hz);
+        hz.addView(parent);
     }
 
     private int dptopx(double dp) {
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
         return (int) ((dp * displayMetrics.density) + 0.5);
+    }
+
+    private int pxToDp(double px) {
+        Resources r = getResources();
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, (float) px, r.getDisplayMetrics());
     }
 
     @Override
@@ -95,14 +124,14 @@ public class Calendar extends ScrollView {
             return;
         }
 
-        View layout = new LinearLayout(context);
-        layout.setBackgroundColor(getResources().getColor(R.color.time_bar));
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, dptopx(2));
+        currentTimeLayout = new LinearLayout(context);
+        currentTimeLayout.setBackgroundColor(getResources().getColor(R.color.time_bar));
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, dptopx(3));
 
         int top = (int) (getDateStartDiffMinutes(currentTime) * PX_PER_MINUTE);
         lp.setMargins(0, top, 0, 0);
 
-        parent.addView(layout, lp);
+        hourParent.addView(currentTimeLayout, lp);
 
         final int y = (int) (top - PX_PER_MINUTE * 60);
         if (top > 0) {
@@ -158,6 +187,7 @@ public class Calendar extends ScrollView {
             ev.index = getNextFreeIdx(bag);
             bag.add(ev);
             updateTotals(bag);
+            maxInRow = Math.max(maxInRow, bag.size());
         }
     }
 
@@ -224,9 +254,10 @@ public class Calendar extends ScrollView {
             return;
         }
         recalculateDisplay();
-        int width = getWidth();
 
-        width = context.getWindowManager().getDefaultDisplay().getWidth() - HOUR_BAR_WIDTH;
+        int width = context.getWindowManager().getDefaultDisplay().getWidth() - HOUR_BAR_WIDTH;
+        int neededWidth = maxInRow * dptopx(100);
+        width = Math.max(width, neededWidth);
 
         drawHours();
 
@@ -234,7 +265,7 @@ public class Calendar extends ScrollView {
             int pxPerIdx = width / ev.rowTotal;
             View layout = LayoutInflater.from(context).inflate(R.layout.c_event_layout, null);
             TextView tv = (TextView) layout.findViewById(R.id.title);
-            tv.setText(ev.event.title);
+            tv.setText(trim(ev.event.title));
 
             tv = (TextView) layout.findViewById(R.id.desc1);
             tv.setText(ev.event.descLine1);
@@ -246,7 +277,8 @@ public class Calendar extends ScrollView {
             if (lp == null) {
                 lp = new RelativeLayout.LayoutParams(pxPerIdx, (int) (getEventLengthMinutes(ev.event) * PX_PER_MINUTE));
             }
-            lp.setMargins(HOUR_BAR_WIDTH + (int) (pxPerIdx * ev.index), (int) (getEventStartDiffMinutes(ev.event) * PX_PER_MINUTE), 0, 0);
+            int offset = 0;// HOUR_BAR_WIDTH;
+            lp.setMargins(offset + (int) (pxPerIdx * ev.index), (int) (getEventStartDiffMinutes(ev.event) * PX_PER_MINUTE), 0, 0);
             lp.width = pxPerIdx;
             lp.height = (int) (getEventLengthMinutes(ev.event) * PX_PER_MINUTE);
 //            lp.setMargins(1, 1, 1, 1);
@@ -260,6 +292,10 @@ public class Calendar extends ScrollView {
         }
 
         drawCurrentTime();
+    }
+
+    private String trim(String title) {
+        return title.replaceAll("<br/>", "\n").replaceAll("\n", ".").replace(" ", "\u00A0");
     }
 
     private void clicked(DisplayEvent ev) {
@@ -290,7 +326,7 @@ public class Calendar extends ScrollView {
             }
             lp.setMargins(0, (int) (PX_PER_MINUTE * 60 * (i - startHour)), 0, 0);
             layout.setLayoutParams(lp);
-            parent.addView(layout, lp);
+            hourParent.addView(layout, lp);
         }
     }
 
@@ -310,6 +346,17 @@ public class Calendar extends ScrollView {
         this.currentTime = currentTime;
     }
 
+    public void updateCurrentTime(Date date) {
+        currentTime = date;
+        if (currentTime == null || currentTimeLayout == null || startDate.getTime() / MILLIS_IN_DAY != currentTime.getTime() / MILLIS_IN_DAY) {
+            return;
+        }
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, dptopx(3));
+        int top = (int) (getDateStartDiffMinutes(currentTime) * PX_PER_MINUTE);
+        lp.setMargins(0, top, 0, 0);
+        currentTimeLayout.setLayoutParams(lp);
+    }
+
     public interface EventListener {
         void eventCLicked(DisplayEvent event);
     }
@@ -323,4 +370,6 @@ public class Calendar extends ScrollView {
                     : e1.event.preferedIdx - e2.event.preferedIdx;
         }
     }
+
+
 }
