@@ -7,5 +7,5 @@
         android:textSize="20dip"
         android:textStyle="bold"
         android:gravity="left"
-        android:textColor="@color/dark"
+        android:textColor="@color/white"
         android:padding="5dip"/>

@@ -84,6 +84,7 @@ public class UpdateDataJob extends Job {
         }
         SpeakerPhotoUtils.removeAll(app);
         eraseDbData();
+        correctData(codecamp);
         saveDbData(codecamp);
         OverviewDAO.saveOverview(codecamp, gson, app);
         UpdatePrefHelper.setLastUpdated(System.currentTimeMillis());
@@ -123,6 +124,20 @@ public class UpdateDataJob extends Job {
 
     private void eraseDbData() {
         dbHelper.recreateStructure();
+    }
+
+    private void correctData(Codecamp codecamp) {
+        for (Session session : codecamp.getSessions()) {
+            try {
+                session.setDescription(session.getDescription().replaceAll("<br/>", "\n"));
+            } catch (Exception e) {
+                Log.e(Logging.TAG, "Error parsing data", e);
+            }
+        }
+
+        for (Speaker speaker : codecamp.getSpeakers()) {
+            speaker.setBio(speaker.getBio().replaceAll("<br/>", "\n"));
+        }
     }
 
     private void saveDbData(Codecamp codecamp) {
