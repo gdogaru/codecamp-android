@@ -1,9 +1,9 @@
 package com.gdogaru.codecamp.view;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.MenuItem;
 
 import com.gdogaru.codecamp.CodecampApplication;
@@ -14,7 +14,7 @@ import com.google.android.gms.analytics.GoogleAnalytics;
 /**
  * Created by Gabriel on 10/22/2014.
  */
-public class CodecampActivity extends Activity {
+public class CodecampActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

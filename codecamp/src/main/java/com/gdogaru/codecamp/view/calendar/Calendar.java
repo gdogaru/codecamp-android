@@ -235,7 +235,7 @@ public class Calendar extends ScrollView {
             idxs.add(i);
         }
         for (DisplayEvent ev : bag) {
-            idxs.remove(new Integer(ev.index));
+            idxs.remove(Integer.valueOf(ev.index));
         }
         return idxs.iterator().next();
     }

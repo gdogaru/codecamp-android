@@ -59,7 +59,7 @@
     <string name="server_registering">%1$d from %2$d</string>
     <string name="server_registered"></string>
     <string name="server_register_error"></string>
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="server_unregistered">Unregistered from server</string>
     <string name="server_unregister_error">Server unregister error</string>
     <string name="gcm_error">GCM error %1$s</string>

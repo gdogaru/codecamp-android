@@ -34,7 +34,8 @@
         android:icon="@drawable/icon"
         android:logo="@drawable/splashscreen"
         android:name=".CodecampApplication"
-        android:theme="@style/CodecampTheme">
+        android:theme="@style/CodecampTheme"
+        android:allowBackup="true">
 
         <activity android:name=".view.SplashScreenActivity" android:noHistory="true">
             <intent-filter>

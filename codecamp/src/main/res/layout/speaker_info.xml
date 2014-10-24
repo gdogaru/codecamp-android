@@ -12,8 +12,8 @@
         <ImageView android:id="@+id/speakerPhoto"
                    android:layout_width="80dp"
                    android:layout_height="80dp"
-                   android:minHeight="100px"
-                   android:minWidth="100px"
+                   android:minHeight="80dp"
+                   android:minWidth="80dp"
                    android:scaleType="fitCenter"
                    android:src="@drawable/person_icon"/>
 

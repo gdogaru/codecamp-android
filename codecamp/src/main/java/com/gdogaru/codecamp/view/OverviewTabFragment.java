@@ -16,12 +16,12 @@
 
 package com.gdogaru.codecamp.view;
 
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,17 +38,18 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 public class OverviewTabFragment extends Fragment {
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMMM yyyy ");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMMM yyyy", Locale.US);
 
     TextView eventTitle;
 
@@ -63,7 +64,7 @@ public class OverviewTabFragment extends Fragment {
     TextView locationNotes;
 
     LinearLayout mapLayout;
-    private MapFragment mapview;
+    private SupportMapFragment mapview;
     private Overview overview;
 
     @Override
@@ -131,8 +132,8 @@ public class OverviewTabFragment extends Fragment {
     }
 
     private void setMap() {
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        mapview = new MapFragment();
+        android.support.v4.app.FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        mapview = new SupportMapFragment();
         transaction.add(R.id.mapLayout, mapview);
         transaction.commit();
 

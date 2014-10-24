@@ -18,11 +18,11 @@ package com.gdogaru.codecamp.view;
 
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v13.app.FragmentStatePagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 
@@ -60,7 +60,7 @@ public class ExpandedSessionsInfoActivity extends CodecampActivity {
         setContentView(R.layout.expanded_sessions);
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        trackSelector = (TrackSelectorFragment) getFragmentManager().findFragmentById(R.id.trackSelector);
+        trackSelector = (TrackSelectorFragment) getSupportFragmentManager().findFragmentById(R.id.trackSelector);
 
         initViews();
         setChildActionBar(R.string.session_info);
@@ -81,7 +81,7 @@ public class ExpandedSessionsInfoActivity extends CodecampActivity {
     public void initViews() {
         dbHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
 
-        ExpandedSessionsAdapter adapter = new ExpandedSessionsAdapter(getFragmentManager(), getLayoutInflater(), trackSessions);
+        ExpandedSessionsAdapter adapter = new ExpandedSessionsAdapter(getSupportFragmentManager(), getLayoutInflater(), trackSessions);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(trackSessions.indexOf(sessionId.intValue()));
         initSelector();
@@ -164,7 +164,7 @@ public class ExpandedSessionsInfoActivity extends CodecampActivity {
         viewPager.post(new Runnable() {
             @Override
             public void run() {
-                viewPager.setAdapter(new ExpandedSessionsAdapter(getFragmentManager(), getLayoutInflater(), ids));
+                viewPager.setAdapter(new ExpandedSessionsAdapter(getSupportFragmentManager(), getLayoutInflater(), ids));
                 viewPager.setCurrentItem(0);
             }
         });
@@ -178,7 +178,7 @@ public class ExpandedSessionsInfoActivity extends CodecampActivity {
         activity.startActivity(intent);
     }
 
-    private class ExpandedSessionsAdapter extends FragmentStatePagerAdapter {
+    private class ExpandedSessionsAdapter extends FragmentPagerAdapter {
 
         LayoutInflater layoutInflater;
         private final ArrayList<Integer> trackSessions;

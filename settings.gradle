@@ -1,1 +1,1 @@
-include ':viewpager', ':codecamp'
+include ':codecamp'
