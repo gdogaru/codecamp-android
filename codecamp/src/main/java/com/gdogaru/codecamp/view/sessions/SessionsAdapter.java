@@ -14,8 +14,10 @@ import com.gdogaru.codecamp.util.StringUtils;
 import java.util.Collections;
 import java.util.List;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
-public class SessionsAdapter extends BaseAdapter {
+
+public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
     private LayoutInflater mInflater;
     private List<SessionListItem> sessions;
@@ -48,18 +50,62 @@ public class SessionsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView != null ? convertView : mInflater.inflate(R.layout.session_list_item, parent, false);
-        TextView title = (TextView) view.findViewById(R.id.sessionName);
-        TextView time = (TextView) view.findViewById(R.id.sessionTime);
-        TextView place = (TextView) view.findViewById(R.id.sessionPlace);
-        TextView speaker = (TextView) view.findViewById(R.id.sessionSpeaker);
+        View view;
+        if (convertView != null) view = convertView;
+        else {
+            view = mInflater.inflate(R.layout.session_list_item, parent, false);
+            ViewHolder holder = new ViewHolder();
+            holder.title = (TextView) view.findViewById(R.id.sessionName);
+            holder.time = (TextView) view.findViewById(R.id.sessionTime);
+            holder.place = (TextView) view.findViewById(R.id.sessionPlace);
+            holder.speaker = (TextView) view.findViewById(R.id.sessionSpeaker);
+            view.setTag(holder);
+        }
+        ViewHolder holder = (ViewHolder) view.getTag();
         SessionListItem session = sessions.get(position);
-        title.setText(session.getName());
+        holder.title.setText(session.getName());
         String timeString = DateUtil.formatPeriod(session.getStart(), session.getEnd());
-        time.setText(timeString);
-        place.setText(session.getTrackName());
+        holder.time.setText(timeString);
+        holder.place.setText(session.getTrackName());
         String speakerNames = StringUtils.join(session.getSpeakerNames(), ", ");
-        speaker.setText(speakerNames);
+        holder.speaker.setText(speakerNames);
         return view;
     }
+
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        HeaderViewHolder holder;
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            convertView = mInflater.inflate(R.layout.list_header, parent, false);
+            holder.text = (TextView) convertView;
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+        //set header text as first char in name
+        SessionListItem session = sessions.get(position);
+        String headerText = DateUtil.formatPeriod(session.getStart(), session.getEnd());
+        holder.text.setText(headerText);
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        SessionListItem session = sessions.get(position);
+        return DateUtil.formatPeriod(session.getStart(), session.getEnd()).hashCode();
+//        return sessions.get(i).getStart().getTime();
+    }
+
+    class HeaderViewHolder {
+        TextView text;
+    }
+
+    class ViewHolder {
+        TextView title;
+        TextView time;
+        TextView place;
+        TextView speaker;
+    }
+
 }

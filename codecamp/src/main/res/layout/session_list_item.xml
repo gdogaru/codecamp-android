@@ -16,6 +16,14 @@
         android:layout_height="wrap_content"
         android:text="Android made simple" />
 
+    <TextView
+        android:id="@+id/sessionSpeaker"
+        style="@style/session_item_time"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Gabriel Dogaru" />
+
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,22 +34,17 @@
             style="@style/session_item_time"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="10:30" />
+            android:text="10:30"
+            android:layout_marginRight="5dp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/sessionPlace"
             style="@style/session_item_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingLeft="5dp"
             android:text="sala napoli" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/sessionSpeaker"
-        style="@style/session_item_time"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Gabriel Dogaru" />
 
 </LinearLayout>

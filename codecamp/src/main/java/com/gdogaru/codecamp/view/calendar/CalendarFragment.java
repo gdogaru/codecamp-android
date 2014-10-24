@@ -93,7 +93,7 @@ public class CalendarFragment extends Fragment {
         List<Speaker> speakers = dbHelper.getSpeakerDao().queryForAll();
 
         Map<Long, String> idToSpeaker = SessionsUtil.extractSpeakers(speakers);
-        Map<Long, String> idToTrack = SessionsUtil.extractTracks(tracks);
+        Map<Long, String> idToTrack = SessionsUtil.extractTrackDisplay(tracks);
 
         List<CEvent> events = new ArrayList<CEvent>();
         Collections.sort(sessions, SESSION_BY_DATE_COMPARATOR);

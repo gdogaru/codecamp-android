@@ -42,6 +42,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
@@ -55,7 +57,7 @@ public class SessionsTabFragment extends Fragment {
             onListItemClick((ListView) parent, v, position, id);
         }
     };
-    ListView listView;
+    StickyListHeadersListView listView;
     RelativeLayout trackSelectorLayout;
     TrackSelectorFragment trackSelector;
     private DatabaseHelper dbHelper;
@@ -68,7 +70,7 @@ public class SessionsTabFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.sessions_fragment, container, false);
         trackSelectorLayout = (RelativeLayout) view.findViewById(R.id.trackSelectorLayout);
-        listView = (ListView) view.findViewById(android.R.id.list);
+        listView = (StickyListHeadersListView) view.findViewById(android.R.id.list);
         initView();
         initTrackSelector();
         return view;
@@ -197,7 +199,7 @@ public class SessionsTabFragment extends Fragment {
         List<Speaker> speakers = dbHelper.getSpeakerDao().queryForAll();
 
         Map<Long, String> idToSpeaker = SessionsUtil.extractSpeakers(speakers);
-        Map<Long, String> idToTrack = SessionsUtil.extractTracks(tracks);
+        Map<Long, String> idToTrack = SessionsUtil.extractTrackDisplay(tracks);
 
         sessionListItems = new ArrayList<SessionListItem>();
         for (Session s : sessions) {

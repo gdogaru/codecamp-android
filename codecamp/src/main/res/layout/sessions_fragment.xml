@@ -10,7 +10,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"/>
 
-    <ListView android:id="@android:id/list"
+    <se.emilsjolander.stickylistheaders.StickyListHeadersListView  android:id="@android:id/list"
               android:layout_below="@+id/trackSelectorLayout"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
