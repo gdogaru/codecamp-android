@@ -23,6 +23,12 @@
     <screenName name="com.gdogaru.codecamp.view.MainActivity">
         Main
     </screenName>
+    <screenName name="com.gdogaru.codecamp.view.CalendarActivity">
+        Calendar
+    </screenName>
+    <screenName name="com.gdogaru.codecamp.view.SessionListActivity">
+        Session List
+    </screenName>
 
     <screenName name="com.gdogaru.codecamp.view.ExpandedSessionsInfoActivity">
         Session Info
