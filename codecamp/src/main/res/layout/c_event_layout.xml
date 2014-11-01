@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/calendar_event_back"
     android:orientation="vertical"
+    android:layout_margin="0.5dp"
     android:padding="3dp">
 
     <TextView

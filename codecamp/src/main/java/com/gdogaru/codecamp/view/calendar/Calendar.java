@@ -263,7 +263,7 @@ public class Calendar extends ScrollView {
 
         for (final DisplayEvent ev : events) {
             int pxPerIdx = width / ev.rowTotal;
-            View layout = LayoutInflater.from(context).inflate(R.layout.c_event_layout, null);
+            View layout = LayoutInflater.from(context).inflate(R.layout.c_event_layout2, null);
             TextView tv = (TextView) layout.findViewById(R.id.title);
             tv.setText(trim(ev.event.title));
 
