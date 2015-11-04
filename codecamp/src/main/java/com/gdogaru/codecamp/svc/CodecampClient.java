@@ -27,7 +27,7 @@ public class CodecampClient {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm").create();
         messageConverter.setGson(gson);
         restTemplate.getMessageConverters().add(messageConverter);
-        rootUrl = "https://codecampevents.azure-mobile.net/tables";
+        rootUrl = "https://codecampevents.azure-mobile.dnet/tables";
     }
 
     public Codecamp getEventData() {

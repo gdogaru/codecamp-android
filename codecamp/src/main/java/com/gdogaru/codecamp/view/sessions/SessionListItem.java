@@ -12,6 +12,13 @@ public class SessionListItem {
     private long id;
     private String name;
     private Date start;
+    public static Comparator<SessionListItem> SESSION_BY_DATE_COMPARATOR = new Comparator<SessionListItem>() {
+
+        @Override
+        public int compare(SessionListItem object1, SessionListItem object2) {
+            return object1.getStart() == null ? -1 : object1.getStart().compareTo(object2.getStart());
+        }
+    };
     private Date end;
     private String trackName;
     private List<String> speakerNames;
@@ -72,12 +79,4 @@ public class SessionListItem {
     public void setTrackId(Long trackId) {
         this.trackId = trackId;
     }
-
-    public static Comparator<SessionListItem> SESSION_BY_DATE_COMPARATOR = new Comparator<SessionListItem>() {
-
-        @Override
-        public int compare(SessionListItem object1, SessionListItem object2) {
-            return object1.getStart().compareTo(object2.getStart());
-        }
-    };
 }

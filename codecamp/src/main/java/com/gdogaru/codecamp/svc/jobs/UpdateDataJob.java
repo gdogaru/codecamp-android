@@ -73,9 +73,9 @@ public class UpdateDataJob extends Job {
             if (UpdatePrefHelper.getLastUpdated() == 0) {
                 try {
                     codecamp = loadFromAssets(gson, app);
-                    Log.e(Logging.TAG, "Loaded from assets.", e);
+                    Log.i(Logging.TAG, "Loaded from assets.", e);
                 } catch (Exception e1) {
-                    Log.e(Logging.TAG, "Error retrieving data.", e);
+                    Log.e(Logging.TAG, "Error retrieving data.", e1);
                     throw new ErrorLoadingException();
                 }
             } else {

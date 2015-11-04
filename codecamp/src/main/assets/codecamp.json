@@ -1,1125 +1,1797 @@
 {
-    "Title": "CodeCamp/Iasi, 25 October 2014",
-    "Description": "CodeCamp is your local IT community & conference, here in Iasi. It started in 2009 and aims for better communication among the IT people.",
-    "ShortName": "CodeCamp/Iasi, 25 October 2014",
-    "StartDate": "2014-10-25T08:00:00",
-    "EndDate": "2014-10-25T18:00:00",
-    "Location": {
-        "Id": 1,
-        "Name": "Hotel International, Palas, Iasi",
-        "Notes": "Hotel International, Palas, Strada Palat 5A, Iași, 700032, Romania",
-        "Latitude": 47.154787,
-        "Longitude": 27.586702,
-        "City": "Iasi"
+  "Title": "CodeCamp/Iasi, 7 November 2015",
+  "Description": "CodeCamp is your local IT community & conference, here in Iasi. It started in 2009 and aims for better communication among the IT people.",
+  "ShortName": "CodeCamp/Iasi, 25 October 2014",
+  "StartDate": "2015-11-07T08:00:00",
+  "EndDate": "2015-11-07T18:00:00",
+  "Location": {
+    "Id": 1,
+    "Name": "Hotel International, Palas, Iasi",
+    "Notes": "Hotel International, Palas, Strada Palat 5A, Ia\u0219i, 700032, Romania",
+    "Latitude": 47.154787,
+    "Longitude": 27.586702,
+    "City": "Iasi"
+  },
+  "Tracks": [
+    {
+      "Id": 1,
+      "_code": "track1",
+      "Name": "Room 1",
+      "Notes": "(150 seats, floor -2)"
     },
-    "Tracks": [{
-        "Id": 1,
-        "Name": "Room 1",
-        "Notes": "Room 1 - 100+ seats"
-    }, {
-        "Id": 2,
-        "Name": "Room 2",
-        "Notes": "Room 2 - 250+ seats"
-    }, {
-        "Id": 3,
-        "Name": "Room 3",
-        "Notes": "Room 3 - 100+ seats"
-    }, {
-        "Id": 4,
-        "Name": "Room 4",
-        "Notes": "Room 4 - 20+ seats"
-    }, {
-        "Id": 5,
-        "Name": "Room 5",
-        "Notes": "Room 5 - 30+ seats"
-    }, {
-        "Id": 6,
-        "Name": "Room 6",
-        "Notes": "Room 6 - 100+ seats"
-    }, {
-        "Id": 7,
-        "Name": "Room 7",
-        "Notes": "Room 7 - 20+ seats"
-    }, {
-        "Id": 8,
-        "Name": "Room 8",
-        "Notes": "Room 8 - 35+ seats"
-    }],
-    "Speakers": [{
-        "Id": 0,
-        "Name": "Adrian Bolboacă",
-        "Title": "Programmer, Trainer, Coach",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/adrian.bolboacă.jpg",
-        "CompanyName": "Mozaic Works",
-        "CompanyUrl": "http://www.mozaicworks.com",
-        "Bio": "Adrian was involved in developing software for domains like energy, ecommerce, banking, customs<br/>and ERP/CRM. He has been working with companies from Netherlands, Romania, Italy, France and Germany, and he is knowledgeable in software technical domains like: clean code, test driven development, simple design, emergent design, working effectively with legacy code.<br/>As a continuous learner and challenger of existing ideas and concepts, Adrian is a supporter of movements that give new ideas on how to continuously improve software and that embrace the values of software quality and efficiency. He facilitated many code retreats in Romania, Belgium, France, Germany, Netherlands, Finland, Bulgaria and has a keen interest in serious games and using gamestorming for continuous improvement. <br/>He is fluent in Romanian, English and French, but when it comes to programming languages he supports language agnosticism, since he strongly believes that a programming language is only a tool towards higher level software concepts. <br/>As a constant participant to conferences and workshops, he is recognized for challenging ideas and getting people out of their comfort zone, not out of disrespect or lack of reverence for his peers, but out of his desire to show people that there are always things to learn.<br/>“I try to be a continuous learner and a continuous teacher, because I think good software comes from the skills of the people that are involved in the process, on each and every level. Whenever I write code I focus on reducing domain complexity to obtain maintainable software. I love to develop software that helps companies to improve their business, to implement solutions that improve their internal processes and to motivate teams to use their capabilities to yet another level.” ",
-        "FirstName": "Adrian",
-        "LastName": "Bolboacă",
-        "Code": 0
-    }, {
-        "Id": 1,
-        "Name": "Adrian Marinica",
-        "Title": "Software Developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/adrian.marinica.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Software Developer at Maxcode. Technology passionate with a background on mobile and web applications. I enjoy building and delivering quality, all the while trying to have fun as much as possible.",
-        "FirstName": "Adrian",
-        "LastName": "Marinica",
-        "Code": 1
-    }, {
-        "Id": 2,
-        "Name": "Adrian Rindasu",
-        "Title": "Trainer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/adrian.rindasu.jpg",
-        "CompanyName": "EDUROM",
-        "CompanyUrl": "",
-        "Bio": "Adrian co founded Edurom in 2002. Since then, he developed and delivered training and consultancy programs for various companies in the software development industry. He is running Situational Leadership trainings for the IT&C clients of Edurom.",
-        "FirstName": "Adrian",
-        "LastName": "Rindasu",
-        "Code": 2
-    }, {
-        "Id": 3,
-        "Name": "Alex Mang",
-        "Title": "Cloud Architect",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/alex.mang.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Alex Mang is a regular speaker at community driven events focusing mostly on cloud-computing topics, thus aiming to help developers better understand the implications of cloud-computing as a whole. As an Azure Advisor, he regularly offers feedback on upcoming Azure features and services and gets to test them out in early development stages.<br/> <br/>Alex is dedicating most of his time developing his BizSpark Plus start-up, KeyTicket Solutions, an event management and ticketing solution developer company, where he gets to work with some of the biggest event organizers in Romania. He also invests lots of time teaching software architectural patterns and cloud computing development at user groups. and forums. Whenever he doesn’t write articles in the monthly TechWiki magazine, he develops and publishes open-source Azure-related libraries (Azure Search Client) on CodePlex or in Git repositories.<br/> <br/>During his 10 year career as a software developer he got the chance to work on both hardware and software projects using Microsoft and Microsoft-related technologies on all platforms imaginable: embedded, robotics, desktop, mobile and web.",
-        "FirstName": "Alex",
-        "LastName": "Mang",
-        "Code": 3
-    }, {
-        "Id": 4,
-        "Name": "Alexandru Carcea",
-        "Title": "Senior Developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/alexandru.carcea.jpg",
-        "CompanyName": "SOFTVISION",
-        "CompanyUrl": "http://www.softvision.ro/",
-        "Bio": "Alex is a Senior Software Engineer with more than 6 years of experience. He is a front end developer with a background in Flash/Flex. He discovered a new passion as his focus shifted towards HTML 5 / CSS 3 / JS (yay!)",
-        "FirstName": "Alexandru",
-        "LastName": "Carcea",
-        "Code": 4
-    }, {
-        "Id": 5,
-        "Name": "Amalia Raluca Gimbuta",
-        "Title": "Developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/amalia.raluca.gimbuta.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Passionate about technology with a background on developing web applications. I enjoy learning new things and taking on challenging projects. For me. the best feeling ever is when I overcome a hurdle and I am ready to move on to the next one.",
-        "FirstName": "Amalia",
-        "LastName": "Raluca",
-        "Code": 5
-    }, {
-        "Id": 6,
-        "Name": "Ana Milutinovic",
-        "Title": "Quality Assurance Engineer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ana.milutinovic.jpg",
-        "CompanyName": "youngculture",
-        "CompanyUrl": "http://www.youngculture.com/",
-        "Bio": "Ana is a senior Software Quality Assurance Engineer with over 10 years of experience in different testing areas.<br/>Working on different international projects for a Swiss software engineering company, she became skilled in various software testing technologies and QA methodologies. Her interests include improvement methods for modern software testing techniques.<br/>",
-        "FirstName": "Ana",
-        "LastName": "Milutinovic",
-        "Code": 6
-    }, {
-        "Id": 7,
-        "Name": "Andrei Cotorobai",
-        "Title": "Java Developer ",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/andrei.cotorobai.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Software developer with more than 10 years of experience. Domain of competence: e-Commerce, banking application, high-load applications.",
-        "FirstName": "Andrei",
-        "LastName": "Cotorobai",
-        "Code": 7
-    }, {
-        "Id": 8,
-        "Name": "Andrei Postolache",
-        "Title": "Delivery Unit Manager",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/andrei.postolache.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "I like to think, conceptualize, abstract, extrapolate and imagine things. <br/>I seek malleability of thought and clarity among many options and degrees of unknown, including those of human nature. <br/>I dislike flawed logic, rush to conclusions and the many other mistakes our minds make on a daily basis. <br/>In my work so far, I’ve strived to get better at it, learn from my failures and increase my ability to understand new things better, faster. <br/>I’ve put a lot of deliberate work into this and I’ve gathered a set of cognitive practices that I’ve applied when I was writing software, when understanding clients, or when being a manager and they’re the same.",
-        "FirstName": "Andrei",
-        "LastName": "Postolache",
-        "Code": 8
-    }, {
-        "Id": 9,
-        "Name": "Bogdan Botea",
-        "Title": "Development Lead at Appsbroker",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/bogdan.botea.jpg",
-        "CompanyName": "Appsbroker",
-        "CompanyUrl": "",
-        "Bio": "Bogdan is a lead developer at Appsbroker. Having over 7 years of experience with Java stack he is an enthusiastic and dedicated IT professional, addicted to Agile practices. <br/>Bogdan loves to write clean and reusable code and has a passion for code quality and cloud technologies.",
-        "FirstName": "Bogdan",
-        "LastName": "Botea",
-        "Code": 9
-    }, {
-        "Id": 10,
-        "Name": "Bogdan Lazarescu",
-        "Title": "Senior database developer/DBA",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/bogdan.lazarescu.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "-- about 10 years experience in database area<br/>-- SQL Server and Oracle experience<br/>-- BI enthusiastic",
-        "FirstName": "Bogdan",
-        "LastName": "Lazarescu",
-        "Code": 10
-    }, {
-        "Id": 11,
-        "Name": "Caciuc Mihai Antonio",
-        "Title": "Business Analyst",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/caciuc.mihai.antonio.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Halfway between the dream of building robots and the business of understanding humans.<br/>Working towards a future when the things that make us weak and strange get engineered away.",
-        "FirstName": "Caciuc",
-        "LastName": "Mihai",
-        "Code": 11
-    }, {
-        "Id": 12,
-        "Name": "Catalin Mihalache",
-        "Title": "Java Technical Lead",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/catalin.mihalache.jpg",
-        "CompanyName": "Pentalog Romania",
-        "CompanyUrl": "http://www.pentalog.ro/",
-        "Bio": "Joined IT industry in 1998. In this moment working for Pentalog as Java Technical Lead. Experienced in conducting technical audits, providing diagnosis for architecture solutions, optimizing / defining complex architectures and designing technical solutions. <br/><br/>",
-        "FirstName": "Catalin",
-        "LastName": "Mihalache",
-        "Code": 12
-    }, {
-        "Id": 13,
-        "Name": "Cezar Coca",
-        "Title": "Design Lead",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/cezar.coca.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Cezar Coca is passionate about developing with Java and enjoys helping others write good code, implement standards, refactor efficiently, and incorporate unit and functional tests into their projects. ",
-        "FirstName": "Cezar",
-        "LastName": "Coca",
-        "Code": 13
-    }, {
-        "Id": 14,
-        "Name": "Ciprian Ouatu",
-        "Title": "Associate Consultant",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ciprian.ouatu.jpg",
-        "CompanyName": "Ascendis Consulting",
-        "CompanyUrl": "",
-        "Bio": "Ciprian has been an Associate Consultant within Ascendis since June 2011, having joined the market leader in training because of his need for constant development, along with his customers and peers. He specializes in facilitating communication, sales and management programs, and does tis with responsability, involvment and humour. He loves reading, Pink Floyd and red wine.",
-        "FirstName": "Ciprian",
-        "LastName": "Ouatu",
-        "Code": 14
-    }, {
-        "Id": 15,
-        "Name": "Ciprian Redinciuc",
-        "Title": "iOS Developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ciprian.redinciuc.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "I'm a passionate iOS developer with a taste for fine crafted mobile apps. The first contact with the SDK was in 2010, a few months after Apple have just released the 3.1 version. A constant need to improve my skill set made me join Endava.",
-        "FirstName": "Ciprian",
-        "LastName": "Redinciuc",
-        "Code": 15
-    }, {
-        "Id": 16,
-        "Name": "Codecamper",
-        "Title": "",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/blank.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "",
-        "FirstName": "Codecamper",
-        "LastName": null,
-        "Code": 16
-    }, {
-        "Id": 17,
-        "Name": "Codecampers",
-        "Title": "",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/blank.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "",
-        "FirstName": "Codecampers",
-        "LastName": null,
-        "Code": 17
-    }, {
-        "Id": 18,
-        "Name": "Coffee",
-        "Title": "Delivery Manager",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/Coffee-Cup.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Relax, meet your friends and enjoy a cup of coffee, I'll be there too. ;)",
-        "FirstName": "Coffee",
-        "LastName": null,
-        "Code": 18
-    }, {
-        "Id": 19,
-        "Name": "Corina Cilibiu",
-        "Title": "Business Analyst",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/corina.cilibiu.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "7+ years of business analysis with a smile",
-        "FirstName": "Corina",
-        "LastName": "Cilibiu",
-        "Code": 19
-    }, {
-        "Id": 20,
-        "Name": "Cristian Leon",
-        "Title": "Business Analyst",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/cristian.leon.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "I'm a BA that likes to drill into details and ask relevant questions each time there is an opportunity.<br/>My job is more than being a buffer between a client and the team and by adding clarity to specifications and being able to negotiate new features, this role is valued by the project stakeholders. <br/><br/>A good life is a happy life and BAs can make your life better.",
-        "FirstName": "Cristian",
-        "LastName": "Leon",
-        "Code": 20
-    }, {
-        "Id": 21,
-        "Name": "Daniel Leon",
-        "Title": "Senior Software Engineer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/daniel.leon.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "I'm a Linux passionate and a proactive learner",
-        "FirstName": "Daniel",
-        "LastName": "Leon",
-        "Code": 21
-    }, {
-        "Id": 22,
-        "Name": "Diaconu Andrei",
-        "Title": "Android developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/diaconu.andrei.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Android applications are my passion, from wireframes to final product. Great design and user experience is what makes the mobile world go round, but they need to be implemented.<br/>Providing an elegant implementation for my projects is what I try to do everyday. I have been doing this for the last 4 years, witnessing Android constantly change from 1.5 Cupcake.<br/>",
-        "FirstName": "Diaconu",
-        "LastName": "Andrei",
-        "Code": 22
-    }, {
-        "Id": 23,
-        "Name": "Dmitry Nefedkin",
-        "Title": "Google Cloud Platform Solutions Engineer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/dmitry.nefedkin.png",
-        "CompanyName": "Google, Appsbroker partner",
-        "CompanyUrl": "",
-        "Bio": "Dmitry started his IT career on Sep, 2001 and walked a long way since then. He worn many hats and done a lot of projects in Russia, CIS and CEE working for major technology companies, he works at Google for two years now. He’s a keen user of the latest technologies and loves to help businesses to work and benefit from utilising the technologies to become more innovative, agile and profitable.",
-        "FirstName": "Dmitry",
-        "LastName": "Nefedkin",
-        "Code": 23
-    }, {
-        "Id": 24,
-        "Name": "Flavius Olaru",
-        "Title": "Senior UI Developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/flavius.olaru.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "XWikier since 2009 and Endavian since March accumulated more than 5 years experience in Web Development.<br/>I am open source enthusiast with a passion for JavaScript, pushing for new things in UI/UX/Front-End development, learning, coding and sharing.<br/>Participated in March at Open Source in Iasi with XWiki Bookmarklets now going for Code Camp.",
-        "FirstName": "Flavius",
-        "LastName": "Olaru",
-        "Code": 24
-    }, {
-        "Id": 25,
-        "Name": "Florin Asăvoaie",
-        "Title": "Senior Devops Engineer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/florin.asavoaie.jpg",
-        "CompanyName": "Yonder",
-        "CompanyUrl": "",
-        "Bio": "Florin is an IT and computer security enthusiast. He’s got experience with the automated deployment and configuration of medium to large environments dedicated to web applications and web services. He is a fan of Open Source communities and promotes the use of Open Source software in business environments.",
-        "FirstName": "Florin",
-        "LastName": "Asăvoaie",
-        "Code": 25
-    }, {
-        "Id": 26,
-        "Name": "Florin Olariu",
-        "Title": "Technical Lead/ Scrum Master",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/florin.olariu.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Working in field since 1997. <br/>In this moment working for Centric as Technical Lead for big project related to retail management system",
-        "FirstName": "Florin",
-        "LastName": "Olariu",
-        "Code": 26
-    }, {
-        "Id": 27,
-        "Name": "Fătulescu Cornel",
-        "Title": "CTO",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/fatulescu.cornel.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Cornel Fatulescu is CTO of Pentalog Group, Manager of Pentalog Institute & Agile coach.<br/><br/>With an incredible portfolio in IT Services and 13 years of experience, Cornel ventures Pentalog Institute in the challenging world of IT consultancy.<br/><br/>Being a passionate agile advocate, he optimized business value delivered within various large scale organizations by implementing Scrum and Kanban methodologies. “In my opinion, Involvement in agile communities is like witnessing the inevitable metamorphosis of companies continuously progressing until the educational big bang occurs.”",
-        "FirstName": "Fătulescu",
-        "LastName": "Cornel",
-        "Code": 27
-    }, {
-        "Id": 28,
-        "Name": "Gabriel Enea",
-        "Title": "Microsoft MVP ASP.NET/IIS",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/gabriel.enea.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Gabriel is a software developer with over 12 years of experience in the IT industry and also one of the co-founders of the CodeCamp Iasi community.<br/><br/>In 2012, 2013 and 2014 he was awarded the Microsoft MVP on ASP.NET/IIS as a result of his contribution to the community. <br/><br/>He is part of the www.maxcode.nl team and he is one of those developers for whom work is an art.<br/><br/>You can find him on Twitter at @dotnet18",
-        "FirstName": "Gabriel",
-        "LastName": "Enea",
-        "Code": 28
-    }, {
-        "Id": 29,
-        "Name": "Gabriel Manole",
-        "Title": "Group Leader ",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/gabriel.manole.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Manager, embedded engineer, blogger and passionate to bring people together.<br/>Started 11 years ago in Timisoara, as part of device drivers team, Gabi Manole had different experiences in companies developing solutions for communications or automotive products.<br/>He is organizing Iasi Management IT Forum, a place where passionate managers from IT companies meet to learn and grow together.",
-        "FirstName": "Gabriel",
-        "LastName": "Manole",
-        "Code": 29
-    }, {
-        "Id": 30,
-        "Name": "Iavi Rotberg",
-        "Title": "Business Analyst",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/iavi.rotberg.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Energetic, resourceful and performance-driven Business Analyst and Product Manager with an entrepreneurial spirit having proven experience in the market. A perceptive and innovative individual, I am unafraid to exploit my resourceful thinking and persistence and go outside the conventional box. ",
-        "FirstName": "Iavi",
-        "LastName": "Rotberg",
-        "Code": 30
-    }, {
-        "Id": 31,
-        "Name": "Ionut Hrubaru",
-        "Title": "Senior Architect/DBA",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ionut.hrubaru.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "10+ years experience in IT, transitioned from developer to software development manager, currently building high availability and disaster recovery solutions. Primary focus on database technologies but also passionate about software development methodologies, leadership, personal development, mentoring, coaching, time management. <br/>Ongoing Phd in NoSQL technologies",
-        "FirstName": "Ionut",
-        "LastName": "Hrubaru",
-        "Code": 31
-    }, {
-        "Id": 32,
-        "Name": "Iulian Dogariu",
-        "Title": "Technical team lead",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/iulian.dogariu.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Iulian is a passionate engineer with 12 years of experience. His interests include programming languages, software product engineering, embedded systems, and parallel computing.",
-        "FirstName": "Iulian",
-        "LastName": "Dogariu",
-        "Code": 32
-    }, {
-        "Id": 33,
-        "Name": "Jozua Velle",
-        "Title": "Unit Manager",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/jozua.velle.jpg",
-        "CompanyName": "Centric",
-        "CompanyUrl": "http://www.centric.eu",
-        "Bio": "Unit manager of a 5 distributed scrum teams (Belgium-Romania) working on a front- and backoffice solution for mid/large scale retailers. Focused on aligning the entire organisation with modern software development concepts.",
-        "FirstName": "Jozua",
-        "LastName": "Velle",
-        "Code": 33
-    }, {
-        "Id": 34,
-        "Name": "Laurentiu Macovei",
-        "Title": "Technical Lead",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/laurentiu.macovei.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "I am an enthusiast, experienced software developer and technical lead on .NET / Javascript / Node technology stacks.<br/><br/>I love to play, learn and build new state of the art technologies.",
-        "FirstName": "Laurentiu",
-        "LastName": "Macovei",
-        "Code": 34
-    }, {
-        "Id": 35,
-        "Name": "Liviu Mazilu",
-        "Title": "Team Lead",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/liviu.mazilu.png",
-        "CompanyName": "Expert Network",
-        "CompanyUrl": "",
-        "Bio": "Liviu - Enthusiast software engineer working in Expert Network since 2010.",
-        "FirstName": "Liviu",
-        "LastName": "Mazilu",
-        "Code": 35
-    }, {
-        "Id": 36,
-        "Name": "Luigi Lauro",
-        "Title": "Enterprise Architect",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/luigi.lauro.jpg",
-        "CompanyName": "UBIS",
-        "CompanyUrl": "http://www.unicredit.eu/",
-        "Bio": "Wide experiences in services, application and web development (Java, Scala, .NET, C/C++, most scripting languages), databases, networks, operating systems (FreeBSD, Mac OS X, Linux, Windows), hardware and software security (parallel computing and cryptology are some of my main interests). <br/> Started coding at 10, and began working at 14 as a freelance software developer, and since then I has never stopped, having covered almost any available role: project manager, technology consultant, architect, analyst, developer. <br/> Over the years I have participated as an acknowledged expert and speaker at various technical conferences around the world. I’m always interested in getting my hands dirty on ground breaking, technology-driven and challenging projects, especially if Scala, Java and/or open frameworks are involved.",
-        "FirstName": "Luigi",
-        "LastName": "Lauro",
-        "Code": 36
-    }, {
-        "Id": 37,
-        "Name": "Marius Lupu",
-        "Title": "",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/Marius.Lupu.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Tags: Iasi citizen, programmer, engineer, manager, speaker, guitar player, photographer, leader, idealist, volunteer, corporatist, perfectionist, tech freak, farmer. I love being all these and I feel the urge to share.",
-        "FirstName": "Marius",
-        "LastName": "Lupu",
-        "Code": 37
-    }, {
-        "Id": 38,
-        "Name": "Mihai Mahulea",
-        "Title": "Software engineer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/mihai.mahulea.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Mihai is a craftsmanship enthusiast who cares about software excellence, a strong advocate for best engineering practices and loves learning new skills. He has an obsession for extreme programming practices, TDD in particular.",
-        "FirstName": "Mihai",
-        "LastName": "Mahulea",
-        "Code": 38
-    }, {
-        "Id": 39,
-        "Name": "Molocea Bogdan",
-        "Title": "QA Architect",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/molocea.bogdan.jpg",
-        "CompanyName": "Ness",
-        "CompanyUrl": "http://www.ness.com/",
-        "Bio": "Bogdan is a Senior Tester with 8+ years experience. He is passionate about Automation and Performance Testing and he likes technical challenges.",
-        "FirstName": "Molocea",
-        "LastName": "Bogdan",
-        "Code": 39
-    }, {
-        "Id": 40,
-        "Name": "Monica C. Petraru",
-        "Title": "Senior Business Analyst",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/monica.c.petraru.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Hi, my name is Monica C. Petraru and I am passionate about approaching a wide variety of practices and competences that lead to the Business Analyst / Product Manager role as a leader of business change.<br/>Based on the professional experience gained until now both on international and national products, I had decided myself to share with other IT colleagues some inside hints and stories about the way we could improve our daily professional activities.",
-        "FirstName": "Monica",
-        "LastName": "C.",
-        "Code": 40
-    }, {
-        "Id": 41,
-        "Name": "Moron Liviu",
-        "Title": "IT Consultant",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/moron.liviu.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "2013\tGXPN certification (GIAC Exploit Researcher and Advanced Penetration Tester )<br/>2012\tGPEN certification (GIAC Certified Penetration Tester)<br/><br/><br/>September 2013 – present Security Consultant<br/>Freelance<br/>12 January 2009 – july 2013<br/><br/>Security Engineer<br/>Unibail Rodamco Paris, FRANCE<br/>12 February 2007 – 12 January 2009<br/>Network Systems Engineer<br/>Palais des Congrès de Paris, <br/>Paris, FRANCE<br/>\t<br/>01 of May 2004 - 12 March 2007 <br/>Network Systems Engineer<br/>Le Chesnay FRANCE<br/>01 October 2002 - 30 April 2004 <br/>Systems Engineer<br/>Aurel Leven Securities<br/>Paris, FRANCE<br/>",
-        "FirstName": "Moron",
-        "LastName": "Liviu",
-        "Code": 41
-    }, {
-        "Id": 42,
-        "Name": "Nicolae Berbece (Xelu)",
-        "Title": "Developer - 'Move or Die' | Founder 'Those Awesome Guys'",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/blank.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Nicolae Berbece (Xelu) is a game developer who used to have awesomely long hair that was soft to the touch.<br/><br/>He is currently working on \"Move or Die\", a fast paced competitive multiplayer game scheduled to be released later this year on Steam. He also produced, designed and created the art for other titles such as \"Concerned Joe\" , \"Kawairun\" and a handful of older browser games created across 5 years of game development. <br/><br/>He worked online with many programmers, artists and musicians from around the world, developing games in both online and local game jams. One of said games, \"Kawairun\", was made in the hopes of winning a lifetime supply of bubblegum... He did not win the bubblegum, but the game ended up getting over a hundred million hits and fans, more than the population of Mexico.<br/><br/>Growing up with a computer in the house while reading \"Level\" and \"X-treme PC\" magazines, he got interested in game development by modding titles like counter strike 1.6 and warcraft 3 back in the 2000's, developing a taste for games with innovative mechanics in the process.<br/><br/>Get in touch with him at nick@thoseawesomeguys.com, he'll happily talk about anything related to games, so you're welcome to tell him about your projects!",
-        "FirstName": "Nicolae",
-        "LastName": "Berbece",
-        "Code": 42
-    }, {
-        "Id": 43,
-        "Name": "Radu Iscu",
-        "Title": "Senior Developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/radu.iscu.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "He a senior developer at Ness, with 7 year experience working with .Net’s web stack and as a front end developer. He is enthusiastic about lightweight frameworks, composability, emerging technologies and open source, among other things. He is also a founder of the JavaScript and .Net user groups in Iasi.",
-        "FirstName": "Radu",
-        "LastName": "Iscu",
-        "Code": 43
-    }, {
-        "Id": 44,
-        "Name": "Radu Pascal",
-        "Title": "Design Lead",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/radu.pascal.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Radu Pascal is a Design Lead at Endava, working with .Net technologies for the past 7 years. He has experience at developing large enterprise applications on the Microsoft technology stack. His recent work is focused on integrating enterprise solutions in the Azure Cloud, binding cloud and on-premise systems. In his spare time he enjoys tinkering with various new technologies, hardware gadgets and Internet of Things.",
-        "FirstName": "Radu",
-        "LastName": "Pascal",
-        "Code": 44
-    }, {
-        "Id": 45,
-        "Name": "Radu Pintilie",
-        "Title": "Technical Lead",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/radu.pintilie.png",
-        "CompanyName": "Expert Network",
-        "CompanyUrl": "",
-        "Bio": "Radu - Working with Expert Network since 2008, mainly interested in Cloud computing and software architecture.",
-        "FirstName": "Radu",
-        "LastName": "Pintilie",
-        "Code": 45
-    }, {
-        "Id": 46,
-        "Name": "Romulus Crisan",
-        "Title": "Language Platform Evangelist",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/romulus.crisan.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Romulus is a Language Platform Evangelist at SDL. He has experience in Software Development, Enterprise <br/><br/>Architecture, Information Exchange, LOB and Digital Media applications working for global enterprises. <br/><br/>Romulus provides mentoring and coaching to software developers helping them grow. He is also a <br/><br/>certified Scrum Master fulfilling this role with various teams around the world.<br/><br/>Romulus embrace challenges because this make him a better person and he loves writing code because <br/><br/>for him this is not a job it’s a hobby, a way of living.",
-        "FirstName": "Romulus",
-        "LastName": "Crisan",
-        "Code": 46
-    }, {
-        "Id": 47,
-        "Name": "Roxana Leatu",
-        "Title": "PM",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/roxana.leatu.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Roxana has more than 10 years experience in IT, part of it as .Net developer and team leader and part as Project Manager.<br/>She is currently working for Endava as Head of Project Management for Iasi Delivery Unit.<br/>",
-        "FirstName": "Roxana",
-        "LastName": "Leatu",
-        "Code": 47
-    }, {
-        "Id": 48,
-        "Name": "Silviu Eigel",
-        "Title": "Team Lead",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/silviu.eigel.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "I've been developing software for 8 years and I've seen my focus continuously change. I've started with focusing on the low level implementation details of the frameworks. After a few years changed it to the design of the code and its cleanliness. Again, after 2 years I moved to understanding how processes can influence the performance of the team and studied Agile. A year ago I started looking on the systemic nature of our problems, on how systems thinking can help us in better coping with the continual changes, the short term thinking, the need for ever-more efficiency.",
-        "FirstName": "Silviu",
-        "LastName": "Eigel",
-        "Code": 48
-    }, {
-        "Id": 49,
-        "Name": "Silviu Luca",
-        "Title": "Software tester",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/silviu.luca.jpg",
-        "CompanyName": "Centric",
-        "CompanyUrl": "http://www.centric.eu",
-        "Bio": "I'm a software tester at Centric passionate about technology. In the last 7 years I was involved in manual and automated testing. Recently I'm involved in the devops side, trying to automate all the steps from the installation, deployment and update of company product components.",
-        "FirstName": "Silviu",
-        "LastName": "Luca",
-        "Code": 49
-    }, {
-        "Id": 50,
-        "Name": "Sorin Damian",
-        "Title": "Software Developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/sorin.damian.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Passionate developer, always looking for a chanllenge.",
-        "FirstName": "Sorin",
-        "LastName": "Damian",
-        "Code": 50
-    }, {
-        "Id": 51,
-        "Name": "Vadim Zabrian",
-        "Title": "Software developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/vadim.zabrian.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "If i want, i can make people cheer enthusiastically and happiness and bright lights fill the room. When i leave.<br/>But i almost always try to be a pleasant person to hang around, who enjoys gathering information, sharing and debating it with others.",
-        "FirstName": "Vadim",
-        "LastName": "Zabrian",
-        "Code": 51
-    }, {
-        "Id": 52,
-        "Name": "Vali Malinoiu",
-        "Title": "Javascript Addict",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/vali.malinoiu.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "(Software,Web)Developer, (Occasional)Speaker, (wannabe)Blogger,(hungry-for)Technology, (passionate-about)Security.<br/>Experienced as technical leader and being focused on building high-quality, distributed, scalable applications.<br/>Specialities: software-development, software-architecure,software-design,distributed-systems,web-security",
-        "FirstName": "Vali",
-        "LastName": "Malinoiu",
-        "Code": 52
-    }, {
-        "Id": 53,
-        "Name": "Victor Chircu",
-        "Title": "Software Developer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/victor.chircu.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Victor is a software developer with a passion for clean code, continuously improving himself and sharing experiences with other people. With an interest in improving software quality, he is always looking for tools and practices that can help him along the way.",
-        "FirstName": "Victor",
-        "LastName": "Chircu",
-        "Code": 53
-    }, {
-        "Id": 54,
-        "Name": "Vincent van Scherpenseel",
-        "Title": "Designer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/vincent.van.scherpenseel.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Vincent is founder and Experience Designer at dotBlue (www.dotblue.net). He loves to build apps and sites with rich interaction. Getting to know the user, their requirements and creating something that not just fits, but delights. As a former developer he also loves to get his hands dirty and play with brackets and semi-colons every now and then.<br/><br/>Originally from The Netherlands, before moving to Iași he lived in Brno (Czech Republic) where he co-founded ColoursConf (www.coloursconf.com) and BrnoJS (www.brnojs.org).",
-        "FirstName": "Vincent",
-        "LastName": "van",
-        "Code": 54
-    }, {
-        "Id": 55,
-        "Name": "Vlad Durnea",
-        "Title": "Software Engineer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/vlad.durnea.png",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Vlad is one of the community organizers of IasiJS - the local JavaScript user group. <br/>He also works as a Senior Software Engineer specialized on frontend-heavy web applications.",
-        "FirstName": "Vlad",
-        "LastName": "Durnea",
-        "Code": 55
-    }, {
-        "Id": 56,
-        "Name": "Vlad Zelinschi",
-        "Title": "Frontend Engineer",
-        "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/vlad.zelinschi.jpg",
-        "CompanyName": "",
-        "CompanyUrl": "",
-        "Bio": "Vlad is a Frontend Engineer with a passion for the latest technologies out there and an unhealthy obsession for clean and simple code. He loves to try out things as soon as they hit the market, so he always keeps an eye out for the JS, CSS and HTML everchanging landscapes. He happily embraces any challenge, though he’ll prefer the ones related to Angular, Ember, Node, MongoDB and frontend performance. He is currently employed at Yonder and one of his strong beliefs is that you have to constantly push yourself to become a better developer.",
-        "FirstName": "Vlad",
-        "LastName": "Zelinschi",
-        "Code": 56
-    }],
-    "Sessions": [{
-        "Title": "Registration & Welcome coffee in the lobby & Intro",
-        "Description": "",
-        "Start": "2014-10-25T08:00:00",
-        "End": "2014-10-25T09:00:00",
-        "OverrideTracks": true,
-        "SpeakerRefIds": [-1],
-        "TrackRefId": -1
-    }, {
-        "Title": "Opening + Meet the sponsors",
-        "Description": "",
-        "Start": "2014-10-25T09:00:00",
-        "End": "2014-10-25T10:30:00",
-        "OverrideTracks": true,
-        "SpeakerRefIds": [-1],
-        "TrackRefId": -1
-    }, {
-        "Title": "Coffee Break",
-        "Description": "",
-        "Start": "2014-10-25T10:30:00",
-        "End": "2014-10-25T11:00:00",
-        "OverrideTracks": true,
-        "SpeakerRefIds": [-1],
-        "TrackRefId": -1
-    }, {
-        "Title": "Enterprise Integration Patterns with Spring Integration",
-        "Description": "Spring Integration provides an extension of the Spring programming model to support the well-known enterprise integration patterns. It enables lightweight messaging within Spring-based applications and supports integration with external systems via declarative adapters. Those adapters provide a higher level of abstraction over Spring’s support for remoting, messaging, and scheduling. Spring Integration’s primary goal is to provide a simple model for building enterprise integration solutions while maintaining the separation of concerns that's essential for producing maintainable, testable code.",
-        "Start": "2014-10-25T11:00:00",
-        "End": "2014-10-25T11:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [12],
-        "TrackRefId": 1
-    }, {
-        "Title": "Of health and beyond",
-        "Description": "There's ways to live healthy: eat well, exercise, do regular check-ups at the doctor. There are also ways to do the opposite. Overindulge, lead a sedentary life, smoke. There's fun in breaking the rules of course, but there's also consequences. And we have many choices to make along the way. What if the same thing happens in our professional lives, our careers? What is a healthy career? What do things like 'healthy eating' or 'exercising' mean in our work lives, in our profession? Join us as we discuss the meaning of a healthy career with healthy habits... and also the pleasures and temptations of the professional 'vices' and how to deal with them.",
-        "Start": "2014-10-25T11:00:00",
-        "End": "2014-10-25T11:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [8, 37],
-        "TrackRefId": 2
-    }, {
-        "Title": "DevOps",
-        "Description": "What's the point of making software incremently if you're failing to get it safe, smooth and fast to the business? A lot of enterprises claim to have agile software teams but have a big gap between those teams and the operartions team putting the software in production and support it there. We'll have a short talk about the concept of DevOps but must of all showing how we narrowed the gap, the pitfalls we avoided and/or stumbled into. Not claiming to have all the wisdom but willing to share our experience and vision.",
-        "Start": "2014-10-25T11:00:00",
-        "End": "2014-10-25T11:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [33, 49],
-        "TrackRefId": 3
-    }, {
-        "Title": "Logicless UI Prototyping with Node.js",
-        "Description": "Prototyping modular UI components without the backend logic and focusing more on presentational logic and user experience. Presentation of an open source tool released as MIT to bootstrap front-end practices without relying on complicated backend environments.",
-        "Start": "2014-10-25T11:00:00",
-        "End": "2014-10-25T11:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [24],
-        "TrackRefId": 4
-    }, {
-        "Title": "Conflict @work. A guide for when it's about to hit the fan.",
-        "Description": "We all wish the workplace was a carefree place. But sometimes interpersonal misunderstandings occur. Together we will discuss how to minimize them by looking at: - a list of the most common conflict sources at work and a few tips to prevent them - a decision flowchart to see whether a confrontation is necessary, in case a tense situation arises - a plan to keep a confrontation under control and beneficial to both parties, in case it is unavoidable.",
-        "Start": "2014-10-25T11:00:00",
-        "End": "2014-10-25T11:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [51],
-        "TrackRefId": 5
-    }, {
-        "Title": "Defense against the dark arts",
-        "Description": "A talk about code complexity, code obscurity, magic in code, and a few more nefarious practices that one may encounter. We will also be discussing about dealing with these problems, management of technical knowledge and coding elegance.",
-        "Start": "2014-10-25T11:00:00",
-        "End": "2014-10-25T11:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [43],
-        "TrackRefId": 6
-    }, {
-        "Title": "Boosting the skills of the Scrum Master",
-        "Description": "I’ll speak about things that I’ve learned being a father, a coach and a trainer, things that every Leader should know. During my last session în Iași, code campers were very interested in the examples I gave on several difficult situations (conflicts management, boosting team performance, better communication, etc.). This session will focus only on the soft skills required for a Scrum Master, but the presentation can serve to any leader.",
-        "Start": "2014-10-25T11:00:00",
-        "End": "2014-10-25T11:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [27],
-        "TrackRefId": 7
-    }, {
-        "Title": "Internet of everyThing",
-        "Description": "First, some mainframes of US Army were connected. Than, there were added some mainframes from universities. More, personal computers were brought in the game. After 2000, the mobile world is part of every speech about internet and connectivity. What is next? Everything can be connected. Come to see what opportunities will offer the next generation computing paradigms.",
-        "Start": "2014-10-25T11:00:00",
-        "End": "2014-10-25T11:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [29],
-        "TrackRefId": 8
-    }, {
-        "Title": "Working with domain models in C# 6.0 context",
-        "Description": "This presentation is related to domain driven design and domain models. I'm going to craft a wicked domain using the new features from the latest version of C#. ",
-        "Start": "2014-10-25T12:00:00",
-        "End": "2014-10-25T12:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [26],
-        "TrackRefId": 1
-    }, {
-        "Title": "The Importance of Transactional E-mail",
-        "Description": "In 45 minutes the audience will get a thorough overview of the possibilities and importance of transactional e-mail. After a brief introduction with real-world use cases the talk will cover topics such as integrating external e-mail services in your codebase, creating well-formatted templates supporting the mobile web and measuring and optimizing the success of your transactional e-mail.",
-        "Start": "2014-10-25T12:00:00",
-        "End": "2014-10-25T12:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [54],
-        "TrackRefId": 2
-    }, {
-        "Title": "Game Feel | Why your death animation sucks",
-        "Description": "Game feel, a death animation walk through. The importance of polish, game feel and responsiveness, how to make your game feel and look awesome from scratch. If you hate it when you press a button and it's not clear what happened in-game, this is for you.",
-        "Start": "2014-10-25T12:00:00",
-        "End": "2014-10-25T12:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [42],
-        "TrackRefId": 3
-    }, {
-        "Title": "AngularJS vs Dojo Toolkit",
-        "Description": "A quick overview of AngularJS Framework and Dojo Toolkit. Why use them and when? Why use one instead of the other? Strong points and drawbacks! Plus a hands-on example!",
-        "Start": "2014-10-25T12:00:00",
-        "End": "2014-10-25T12:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [5],
-        "TrackRefId": 4
-    }, {
-        "Title": "Click’n’Deploy",
-        "Description": "The focus of this session will be to present options to streamline build, integrate tests as part of build process, and deploy your work on various environments. Traditionally this part of the application lifecycle was neglected, in most projects the effort to promote changes is significant. In the recent years lots of tools have appeared that simplify the build and deployment parts of the application lifecycle. In this session we will walk you through a scenario of a complex .Net Web Application with Back-end Services that is developed using Continuous Integration, Versioned Builds and Click’n’Deploy using tools like: TFSBuild, Gulp and Octopus Deploy.",
-        "Start": "2014-10-25T12:00:00",
-        "End": "2014-10-25T12:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [46, 44],
-        "TrackRefId": 5
-    }, {
-        "Title": "Quality Awareness When Practicing Agile Testing",
-        "Description": "What is the concept of quality in agile methodologies? How to understand the idea of agile methods and customise your own framework? Best practices described through fundamental test process.",
-        "Start": "2014-10-25T12:00:00",
-        "End": "2014-10-25T12:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [6],
-        "TrackRefId": 6
-    }, {
-        "Title": "Common Web Application Attacks ",
-        "Description": "Some common Web Application Attacks will be presented. Demonstrations will be given by attacking a deliberately insecure web application.",
-        "Start": "2014-10-25T12:00:00",
-        "End": "2014-10-25T12:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [41],
-        "TrackRefId": 7
-    }, {
-        "Title": "MVC does not scale use Flux and React instead.",
-        "Description": "For our testing framework, which is a sufficiently large codebase and a large organization, 'Adding new games to our gaming testing framework got really complicated over time', every new game that we were adding to our system went exponential every time they attempted to add a new feature making the code to 'smell and to be unpredictable'. This was becoming a serios problem due to the fact that the QA automation tool was afraid to touch the code because they we're afraid to break something. A fix for the problem required to make the code more structured in order to be more predictable. Facebook has done it with Flux and React, and we wanted to try it as well. Flux has proven a great sucess due to it's system architecture that promotes one way data flow. And React, well React is awesome.",
-        "Start": "2014-10-25T12:00:00",
-        "End": "2014-10-25T12:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [52],
-        "TrackRefId": 8
-    }, {
-        "Title": "Coffee Break",
-        "Description": "",
-        "Start": "2014-10-25T12:45:00",
-        "End": "2014-10-25T13:00:00",
-        "OverrideTracks": true,
-        "SpeakerRefIds": [-1],
-        "TrackRefId": -1
-    }, {
-        "Title": "The future of ASP.NET",
-        "Description": "After more than 10 years of web development using the ASP.NET framework, an important shift in the .NET web development platform has begun. In this talk we will see how the existing ASP.NET web technologies emerge together on a new lean and composable .NET vNext stack for building tomorrow's web and cloud based applications.",
-        "Start": "2014-10-25T13:00:00",
-        "End": "2014-10-25T13:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [28],
-        "TrackRefId": 1
-    }, {
-        "Title": "No fiddle, efficient development on the Google Cloud Platform",
-        "Description": "In this session we will have a look at the ongoing challenges for enterprise applications like performance, scalability and some of the new ones, like access applications from any device, anywhere. We will explore through a live coding session the benefits of the Google Cloud Platform services as we used them to develop our flagship product, a multi-tenant workflow engine made available to our clients through continuous delivery of enhanced code iterations. ",
-        "Start": "2014-10-25T13:00:00",
-        "End": "2014-10-25T13:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [23, 9],
-        "TrackRefId": 2
-    }, {
-        "Title": "A story of how JavaScript joined the big league: WebSockets and other goodies",
-        "Description": "•\tOOP: from the playground to the gym; •\tWebSockets, or how JavaScript is going real-time; •\tMemory Management: didn't your momma teach you to clean up after yourself? •\tPerformance / Profiling : real-time front end development, with a cherry on top. ",
-        "Start": "2014-10-25T13:00:00",
-        "End": "2014-10-25T13:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [4],
-        "TrackRefId": 3
-    }, {
-        "Title": "As a BA I want to detail clear stories",
-        "Description": "This session aims to present a clean strategy in detailing and refining a user-story. Topics in a 45min rush: (1)-template proposal for detailing a story, (2)-keep INVEST, DOR and DOD in mind when detailing stories, (3)-have UI and UX present in the story when refining it with the team, (4)-negotiate the Acceptance Criteria with the PO, (5)-vertical story slicing - useful, but do it with caution, (6)-the importance of 2 grooming/refinement sessions per sprint, (7)-how to motivate the team to read and prepare the stories before grooming?, (8)-possible ways to handle non-user-stories (eg. spikes, administrative stories), (9)-toolset (eg. Jira, Mingle, RTC, Confluence, MS Viso, MockUpBuilder, Balsamiq, Pencil, Lumzy, pen&paper), (10)-Q&A",
-        "Start": "2014-10-25T13:00:00",
-        "End": "2014-10-25T13:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [20],
-        "TrackRefId": 4
-    }, {
-        "Title": "JavaScript in 45 minutes",
-        "Description": "We will talk about base concepts of the language all the way to best practices and having proper coding style.",
-        "Start": "2014-10-25T13:00:00",
-        "End": "2014-10-25T13:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [55],
-        "TrackRefId": 5
-    }, {
-        "Title": "Scaling up using Automation and Performance Testing",
-        "Description": "A journey about how to use the power of Automation and Performance testing tools inside a challenging project. What to do when the current automation solution consumes more time for maintenance activities than manual testing. How to increase the performance of your system under test.",
-        "Start": "2014-10-25T13:00:00",
-        "End": "2014-10-25T13:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [39],
-        "TrackRefId": 6
-    }, {
-        "Title": "ASSERTIVENESS – BEHAVIOUR AND COMMUNICATION",
-        "Description": "Lange and Jacubowski (1976) stated that „assertiveness implies defending personal rights and freedom of thought, feeling and conviction, directly, honestly and adequately, withouth violating the rights of the other person”. Assertiveness is the most efficient way to solve inter-personal problems. Direct, open and honest communication allows messages to be received without blockage and distortion, which maintains and improves relationships with the others. The ability to assertively communicate feelings, emotions and thoughts without hurting others’ integrity represents an efficient communication model, leading to improvement of self image and creation of productive relationships with the ones around us. ",
-        "Start": "2014-10-25T13:00:00",
-        "End": "2014-10-25T13:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [14],
-        "TrackRefId": 7
-    }, {
-        "Title": "Agile Pricing",
-        "Description": "Do money matter in the Agile world?. What are the pricing ingredients that should be taken into account when creating and presenting a price to a client? What pricing types can be used for an Agile delivery? This talk looks at answering these questions. At the end, a few tips and tricks based on experience on how to set or present a price to a customer, considering some cognitive biases. ",
-        "Start": "2014-10-25T13:00:00",
-        "End": "2014-10-25T13:45:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [47],
-        "TrackRefId": 8
-    }, {
-        "Title": "Lunch break in the restaurant",
-        "Description": "",
-        "Start": "2014-10-25T13:45:00",
-        "End": "2014-10-25T15:30:00",
-        "OverrideTracks": true,
-        "SpeakerRefIds": [-1],
-        "TrackRefId": -1
-    }, {
-        "Title": "INternet (IN)Security",
-        "Description": "This presentation aims to make a comparison between computer security, social engineering, and lack of users sense of security, trying to figure out which have the biggest impact and how to try and stay protected against each of them.",
-        "Start": "2014-10-25T15:30:00",
-        "End": "2014-10-25T16:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [25],
-        "TrackRefId": 1
-    }, {
-        "Title": "Thread with care: concurrency pitfalls in Java",
-        "Description": "We live in a world where parallel computing is becoming more and more ubiquitous: from large-scale GPU-based computing grids for bit coin mining and Monte Carlo simulations, to 16+ cores desktop processors, 5760 shader cores GPUs, and octa-core smartphones. Leveraging this computing power in an effective way while also guaranteeing correctness requires a deep understanding of the threading capabilities and of the memory model behaviors hidden behind the language primitives that we use every day while coding. Yet, concurrency is one of the least taught subject in programming courses around the world, and one of the most obscure topic for the developers, often also very senior ones. We'll explore the topic together by walking through cases in the Java world. We'll also delve into novel approaches that can simplify it, such as Actors and Software Transactional Memory.",
-        "Start": "2014-10-25T15:30:00",
-        "End": "2014-10-25T16:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [36],
-        "TrackRefId": 2
-    }, {
-        "Title": "Optimizing the Critical Rendering Path",
-        "Description": "The perceived speed of your website relies heavily on the browser being able to paint to your user's screen. For this they must construct a 'render tree' which consists of the DOM and the often forgotten CSSOM. The critical path which the browser takes to gather this information is the only thing standing between your server and the user's screen. And that makes it an important piece of the puzzle when talking about performance. The presentation will focus on what the critical path actually is and how can we, as developers, optimize it for best results. So prepare to dive into some advanced browser rendering geekness and perf talk...",
-        "Start": "2014-10-25T15:30:00",
-        "End": "2014-10-25T16:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [56],
-        "TrackRefId": 3
-    }, {
-        "Title": "Design Principles in the Functional World - Down to Earth Examples in Java 8 & Scala",
-        "Description": "The internet is now full of functional programming and lambda calculus buzz. But how does this change our perception of design principles and patterns? I will be talking about this topic while comparing some implementations of patterns in Java 8 and Scala.",
-        "Start": "2014-10-25T15:30:00",
-        "End": "2014-10-25T16:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [21],
-        "TrackRefId": 4
-    }, {
-        "Title": "ASP.NET vNext apps without Visual Studio",
-        "Description": "The next version of the .net platform brings a load of exciting changes. We're going to take the K Runtime and the new command line experience for a test drive from a non windows developer's perspective. Keywords: k, kvm, kpm, kestrel, yo, sublime, mac os, github",
-        "Start": "2014-10-25T15:30:00",
-        "End": "2014-10-25T16:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [50],
-        "TrackRefId": 5
-    }, {
-        "Title": "DocumentDB - fully managed NoSQL document database service",
-        "Description": "Azure DocumentDB is a NoSQL document database service designed for scalable and high performance modern applications. As a NoSQL store, DocumentDB is truly schema-free. It allows you to store and query any JSON document, regardless of schema. Keywords : JSON, JavaScript, REST, SQL.",
-        "Start": "2014-10-25T15:30:00",
-        "End": "2014-10-25T16:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [45, 35],
-        "TrackRefId": 6
-    }, {
-        "Title": "Leveraging Your Power to Influence",
-        "Description": "Power = Influence Potential. Leadership = an attempt to influence coworkers. Personal Power vs. Position Power. The Seven Power Bases as described by The Situational Leadership Model. How all this applies to a software development team/organisation",
-        "Start": "2014-10-25T15:30:00",
-        "End": "2014-10-25T16:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [2],
-        "TrackRefId": 7
-    }, {
-        "Title": "Meteor: A better way to build apps",
-        "Description": "Seven Reasons to Develop Your Next Web App with Meteor: 1. Your applications are real-time by default. 2. You can develop with just one language. 3. You can save a lot of time with smart packages. 4. The community is extremely supportive. 5. It’s optimized for developer happiness. 6. It’s friendly to beginner developers. 7. It’s ahead of the tech curve. We will go through an introductory overview of Meteor apps. Meet tomorrow's apps at Codecamp!",
-        "Start": "2014-10-25T15:30:00",
-        "End": "2014-10-25T16:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [34],
-        "TrackRefId": 8
-    }, {
-        "Title": "Refactoring legacy code - step-by-step examples",
-        "Description": "In this presentation we will talk about the entire journey of refactoring a legacy code base. The presenter will begin with the assessment of an existing legacy application revealing Why refactoring is necessary, move on to planning How, give step-by-step examples, and even show how to manage the lack of automated functional tests effectively. Attendees will gain insight and tips on how to handle their own pile of code and refactor happily.",
-        "Start": "2014-10-25T16:30:00",
-        "End": "2014-10-25T17:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [13],
-        "TrackRefId": 1
-    }, {
-        "Title": "Patterns for Scalability in Microsoft Azure Applications",
-        "Description": "So you've learned what elasticity means and why it is important to consider scalability in your cloud application architecture. But how can you easily manage your code in order to implement all the theories around scalability? During this session, I will talk and demo the most common patterns used when designing a cloud application: the queue based load leveling, the competing consumers pattern, the priority queue pattern, the throttling pattern, the materialized view pattern, the event sourcing pattern and the CQRS pattern. ",
-        "Start": "2014-10-25T16:30:00",
-        "End": "2014-10-25T17:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [3],
-        "TrackRefId": 2
-    }, {
-        "Title": "The Sad Story of the Server that Tries to Please Everyone",
-        "Description": "[PROVISIONAL] You're a VIP. Everyone wants a bit of your time, to help with this and that. Let's say you try to promptly serve everyone that asks for your help. What would happen to your life? We will see how to apply these learnings to build services that behave gracefully under heavy load. Keywords: scalability, producer-consumer, Akka, Reactive Streams, Java, Scala.",
-        "Start": "2014-10-25T16:30:00",
-        "End": "2014-10-25T17:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [32],
-        "TrackRefId": 3
-    }, {
-        "Title": "The Product Manager's Luck",
-        "Description": "Abstract: I would like to speak about experiences that I had faced in my career as a product manager in the financial sector. In my opinion, there are different situations when sudden changes or provocations might come across and the product manager is put in an spontaneous environment where he/she has to take the right decisions. What happens when one of the following situations might occur: 1) Changes in customer perception 2) Business and process improvement 3) Industry and market structures 4) Demographic influences I would like to bring into discussion the above mentioned topics with an interesting emphasize on cloud applications in financial services. ",
-        "Start": "2014-10-25T16:30:00",
-        "End": "2014-10-25T17:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [40],
-        "TrackRefId": 4
-    }, {
-        "Title": "ListView vs RecyclerView from Android L",
-        "Description": "If you develop on the Android platform and haven't had a chance to try out the new widgets introduced in Android L Preview this will be a very interesting presentation for you; find out from my experiments how the new RecyclerView stacks up against the view it should replace. If Android is not your game, you will still learn a few things regarding lists on mobile and what Android is like for developers on the platform.",
-        "Start": "2014-10-25T16:30:00",
-        "End": "2014-10-25T17:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [22],
-        "TrackRefId": 5
-    }, {
-        "Title": "5 principles for making your environment “Flow” friendly",
-        "Description": "Reaching the state of “Flow” while writing hundreds of lines of code is easy. But most of our work involves other activities: reading code, debugging, testing, navigating, etc. This type of work is littered with moments of waiting, of slow, error prone, repetitive actions. 5S is a workplace organization system identified in manufacturing that can be applied to software engineering. During this presentation you will see how applying 5S (having things in the right place, removing clutter, constantly cleaning and sorting our tools and automating repetitive actions) helps us be more efficient, stay in flow and focus more on creative work.",
-        "Start": "2014-10-25T16:30:00",
-        "End": "2014-10-25T17:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [48, 53],
-        "TrackRefId": 6
-    }, {
-        "Title": "Business Processes in action (aka BPMN)",
-        "Description": "When we speak about a large-scale applications we speak about multitenancy, global transactions, exception handling, error compensation, dynamic routing and so on. During this presentation we will show how all this problems can be solved using BPMN. We will briefly describe what business processes are, for whose who are new to it; will see most common usages, for whose who are familiar with the concept; and will have some hands-on cases for the hardcore guys. Stay tuned. ",
-        "Start": "2014-10-25T16:30:00",
-        "End": "2014-10-25T17:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [7],
-        "TrackRefId": 7
-    }, {
-        "Title": "Forensic analysis of a dumped product",
-        "Description": "For every failure there’s a reason. But there’s no reason to become a failure. We go backward and decompose step by step a project gone wrong. We’ll look through the eyes of a business analyst and discuss how together we can turn the tide and a derailing project back on track. No remorse, no hard feelings, just analyse and learn! ",
-        "Start": "2014-10-25T16:30:00",
-        "End": "2014-10-25T17:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [30, 19],
-        "TrackRefId": 8
-    }, {
-        "Title": "Coffee Break",
-        "Description": "",
-        "Start": "2014-10-25T17:15:00",
-        "End": "2014-10-25T17:30:00",
-        "OverrideTracks": true,
-        "SpeakerRefIds": [-1],
-        "TrackRefId": -1
-    }, {
-        "Title": "Continuous integration with Release Management",
-        "Description": "In today's software projects, be it large, medium or small size, there comes a time when great resources of the team involved have to be focused in delivering said project. If the delivery is a recurrent process, then comes the need to automate it, to leave people time to invest in useful activities (like drinking a cup of coffee :) ). In my session, I will emphasize the importance of implementing a Continuous integration mindset and process in your project(s), as well as a nice tool for doing so, Release Management for Visual Studio.",
-        "Start": "2014-10-25T17:30:00",
-        "End": "2014-10-25T18:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [1],
-        "TrackRefId": 1
-    }, {
-        "Title": "Legacy Code is Fear",
-        "Description": "Teaser Legacy code is fear because we fear the unknown. Learn what you need to learn in order to be less scared about legacy code during this talk. Introduction This will be a presentation about how you can work fast and safe with existing code. I will present the problem of working with legacy code and some of the solutions I know. You are a programmer. Someone from the company comes with an idea to add a feature and they are sure this new feature is very easy to add. And it should be. But the code is old. The code is a mess. Nobody in the firm knows any more that part of the system. You need to change that ugly piece of code. You are afraid that you might introduce defects. Legacy code is fear. During this talk we will discuss a Mantra Against Fear that will consist of the attitude, the tools and the techniques you can use to work fast and safe with existing code. You will learn how you can apply agile software development to messy ugly code. Target Audience If you are working as a programmer, tester, technical manager or CTO this talk might be extremely helpful. If you are a manager, trainer, coach you will find out about some ideas that you could implement with the companies you work with. Process Mechanics A very clear image of the reason to change the legacy code is essential: fix a bug, add a feature, cover the core system part with tests. I will explain why not reading legacy code is a lot better because even if we think we are super-smart programmers we never get what legacy code really does when we read it. One alternate way programmers could understand legacy code is to focus on writing characterization tests. But these characterization tests should be focused on a very thin layer of behavior, we should cover the least amount of code needed for the stated purpose of the change. Characterization tests can be of several type in the beginning: System Tests, Acceptance tests, Integration tests, Component tests, Contract tests, Unit tests. But we might need to refactor some of the higher order tests, on the tests pyramid, into unit tests. I will focus why it is essential to go in small steps that seem very unnatural to us. Also the steps may vary depending on the programming language. Agile Software development can be applied on legacy code if we focus on delivering the value, meaning doing the change needed, and if we let all the rest of the ugly code be the same. It is a challenge for any programmer to leave ugly code behind, but changing it would not bring any value for the moment. I am writing a series of articles that go in depth of this topic: http://blog.adrianbolboaca.ro/2014/04/legacy-coderetreat/#sessions",
-        "Start": "2014-10-25T17:30:00",
-        "End": "2014-10-25T18:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [0],
-        "TrackRefId": 2
-    }, {
-        "Title": "TBD",
-        "Description": "",
-        "Start": "2014-10-25T17:30:00",
-        "End": "2014-10-25T18:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [16],
-        "TrackRefId": 3
-    }, {
-        "Title": "The Zen of Test Driven Development",
-        "Description": "In this session, I will share my experiences in practicing TDD for more that 5 years; the ideas, techniques, objections, and misunderstandings. I'll talk about what I've learned about mistakes that I've made, how to do it well and how to adopt it in a way that supports development rather than impeding it. ",
-        "Start": "2014-10-25T17:30:00",
-        "End": "2014-10-25T18:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [38],
-        "TrackRefId": 4
-    }, {
-        "Title": "Continuous Integration with Jenkins for iOS",
-        "Description": "Setting up a Jenkins server is very useful for an iOS project and can be worthwhile. We will find out what are the advantages of using continuous integration on our projects, what options do we have and how to setup a job to suit our needs.",
-        "Start": "2014-10-25T17:30:00",
-        "End": "2014-10-25T18:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [15],
-        "TrackRefId": 5
-    }, {
-        "Title": "SQL Server High Availability and Disaster Recovery using AlwaysOn",
-        "Description": "We will present the latest hype in HA/DR solutions for SQL Server: AlwaysOn with Availability Groups. We will talk about RPO/RTO, what do they mean from a business perspective, and how we can satisfy SLAs using AlwaysOn. We will present a use case with live servers crashing while the client app remains up due to automatic failover.",
-        "Start": "2014-10-25T17:30:00",
-        "End": "2014-10-25T18:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [31, 10],
-        "TrackRefId": 6
-    }, {
-        "Title": "N/A",
-        "Description": "",
-        "Start": "2014-10-25T17:30:00",
-        "End": "2014-10-25T18:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [16],
-        "TrackRefId": 7
-    }, {
-        "Title": "Hackerspaces - Spaces for the creative use of technology",
-        "Description": "Hackerspaces are creative communities, physical spaces with a technological bent. Members work on art & technology projects, share ideas & knowledge, and host workshops & tutorials. We will show you the kind of projects that people build in hackerspaces and then we can have a serious discussion on why we don't have one yet.",
-        "Start": "2014-10-25T17:30:00",
-        "End": "2014-10-25T18:15:00",
-        "OverrideTracks": false,
-        "SpeakerRefIds": [11],
-        "TrackRefId": 8
-    }, {
-        "Title": "Feedback & closing of the day",
-        "Description": "",
-        "Start": "2014-10-25T18:15:00",
-        "End": "2014-10-25T18:30:00",
-        "OverrideTracks": true,
-        "SpeakerRefIds": [-1],
-        "TrackRefId": -1
-    }, {
-        "Title": "Byron @PUB UNDERGROUND!",
-        "Description": "",
-        "Start": "2014-10-25T20:30:00",
-        "End": "2014-10-26T05:00:00",
-        "OverrideTracks": true,
-        "SpeakerRefIds": [-1],
-        "TrackRefId": -1
-    }]
+    {
+      "Id": 2,
+      "_code": "track2",
+      "Name": "Room 2",
+      "Notes": "(250 seats, floor -2)"
+    },
+    {
+      "Id": 3,
+      "_code": "track3",
+      "Name": "Room 3",
+      "Notes": "(150 seats, floor -2)"
+    },
+    {
+      "Id": 4,
+      "_code": "track4",
+      "Name": "Room 4",
+      "Notes": "(30 seats, floor -2)"
+    },
+    {
+      "Id": 5,
+      "_code": "track5",
+      "Name": "Room 5",
+      "Notes": "(30 seats, floor -2)"
+    },
+    {
+      "Id": 6,
+      "_code": "track6",
+      "Name": "Room 6",
+      "Notes": "(30 seats, floor -1)"
+    },
+    {
+      "Id": 7,
+      "_code": "track7",
+      "Name": "Room 7",
+      "Notes": "(30 seats, floor -1)"
+    },
+    {
+      "Id": 8,
+      "_code": "track8",
+      "Name": "Room 8",
+      "Notes": "(40 seats, floor 0)"
+    },
+    {
+      "Id": 9,
+      "_code": "track9",
+      "Name": "Room 9",
+      "Notes": "(100 seats, floor 11)"
+    },
+    {
+      "Id": 10,
+      "_code": "track10",
+      "Name": "Room 10",
+      "Notes": "(60 seats, floor 11)"
+    }
+  ],
+  "Speakers": [
+    {
+      "Id": 1,
+      "Name": "Todd Kulick",
+      "Title": "VP of Technology, TiVo",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/todd.kulick.jpg",
+      "CompanyName": "Ness",
+      "CompanyUrl": "",
+      "Bio": "Software engineer with fifteen years of experience in building and shipping small, medium, and large scale software products. Detailed experience in embedded DVR/video applications, computer graphics, user interface development, and client-server applications. Prior experience includes design, development, implementation and ongoing support of large scale application deployment working in a large software organization.<br/><br/>Specialties:Interpersonal: Anchoring/building a fun and exciting engineering environment.<br/><br/>Technical: Graphics, video, embedded set-top box development, networking, web technologies, large-scale software engineering, build infrastructure.",
+      "FirstName": "Todd",
+      "LastName": "Kulick",
+      "Code": 73
+    },
+    {
+      "Id": 2,
+      "Name": "Arthur Kerpician",
+      "Title": "Team Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/arthur.kerpician.jpg",
+      "CompanyName": "eMAG",
+      "CompanyUrl": "",
+      "Bio": "16 years ago he found his first PHP tutorial and instantly fell in love with the „elephant language”. Since then, he worked with as many web technologies he could lay his hands on. Nowadays, he eats PHP for breakfast, Scrum for lunch and enjoys a relaxing Symfony during dinner. ",
+      "FirstName": "Arthur",
+      "LastName": "Kerpician",
+      "Code": 73
+    },
+    {
+      "Id": 3,
+      "Name": "Luigi Lauro",
+      "Title": "IT Architect",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/luigi.lauro.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Enterprise Architect and Senior Software Analyst and Developer with wide experiences in services, application and web development (Java, Scala, .NET, C/C++, most scripting languages), databases, networks, operating systems (FreeBSD, Mac OS X, Linux, Windows), hardware and software security (parallel computing and cryptology are some of his main interests).<br/><br/>Started coding at 10, and began working at 14 as a freelance software developer, and since then he has never stopped. Luigi has a long and proven experience of successful deliveries of challenging projects (from small companies to big enterprises in several fields, such as banking), where he has acted over the years in almost any available role: project manager, technology consultant, architect, analyst, developer.<br/><br/>Over the years he has participated as an acknowledged expert and speaker at various technical conferences around the world, and he's always interested in getting his hands dirty on ground breaking, technology-driven and challenging projects, especially if scala, java and/or open frameworks are involved.<br/><br/>Since 2011 he has been working as a Lead Technical Architect for UniCredit Business Integrated Solutions, global service company of UniCredit group.",
+      "FirstName": "Luigi",
+      "LastName": "Lauro",
+      "Code": 73
+    },
+    {
+      "Id": 4,
+      "Name": "Andrei Postolache",
+      "Title": "Trainer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/andrei.postolache.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I’m a co-founder and trainer at Introspecials with a focus on modern organizations, leadership, agility, lean, learning, culture and communication.<br/><br/>My previous experience is that of a business leader with P&L responsibilities for Endava’s 300 people strong Iasi business unit, of which I was the first employee. <br/><br/>I have also taken a keen interest in the local communities, having been a speaker at various local, national and international conferences, on various leadership topics. <br/><br/>See more about my company at introspecials.com. You can find a summary of my public speaking on my slideshare page. I am a cofounder of the local community thehumansidegroup.com. My personal blog is on medium and I’ve recently started a collaboration with clasabusiness.ro. My original background is in software development and architecture.",
+      "FirstName": "Andrei",
+      "LastName": "Postolache",
+      "Code": 73
+    },
+    {
+      "Id": 5,
+      "Name": "Florin Cardasim",
+      "Title": "Codecamper",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/florin.cardasim2015.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Florin leads the Architecture and Analysis discipline in Endava. Beyond his technical skills, Florin has gained a broad experience as a trainer for companies and speaker in community events. Florin is also co-founder of CodeCamp, one of the largest communities of software developers in Romania.",
+      "FirstName": "Florin",
+      "LastName": "Cardasim",
+      "Code": 73
+    },
+    {
+      "Id": 6,
+      "Name": "Mihai Alexandru Bîrsan",
+      "Title": "Software Development Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/mihai.birsan.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Passionate about front-end technologies and the web. Codes by night, manages brilliant engineers by day. Still believes boring problems should be automated away through coding. Looks for interesting problems to solve with other skills.",
+      "FirstName": "Mihai",
+      "LastName": "Alexandru Bîrsan",
+      "Code": 73
+    },
+    {
+      "Id": 7,
+      "Name": "Archit Lohokare",
+      "Title": "Senior Director, Platform Product Management",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/archit.lohokare.jpg",
+      "CompanyName": "Optymyze",
+      "CompanyUrl": "",
+      "Bio": "Archit Lohokare is the Senior Director of Platform Product Management at Optymyze, the market leader in Sales Performance Management. Prior to this, he was the Director of Product Management for Symantec's Cloud Information Protection security as a service. Before Symantec, Archit managed IBM's market leading Access Management product line comprising of web access management, identity federation, enterprise single sign-on, risk-based access and entitlements management products. Archit joined IBM through the acquisition of Encentuate, a leading Bay Area startup in the security space, of which he was an early member. At Encentuate, Archit held roles in the engineering, professional services, support, and pre-sales organizations. Archit has an MBA from UC Berkeley-Haas School of Business and a Bachelors degree in Computer Engineering from NTU, Singapore where he was awarded the SIA-NOL undergraduate scholarship by the Ministry of Education, Singapore.",
+      "FirstName": "Archit",
+      "LastName": "Lohokare",
+      "Code": 73
+    },
+    {
+      "Id": 8,
+      "Name": "Steven Arnauts",
+      "Title": "Software Architect",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/StevenArnauts.jpg",
+      "CompanyName": "Expert Network",
+      "CompanyUrl": "",
+      "Bio": "Software architect, designer and developer. I’ve been working as a consultant for ISV’s designing SAAS applications for the last couple of years, with a primary technological focus on the .NET platform.",
+      "FirstName": "Steven",
+      "LastName": "Arnauts",
+      "Code": 73
+    },
+    {
+      "Id": 9,
+      "Name": "Ralf Geenen",
+      "Title": "Software Architect",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/RalfGeenen.jpg",
+      "CompanyName": "Expert Network",
+      "CompanyUrl": "",
+      "Bio": "Ralf has more than 17 years of experience in IT. During his professional career, he has worked as a software architect for multiple Belgian customers in the financial, utilities, public, healthcare and other sectors. He focuses on software design and methodology.",
+      "FirstName": "Ralf",
+      "LastName": "Geenen",
+      "Code": 73
+    },
+    {
+      "Id": 10,
+      "Name": "Sebastian Agachie",
+      "Title": "Ethical Hacker, Security Specialist",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/sebastian.agachie.jpg",
+      "CompanyName": "Centric",
+      "CompanyUrl": "",
+      "Bio": "Sebastian believes that curiosity, motivation and the right attitude are the key ingredients of achieving everything you want. Although in his career Sebastian covered almost every position in IT, from networking to development, he always had an incredible passion for security. <br/><br/>His courage and motivation plus Centric adaptive horizons were the key fundamental aspects of the new security department that was created in Centric Romania. Aside from coordinating and keeping the security department in RO synchronized with Centric BV, Sebastian is driving through security operations such as: pen tests, security advices and awareness for developers/testers/managers throw a various series processes.",
+      "FirstName": "Sebastian",
+      "LastName": "Agachie",
+      "Code": 73
+    },
+    {
+      "Id": 11,
+      "Name": "Elger Jonker",
+      "Title": "Ethical Hacker, Security Lead",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/elger.jonker.jpg",
+      "CompanyName": "Centric",
+      "CompanyUrl": "",
+      "Bio": "Elger believes the world is a better place when knowledge, research and joy are shared. Therefore he has helped establish several hackerspaces in the Netherlands, is active in a foundation that shares the joy of retro gaming and helps organizing the world’s biggest outdoor hacker conference in 2017.<br/><br/>Elgers passion for world improvement also translates to Centric, where he is leading the security implementation. Aside from giving clear insights into the needs for security, Elger performs security tests, sets standards (based on standards), shares knowledge, builds a dedicated security team and shares his vision that Centric and trust must stay synonymous.",
+      "FirstName": "Elger",
+      "LastName": "Jonker",
+      "Code": 73
+    },
+    {
+      "Id": 12,
+      "Name": "Jozua Velle",
+      "Title": "Unit Manager Storeworld",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/jozua.velle.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Jozua Velle<br/>Unit manager of a 5 distributed scrum teams (Belgium-Romania) working on a front- and backoffice solution for mid/large scale retailers. Focused on aligning the entire organisation with modern software development concepts.",
+      "FirstName": "Jozua",
+      "LastName": "Velle",
+      "Code": 73
+    },
+    {
+      "Id": 13,
+      "Name": "Dan Vulpe",
+      "Title": "Software Engineer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/dan.vulpe.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Proud father of two and passionate software engineer with a strong focus on code quality and low technical debt.",
+      "FirstName": "Dan",
+      "LastName": "Vulpe",
+      "Code": 73
+    },
+    {
+      "Id": 14,
+      "Name": "Vlad Zelinschi (Reign)",
+      "Title": "UI Tech Lead",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/vlad.zelinschi.reign.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Vlad (close friends call him Reign :D) is a Frontend Engineer with a strong passion for the latest technologies out there and an unhealthy obsession for clean and simple code. He loves to try out things as soon as they hit the market so he always keeps an eye out for the JS, CSS and HTML everchanging landscapes. He happily embraces any challenge, though he’ll prefer the ones related to Angular, React, FRP, Node, MongoDB and frontend performance. He is currently employed at Appsbroker where he leads the frontend team and drives innovation forward.",
+      "FirstName": "Vlad",
+      "LastName": "Zelinschi (Reign)",
+      "Code": 73
+    },
+    {
+      "Id": 15,
+      "Name": "Alex Mang",
+      "Title": "CEO",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/alex.mang.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Alex Mang is a regular speaker at community driven events focusing mostly on cloud-computing topics, thus aiming to help developers better understand the implications of cloud-computing as a whole. As an Azure Advisor, he regularly offers Azure teams in Redmond feedback on upcoming Azure features and services and gets to test them out in early development stages.<br/>Alex dedicates most of his time developing his BizSpark Plus start-up, KeyTicket Solutions, a software development company involved in the event management and ticketing industry, where he gets to work with some of the biggest event organizers in Romania. He also invests lots of time teaching software architectural patterns and cloud computing development at user groups and forums around Europe. Whenever he doesn’t write articles in the monthly TechWiki magazine, he develops and publishes open-source Azure-related libraries (e.g. Azure Search Client) on CodePlex or in Git repositories.<br/>During his 10 year career as a software developer he got the chance to work on both hardware and software projects using Microsoft and Microsoft-related technologies on all platforms imaginable: embedded, robotics, desktop, mobile and web.",
+      "FirstName": "Alex",
+      "LastName": "Mang",
+      "Code": 73
+    },
+    {
+      "Id": 16,
+      "Name": "Radu Iscu",
+      "Title": "Solution Architect",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/radu.iscu2.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Radu has been a software professional for a while now. He's worked on both small and large projects, small and large companies, and in this time he's learned a lot of stuff about code. He's passionate about extreme programming, flexible design, emergent architecture and refactoring, to the point where he won't stop talking about it.",
+      "FirstName": "Radu",
+      "LastName": "Iscu",
+      "Code": 73
+    },
+    {
+      "Id": 17,
+      "Name": "Silviu Eigel",
+      "Title": "Team Leader",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/silviueigel.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Team leader for a FOREX trading platform with a focus on online payment processing.",
+      "FirstName": "Silviu",
+      "LastName": "Eigel",
+      "Code": 73
+    },
+    {
+      "Id": 18,
+      "Name": "Alex Michel",
+      "Title": "Chief Architect",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/alex.michael.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Architect, mentor, software design and development lead in Financial Services. Design and development of real time trading products, risk management applications, online payment processing and back office tools. Full product life cycle management and support.",
+      "FirstName": "Alex",
+      "LastName": "Michel",
+      "Code": 73
+    },
+    {
+      "Id": 19,
+      "Name": "Anghel Adrian-Claudiu",
+      "Title": "Developer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/anghelclaudiu.jpg",
+      "CompanyName": "Unicredit",
+      "CompanyUrl": "",
+      "Bio": "n/a",
+      "FirstName": "Anghel",
+      "LastName": "Adrian-Claudiu",
+      "Code": 73
+    },
+    {
+      "Id": 20,
+      "Name": "Butnariu Cristi",
+      "Title": "Senior Programmer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/butnariu.cristi.png",
+      "CompanyName": "BeeNear",
+      "CompanyUrl": "",
+      "Bio": "I'm a passionate and enthusiastic software developer working on BeeNear, with a 10+ years experience in building software for retail markets from abroad using Microsoft technologies.<br/> For the last 2 years I start focusing on mobile hybrid applications and on emerging web technologies and frameworks.<br/> I have a passion for discovering new ways to improve myself, to learn from others and, why not, to share my experience with others.",
+      "FirstName": "Butnariu",
+      "LastName": "Cristi",
+      "Code": 73
+    },
+    {
+      "Id": 21,
+      "Name": "Sorin Peste",
+      "Title": "Technical Evangelist, Microsoft Romania",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/sorin.peste.jpg",
+      "CompanyName": "Microsoft",
+      "CompanyUrl": "",
+      "Bio": "Sorin has been a part of the Enterprise Services unit within Microsoft Romania since 2011, and has been busy developing software on the Microsoft technology stack since 2001. Recently he has taken on the Technical Evangelist role and will engage more actively with developers and IT Professionals, showcasing the newest Microsoft solutions and technology.<br/><br/>In his current role as well as previous ones, he has been part of delivering a number of enterprise solutions, both on premises and in the cloud. <br/><br/>Sorin likes coding, travelling and riding his motorcycle in his spare time. ",
+      "FirstName": "Sorin",
+      "LastName": "Peste",
+      "Code": 73
+    },
+    {
+      "Id": 22,
+      "Name": "Cezar Romaniuc",
+      "Title": "Senior Java Developer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/cezar.romaniuc.jpg",
+      "CompanyName": "Endava",
+      "CompanyUrl": "",
+      "Bio": "I’m a Software Developer with over 4 years of experience in building Java based solutions related to payment, digital media, telecommunications, energy and ERP systems.<br/><br/>Over the past few years I’ve been part of various teams on different projects that gave me the possibility to develop and consolidate my technical knowledge.",
+      "FirstName": "Cezar",
+      "LastName": "Romaniuc",
+      "Code": 73
+    },
+    {
+      "Id": 23,
+      "Name": "Remus Langu",
+      "Title": "Design Lead",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/remus_langu.png",
+      "CompanyName": "Endava",
+      "CompanyUrl": "",
+      "Bio": "Remus is a software engineer with a high interest in Agile practices (XP, BDD/TDD, Emergent Design,…) and Software Craftsmanship.<br/>He is excited about writing clean code and making the complex simple.<br/>He is also passionate about sustainable systems, free energy and permaculture.<br/>Remus is a continuous learner, an Orthodox Christian, a husband, a father, a free thinker and he enjoys learning from others and helping others with what he has learned and experienced.",
+      "FirstName": "Remus",
+      "LastName": "Langu",
+      "Code": 73
+    },
+    {
+      "Id": 24,
+      "Name": "Bogdan Litescu",
+      "Title": "Owner",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/bogdan.litescu.jpg",
+      "CompanyName": "DNN Sharp",
+      "CompanyUrl": "",
+      "Bio": "Bogdan Litescu is a software developer and business geek, balancing strategy and execution in product development for over 12 years. His skill set is at the intersection of business, customer and technical worlds. For DNN Sharp which he’s running, this translates into high tech software products that provide brilliantly simple solutions to real problems and unparalleled support. There's no surprise that the company is at the top of the DNN ecosystem. Inside the community, Bogdan is seen as the quiet guy with a vision to transform DNN into a next generation platform.",
+      "FirstName": "Bogdan",
+      "LastName": "Litescu",
+      "Code": 73
+    },
+    {
+      "Id": 25,
+      "Name": "Raluca Breaur",
+      "Title": "Delivery Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/raluca.breaur.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Raluca is an Agile enthusiast with 12 years of experience in software development.<br/>Loving change, she had various roles from java developer, manager, focusing now on agile transformations.",
+      "FirstName": "Raluca",
+      "LastName": "Breaur",
+      "Code": 73
+    },
+    {
+      "Id": 26,
+      "Name": "Ovidiu Simionica",
+      "Title": "Technical Project Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ovidiu.simionica.jpg",
+      "CompanyName": "Fortech",
+      "CompanyUrl": "",
+      "Bio": "Passionate about code quality practices, Object Oriented Design, TDD and 'Uncle Bob\"<br/>14 Years Software Developer mainly Java but also C and C++.<br/>5 years of technical leadership , adept of collaborative management and self organizing teams",
+      "FirstName": "Ovidiu",
+      "LastName": "Simionica",
+      "Code": 73
+    },
+    {
+      "Id": 27,
+      "Name": "Mihai Bura",
+      "Title": "Web Developer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/mihai.bura.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Being an eager learner and tech savvy, Mihai is helping Yonder deliver the best front end experience for their customers. He enjoys challenging mentees to learn and discover new ways of building the web.",
+      "FirstName": "Mihai",
+      "LastName": "Bura",
+      "Code": 73
+    },
+    {
+      "Id": 28,
+      "Name": "Doina Movila",
+      "Title": "Social Media Analyst",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/doina.movila.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "https://ro.linkedin.com/pub/doina-movila/a0/474/86a",
+      "FirstName": "Doina",
+      "LastName": "Movila",
+      "Code": 73
+    },
+    {
+      "Id": 29,
+      "Name": "Ancuta Damian",
+      "Title": "Project manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ancuta.damian.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I'm an IT enthusiast interested in Agile methodologies and understanding how improving human interactions in a team can lead to better results.",
+      "FirstName": "Ancuta",
+      "LastName": "Damian",
+      "Code": 73
+    },
+    {
+      "Id": 30,
+      "Name": "Mircea Pricop",
+      "Title": "Software Engineer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/mircea.pricop.jpg",
+      "CompanyName": "Google",
+      "CompanyUrl": "",
+      "Bio": "I joined Google fresh off the benches of the University of Hamburg, where I transferred to after starting my CS education right here in Iasi. Having been at Google for three years now, I'm currently focusing on information extraction, aggregation and data understanding as part of developing exciting new search features.",
+      "FirstName": "Mircea",
+      "LastName": "Pricop",
+      "Code": 73
+    },
+    {
+      "Id": 31,
+      "Name": "Bogdan Bujdea",
+      "Title": "Windows Platform Developer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/bogdan.bujdea.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I'm a Windows Platform Developer with ~4 years of experience. I worked at Thinslices as a Windows 8 Developer, and now I work at Feel IT as Windows Phone developer. Considering that Windows 10 is only one platform now, I think my correct title would be Windows Platform Developer.<br/><br/>Although my main focus is on C# and UWP apps, I also worked with a lot of languages like Java, Node.js, Angular.js, HTML5/CSS3.<br/><br/>One of my favorite authors and speakers is Robert Martin(Uncle Bob). I learned from him a lot of things like Test Driven Development, writing clean code, and the most important one, being a professional developer.",
+      "FirstName": "Bogdan",
+      "LastName": "Bujdea",
+      "Code": 73
+    },
+    {
+      "Id": 32,
+      "Name": "Bianca Ionel",
+      "Title": "IT Specialist",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/bianca.ionel.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Roxana Bianca Ionel works as IT Specialist for Expert Moldova Trading. She develops websites in Magento, Prestashop and Wordpress, and relaxes doing some design, but she's strong interest is Magento. After she took the degree in Informatica Economica, 3 years ago, she fall in love with Magento, and their relationship is more stronger every day. During her free time she likes to write on her professional blog (http://www.biancaionel.com/blog) tutorials for programmers.",
+      "FirstName": "Bianca",
+      "LastName": "Ionel",
+      "Code": 73
+    },
+    {
+      "Id": 33,
+      "Name": "Daniel Leon",
+      "Title": "Senior Software Developer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/leon.daniel.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I'm a Linux enthusiast and a proactive learner. I like finding the best solutions and putting them into practice.",
+      "FirstName": "Daniel",
+      "LastName": "Leon",
+      "Code": 73
+    },
+    {
+      "Id": 34,
+      "Name": "Radu Danciu",
+      "Title": "Senior Entertainment Engineer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/radu.danciu.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "With over 7 years of experience in game development having shipped a couple of triple-A titles my goal is to provide memorable experiences to people who enjoy games.",
+      "FirstName": "Radu",
+      "LastName": "Danciu",
+      "Code": 73
+    },
+    {
+      "Id": 35,
+      "Name": "Robert Tamas",
+      "Title": "Develpment Lead",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/robert_tamas.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "IT professionals with a keen interest in software full delivery life-cycle aimed at offering best value given the right contextual approach, practices and methodologies.",
+      "FirstName": "Robert",
+      "LastName": "Tamas",
+      "Code": 73
+    },
+    {
+      "Id": 36,
+      "Name": "Dragos Tudorache",
+      "Title": "Develpment Lead",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/dragos_tudorache.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "IT professionals with a keen interest in software full delivery life-cycle aimed at offering best value given the right contextual approach, practices and methodologies.",
+      "FirstName": "Dragos",
+      "LastName": "Tudorache",
+      "Code": 73
+    },
+    {
+      "Id": 37,
+      "Name": "Paul Istoan",
+      "Title": "Software Development Engineer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/paul.istoan.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Paul is a software developer who's been slowly realizing that writing software is not that easy. From working on legacy projects to designing <br/>a product from scratch, through deployment and maintenance, Paul has been trying to figure out why some software is so easy to work with while other software is virtually unmodifiable. A diverse professional career underlined by curiosity and a desire to share have currently brought<br/>him to Iasi where he works at Amazon as a Software Development Engineer.",
+      "FirstName": "Paul",
+      "LastName": "Istoan",
+      "Code": 73
+    },
+    {
+      "Id": 38,
+      "Name": "George Serediuc",
+      "Title": " Digital Designer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/george.serediuc.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I’m a multidisciplinary designer striving to create great experiences. My favorite things include unfiltered beer, science fiction novels, cosmology, and hiking. Currently designing positive outcomes at figshare. Follow me: @georgeserediuc",
+      "FirstName": "George",
+      "LastName": "Serediuc",
+      "Code": 73
+    },
+    {
+      "Id": 39,
+      "Name": "Antonio Caciuc",
+      "Title": "HackerSpace Pilot",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/caciuc.mihai.antonio.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Just a guy, working towards a future when the things that make us weak and strange get engineered away.",
+      "FirstName": "Antonio",
+      "LastName": "Caciuc",
+      "Code": 73
+    },
+    {
+      "Id": 40,
+      "Name": "Ciprian Redinciuc",
+      "Title": "iOS Developer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ciprian.redinciuc.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I'm a passionate iOS developer with a taste for fine crafted mobile apps. <br/>Always on the look for what's new on the market and",
+      "FirstName": "Ciprian",
+      "LastName": "Redinciuc",
+      "Code": 73
+    },
+    {
+      "Id": 41,
+      "Name": "Andrei Pruteanu",
+      "Title": "Software engineer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/andrei.pruteanu.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I am information processing specialist at Uber Research. My work focuses on performing complex data analysis on large research publication data-sets. <br/><br/>Previously I was software architect at NXP Semiconductors and Post-Doctoral Research Scientist at the Embedded Software Group, Faculty of Electrical Engineering, Mathematics and Computer Science (EEMCS), Delft University of Technology, the Netherlands. <br/><br/>I received my PhD in Computer Science from Delft University of Technology, the Netherlands, my Masters degree in Computer Science from the University of Iasi, Romania and my Bachelor degree in telecom. engineering from the Technical University of Iasi, Romania.",
+      "FirstName": "Andrei",
+      "LastName": "Pruteanu",
+      "Code": 73
+    },
+    {
+      "Id": 42,
+      "Name": "Ionut Grecu",
+      "Title": "Scrum Master",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ionut.grecu.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Ionut Grecu has been involved in IT for the last 6+ years. His work exists at the intersection of Agile Transformation, Lean Thinking, Psychology and Digital Marketing. Weird, right? He is a believer in servant leadership and the power that Agile and Lean thinking and techniques can bring to an organization. Being a bookish sort who always loves a mental challenge, he would be bored if he wasn’t constantly learning. Yet he has the ability to focus and research deeply in a narrow field of specialization. Life's big questions interest him most. DNN Sharp is his oyster and when he is out of the office you can find him eating shawarma, sitting at a table near you. He has a self-proclaimed PhD in napping in any position you can think of.",
+      "FirstName": "Ionut",
+      "LastName": "Grecu",
+      "Code": 73
+    },
+    {
+      "Id": 43,
+      "Name": "Horia Popa",
+      "Title": "Software Development Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/horia.popa.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I started my career as a C/C++ developer, worked on various projects using various technologies. Now, after having developed software for the likes of Nokia, Intel, Volkswagen and others I find myself on the management side for TiVo - a Silicon Valley based company. I am currently also a partner in a local company, iColdo.",
+      "FirstName": "Horia",
+      "LastName": "Popa",
+      "Code": 73
+    },
+    {
+      "Id": 44,
+      "Name": "Hrubaru Ana-Maria",
+      "Title": "Software Engineering Manager @Optymyze",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/hrubaru.ana-maria.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "10+ years experience in the testing process in different software development models at all the testing levels.<br/>Now taking the challenge of managing a great team to deliver high quality solutions.<br/>Looking forward to share with you some of this experience.",
+      "FirstName": "Hrubaru",
+      "LastName": "Ana-Maria",
+      "Code": 73
+    },
+    {
+      "Id": 45,
+      "Name": "Ciprian Ouatu",
+      "Title": "Trainer, Consultant",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ciprian.ouatu.jpg",
+      "CompanyName": "Ascendis Consulting",
+      "CompanyUrl": "",
+      "Bio": "Ciprian is specialised in facilitating communication, management and sales programs, and he does this with responsibility, involvement and humour. He always wants to learn new things and is passionate about education, reading, photography and music. He is a part of ASCENDIS, the No. 1 company in developing people and organisations.",
+      "FirstName": "Ciprian",
+      "LastName": "Ouatu",
+      "Code": 73
+    },
+    {
+      "Id": 46,
+      "Name": "Ioana Serediuc",
+      "Title": "Test Lead",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ioana.serediuc.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "•\t9 years’ experience in testing field<br/>•\t7 years leadership experience as a Test Lead and Test Manager in web applications, application virtualization, database management and database management tools<br/>•\tExperienced with Agile as a tester and SCRUM Master.<br/>•\tExperience with leading testing teams, working with complex products, creating test strategy, approaches and planning.<br/>•\tBackground in Economics fields and 5 years’ experience as an accountant",
+      "FirstName": "Ioana",
+      "LastName": "Serediuc",
+      "Code": 73
+    },
+    {
+      "Id": 47,
+      "Name": "Alexandru Pascariu",
+      "Title": "Automation QA",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/alexandrupascariu.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "- software developer - Centric IT Solutions<br/> - QA - Endava<br/> - currently Automation QA - Yonder",
+      "FirstName": "Alexandru",
+      "LastName": "Pascariu",
+      "Code": 73
+    },
+    {
+      "Id": 48,
+      "Name": "Bogdan Florea",
+      "Title": "Senior Java Developer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/bogdanflorea.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "- Java developer -The Red Point, Pentalog and Yonder<br/>- currently Java Cluster Manager - Yonder",
+      "FirstName": "Bogdan",
+      "LastName": "Florea",
+      "Code": 73
+    },
+    {
+      "Id": 49,
+      "Name": "Cristian Coțoi",
+      "Title": "SDET",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/cristian.cotoi.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Cristian has almost 8 years of experience in testing, and currently working as a Software Developer in Test @Amazon. He has been part of many projects, both small and big, and in this time he learned a lot about quality and testing, tools and principles and the space in-between.",
+      "FirstName": "Cristian",
+      "LastName": "Coțoi",
+      "Code": 73
+    },
+    {
+      "Id": 50,
+      "Name": "Andreea Popescu",
+      "Title": "QA Engineer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/andreea.popescu.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I'm a curious QA Engineer at Zitec, passionate about photography, reading, science and learning. ",
+      "FirstName": "Andreea",
+      "LastName": "Popescu",
+      "Code": 73
+    },
+    {
+      "Id": 51,
+      "Name": "Diana Lefter",
+      "Title": "IT Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/diana.lefter.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "IT Manager born and raised in Iasi, with 18 years of experience in US  and Canada, where she effectively implemented various offshore/onshore resource staffing models (India). An advocate for retaining IT talent in Romania, where she wants to apply her management and leadership knowledge. She is relocating back to Romania, with the strong belief that our country is becoming an outsourcing destination for corporations all over the world. Come and hear her emigration and repatriation story.",
+      "FirstName": "Diana",
+      "LastName": "Lefter",
+      "Code": 73
+    },
+    {
+      "Id": 52,
+      "Name": "Nechita Radu",
+      "Title": "Training partner Mentor Training",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/RaduNechita.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Radu Marian Nechita - training partner<br/><br/>Energetic, professional and experienced trainer and consultant with 11 years of career in the financial services industry, both as manager and trainer and 20-year experience in goods and services selling, Radu has a relevant background in team diagnosis and development, organizational culture analysis, business coaching and selling skills including communication, negotiation, presentations, management and training. He worked in developing and delivering programs for industries like: banking, communication, life insurance, construction, measurement technologies, automotives, pharmaceutical, tourism, IT&C, FMCG. Trainer and manager for ING Romania and Citibank Romania.",
+      "FirstName": "Nechita",
+      "LastName": "Radu",
+      "Code": 73
+    },
+    {
+      "Id": 53,
+      "Name": "Cristi Ursachi",
+      "Title": "Entrepreneur",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/cristi.ursachi.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I have been developing software for global enterprises since 2003 mainly using Microsoft technologies and I was involved in all phases of building a product from planning, architecture and development till deployment and maintenance. On the other side I was always passionate and interested about low-level implementations of software, especially databases.As result I founded his start-up and I'm working now on CryptonorDB, a product that will change the way of using a database in the cloud.",
+      "FirstName": "Cristi",
+      "LastName": "Ursachi",
+      "Code": 73
+    },
+    {
+      "Id": 54,
+      "Name": "George Raut",
+      "Title": "Analytics Specialists Leader",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/george.raut.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "https://ro.linkedin.com/in/georgeraut<br/><br/>https://ro.linkedin.com/in/bogdansuchar<br/><br/>https://ro.linkedin.com/pub/oana-andreea-scutarasu/46/503/131/en",
+      "FirstName": "George",
+      "LastName": "Raut",
+      "Code": 73
+    },
+    {
+      "Id": 55,
+      "Name": "Bogdan Suchar",
+      "Title": "Account Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/bogdan.suchar.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "https://ro.linkedin.com/in/georgeraut<br/><br/>https://ro.linkedin.com/in/bogdansuchar<br/><br/>https://ro.linkedin.com/pub/oana-andreea-scutarasu/46/503/131/en",
+      "FirstName": "Bogdan",
+      "LastName": "Suchar",
+      "Code": 73
+    },
+    {
+      "Id": 56,
+      "Name": "Oana Scutarasu",
+      "Title": "Marketing Automation Team Leader",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/oana.scutarasu.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "https://ro.linkedin.com/in/georgeraut<br/><br/>https://ro.linkedin.com/in/bogdansuchar<br/><br/>https://ro.linkedin.com/pub/oana-andreea-scutarasu/46/503/131/en",
+      "FirstName": "Oana",
+      "LastName": "Scutarasu",
+      "Code": 73
+    },
+    {
+      "Id": 57,
+      "Name": "Camelia Codarcea",
+      "Title": "Cofounder AgileHub",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/camelia.codarcea.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Agile Consultant, Trainer and Coach<br/>Cofounder AgileHub<br/>Coiwner Anticafe AgileHub",
+      "FirstName": "Camelia",
+      "LastName": "Codarcea",
+      "Code": 73
+    },
+    {
+      "Id": 58,
+      "Name": "Corneliu Constantin FATULESCU",
+      "Title": "cofounder AgileHub",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/cornel.fatulescu.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Agile coach, father, CTO of Pentalog Group, co-founder of AgileHub and manager at Pentalog Institute, Cornel FĂTULESCU is a passionate agile coach & trainer. With an incredible portfolio in IT Services and 15 years of experience, Cornel ventures Pentalog Institute in the challenging world of IT consultancy. As an agile advocate, he optimized business value delivered within various large scale organizations by implementing XP, Scrum and Kanban. “In my opinion, involvement in agile communities is like witnessing the inevitable metamorphosis of companies continuously progressing until the educational big bang occurs”. This is mainly the reason why Cornel co-created AgileHub in Brașov, probably the most dynamic Agile IT community in Romania, where he is a very important knowledge contributor.",
+      "FirstName": "Corneliu",
+      "LastName": "Constantin FATULESCU",
+      "Code": 73
+    },
+    {
+      "Id": 59,
+      "Name": "Vasile Putină",
+      "Title": "Agile Coach & trainer. Agile transition program coordinator.",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/vasile.putina.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Agile Coach. Agile transition program coordinator at Pentalog.<br/>His passion for agility and coaching has helped many teams and clients to maximize the value delivered to end users. Being 15 years in IT, it managed to achieve a multilateral vision of this field through experience as lecturer, programmer in different languages, Scrum Master, manager, agile trainer and coach. In his opinion, agility is about people and their ability to overcome the limits being guided by a set of values.<br/>",
+      "FirstName": "Vasile",
+      "LastName": "Putină",
+      "Code": 73
+    },
+    {
+      "Id": 60,
+      "Name": "Mitrofan Marius",
+      "Title": "Application Support Lead",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/marius_mitrofan.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Google Apps Certified Administrator with full background knowledge of the following key technologies :<br/>* Scripting : Javascript, Apps Script<br/>* Development : Java, Javascript<br/>* Cloud platforms : Google Cloud/AppEngine, Office365/Azure, Amazon EC2<br/><br/>Key attributes :<br/>✓ fast learner<br/>✓ computer enthusiast<br/>✓ communicative<br/>✓ responsible<br/>✓ analytical thinking",
+      "FirstName": "Mitrofan",
+      "LastName": "Marius",
+      "Code": 73
+    },
+    {
+      "Id": 61,
+      "Name": "Dirla Vasile",
+      "Title": "Activiti Core Developer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/dirla.vasile.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Senior Java Developer with more than 10 years experience in web application development. <br/>An enthusiastic Open Source advocate and contributor in different open source projects.<br/>",
+      "FirstName": "Dirla",
+      "LastName": "Vasile",
+      "Code": 73
+    },
+    {
+      "Id": 62,
+      "Name": "Adrian-Tudor Panescu",
+      "Title": "Web Enthusiast",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/adrian.tudor.panescu.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Computer Science graduate and Web enthusiast. From small Berlin startups to large institutions like CERN, I've always pushed my limits in order to deliver innovative Web products.",
+      "FirstName": "Adrian-Tudor",
+      "LastName": "Panescu",
+      "Code": 73
+    },
+    {
+      "Id": 63,
+      "Name": "Cristian Falcas",
+      "Title": "Dev-Ops",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/icon_user.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I'm 36 years old, born in Iasi and working for almost 3 years as a dev-ops engineer at Optymyze/Synygy/ArezzoSky.<br/><br/>I have a passion for linux. I love to automate as much as possible from my work.",
+      "FirstName": "Cristian",
+      "LastName": "Falcas",
+      "Code": 73
+    },
+    {
+      "Id": 64,
+      "Name": "Florin Asavoaie",
+      "Title": "Senior Devops Engineer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/florin.asavoaie.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Florin is an IT and computer security enthusiast. He’s got experience with the automated deployment and configuration of medium to large environments dedicated to web applications and web services. He is a fan of Open Source communities and promotes the use of Open Source software in business environments.",
+      "FirstName": "Florin",
+      "LastName": "Asavoaie",
+      "Code": 73
+    },
+    {
+      "Id": 65,
+      "Name": "Cosmin Ilie",
+      "Title": "Cloud Services Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/cosmin.ilie.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "I lead the Cloud Services Group in Iasi for Optymyze. Our job is to operate the company's SaaS platform for a large group of clients in different data centers and geographic locations. ",
+      "FirstName": "Cosmin",
+      "LastName": "Ilie",
+      "Code": 73
+    },
+    {
+      "Id": 66,
+      "Name": "Alexandru-Cristian Balmuș",
+      "Title": "R&D Engineer",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/alexandru-cristian.balmus.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Alex has been an R&D engineer for 7 years. Besides software development he also had occasional coordinating and training responsibilities. He is excited about the enterprise – open source synergy, multi-platform development technologies and, above all, he enjoys helping others to learn about these.",
+      "FirstName": "Alexandru-Cristian",
+      "LastName": "Balmuș",
+      "Code": 73
+    },
+    {
+      "Id": 67,
+      "Name": "Florin Ciubotaru",
+      "Title": "Technical Lead",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/florin.ciubotaru.png",
+      "CompanyName": "Pentalog",
+      "CompanyUrl": "",
+      "Bio": "Florin is an engineer with an interest in building complex systems with high impact. He experiments with various leadership forms and is interested in various human factors surrounding information systems. He is currently fulfilling his passion as a Tech Lead at Pentalog.",
+      "FirstName": "Florin",
+      "LastName": "Ciubotaru",
+      "Code": 73
+    },
+    {
+      "Id": 68,
+      "Name": "Adrian Rindasu",
+      "Title": "Managing Partner",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/adrian.rindasu2.jpg",
+      "CompanyName": "EDUROM",
+      "CompanyUrl": "",
+      "Bio": "Adrian co founded Edurom in 2002. Since then, he developed and delivered training and consultancy programs for various companies in the software development industry. He is running Belbin & Situational Leadership trainings for the IT&C clients of Edurom.",
+      "FirstName": "Adrian",
+      "LastName": "Rindasu",
+      "Code": 73
+    },
+    {
+      "Id": 69,
+      "Name": "Ovidiu Avasilcai",
+      "Title": "Technical Project Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/ovidiu.avasilcai.png",
+      "CompanyName": "SCC",
+      "CompanyUrl": "",
+      "Bio": "Technical Project Manager with a background in IT services. Over the years I've had the pleasure of working in many areas of IT service industry, from customer/tech support, devops, dba, project coordination and development.<br/>I have an interest in frontend development and the open source communities that have evolved around it.",
+      "FirstName": "Ovidiu",
+      "LastName": "Avasilcai",
+      "Code": 73
+    },
+    {
+      "Id": 70,
+      "Name": "Alex Morarasu",
+      "Title": "Quality Manager",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/alexmurarasu.jpg",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Welcome the challenge of solving problems. With 10+ years of experience on different QA roles I look forward for new opportunities and challenges. Highly competitive, very ambitious, highly motivated, self-starter who is organized, disciplined, goal – oriented, willing to work hard to reach my objectives. I am a team person, very sociable and communicative. Excellent communication skills demonstrated by ability to work with people of diverse backgrounds. Listen to determine needs of customers before offering a solution. Quickly establish rapport with clients.",
+      "FirstName": "Alex",
+      "LastName": "Morarasu",
+      "Code": 73
+    },
+    {
+      "Id": 71,
+      "Name": "Codecamper",
+      "Title": "",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/icon_user.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "",
+      "FirstName": "",
+      "LastName": "",
+      "Code": 73
+    },
+    {
+      "Id": 72,
+      "Name": "Coffeemaker",
+      "Title": "",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/icon_coffee.png",
+      "CompanyName": "",
+      "CompanyUrl": "",
+      "Bio": "Relax, meet your friends and enjoy a cup of coffee, I'll be there too. ;)",
+      "FirstName": "",
+      "LastName": "",
+      "Code": 73
+    }
+  ],
+  "Sessions": [
+    {
+      "Id": 1,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "New architecture design: Micro services and Continuous Integration",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        19
+      ],
+      "TrackRefId": 1,
+      "Description": "The presentation will focus around new architecture trends and issues regarding continuous integration."
+    },
+    {
+      "Id": 2,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "Stories from the aviation industry",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        67
+      ],
+      "TrackRefId": 1,
+      "Description": "Most of us use air travel and expect it to work perfectly. Did you ever wonder what are the IT challenges surrounding planes, airports and air traffic control? Join us as we have a look at a few information systems from the aviation industry."
+    },
+    {
+      "Id": 3,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "The Blackening",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        2
+      ],
+      "TrackRefId": 1,
+      "Description": "Take part to the most amazing Black Friday experience, behind the scenes, director's cut edition. I'll walk you through eMAG's Black Friday jurney, from 404 and 500 errors to 100% uptime, from 21 servers to over 120.  The Blackening movie will start from Black Friday's birthplace during the late 1800's, we'll move to eMAG's first experience with this event, draw the curtain on our past and current infrastructure, disclose some of the amazing technologies we're using and show the order's jurney through kilometers of fiber optics, terabytes of RAM and peta flops of CPU.  By the way, you'll also have the chance to ask the ultimate question: are the price errors for real?"
+    },
+    {
+      "Id": 4,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "Living the end times",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        26
+      ],
+      "TrackRefId": 1,
+      "Description": "It is the about the imminent change of mentality that our local IT industry must make. It is metaphorically referring to the end times of the \"coder as a resource\" age. The transition has begun  quite a while ago with large adoption of Agile Manifesto.  14 years later after the print and time is up for the \"typical\" outsourcing developer. The economical turmoil will not be forgiving with those companies that are not truly people oriented and with those of us that are not professional. It is the new time of Software Craftsmanship."
+    },
+    {
+      "Id": 5,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "All you need to know about mutation testing",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        35,
+        36
+      ],
+      "TrackRefId": 1,
+      "Description": "Be our guest for a session on the interesting concept of Mutation Testing. Let’s explore together: What is Mutation testing? How can we easily adopt it in our projects? What is the added value?   Target Audience: Our session is aimed at developers but any other “flavor” is welcome.  We are looking forward to meet you there, Dragos & Robert "
+    },
+    {
+      "Id": 6,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "Service Bus Integration Patterns",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        18,
+        17
+      ],
+      "TrackRefId": 1,
+      "Description": "We will go through an example of leveraging MassTransit's Saga concept to create a scalable distributed online payment system."
+    },
+    {
+      "Id": 7,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "Cloud Security for the new Digital and SaaS Enterprise ",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        7
+      ],
+      "TrackRefId": 2,
+      "Description": "In today’s digital age, enterprises and their lines of businesses are increasingly adopting the cloud not just for their internal applications and the infrastructure that hosts those applications to boost their bottom line, but also to engage with their own customers and positively impact their top line. This digital and cloud transformation of their businesses brings for a myriad of security and compliance challenges for the organization. In this session, the speaker delves into these challenges and discusses aspects of the cloud security and compliance architectures these enterprises should consider and invest in as they embark on the cloud journey. "
+    },
+    {
+      "Id": 8,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "Security Going Wrong",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        10,
+        11
+      ],
+      "TrackRefId": 2,
+      "Description": "In this presentation, we will discuss about the role and importance of security in our day to day activities in IT and also we will take a brief look at the artistic ways of security going wrong. We know that security is becoming an increasingly important concern in our development area, since most of the application are taking the world wide web path, being accessible over networks and are, as result, vulnerable to a wide variety of threats. In order to minimize the possibility of unauthorized code to access our application and manipulate sensitive data there were build security measures and routines."
+    },
+    {
+      "Id": 9,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "Haxe - A solution for the big UI rewrite",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        1
+      ],
+      "TrackRefId": 2,
+      "Description": "I'll discuss the basics of what Haxe is, what makes it interesting for software development and why and how we use it at TiVo to make better products faster."
+    },
+    {
+      "Id": 10,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "REST, Event-Driven Architecture and Micro-Services",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        8,
+        9
+      ],
+      "TrackRefId": 2,
+      "Description": "Today, REST is probably the most popular communication style for Web APIs, but there are other styles to consider when designing a scalable, flexible, and maintainable software system. We will share a number of best practices on using REST, event-driven architecture and micro-services."
+    },
+    {
+      "Id": 11,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "Java Developers: how to go from 5 to 9 (A journey through the best and hidden features that came over to Java in the last decade)",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        3
+      ],
+      "TrackRefId": 2,
+      "Description": "Title: Java Developers: how to go from 5 to 9 Summary: A journey through the best and hidden features that came over to Java in the last decade   Java is surely not the first programming language that comes to mind when we talk about innovation and fancy new shining features, especially if you compare it to the likes of modern functional languages as Haskell, Scala, F#, or even C#.   Despite this, in the last 10+ years java language designers and java libraries developers have been very busy trying to push the most relevant and most needed tools to evolve it in the right direction, while keeping intact the core ‘spirit’: that stability, quality and consistency that everyone in the IT world knows and appreciate.   However, as developers in the cold real world out there, unluckily we have to deliver projects rather than play with language features.   This is why, more often than not, most of these new features go severely under-utilized, sometimes even completely ignored by developers, newbies and ‘veterans’ alike.   Of course, this is surely due also to that inherent lag in adopting newer version of the JVM in the enterprise that we all know about. Nevertheless if we are honest, that is not the full picture: we also have to blame ourselves, and our often static mindset to stick to what we know already and have been using in the past, rather than looking for a newer, better way to do things.   I will try to motivate you to refresh your java skills, by having a short journey over the last 10 years in Java development, going through each new version of Java SE (6, 7, 8), to see some of the best and/or most hidden features that came along with each new java release.   Meanwhile, we will also get a glimpse of what will come and what the the future holds for us with Java 9."
+    },
+    {
+      "Id": 12,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "How we did it! 100+ continuous deployments per day… while having a coffee",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        12,
+        13
+      ],
+      "TrackRefId": 2,
+      "Description": "Getting frequent releases into production is not straight forward. Changing a complex software suite release frequency from 1-2 major releases per year to 8-10 releases per year is more complex. Add multiple customers on different versions and configurations to this puzzle and things turn to be really complex. Join this talk and get to know the challenges for Continuous Delivery and our approach for solving this puzzle. "
+    },
+    {
+      "Id": 13,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "Voice Technology in Warehousing",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        20
+      ],
+      "TrackRefId": 3,
+      "Description": "Until recently, the idea of holding a conversation with a computer seemed pure science fiction.  But things are changing, and quickly. A growing number of people now talk to their mobile smart phones, asking them to send e-mail and text messages, search for directions, or find information on the Web. Now the rapid rise of powerful mobile devices is making voice interfaces even more useful and pervasive. Speech is ideally suited to mobile computing because a single spoken command can accomplish tasks that would normally require a multitude of swipes and presses. In this presentation we will try to see how we can make a mobile hybrid application driven by voice commands, using technologies like Apache Cordova mobile development framework, HTML5, Javascript and Google Voice Recognition API."
+    },
+    {
+      "Id": 14,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "Non-Native Mobile Apps",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        6
+      ],
+      "TrackRefId": 3,
+      "Description": "You've built a great web app! It even works offline! The logical next step is to make it work on your smartphone.  Let's walk through what through 3 important aspects to really call it mobile: you want it to be responsive, you want to use system-level functions and you want it well packaged.  (PS. In this talk, I'll brush the surface of what it takes to make a web app work well on the mobile, and try to send you in the right direction. If you want to roll up your sleeves and create one right away, I recommend you attend Mihai Bura's talk about Ionic, at 11am in Room 4.)"
+    },
+    {
+      "Id": 15,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "Flux(Redux) architecture & ReactJS ecosystem",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        69
+      ],
+      "TrackRefId": 3,
+      "Description": "Introductory presentation on FLUX and the React ecosystem. How Flux came to be and why you might prefer it over MVC/MVVM.   Demo application using ReactJS & Redux (FLUX library)  "
+    },
+    {
+      "Id": 16,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "Client-side reactive programming with RxJS",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        14
+      ],
+      "TrackRefId": 3,
+      "Description": "Imperative programming. We're all used to that. Probably doing it since...forever. But it's not the only way we can reason about our applications. In this presentation we will embark on a journey through the land of reactive programming. What it is and why is it useful. What are the advantages as well as the perks of using it, and when should we consider taking this approach. All this while live coding a GitHub suggestion box using RxJS (probably the most well-known client-side JS reactive programming framework). Hope to see you there!"
+    },
+    {
+      "Id": 17,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "Developer Guide to Founding a Startup",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        24
+      ],
+      "TrackRefId": 3,
+      "Description": "If you feel your potential as a software developer could be wasted then the right thing to do is to leave the comfort zone and start your own gig. I’ll share with you the lessons I learnt in my 10 year journey of being a developer and running a business in Romania. Learn about choosing an idea, establishing a legal entity, choosing technologies and tools, adopting the lean startup mindset, bootstrapping or attracting investments and more."
+    },
+    {
+      "Id": 18,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "Building a real time analytic dashboard using Azure Event Hubs, Stream Analytics, Machine Learning, and PowerBI",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        21
+      ],
+      "TrackRefId": 3,
+      "Description": "Come see a demo of a real time analysis of data at motion, using a host of Azure-based technologies.  Find out how you can easily build a pipeline to ingest, transform, predict and present data and trends, using stuff that’s already in Azure today.  Learn how you can get from idea to working prototype in a very short time. "
+    },
+    {
+      "Id": 19,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "Build apps using a zero-knowledge cloud database",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        53
+      ],
+      "TrackRefId": 4,
+      "Description": "Data privacy is a fundamental problem nowadays. Many organizations and individuals are concerned about privacy and what can happen with their data stored in the cloud. In this session will see how you can practically build apps using a cloud database which knows nothing about the data stored, but at the same time being able to query it."
+    },
+    {
+      "Id": 20,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "Integrating Cortana in UWP apps",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        31
+      ],
+      "TrackRefId": 4,
+      "Description": "Cortana is the voice-controlled virtual assistant launched on Windows Phone 8.1. Since its release, it has improved alot, gaining more and more features, especially when Windows 10 was launched. My goal in this presentation is to show you how easy it is to integrate Cortana in UWP apps, while also making sure that the apps run on various Windows 10 devices. Although you can write UWP apps in many languages, I will use C#/XAML in this presentation."
+    },
+    {
+      "Id": 21,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "Ionic - A framework for mobile development",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        27
+      ],
+      "TrackRefId": 4,
+      "Description": "Mobile development done right needs to cover at least a number of areas.   Prototyping - Use customizable block-like components Development - Write the backbone of your application using AngularJS and ngCordova Build and Emulate - A strong CLI will help you build your app using Gulp and then emulate it either in the browser, emulator, or on your very own device Deploy - One-click-deploy to your device? Yup, that's possible Analytics - Learn about the people using your app with less effort  Ionic comes to help and puts in our hands a beautiful framework that keeps us focused at what we should be doing: develop amazing apps."
+    },
+    {
+      "Id": 22,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "Know Your Customers, Know Your Apps",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        15
+      ],
+      "TrackRefId": 4,
+      "Description": "Whether you have to prioritize user stories on your backlog, learn what the best ways to monetize your applications are or simply want to find what the errors your customers are referring to, monitoring your applications is key if you want to be successful in the ISV industry. And yet too many applications, once deployed, remain unmonitored and thus, their developers tend to behave passive when it comes to supporting their customers. Ever heard a developer say ‘I don’t know why it doesn’t work for you. It works perfectly fine on my PC.’? During this session I’ll walk you through the best practices of both implementing and using Azure Application Insights so that you will be two steps ahead of your customer and eventually get to be pro-active when it comes to supporting applications deployed in the wild."
+    },
+    {
+      "Id": 23,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "45 minutes Magento tour",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        32
+      ],
+      "TrackRefId": 4,
+      "Description": "1. Why Magento? 2. Orange rules 3. Scary errors and quick fix 3. SEO mistakes 5. Security tips"
+    },
+    {
+      "Id": 24,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "Blue Chip Companies and their Social Media Tactics in Sales",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        28
+      ],
+      "TrackRefId": 4,
+      "Description": "It's no secret that the sales world has changed and Social Media is the name of the new 'Sales Game'. Although it can still be a mystery for regular Jane's and Joe's, Blue Chip Companies already rely on social media tactics on how to maintain or gain more in Sales."
+    },
+    {
+      "Id": 25,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "Spark: The beginnings",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        33
+      ],
+      "TrackRefId": 5,
+      "Description": "Are you a Java developer interested in big data processing and never had the chance to work with Apache Spark ? My presentation aims to help you get familiar with Spark concepts and start developing your own distributed processing application. "
+    },
+    {
+      "Id": 26,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "Distributed processing of large datasets",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        22
+      ],
+      "TrackRefId": 5,
+      "Description": "This presentation will give an overview of the Big Data trends in processing large datasets using NoSQL databases and cluster computing frameworks that can run applications faster than Hadoop by keeping data in memory."
+    },
+    {
+      "Id": 27,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "Use your data to understand the world: extracting meaning out of free form text and beyond.",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        30
+      ],
+      "TrackRefId": 5,
+      "Description": "Word embeddings are one of the most exciting topics in machine learning today, and thanks to recent developments it's never been easier to harness their power.  Starting from a simple problem, we'll have a look at how and why they work, see them in action on the Google cloud, then peek at how these concepts can be help you with your own challenges."
+    },
+    {
+      "Id": 28,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "How to grow happy teams",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        29
+      ],
+      "TrackRefId": 5,
+      "Description": "We've all worked, at one point or another, as part of a team. Sometimes the experience was pleasant and some other times not. Let's explore how much can one person influence, why some teams never glue together and what are the key attributes of genuinely happy teams. "
+    },
+    {
+      "Id": 29,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "How to improve individual performance",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        57,
+        58
+      ],
+      "TrackRefId": 5,
+      "Description": "I've made various presentations about boosting the skills of a manager, of a Scrum Master or a developer. During this presentation I'll speak about the common framework and the required mind-set that stands behind individual improvement"
+    },
+    {
+      "Id": 30,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "The hidden impediments to agile adoption",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        59
+      ],
+      "TrackRefId": 5,
+      "Description": "“In my case agile is not applicable\". What is really behind these words? It could be lack of knowledge, time or budget. Or there is, perhaps, a special context which needs an individual approach. I think there is something else, more interesting and deeper. Let's investigate this topic together."
+    },
+    {
+      "Id": 31,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "Handling Variations in Emerging Designs",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        23
+      ],
+      "TrackRefId": 6,
+      "Description": "One thing that Agile Software Development manifesto promises and values more is 'Responding to change over following a plan'. Achieving this value by properly handling variations within the problem domain is one of the biggest challenges. In this talk I will share some techniques from Emergent Design that I use when dealing with changes."
+    },
+    {
+      "Id": 32,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "Writing Maintainable JavaScript",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        37
+      ],
+      "TrackRefId": 6,
+      "Description": "With a growing set of front-end technologies and a constant demand for new features from the customer, many developers are having a hard time keeping their project organized and flexible. Unperceptibly, what used to be a small and easily manageable collection of components becomes a mass of indecipherable legacy code. Luckily, these types of problems are not new, and the industry literature is abundant with materials on the topic, albeit oftentimes for other technologies. In this talk, Paul brings some of these proven solutions to the JavaScript world, providing the audience with real-world examples of managing code complexity to ensure developers keep sane and new features get shipped in reasonable time."
+    },
+    {
+      "Id": 33,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "ECMAScript 6 Tips & Traps",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        62
+      ],
+      "TrackRefId": 6,
+      "Description": "JavaScript has always been a language with quite a few dark corners and gotchas, which, if ignored, could lead to unexpected behaviours and bugs.  While the new ECMAScript standard has helped clear some of these issues, it has also brought up some new ones like the Temporal Dead Zone, handling exceptions in Promises, or the behaviour of constants. This interactive presentation will go through a number of ECMAScript 6 quirks, in an attempt to clear them up."
+    },
+    {
+      "Id": 34,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "GPGPU Procedural Content Generation",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        34
+      ],
+      "TrackRefId": 6,
+      "Description": "An overview of techniques used to offload the workload of content generation to the GPU using Compute Shaders.  While of direct interest to game developers, the talk also touches on more general aspects of interacting with massive parallel architectures, useful in other areas of computing."
+    },
+    {
+      "Id": 35,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "A short introduction to VR",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        43
+      ],
+      "TrackRefId": 6,
+      "Description": "A short introduction to some concepts of VR and basic information on how to write a software that creates VR from individual movie clips."
+    },
+    {
+      "Id": 36,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "Marketing Automation Distillery",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        54,
+        55,
+        56
+      ],
+      "TrackRefId": 6,
+      "Description": "As a fine distillery transforms raw fruits into a premium blend, this is how Marketing Automation converts simple web visitors into loyal customers. Our analogy should make it easier to understand the journey through the backstage of the automated and entertaining part of Marketing. You will witness the behavior of a potential customer as he becomes a business opportunity."
+    },
+    {
+      "Id": 37,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "Creative Programming",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        39
+      ],
+      "TrackRefId": 7,
+      "Description": "Make art with computer programming"
+    },
+    {
+      "Id": 38,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "About User Experience: How design became the new language of business",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        38
+      ],
+      "TrackRefId": 7,
+      "Description": "As people now expect beautiful, well-designed product experiences, we are witnessing a design-driven revolution around the world. We will find out how human factors considerations are increasingly being incorporated into the product design process. I will also talk about airports in order to better emphasise the power of fierce focus on customer-centric product design. My vision is that our products and experiences should be purposeful and human-centered."
+    },
+    {
+      "Id": 39,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "Emotional Intelligence - A Success Mantra for Agile Teams",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        42
+      ],
+      "TrackRefId": 7,
+      "Description": "You’re a developer, a tester, or a business analyst, a person with feelings, ideas, and values just like everyone else. And while you know that you are fully qualified and prepared for this position, nobody told you that working on an Agile team requires a shift in your mindset, nobody warned you about the emotional side of being in charge. There is no preparing for finding emotional serenity or being emotionally intelligent when you work in an Agile team. There is no certificate to earn, no pill to take to make the rough feelings that slow you down, hold you back, making you less productive go away. You’re on your own. It is never easy. And how you react to your emotions will have profound consequences for your team.   I invite you to join me in a journey of self-exploration and discovery to learn some practical ways to look at your own behavior within the context of the team and gain self-understanding and insight into your behavior and how this behavior affect your team members. "
+    },
+    {
+      "Id": 40,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "Lessons learned in starting and closing an IT company in Holland",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        41
+      ],
+      "TrackRefId": 7,
+      "Description": "The presentation is a lessons-learned session about starting and closing(failing) an IT company in Holland. It will be an interactive discussion about do's and don't's that I learned during such a process. Practical examples will be shown about technology, marketing and financing. "
+    },
+    {
+      "Id": 41,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "Activiti - The workflow engine of your application",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        61
+      ],
+      "TrackRefId": 7,
+      "Description": "This is intended to be an introductory presentation for java developers interested in workflow execution engines.  We'll start with some basic information about BPMN concepts and then we'll continue with modelling an simple process in Activiti.  Later the developers will see how Activiti could be used as a workflow engine for their applications."
+    },
+    {
+      "Id": 42,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "Intro to Alfresco Development",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        66
+      ],
+      "TrackRefId": 7,
+      "Description": "Alfresco is the leading enterprise - open source content management system (a filed that’s much more interesting than it sounds :). It’s also an awesome platform for building custom ECM solutions. This presentation will introduce you to Alfresco development approaches using Java and JavaScript."
+    },
+    {
+      "Id": 43,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "Useful code metrics",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        16
+      ],
+      "TrackRefId": 8,
+      "Description": "Code metrics are important. They offer us quantitative and qualitative information about our software, or so we've been told.  In this presentation we'll be talking about a few useless metrics and a few more useful ones that will help us more about understanding our code, and the tools we can use to get them."
+    },
+    {
+      "Id": 44,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "Automate your failures. A story about docker and kubernetes.",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        63
+      ],
+      "TrackRefId": 8,
+      "Description": "What is docker, how it works and how it compares with virtualization techniques. How kubernetes is automating docker containers and how the focus changed from keeping an application up as log as possible, to how to replace a misbehaving application as soon as possible."
+    },
+    {
+      "Id": 45,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "Configuration Management NG",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        64
+      ],
+      "TrackRefId": 8,
+      "Description": "An idea on how we could revolutionize configuration management and bring it to the next level, providing real configuration flexibility and unlimited possibilities to scale."
+    },
+    {
+      "Id": 46,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "How to \"Go\"",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        65
+      ],
+      "TrackRefId": 8,
+      "Description": "This talk will provide a short introduction to the Go Programing language developed by Google and share some of the lessons learned at Optymyze during one year of developing tools in go.   Hopefully by the end of this talk you should learn why we choose Go, why we’ve rewritten a large part of our own internal tools in go and why should you invest time in learning go. "
+    },
+    {
+      "Id": 47,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "Continuos Delivery for iOS Projects",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        40
+      ],
+      "TrackRefId": 8,
+      "Description": "Learn how to connect all you deployment tools into one streamlined workflow and start saving development hours by using fastlane. Whether you are testing your latest commit, making a build for your beta testers or even delivering to the AppStore, fastlane has all the right moves for you."
+    },
+    {
+      "Id": 48,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "DevOps on Google's Compute Engine",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        60
+      ],
+      "TrackRefId": 8,
+      "Description": "1) Google Compute Engine capabilities 2) Monitor Instances with Google Cloud Monitoring 3) Automate code deployment "
+    },
+    {
+      "Id": 49,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "Testing Under Way",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        44
+      ],
+      "TrackRefId": 9,
+      "Description": "The development of the Testing market in Iasi in the last 10 years and the future challenges."
+    },
+    {
+      "Id": 50,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "Building frameworks over Selenium",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        49
+      ],
+      "TrackRefId": 9,
+      "Description": "Selenium is the leading tool for web automation. But with a custom framework over it, you can really get the most of it.  We will take a deep look through the ways we can build a framework over Selenium, best practices and loads of solid examples."
+    },
+    {
+      "Id": 51,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "How real are your test leadership abilities?",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        46
+      ],
+      "TrackRefId": 9,
+      "Description": "This presentation touches upon subjects like: what are the most important skills and areas of expertise for a test lead and how technical a test lead role should be."
+    },
+    {
+      "Id": 52,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "[1 - Bring IT back home] [2- From zero to hero with Quality Assurance]",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        51,
+        70
+      ],
+      "TrackRefId": 9,
+      "Description": "[1 - IT Manager born and raised in Iasi, with 18 years of experience in US  and Canada, where she effectively implemented various offshore/onshore resource staffing models (India). An advocate for retaining IT talent in Romania, where she wants to apply her management and leadership knowledge. She is relocating back to Romania, with the strong belief that our country is becoming an outsourcing destination for corporations all over the world. Come and hear her emigration and repatriation story.] [2 - How often did you hear someone saying \"QA is cool\"? How often have you been encouraged to continue as a QA engineer? With this presentation I'm trying to give some answers to the above questions (and more) by using my 10+ years of QA experience and real life examples.]"
+    },
+    {
+      "Id": 53,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "Wisdom is the bug killer",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        50
+      ],
+      "TrackRefId": 9,
+      "Description": "This presentation can be summarized in how awesome is the QA Engineer's job and in the same time, how complex it is. In this presentation you will find about a really \"human\" testing framework and the importance of multiple knowledge in daily testing."
+    },
+    {
+      "Id": 54,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "How to write “Software that matters” using BDD concepts on Java platform",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        47,
+        48
+      ],
+      "TrackRefId": 9,
+      "Description": "General presentation on BDD (Behaviour-Driven Development) concepts from the perspective of an Automation QA and a Java developer. BDD tools: Cucumber and JBehave."
+    },
+    {
+      "Id": 55,
+      "Start": "2015-11-07T09:00:00.000Z",
+      "End": "2015-11-07T09:45:00.000Z",
+      "Title": "Lean - change the game",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        25,
+        5
+      ],
+      "TrackRefId": 10,
+      "Description": "We'll explore the Lean ecosystem and wonder how we can change the game"
+    },
+    {
+      "Id": 56,
+      "Start": "2015-11-07T10:00:00.000Z",
+      "End": "2015-11-07T10:45:00.000Z",
+      "Title": "Decide at the Last Responsible Moment!",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        5,
+        25
+      ],
+      "TrackRefId": 10,
+      "Description": "[Workshop] - Decisions in software architecture & design can be tricky in the complex and agile environments we live. Decide too early or too late and unexpected (sometimes very serious) consequences may arise. Let's explore real options and the Last Responsible Moment!"
+    },
+    {
+      "Id": 57,
+      "Start": "2015-11-07T11:00:00.000Z",
+      "End": "2015-11-07T11:45:00.000Z",
+      "Title": "Thinking Strategically",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        68
+      ],
+      "TrackRefId": 10,
+      "Description": "This presentation challenges leaders to broaden their perspectives, and question conventional wisdom. Participants will be able to: - Describe what strategic thinking is and how it differs from strategic planning and execution - Recognize and demonstrate the characteristics and behaviors of strategic thinkers - Identify and overcome the barriers that impede strategic thinking"
+    },
+    {
+      "Id": 58,
+      "Start": "2015-11-07T13:00:00.000Z",
+      "End": "2015-11-07T13:45:00.000Z",
+      "Title": "Team Synergy",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        45
+      ],
+      "TrackRefId": 10,
+      "Description": " In this experiential learning work-shop we will realize that we need to build trust-based relationships, we will understand that ‘winning’ often requires some partners to be prepared to ‘step aside’ or even sacrifice in order to allow another partner to ‘win’. The more competitive a business landscape becomes, the more we need our teams to operate in a trustful way."
+    },
+    {
+      "Id": 59,
+      "Start": "2015-11-07T14:00:00.000Z",
+      "End": "2015-11-07T14:45:00.000Z",
+      "Title": "The coaching role on employee retention and individual performance",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        52
+      ],
+      "TrackRefId": 10,
+      "Description": "Radu will demonstrate how to use the Coaching in seven steps method to access employee qualities and enhance them for performance. It will be not only a presentations but managers from audience will exercise practically the method and they will be able to use it next day with their employees. The manager do not have to like or dislike people, nor to change them, but to find and enhance their qualities for individual performance and as a team. You can not be a performer if your team do not perform."
+    },
+    {
+      "Id": 60,
+      "Start": "2015-11-07T15:00:00.000Z",
+      "End": "2015-11-07T15:45:00.000Z",
+      "Title": "Lucruri de care mi-e frică, și cele de care nu",
+      "mock": "",
+      "OverrideTracks": false,
+      "SpeakerRefIds": [
+        4
+      ],
+      "TrackRefId": 10,
+      "Description": "Dăm la o parte “cultura organizațională”, “motivarea”, “engagement-ul”, “spiritul de echipă”, “leadership-ul” și altele ca ele, și ne uităm direct în ochii monstrului: ce vedem?  O discuție despre părțile dureroase ale învățării, despre ceea ce ne schimbă cu adevărat, și despre cum trecem prin transformările care contează. Când învățarea încetează să mai fie jucărie și devine identitate. Când intrăm în acel joc în care avem multe de pierdut. Cum o facem? De ce lucruri are rost să ne temem, și de care nu?"
+    },
+    {
+      "Id": 3001,
+      "Start": "2015-11-07T06:00:00.000Z",
+      "End": "2015-11-07T06:45:00.000Z",
+      "OverrideTracks": true,
+      "SpeakerRefIds": [],
+      "TrackRefId": null,
+      "Title": "Registration & Welcome coffee",
+      "Description": ""
+    },
+    {
+      "Id": 3002,
+      "Start": "2015-11-07T06:45:00.000Z",
+      "End": "2015-11-07T08:30:00.000Z",
+      "OverrideTracks": true,
+      "SpeakerRefIds": [],
+      "TrackRefId": null,
+      "Title": "Opening + Meet the sponsors",
+      "Description": ""
+    },
+    {
+      "Id": 3003,
+      "Start": "2015-11-07T08:30:00.000Z",
+      "End": "2015-11-07T09:00:00.000Z",
+      "OverrideTracks": true,
+      "SpeakerRefIds": [],
+      "TrackRefId": null,
+      "Title": "Break",
+      "Description": ""
+    },
+    {
+      "Id": 3004,
+      "Start": "2015-11-07T10:45:00.000Z",
+      "End": "2015-11-07T11:00:00.000Z",
+      "OverrideTracks": true,
+      "SpeakerRefIds": [],
+      "TrackRefId": null,
+      "Title": "Coffee Break",
+      "Description": ""
+    },
+    {
+      "Id": 3005,
+      "Start": "2015-11-07T11:45:00.000Z",
+      "End": "2015-11-07T13:00:00.000Z",
+      "OverrideTracks": true,
+      "SpeakerRefIds": [],
+      "TrackRefId": null,
+      "Title": "Lunch break in the restaurant",
+      "Description": ""
+    },
+    {
+      "Id": 3006,
+      "Start": "2015-11-07T15:45:00.000Z",
+      "End": "2015-11-07T16:00:00.000Z",
+      "OverrideTracks": true,
+      "SpeakerRefIds": [],
+      "TrackRefId": null,
+      "Title": "The Raffle: Come to Room 2 and Win Your Prizes!",
+      "Description": ""
+    }
+  ]
 }
