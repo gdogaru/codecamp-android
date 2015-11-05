@@ -13,6 +13,7 @@ import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.model.Sponsor;
 import com.gdogaru.codecamp.model.Track;
+import com.gdogaru.codecamp.model.json.DateTypeAdapter;
 import com.gdogaru.codecamp.svc.OverviewDAO;
 import com.gdogaru.codecamp.svc.SpeakerPhotoUtils;
 import com.gdogaru.codecamp.util.IOUtils;
@@ -23,6 +24,7 @@ import com.path.android.jobqueue.Params;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Date;
 
 /**
  * Created by Gabriel on 10/22/2014.
@@ -60,11 +62,15 @@ public class UpdateDataJob extends Job {
         signalStart();
         dbHelper = app.getDbHelper();
 
-        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm").create();
+        Gson gson = new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZ")
+                .registerTypeAdapter(Date.class, new DateTypeAdapter())
+                .create();
 
         Codecamp codecamp;
         try {
-            codecamp = downloadData(gson);
+            throw new RuntimeException();
+//            codecamp = downloadData(gson);
         } catch (Exception e) {
             Log.e(Logging.TAG, "Error retrieving server data.", e);
 //            if (!isNetworkConnected()) {

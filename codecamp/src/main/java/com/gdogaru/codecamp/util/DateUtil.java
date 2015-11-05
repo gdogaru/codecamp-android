@@ -19,19 +19,21 @@ package com.gdogaru.codecamp.util;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 public class DateUtil {
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm");
-
 
     public static String formatPeriod(Date start, Date end) {
         if (start == null || end == null) {
             return "";
         }
+        DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        DATE_FORMAT.setTimeZone(TimeZone.getDefault());
         return String.format("%s - %s", DATE_FORMAT.format(start), DATE_FORMAT.format(end));
     }
 }

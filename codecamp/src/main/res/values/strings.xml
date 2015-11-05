@@ -68,6 +68,6 @@
     <string name="day1">Day 1</string>
     <string name="day2">Day 2</string>
     <string name="notification_title">Codecamp Update</string>
-    <string name="copyright">- app by Gabriel Dogaru, gabrieldogaru.com</string>
+    <string name="copyright">- unofficial codecamp agenda app\n- by Gabriel Dogaru, gabrieldogaru.com</string>
     <string name="session_info">Session Info</string>
 </resources>

@@ -48,6 +48,14 @@ public class TrackSelectorFragment extends Fragment {
     private TrackSelectorDialog trackDialog;
     private Long currentTrack;
 
+    private static String[] getTrackNames(List<Track> trackList) {
+        String[] result = new String[trackList.size()];
+        for (int i = 0; i < trackList.size(); i++) {
+            result[i] = trackList.get(i).getName();
+        }
+        return result;
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.track_selector_fragment, container, false);
@@ -72,6 +80,21 @@ public class TrackSelectorFragment extends Fragment {
         }
     }
 
+//    public void initView(){
+//        tracksAdapter = new TrackAdapter(activity, trackList);
+//        if (popupWindow != null) {
+//            ((ListPopupWindow) popupWindow).setAdapter(tracksAdapter);
+//        } else {
+//            initSpinnerPopup();
+//        }
+//        if (trackList.size() > 0) {
+//            Track track = trackList.get(0);
+//            String trackName = track == null || track.getId() == 0 ? getString(R.string.all_tracks) : track.getName();
+//            trackText.setText(trackName);
+//        }
+//        setCurrentTrack(0L);
+//    }
+
     public void init() {
         tracksAdapter = new TrackAdapter(getActivity(), trackList);
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
@@ -89,23 +112,9 @@ public class TrackSelectorFragment extends Fragment {
         }
     }
 
-//    public void initView(){
-//        tracksAdapter = new TrackAdapter(activity, trackList);
-//        if (popupWindow != null) {
-//            ((ListPopupWindow) popupWindow).setAdapter(tracksAdapter);
-//        } else {
-//            initSpinnerPopup();
-//        }
-//        if (trackList.size() > 0) {
-//            Track track = trackList.get(0);
-//            String trackName = track == null || track.getId() == 0 ? getString(R.string.all_tracks) : track.getName();
-//            trackText.setText(trackName);
-//        }
-//        setCurrentTrack(0L);
-//    }
-
     private void initSpinnerPopup() {
-        trackDialog = new TrackSelectorDialog(trackList);
+        trackDialog = new TrackSelectorDialog();
+        trackDialog.setTrackList(trackList);
         trackDialog.setDialogChangeListener(new DialogChangeListener() {
             @Override
             public void onDialogChange(int newInt) {
@@ -159,14 +168,6 @@ public class TrackSelectorFragment extends Fragment {
         this.trackList = trackList;
     }
 
-    private String[] getTrackNames(List<Track> trackList) {
-        String[] result = new String[trackList.size()];
-        for (int i = 0; i < trackList.size(); i++) {
-            result[i] = trackList.get(i).getName();
-        }
-        return result;
-    }
-
     public interface TrackSelectedListener {
         void onTrackSelected(Track track);
     }
@@ -175,15 +176,15 @@ public class TrackSelectorFragment extends Fragment {
         void onDialogChange(int newInt);
     }
 
-    public class TrackSelectorDialog extends DialogFragment {
-        private List<Track> trackList= new ArrayList<Track>();
+    public static class TrackSelectorDialog extends DialogFragment {
         int selectedId = 0;
+        private List<Track> trackList = new ArrayList<Track>();
         private DialogChangeListener dialogChangeListener;
 
         public TrackSelectorDialog() {
         }
 
-        public TrackSelectorDialog(List<Track> trackList) {
+        public void setTrackList(List<Track> trackList) {
             this.trackList = trackList;
         }
 

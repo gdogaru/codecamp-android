@@ -27,7 +27,8 @@ public class CodecampClient {
                 .setDateFormat("yyyy-MM-dd'T'HH:mm").create();
         messageConverter.setGson(gson);
         restTemplate.getMessageConverters().add(messageConverter);
-        rootUrl = "https://codecampevents.azure-mobile.dnet/tables";
+//        rootUrl = "https://codecampevents.azure-mobile.dnet/tables";
+        rootUrl = "http://gdogaru.ro";
     }
 
     public Codecamp getEventData() {
@@ -35,7 +36,7 @@ public class CodecampClient {
         httpHeaders.setAccept(Collections.singletonList(org.springframework.http.MediaType.parseMediaType("application/json")));
         httpHeaders.set(ServerUtilities.ZUMO_HEADER, ServerUtilities.ZUMO_APP_ID);
         HttpEntity<Object> requestEntity = new HttpEntity<Object>(httpHeaders);
-        return restTemplate.exchange(rootUrl.concat("/event"), HttpMethod.GET, requestEntity, Codecamp.class).getBody();
+        return restTemplate.exchange(rootUrl.concat("/codecamp_app_agenda.json"), HttpMethod.GET, requestEntity, Codecamp.class).getBody();
     }
 
 }

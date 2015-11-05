@@ -18,6 +18,7 @@ package com.gdogaru.codecamp.view;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,11 +37,13 @@ import com.j256.ormlite.android.apptools.OpenHelperManager;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 public class SessionInfoFragment extends Fragment {
 
     public static final String SESSION_ID = "sessionId";
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm");
     TextView sessionTitle;
     TextView sessionTime;
     TextView sessionDescription;
@@ -61,7 +64,7 @@ public class SessionInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.session_info,container,false);
+        return inflater.inflate(R.layout.session_info, container, false);
     }
 
     @Override
@@ -87,7 +90,7 @@ public class SessionInfoFragment extends Fragment {
         Session session = dbHelper.getSessionDao().queryForId(sessionId);
         sessionTitle.setText(session.getTitle());
         sessionDescription.setText(session.getDescription());
-        String timeString = String.format("%s - %s", DATE_FORMAT.format(session.getStart()), DATE_FORMAT.format(session.getEnd()));
+        String timeString = String.format("%s - %s", formatDate(session.getStart()), formatDate(session.getEnd()));
         sessionTime.setText(timeString);
         if (!session.isOverrideTracks() && session.getTrackRefId() != null) {
             Track track = dbHelper.getTrackDao().queryForId(session.getTrackRefId());
@@ -105,6 +108,13 @@ public class SessionInfoFragment extends Fragment {
                 }
             }
         }
+    }
+
+    @NonNull
+    private String formatDate(Date start) {
+        DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        DATE_FORMAT.setTimeZone(TimeZone.getDefault());
+        return DATE_FORMAT.format(start);
     }
 
     private void addSpeaker(Speaker speaker) {

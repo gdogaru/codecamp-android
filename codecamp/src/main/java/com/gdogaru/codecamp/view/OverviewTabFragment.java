@@ -49,7 +49,7 @@ import java.util.Locale;
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 public class OverviewTabFragment extends Fragment {
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMMM yyyy", Locale.US);
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
 
     TextView eventTitle;
 
