@@ -4,15 +4,20 @@ import android.app.Application;
 import android.util.Log;
 
 import com.gdogaru.codecamp.db.DatabaseHelper;
+import com.gdogaru.codecamp.model.json.DateTypeAdapter;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.path.android.jobqueue.JobManager;
 import com.path.android.jobqueue.config.Configuration;
 import com.path.android.jobqueue.log.CustomLogger;
+
+import java.util.Date;
 
 import de.greenrobot.event.EventBus;
 
@@ -27,6 +32,7 @@ public class CodecampApplication extends Application {
     private JobManager jobManager;
     private DatabaseHelper dbHelper;
     EventBus eventBus;
+    private Gson gson;
 
     @Override
     public void onCreate() {
@@ -35,7 +41,15 @@ public class CodecampApplication extends Application {
         configureJobManager();
         dbHelper = OpenHelperManager.getHelper(instance, DatabaseHelper.class);
         eventBus = new EventBus();
+        gson = createGson();
         getTracker();
+    }
+
+    private Gson createGson() {
+        return new GsonBuilder()
+                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZ")
+                .registerTypeAdapter(Date.class, new DateTypeAdapter())
+                .create();
     }
 
     synchronized public Tracker getTracker() {
@@ -107,5 +121,9 @@ public class CodecampApplication extends Application {
 
     public EventBus getEventBus() {
         return eventBus;
+    }
+
+    public Gson getGson() {
+        return gson;
     }
 }

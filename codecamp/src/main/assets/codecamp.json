@@ -130,7 +130,7 @@
       "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/florin.cardasim2015.jpg",
       "CompanyName": "",
       "CompanyUrl": "",
-      "Bio": "Florin leads the Architecture and Analysis discipline in Endava. Beyond his technical skills, Florin has gained a broad experience as a trainer for companies and speaker in community events. Florin is also co-founder of CodeCamp, one of the largest communities of software developers in Romania.",
+      "Bio": "Florin is the Group Head of Development at Endava. Beyond his technical skills, Florin has gained a broad experience as a trainer for companies and speaker in community events. Florin is also co-founder of CodeCamp, one of the largest communities of software developers in Romania.",
       "FirstName": "Florin",
       "LastName": "Cardasim",
       "Code": 73
@@ -442,7 +442,7 @@
       "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/bogdan.bujdea.jpg",
       "CompanyName": "",
       "CompanyUrl": "",
-      "Bio": "I'm a Windows Platform Developer with ~4 years of experience. I worked at Thinslices as a Windows 8 Developer, and now I work at Feel IT as Windows Phone developer. Considering that Windows 10 is only one platform now, I think my correct title would be Windows Platform Developer.<br/><br/>Although my main focus is on C# and UWP apps, I also worked with a lot of languages like Java, Node.js, Angular.js, HTML5/CSS3.<br/><br/>One of my favorite authors and speakers is Robert Martin(Uncle Bob). I learned from him a lot of things like Test Driven Development, writing clean code, and the most important one, being a professional developer.",
+      "Bio": "I'm a Windows Platform Developer with ~4 years of experience on Windows apps, currently working for Feel IT. My favorite hobby is writing code, I knew this from high school and I managed to also turn it into a full-time job. Although I also worked with other languages and frameworks, I focused myself on developing apps with C#/XAML for the Windows Platform..",
       "FirstName": "Bogdan",
       "LastName": "Bujdea",
       "Code": 73
@@ -823,7 +823,7 @@
       "Id": 63,
       "Name": "Cristian Falcas",
       "Title": "Dev-Ops",
-      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/icon_user.png",
+      "PortraitImageUrl": "http://iasi.codecamp.ro/images/speakers/falcas_100.png",
       "CompanyName": "",
       "CompanyUrl": "",
       "Bio": "I'm 36 years old, born in Iasi and working for almost 3 years as a dev-ops engineer at Optymyze/Synygy/ArezzoSky.<br/><br/>I have a passion for linux. I love to automate as much as possible from my work.",
@@ -1171,14 +1171,14 @@
       "Id": 18,
       "Start": "2015-11-07T15:00:00+0000",
       "End": "2015-11-07T15:45:00+0000",
-      "Title": "Building a real time analytic dashboard using Azure Event Hubs, Stream Analytics, Machine Learning, and PowerBI",
+      "Title": "Building an IoT Solution Using Azure IoT Hub, Stream Analytics, Machine Learning, and PowerBI",
       "mock": "",
       "OverrideTracks": false,
       "SpeakerRefIds": [
         21
       ],
       "TrackRefId": 3,
-      "Description": "Come see a demo of a real time analysis of data at motion, using a host of Azure-based technologies.  Find out how you can easily build a pipeline to ingest, transform, predict and present data and trends, using stuff that’s already in Azure today.  Learn how you can get from idea to working prototype in a very short time. "
+      "Description": "Your cloud-based Internet of Things is here! Come see a demo of a real time analysis of device telemetry at motion, using a host of Microsoft Azure-based technologies. Find out how you can easily build a pipeline to ingest, transform, predict and present data and trends, using stuff that’s already in Azure today. Learn how you can get from idea to working prototype in a very short time."
     },
     {
       "Id": 19,
@@ -1197,14 +1197,14 @@
       "Id": 20,
       "Start": "2015-11-07T10:00:00+0000",
       "End": "2015-11-07T10:45:00+0000",
-      "Title": "Integrating Cortana in UWP apps",
+      "Title": "Using Cortana for voice activated apps",
       "mock": "",
       "OverrideTracks": false,
       "SpeakerRefIds": [
         31
       ],
       "TrackRefId": 4,
-      "Description": "Cortana is the voice-controlled virtual assistant launched on Windows Phone 8.1. Since its release, it has improved alot, gaining more and more features, especially when Windows 10 was launched. My goal in this presentation is to show you how easy it is to integrate Cortana in UWP apps, while also making sure that the apps run on various Windows 10 devices. Although you can write UWP apps in many languages, I will use C#/XAML in this presentation."
+      "Description": "Voice activated applications and voice recognition have become an increasingly popular concept in recent years. In this presentation my goal is to help you know when to use voice recognition, and what are its advantages and disadvantages. Considering that in these days every device supports voice recognition(smartwatches, smartphones, IoT devices, etc), knowing how and when to handle voice input is something that every developer should know. The code that I will write during the presentation will be in C#/XAML for UWP apps, but the presentation ideas also apply to other platforms that support voice recognition."
     },
     {
       "Id": 21,
@@ -1314,7 +1314,7 @@
       "Id": 29,
       "Start": "2015-11-07T14:00:00+0000",
       "End": "2015-11-07T14:45:00+0000",
-      "Title": "How to improve individual performance",
+      "Title": "A new perspective on agile work and what agility means",
       "mock": "",
       "OverrideTracks": false,
       "SpeakerRefIds": [
@@ -1322,7 +1322,7 @@
         58
       ],
       "TrackRefId": 5,
-      "Description": "I've made various presentations about boosting the skills of a manager, of a Scrum Master or a developer. During this presentation I'll speak about the common framework and the required mind-set that stands behind individual improvement"
+      "Description": "What is agility? What is actually the agile manifesto?  If you have seen the agile manifesto before and you think it is just a list of abstract things and phrases, then this presentation is for you. Come to our session to gain a new perspective that will certainly change the way you see work in an agile team. We'll be there! What about you? "
     },
     {
       "Id": 30,
@@ -1671,7 +1671,7 @@
       "Id": 56,
       "Start": "2015-11-07T10:00:00+0000",
       "End": "2015-11-07T10:45:00+0000",
-      "Title": "Decide at the Last Responsible Moment!",
+      "Title": "[Workshop] Decide at the Last Responsible Moment!",
       "mock": "",
       "OverrideTracks": false,
       "SpeakerRefIds": [

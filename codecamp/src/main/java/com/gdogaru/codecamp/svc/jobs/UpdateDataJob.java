@@ -13,18 +13,15 @@ import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.model.Sponsor;
 import com.gdogaru.codecamp.model.Track;
-import com.gdogaru.codecamp.model.json.DateTypeAdapter;
 import com.gdogaru.codecamp.svc.OverviewDAO;
 import com.gdogaru.codecamp.svc.SpeakerPhotoUtils;
 import com.gdogaru.codecamp.util.IOUtils;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.path.android.jobqueue.Job;
 import com.path.android.jobqueue.Params;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Date;
 
 /**
  * Created by Gabriel on 10/22/2014.
@@ -62,20 +59,16 @@ public class UpdateDataJob extends Job {
         signalStart();
         dbHelper = app.getDbHelper();
 
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZZ")
-                .registerTypeAdapter(Date.class, new DateTypeAdapter())
-                .create();
+        Gson gson = CodecampApplication.instance().getGson();
 
         Codecamp codecamp;
         try {
-            throw new RuntimeException();
-//            codecamp = downloadData(gson);
+            codecamp = downloadData(gson);
         } catch (Exception e) {
             Log.e(Logging.TAG, "Error retrieving server data.", e);
-//            if (!isNetworkConnected()) {
-//                CodecampApplication.instance().getEventBus().post(new NoInternetEvent());
-//            }
+            if (!isNetworkConnected()) {
+                CodecampApplication.instance().getEventBus().post(new NoInternetEvent());
+            }
             if (UpdatePrefHelper.getLastUpdated() == 0) {
                 try {
                     codecamp = loadFromAssets(gson, app);

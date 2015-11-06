@@ -1,8 +1,8 @@
 package com.gdogaru.codecamp.svc;
 
+import com.gdogaru.codecamp.CodecampApplication;
 import com.gdogaru.codecamp.model.Codecamp;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,8 +23,7 @@ public class CodecampClient {
     public CodecampClient() {
         restTemplate = new RestTemplate();
         GsonHttpMessageConverter messageConverter = new GsonHttpMessageConverter();
-        Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm").create();
+        Gson gson = CodecampApplication.instance().getGson();
         messageConverter.setGson(gson);
         restTemplate.getMessageConverters().add(messageConverter);
 //        rootUrl = "https://codecampevents.azure-mobile.dnet/tables";

@@ -15,7 +15,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.TimeZone;
 
 /**
  * Created by Gabriel on 11/5/2015.
@@ -25,13 +24,10 @@ public class DateTypeAdapter implements JsonDeserializer<Date>, JsonSerializer<D
 
     public DateTypeAdapter() {
         dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZ", Locale.getDefault());
-        dateFormat.setTimeZone(TimeZone.getDefault());
-
     }
 
     @Override
-    public Date deserialize(final JsonElement je, final Type type,
-                            final JsonDeserializationContext jdc) throws JsonParseException {
+    public Date deserialize(final JsonElement je, final Type type, final JsonDeserializationContext jdc) throws JsonParseException {
         try {
             return je.getAsString().length() == 0 ? null : dateFormat.parse(je.getAsString());
         } catch (ParseException e) {
