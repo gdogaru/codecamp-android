@@ -20,7 +20,6 @@ package com.gdogaru.codecamp.view;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +37,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -48,7 +48,7 @@ import java.util.Locale;
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
-public class OverviewTabFragment extends Fragment {
+public class OverviewTabFragment extends Fragment implements OnMapReadyCallback {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
 
     TextView eventTitle;
@@ -137,6 +137,8 @@ public class OverviewTabFragment extends Fragment {
         transaction.add(R.id.mapLayout, mapview);
         transaction.commit();
 
+        mapview.getMapAsync(this);
+
 
 //        centerMap();
 
@@ -153,13 +155,13 @@ public class OverviewTabFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                centerMap();
-            }
-        }, 500);
+//        Handler handler = new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                centerMap();
+//            }
+//        }, 500);
     }
 
     private void centerMap() {
@@ -188,5 +190,33 @@ public class OverviewTabFragment extends Fragment {
                 }
             });
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        final double latitude = overview.getLocation().getLatitude();
+        final double longitude = overview.getLocation().getLongitude();
+        LatLng latLng = new LatLng(latitude, longitude);
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+        //set zoom level
+        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+        //add marker to map
+        googleMap.addMarker(new MarkerOptions().position(latLng));
+        // disables zoom gestures
+        googleMap.getUiSettings().setZoomControlsEnabled(false);
+        //disable scroll gesture
+        googleMap.getUiSettings().setScrollGesturesEnabled(false);
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+            @Override
+            public void onMapClick(LatLng latLng) {
+                //geo:latitude,longitude?z=zoom
+                String uri = "geo:" + latitude + "," + longitude + "?z=" + 19;
+                Intent intentMap = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intentMap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intentMap);
+            }
+        });
     }
 }

@@ -8,8 +8,8 @@ android {
         minSdkVersion Integer.parseInt(project.ANDROID_BUILD_MIN_SDK_VERSION)
         targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
         applicationId "com.gdogaru.codecamp"
-        versionCode 8
-        versionName "3.8"
+        versionCode 9
+        versionName "3.9"
     }
 
     signingConfigs {
@@ -29,11 +29,12 @@ android {
     }
 
     buildTypes {
-//        debug {
-//            signingConfig signingConfigs.release
-//            runProguard true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-//        }
+        debug {
+            signingConfig signingConfigs.release
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
 
         release {
             signingConfig signingConfigs.release
@@ -66,17 +67,18 @@ android {
 }
 
 dependencies {
-    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
-    compile 'com.google.code.gson:gson:2.3'
-    compile 'com.j256.ormlite:ormlite-android:4.48'
-    compile 'de.greenrobot:eventbus:2.4.0'
     compile('com.path:android-priority-jobqueue:1.1.2') {
         exclude group: 'com.google.android', module: 'android'
     }
-    compile 'se.emilsjolander:stickylistheaders:2.7.0'
 
-    compile 'com.google.android.gms:play-services:8.1.0'
-    compile 'com.android.support:support-v13:23.1.0'
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'org.springframework.android:spring-android-rest-template:1.0.1.RELEASE'
+    compile 'com.google.code.gson:gson:2.4'
+    compile 'com.j256.ormlite:ormlite-android:4.48'
+    compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'se.emilsjolander:stickylistheaders:2.7.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.android.support:support-v13:23.3.0'
+    compile 'com.android.support:appcompat-v7:23.3.0'
 }
