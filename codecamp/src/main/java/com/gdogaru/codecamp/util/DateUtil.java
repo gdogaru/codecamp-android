@@ -16,6 +16,10 @@
 
 package com.gdogaru.codecamp.util;
 
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,7 +30,19 @@ import java.util.TimeZone;
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 public class DateUtil {
+    static DateTimeFormatter hourFormat = DateTimeFormat.forPattern("HH:mm");
 
+
+    public static String formatPeriod(LocalTime start, LocalTime end) {
+        if (start == null || end == null) {
+            return "";
+        }
+        return String.format("%s - %s", formatTime(start), formatTime(end));
+    }
+
+    public static String formatTime(LocalTime start) {
+        return hourFormat.print(start);
+    }
 
     public static String formatPeriod(Date start, Date end) {
         if (start == null || end == null) {

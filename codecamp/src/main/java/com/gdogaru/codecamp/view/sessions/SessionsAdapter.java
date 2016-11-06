@@ -41,7 +41,7 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
 
     @Override
     public long getItemId(int position) {
-        return sessions.get(position).getId();
+        return position;
     }
 
     public List<SessionListItem> getSessions() {
@@ -53,7 +53,7 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
         View view;
         if (convertView != null) view = convertView;
         else {
-            view = mInflater.inflate(R.layout.session_list_item, parent, false);
+            view = mInflater.inflate(R.layout.sessions_list_item, parent, false);
             ViewHolder holder = new ViewHolder();
             holder.title = (TextView) view.findViewById(R.id.sessionName);
             holder.time = (TextView) view.findViewById(R.id.sessionTime);

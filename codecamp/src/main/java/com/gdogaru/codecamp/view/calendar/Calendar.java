@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.gdogaru.codecamp.R;
 
+import org.joda.time.LocalTime;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -27,7 +29,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.TimeZone;
 
 
 public class Calendar extends ScrollView {
@@ -36,18 +37,18 @@ public class Calendar extends ScrollView {
     private static final long MILLIS_IN_MINUTE = 60000;
     private static final long MILLIS_IN_DAY = 86400000;
     private static final long MILLIS_IN_HOUR = 3600000;
+    private final Activity context;
+    RelativeLayout parent;
+    RelativeLayout hourParent;
     private double PX_PER_MINUTE;
     private int HOUR_BAR_WIDTH;
-    private final Activity context;
     private List<DisplayEvent> events = new ArrayList<DisplayEvent>();
-    private Date startDate;
-    private Date endDate;
+    private LocalTime startDate;
+    private LocalTime endDate;
     private long dateDiff;
     private EventListener eventListener;
     private Date currentTime;
     private int maxInRow = 1;
-    RelativeLayout parent;
-    RelativeLayout hourParent;
     private LinearLayout currentTimeLayout;
 
     public Calendar(Context context) {
@@ -71,11 +72,6 @@ public class Calendar extends ScrollView {
 //        });
     }
 
-    private void initSizes() {
-        HOUR_BAR_WIDTH = dptopx(15);
-        PX_PER_MINUTE = dptopx(1.9);
-    }
-
     public Calendar(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = (Activity) context;
@@ -89,6 +85,11 @@ public class Calendar extends ScrollView {
         this.context = (Activity) context;
         initSizes();
         addParent();
+    }
+
+    private void initSizes() {
+        HOUR_BAR_WIDTH = dptopx(15);
+        PX_PER_MINUTE = dptopx(1.9);
     }
 
     void addParent() {
@@ -120,7 +121,7 @@ public class Calendar extends ScrollView {
     }
 
     private void drawCurrentTime() {
-        if (currentTime == null || startDate.getTime() / MILLIS_IN_DAY != currentTime.getTime() / MILLIS_IN_DAY) {
+        if (currentTime == null || startDate.getMillisOfDay() / MILLIS_IN_DAY != currentTime.getTime() / MILLIS_IN_DAY) {
             return;
         }
 
@@ -165,21 +166,22 @@ public class Calendar extends ScrollView {
             return;
         }
         Collections.sort(events, EVENT_COMPARATOR);
-        trimEvents(events);
+//        trimEvents(events);
         startDate = events.get(0).event.start;
-        dateDiff = startDate.getTime() % MILLIS_IN_DAY - startDate.getTime() % MILLIS_IN_HOUR;
-        endDate = events.get(events.size() - 1).event.end;
-        if (endDate.before(startDate)) {
-            java.util.Calendar cal = GregorianCalendar.getInstance();
-            cal.setTime(endDate);
-            cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
-            cal.set(java.util.Calendar.MINUTE, 0);
-            cal.set(java.util.Calendar.SECOND, 0);
-            cal.set(java.util.Calendar.MILLISECOND, 0);
-            cal.add(java.util.Calendar.DAY_OF_MONTH, 1);//next day
-            cal.add(java.util.Calendar.SECOND, -11);
-            endDate = cal.getTime();
-        }
+        dateDiff = startDate.getMillisOfDay() % MILLIS_IN_DAY - startDate.getMillisOfDay() % MILLIS_IN_HOUR;
+        CEvent lastEvent = events.get(events.size() - 1).event;
+        endDate = lastEvent.end;
+//        if (endDate.isBefore(startDate)) {
+//            java.util.Calendar cal = GregorianCalendar.getInstance();
+//            cal.setTime(endDate);
+//            cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
+//            cal.set(java.util.Calendar.MINUTE, 0);
+//            cal.set(java.util.Calendar.SECOND, 0);
+//            cal.set(java.util.Calendar.MILLISECOND, 0);
+//            cal.add(java.util.Calendar.DAY_OF_MONTH, 1);//next day
+//            cal.add(java.util.Calendar.SECOND, -11);
+//            endDate = cal.getTime();
+//        }
 
         Set<DisplayEvent> bag = new HashSet<DisplayEvent>();
         for (DisplayEvent ev : events) {
@@ -191,31 +193,31 @@ public class Calendar extends ScrollView {
         }
     }
 
-    /**
-     * Removes events not in the same day
-     *
-     * @param events
-     */
-    private void trimEvents(List<DisplayEvent> events) {
-        java.util.Calendar cal = new GregorianCalendar();
-        cal.setTime(events.get(0).event.start);
-        int day = cal.get(java.util.Calendar.DAY_OF_WEEK);
-        long sm = events.get(0).event.start.getTime();
-        TimeZone tz = TimeZone.getDefault();
-        Date eod = new Date(sm - sm % MILLIS_IN_DAY + MILLIS_IN_DAY - 1 - tz.getOffset(cal.getTime().getTime()));
-        for (Iterator<DisplayEvent> iterator = events.iterator(); iterator.hasNext(); ) {
-            DisplayEvent e = iterator.next();
-            cal.setTime(e.event.start);
-            if (cal.get(java.util.Calendar.DAY_OF_WEEK) != day) {
-                iterator.remove();
-            } else {
-                cal.setTime(e.event.end);
-                if (cal.get(java.util.Calendar.DAY_OF_WEEK) != day) {
-                    e.event.end.setTime(eod.getTime());
-                }
-            }
-        }
-    }
+//    /**
+//     * Removes events not in the same day
+//     *
+//     * @param events
+//     */
+//    private void trimEvents(List<DisplayEvent> events) {
+//        java.util.Calendar cal = new GregorianCalendar();
+//        cal.setTime(events.get(0).event.start);
+//        int day = cal.get(java.util.Calendar.DAY_OF_WEEK);
+//        long sm = events.get(0).event.start.getTime();
+//        TimeZone tz = TimeZone.getDefault();
+//        Date eod = new Date(sm - sm % MILLIS_IN_DAY + MILLIS_IN_DAY - 1 - tz.getOffset(cal.getTime().getTime()));
+//        for (Iterator<DisplayEvent> iterator = events.iterator(); iterator.hasNext(); ) {
+//            DisplayEvent e = iterator.next();
+//            cal.setTime(e.event.start);
+//            if (cal.get(java.util.Calendar.DAY_OF_WEEK) != day) {
+//                iterator.remove();
+//            } else {
+//                cal.setTime(e.event.end);
+//                if (cal.get(java.util.Calendar.DAY_OF_WEEK) != day) {
+//                    e.event.end.setTime(eod.getTime());
+//                }
+//            }
+//        }
+//    }
 
     private void updateTotals(Set<DisplayEvent> bag) {
         int total = bag.size();
@@ -240,10 +242,10 @@ public class Calendar extends ScrollView {
         return idxs.iterator().next();
     }
 
-    private void removeExpired(Set<DisplayEvent> bag, Date end) {
+    private void removeExpired(Set<DisplayEvent> bag, LocalTime end) {
         for (Iterator<DisplayEvent> iterator = bag.iterator(); iterator.hasNext(); ) {
             DisplayEvent ev = iterator.next();
-            if (!ev.event.end.after(end)) {
+            if (!ev.event.end.isAfter(end)) {
                 iterator.remove();
             }
         }
@@ -306,11 +308,11 @@ public class Calendar extends ScrollView {
 
     private void drawHours() {
         java.util.Calendar cal = new GregorianCalendar();
-        cal.setTime(startDate);
-        int startHour = cal.get(java.util.Calendar.HOUR_OF_DAY);
-        cal.setTime(endDate);
-        int endHour = cal.get(java.util.Calendar.HOUR_OF_DAY);
-        if (endHour == 0) {
+//        cal.setTime(startDate);
+        int startHour = startDate.getHourOfDay(); //cal.get(java.util.Calendar.HOUR_OF_DAY);
+//        cal.setTime(endDate);
+        int endHour = endDate.getHourOfDay(); //cal.get(java.util.Calendar.HOUR_OF_DAY);
+        if (endHour == 0 || endHour < startHour) {
             endHour = 23;
         }
         for (int i = startHour; i <= endHour; i++) {
@@ -331,11 +333,11 @@ public class Calendar extends ScrollView {
     }
 
     private int getEventStartDiffMinutes(CEvent event) {
-        return (int) (((event.start.getTime() % MILLIS_IN_DAY) - dateDiff) / MILLIS_IN_MINUTE);
+        return (int) (((event.start.millisOfDay().get() % MILLIS_IN_DAY) - dateDiff) / MILLIS_IN_MINUTE);
     }
 
     private int getEventLengthMinutes(CEvent event) {
-        return (int) ((event.end.getTime() - event.start.getTime()) / MILLIS_IN_MINUTE);
+        return (int) ((event.end.millisOfDay().get() - event.start.millisOfDay().get()) / MILLIS_IN_MINUTE);
     }
 
     public void setEventListener(EventListener eventListener) {
@@ -348,7 +350,7 @@ public class Calendar extends ScrollView {
 
     public void updateCurrentTime(Date date) {
         currentTime = date;
-        if (currentTime == null || currentTimeLayout == null || startDate.getTime() / MILLIS_IN_DAY != currentTime.getTime() / MILLIS_IN_DAY) {
+        if (currentTime == null || currentTimeLayout == null || startDate.getMillisOfDay() / MILLIS_IN_DAY != currentTime.getTime() / MILLIS_IN_DAY) {
             return;
         }
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, dptopx(3));

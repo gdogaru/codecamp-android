@@ -19,10 +19,10 @@ package com.gdogaru.codecamp.svc;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.util.Log;
 
-import com.gdogaru.codecamp.Logging;
 import com.gdogaru.codecamp.util.IOUtils;
+
+import org.slf4j.Logger;
 
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -30,10 +30,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 public class SpeakerPhotoUtils {
+    private static final Logger LOG = getLogger(SpeakerPhotoUtils.class);
 
     private static final String FILENAME_MASK = "speaker_%d.jpg";
 
@@ -47,12 +50,12 @@ public class SpeakerPhotoUtils {
             savePhoto(context, imageFromUrl, id);
             return imageFromUrl;
         } catch (Exception e) {
-            Log.e(Logging.TAG, "Error saving photo.", e);
+            LOG.error("Error saving photo.", e);
         }
         return null;
     }
 
-   private static Bitmap getImageFromUrl(String urlValue) throws IOException {
+    private static Bitmap getImageFromUrl(String urlValue) throws IOException {
         URL url = new URL(urlValue);
         InputStream content = (InputStream) url.getContent();
         BitmapFactory.Options o = new BitmapFactory.Options();
@@ -78,7 +81,7 @@ public class SpeakerPhotoUtils {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
             fos.close();
         } catch (Exception e) {
-            Log.e(Logging.TAG, "Error saving overview.", e);
+            LOG.error("Error saving overview.", e);
         } finally {
             IOUtils.closeQuietly(fos);
         }

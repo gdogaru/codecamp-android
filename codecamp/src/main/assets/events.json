@@ -1,0 +1,14 @@
+[
+  {
+    "refId": 2,
+    "title": "Codecamp Iasi, Autumn Edition 2016",
+    "startDate": "2016-10-22T00:00:00",
+    "endDate": "2016-10-22T00:00:00",
+    "venue": {
+      "name": "Hotel International",
+      "city": "Iasi",
+      "country": "Romania",
+      "directions": "47.154776, 27.586785"
+    }
+  }
+]

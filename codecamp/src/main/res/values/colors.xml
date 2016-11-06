@@ -1,4 +1,8 @@
 <resources>
+    <color name="colorPrimary">#51b4f2</color>
+    <color name="colorPrimaryDark">#000000</color>
+    <color name="colorAccent">#c8d3ff</color>
+
     <color name="navbar0">#000000</color>
     <color name="navbar100">#ff1e1a15</color>
     <color name="tab_focused">#444444</color>
@@ -8,4 +12,6 @@
     <color name="sec_list_item">#ffad9f99</color>
     <color name="white">#fff3f3f3</color>
     <color name="dark">#ff2f2f2f</color>
+    <color name="black">#000000</color>
+    <color name="list_item_pressed_back">#b9ffffff</color>
 </resources>

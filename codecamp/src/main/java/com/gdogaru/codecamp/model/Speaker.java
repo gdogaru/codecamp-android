@@ -17,82 +17,64 @@
 package com.gdogaru.codecamp.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@DatabaseField    @gmail.com)
  */
-@DatabaseTable(tableName = "speakers")
 public class Speaker {
-
-    @DatabaseField(id = true)
-    @SerializedName("Id")
-    long id;
-    @DatabaseField
-    @SerializedName("FirstName")
-    String firstName;
-    @DatabaseField
-    @SerializedName("LastName")
-    String lastName;
-    @DatabaseField
-    @SerializedName("Title")
-    String title;
-    @DatabaseField
-    @SerializedName("Bio")
-    String bio;
-    @DatabaseField
-    @SerializedName("PortraitImageUrl")
-    String portraitImageUrl;
-    @DatabaseField
-    @SerializedName("BlogUrl")
-    String blogUrl;
-    @DatabaseField
-    @SerializedName("LinkedInProfileUrl")
-    String linkedInProfileUrl;
-    @DatabaseField
-    @SerializedName("TwitterProfileUrl")
-    String twitterProfileUrl;
-    @DatabaseField
-    @SerializedName("FacebookProfileUrl")
-    String facebookProfileUrl;
-    @DatabaseField
-    @SerializedName("CompanyName")
-    String companyName;
-    @DatabaseField
-    @SerializedName("CompanyWebsiteUrl")
+    @SerializedName("name")
+    String name;
+    @SerializedName("photoUrl")
+    String photoUrl;
+    @SerializedName("company")
+    String company;
+    @SerializedName("companyWebsiteUrl")
     String companyWebsiteUrl;
+    @SerializedName("jobTitle")
+    String jobTitle;
+    @SerializedName("bio")
+    String bio;
+    @SerializedName("displayOrder")
+    int displayOrder;
 
-    public long getId() {
-        return id;
+    public String getName() {
+        return name;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getPhotoUrl() {
+        return photoUrl;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getCompany() {
+        return company;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setCompany(String company) {
+        this.company = company;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCompanyWebsiteUrl() {
+        return companyWebsiteUrl;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCompanyWebsiteUrl(String companyWebsiteUrl) {
+        this.companyWebsiteUrl = companyWebsiteUrl;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
     }
 
     public String getBio() {
@@ -103,59 +85,11 @@ public class Speaker {
         this.bio = bio;
     }
 
-    public String getPortraitImageUrl() {
-        return portraitImageUrl;
+    public int getDisplayOrder() {
+        return displayOrder;
     }
 
-    public void setPortraitImageUrl(String portraitImageUrl) {
-        this.portraitImageUrl = portraitImageUrl;
-    }
-
-    public String getBlogUrl() {
-        return blogUrl;
-    }
-
-    public void setBlogUrl(String blogUrl) {
-        this.blogUrl = blogUrl;
-    }
-
-    public String getLinkedInProfileUrl() {
-        return linkedInProfileUrl;
-    }
-
-    public void setLinkedInProfileUrl(String linkedInProfileUrl) {
-        this.linkedInProfileUrl = linkedInProfileUrl;
-    }
-
-    public String getTwitterProfileUrl() {
-        return twitterProfileUrl;
-    }
-
-    public void setTwitterProfileUrl(String twitterProfileUrl) {
-        this.twitterProfileUrl = twitterProfileUrl;
-    }
-
-    public String getFacebookProfileUrl() {
-        return facebookProfileUrl;
-    }
-
-    public void setFacebookProfileUrl(String facebookProfileUrl) {
-        this.facebookProfileUrl = facebookProfileUrl;
-    }
-
-    public String getCompanyName() {
-        return companyName;
-    }
-
-    public void setCompanyName(String companyName) {
-        this.companyName = companyName;
-    }
-
-    public String getCompanyWebsiteUrl() {
-        return companyWebsiteUrl;
-    }
-
-    public void setCompanyWebsiteUrl(String companyWebsiteUrl) {
-        this.companyWebsiteUrl = companyWebsiteUrl;
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
     }
 }

@@ -17,34 +17,19 @@
 package com.gdogaru.codecamp.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@DatabaseField    @gmail.com)
  */
-@DatabaseTable(tableName = "tracks")
 public class Track {
-
-    @DatabaseField(id = true)
-    @SerializedName("Id")
-    long id;
-
-    @DatabaseField
-    @SerializedName("Name")
+    @SerializedName("name")
     String name;
-
-    @DatabaseField
-    @SerializedName("Notes")
-    String notes;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    @SerializedName("capacity")
+    String capacity;
+    @SerializedName("description")
+    String description;
+    @SerializedName("displayOrder")
+    int displayOrder;
 
     public String getName() {
         return name;
@@ -54,11 +39,27 @@ public class Track {
         this.name = name;
     }
 
-    public String getNotes() {
-        return notes;
+    public String getCapacity() {
+        return capacity;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
     }
 }

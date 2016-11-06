@@ -26,11 +26,11 @@
     <screenName name="com.gdogaru.codecamp.view.CalendarActivity">
         Calendar
     </screenName>
-    <screenName name="com.gdogaru.codecamp.view.SessionListActivity">
+    <screenName name="com.gdogaru.codecamp.view.sessions.EventListActivity">
         Session List
     </screenName>
 
-    <screenName name="com.gdogaru.codecamp.view.ExpandedSessionsInfoActivity">
+    <screenName name="com.gdogaru.codecamp.view.session.SessionExpandedActivity">
         Session Info
     </screenName>
 
@@ -40,7 +40,7 @@
     <screenName name="com.gdogaru.codecamp.view.OverviewTabFragment">
         Overview
     </screenName>
-    <screenName name="com.gdogaru.codecamp.view.SessionInfoFragment">
+    <screenName name="com.gdogaru.codecamp.view.session.SessionInfoFragment">
         Session Info Fragment
     </screenName>
     <screenName name="com.gdogaru.codecamp.view.calendar.CalendarFragment">

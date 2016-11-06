@@ -17,54 +17,46 @@
 package com.gdogaru.codecamp.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.j256.ormlite.field.DataType;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
+
+import org.joda.time.LocalTime;
 
 import java.io.Serializable;
 import java.util.Comparator;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@DatabaseField    @gmail.com)
  */
-@DatabaseTable(tableName = "sessions")
 public class Session implements Serializable {
 
-    @DatabaseField(generatedId = true, columnName = "_id")
-    @SerializedName("Id")
-    long id;
-    @DatabaseField
-    @SerializedName("Title")
+    public static final Comparator<Session> SESSION_BY_DATE_COMPARATOR = new Comparator<Session>() {
+        @Override
+        public int compare(Session object1, Session object2) {
+            return object1.getStartTime().compareTo(object2.getStartTime());
+        }
+    };
+    @SerializedName("title")
     String title;
-    @DatabaseField
-    @SerializedName("Description")
+    @SerializedName("description")
     String description;
-    @DatabaseField
-    @SerializedName("OverrideTracks")
-    boolean overrideTracks;
-    @DatabaseField
-    @SerializedName("Start")
-    Date start;
-    @DatabaseField
-    @SerializedName("End")
-    Date end;
-    @DatabaseField(dataType = DataType.SERIALIZABLE)
-    @SerializedName("SpeakerRefIds")
-    Long[] speakerRefIds;
-    @DatabaseField
-    @SerializedName("TrackRefId")
-    Long trackRefId;
+    @SerializedName("startTime")
+    LocalTime startTime;
+    @SerializedName("endTime")
+    LocalTime endTime;
+    @SerializedName("speakers")
+    List<String> speakerIds;
+    @SerializedName("speakingLang")
+    String speakingLang;
+    @SerializedName("level")
+    String level;
+    @SerializedName("allTracks")
+    Boolean allTracks;
+    @SerializedName("track")
+    String track;
 
-    @DatabaseField
-    boolean evaluated;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
+    public String getId() {
+        return String.valueOf(startTime) + String.valueOf(track);
     }
 
     public String getTitle() {
@@ -83,59 +75,60 @@ public class Session implements Serializable {
         this.description = description;
     }
 
-    public boolean isOverrideTracks() {
-        return overrideTracks;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setOverrideTracks(boolean overrideTracks) {
-        this.overrideTracks = overrideTracks;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
-    public Date getStart() {
-        return start;
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
-    public void setStart(Date start) {
-        this.start = start;
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
-    public Date getEnd() {
-        return end;
+    public String getTrack() {
+        return track;
     }
 
-    public void setEnd(Date end) {
-        this.end = end;
+    public void setTrack(String track) {
+        this.track = track;
     }
 
-    public Long[] getSpeakerRefIds() {
-        return speakerRefIds;
+    public List<String> getSpeakerIds() {
+        return speakerIds;
     }
 
-    public void setSpeakerRefIds(Long[] speakerRefIds) {
-        this.speakerRefIds = speakerRefIds;
+    public void setSpeakerIds(List<String> speakerIds) {
+        this.speakerIds = speakerIds;
     }
 
-    public Long getTrackRefId() {
-        return trackRefId;
+    public String getSpeakingLang() {
+        return speakingLang;
     }
 
-    public void setTrackRefId(Long trackRefId) {
-        this.trackRefId = trackRefId;
+    public void setSpeakingLang(String speakingLang) {
+        this.speakingLang = speakingLang;
     }
 
-    public boolean isEvaluated() {
-        return evaluated;
+    public String getLevel() {
+        return level;
     }
 
-    public void setEvaluated(boolean evaluated) {
-        this.evaluated = evaluated;
+    public void setLevel(String level) {
+        this.level = level;
     }
 
-    public static Comparator<Session> SESSION_BY_DATE_COMPARATOR = new Comparator<Session>() {
-        @Override
-        public int compare(Session object1, Session object2) {
-            return object1.getStart().compareTo(object2.getStart());
-        }
-    };
 
+    public Boolean getAllTracks() {
+        return allTracks;
+    }
+
+    public void setAllTracks(Boolean allTracks) {
+        this.allTracks = allTracks;
+    }
 }

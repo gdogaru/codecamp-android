@@ -17,42 +17,26 @@
 package com.gdogaru.codecamp.model;
 
 import com.google.gson.annotations.SerializedName;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@DatabaseField    @gmail.com)
  */
-@DatabaseTable(tableName = "sponsors")
 public class Sponsor {
 
-    @DatabaseField(id = true)
-    @SerializedName("Id")
-    long id;
-
-    @DatabaseField
-    @SerializedName("Name")
+    @SerializedName("name")
     String name;
 
-    @DatabaseField
-    @SerializedName("WebSiteUrl")
-    String webSiteUrl;
+    @SerializedName("websiteUrl")
+    String websiteUrl;
 
-    @DatabaseField
-    @SerializedName("LogoImageUrl")
-    String logoImageUrl;
+    @SerializedName("logoUrl")
+    String logoUrl;
 
-    @DatabaseField
-    @SerializedName("Type")
-    String type;
+    @SerializedName("sponsorshipPackage")
+    String sponsorshipPackage;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
+    @SerializedName("displayOrder")
+    int displayOrder;
 
     public String getName() {
         return name;
@@ -62,27 +46,35 @@ public class Sponsor {
         this.name = name;
     }
 
-    public String getWebSiteUrl() {
-        return webSiteUrl;
+    public String getWebsiteUrl() {
+        return websiteUrl;
     }
 
-    public void setWebSiteUrl(String webSiteUrl) {
-        this.webSiteUrl = webSiteUrl;
+    public void setWebsiteUrl(String websiteUrl) {
+        this.websiteUrl = websiteUrl;
     }
 
-    public String getLogoImageUrl() {
-        return logoImageUrl;
+    public String getLogoUrl() {
+        return logoUrl;
     }
 
-    public void setLogoImageUrl(String logoImageUrl) {
-        this.logoImageUrl = logoImageUrl;
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
     }
 
-    public String getType() {
-        return type;
+    public String getSponsorshipPackage() {
+        return sponsorshipPackage;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setSponsorshipPackage(String sponsorshipPackage) {
+        this.sponsorshipPackage = sponsorshipPackage;
+    }
+
+    public int getDisplayOrder() {
+        return displayOrder;
+    }
+
+    public void setDisplayOrder(int displayOrder) {
+        this.displayOrder = displayOrder;
     }
 }

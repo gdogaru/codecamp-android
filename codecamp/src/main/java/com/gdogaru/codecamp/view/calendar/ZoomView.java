@@ -15,29 +15,18 @@ import android.widget.ScrollView;
  */
 public class ZoomView extends ScrollView {
 
-    /**
-     * Zooming view listener interface.
-     *
-     * @author karooolek
-     *
-     */
-    public interface ZoomViewListener {
-
-        void onZoomStarted(float zoom, float zoomx, float zoomy);
-
-        void onZooming(float zoom, float zoomx, float zoomy);
-
-        void onZoomEnded(float zoom, float zoomx, float zoomy);
-    }
-
+    // drawing
+    private final Matrix m = new Matrix();
+    private final Paint p = new Paint();
     // zooming
     float zoom = 1.0f;
     float maxZoom = 2.0f;
     float smoothZoom = 1.0f;
     float zoomX, zoomY;
     float smoothZoomX, smoothZoomY;
+    // listener
+    ZoomViewListener listener;
     private boolean scrolling; // NOPMD by karooolek on 29.06.11 11:45
-
     // minimap variables
     private boolean showMinimap = false;
     private int miniMapColor = Color.BLACK;
@@ -45,7 +34,6 @@ public class ZoomView extends ScrollView {
     private String miniMapCaption;
     private float miniMapCaptionSize = 10.0f;
     private int miniMapCaptionColor = Color.WHITE;
-
     // touching variables
     private long lastTapTime;
     private float touchStartX, touchStartY;
@@ -55,14 +43,6 @@ public class ZoomView extends ScrollView {
     private float lastd;
     private float lastdx1, lastdy1;
     private float lastdx2, lastdy2;
-
-    // drawing
-    private final Matrix m = new Matrix();
-    private final Paint p = new Paint();
-
-    // listener
-    ZoomViewListener listener;
-
     private Bitmap ch;
 
     public ZoomView(final Context context) {
@@ -85,12 +65,16 @@ public class ZoomView extends ScrollView {
         this.maxZoom = maxZoom;
     }
 
+    public boolean isMiniMapEnabled() {
+        return showMinimap;
+    }
+
     public void setMiniMapEnabled(final boolean showMiniMap) {
         this.showMinimap = showMiniMap;
     }
 
-    public boolean isMiniMapEnabled() {
-        return showMinimap;
+    public int getMiniMapHeight() {
+        return miniMapHeight;
     }
 
     public void setMiniMapHeight(final int miniMapHeight) {
@@ -100,16 +84,12 @@ public class ZoomView extends ScrollView {
         this.miniMapHeight = miniMapHeight;
     }
 
-    public int getMiniMapHeight() {
-        return miniMapHeight;
+    public int getMiniMapColor() {
+        return miniMapColor;
     }
 
     public void setMiniMapColor(final int color) {
         miniMapColor = color;
-    }
-
-    public int getMiniMapColor() {
-        return miniMapColor;
     }
 
     public String getMiniMapCaption() {
@@ -429,5 +409,19 @@ public class ZoomView extends ScrollView {
         getRootView().invalidate();
         invalidate();
         // }
+    }
+
+    /**
+     * Zooming view listener interface.
+     *
+     * @author karooolek
+     */
+    public interface ZoomViewListener {
+
+        void onZoomStarted(float zoom, float zoomx, float zoomy);
+
+        void onZooming(float zoom, float zoomx, float zoomy);
+
+        void onZoomEnded(float zoom, float zoomx, float zoomy);
     }
 }

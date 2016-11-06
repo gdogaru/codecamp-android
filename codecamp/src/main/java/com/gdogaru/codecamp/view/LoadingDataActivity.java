@@ -16,30 +16,85 @@
 
 package com.gdogaru.codecamp.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ProgressBar;
 
+import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
+import com.gdogaru.codecamp.svc.jobs.DataLoadingEvent;
+import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
+import com.path.android.jobqueue.JobManager;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import javax.inject.Inject;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
-public class LoadingDataActivity extends CodecampActivity {
+public class LoadingDataActivity extends BaseActivity {
+
+    private static final String START_UPDATE = "start_update";
+    @Inject
+    JobManager jobManager;
+    @BindView(R.id.progress)
+    ProgressBar progressBar;
+
+    public static void startTop(Context context) {
+        Intent intent = new Intent(context, LoadingDataActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+    }
+
+    public static void startUpdate(Activity activity) {
+        Intent intent = new Intent(activity, LoadingDataActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra(START_UPDATE, true);
+        activity.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        App.getDiComponent().inject(this);
+
         setContentView(R.layout.loading_data);
-        if(getActionBar()!= null) {
+        ButterKnife.bind(this);
+
+        if (getActionBar() != null) {
             getActionBar().hide();
         }
-
+        if (getIntent().hasExtra(START_UPDATE)) {
+            jobManager.addJobInBackground(new UpdateDataJob());
+        }
     }
 
-    public static void startTop(Context context){
-        Intent intent = new Intent(context, LoadingDataActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(intent);
+    @Override
+    protected void onResume() {
+        super.onResume();
+        eventBus.register(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        eventBus.unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onDataLoading(DataLoadingEvent event) {
+        if (event.progress >= 100) {
+            MainActivity.start(this);
+            finish();
+        } else {
+            progressBar.setProgress(event.progress);
+        }
     }
 }

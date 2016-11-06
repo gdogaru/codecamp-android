@@ -1,45 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        style="?android:attr/buttonBarStyle">
-
-        <Button
-            android:id="@+id/calendar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:padding="5dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="@string/calendar"
-            style="?android:attr/buttonBarButtonStyle"/>
-
-        <Button
-            android:id="@+id/sessions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="@string/sessions"
-            style="?android:attr/buttonBarButtonStyle"/>
+    <android.support.design.widget.AppBarLayout style="@style/CodecampAppBarLayout">
 
 
-    </LinearLayout>
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            style="@style/CodecampToolbar"
+            android:background="@color/black">
 
-    <fragment
-        android:id="@+id/viewer"
-        android:name="com.gdogaru.codecamp.view.OverviewTabFragment"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/codecamp_title"/>
+
+                <Spinner
+                    android:id="@+id/location_spinner"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"/>
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="2" />
+        android:fillViewport="true"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp">
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/eventTitle"
+                style="@style/header_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="title"/>
+
+            <TextView
+                android:id="@+id/eventDate"
+                style="@style/field_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10 November 2012"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/agenda"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:visibility="visible"
+                tools:context=".view.MainActivity"
+                tools:listitem="@layout/main_schedule_item"/>
+
+            <RelativeLayout
+                android:id="@+id/sponsors"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/schedule_item"
+                android:background="@drawable/list_item_background"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/title"
+                        style="@style/header_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="0dp"
+                        android:layout_weight="1"
+                        android:text="Sponsors"/>
+
+                    <ImageView style="@style/ChevronLarge"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="5dp"
+                    android:background="#535252"/>
+            </RelativeLayout>
+
+            <TextView
+                style="@style/header_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Location"/>
+
+            <TextView
+                android:id="@+id/location"
+                style="@style/field_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="hotel ramada"/>
+
+            <LinearLayout
+                android:id="@+id/mapLayout"
+                android:layout_width="fill_parent"
+                android:layout_height="180dp"
+                android:orientation="vertical"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"/>
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true"
+                android:text="@string/copyright"
+                android:textStyle="italic"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>

@@ -16,138 +16,49 @@
 
 package com.gdogaru.codecamp.model;
 
-import com.google.gson.annotations.SerializedName;
-import com.j256.ormlite.field.DatabaseField;
-import com.j256.ormlite.table.DatabaseTable;
-
 import java.io.Serializable;
-import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
-@DatabaseTable(tableName = "codecamp")
-public class Codecamp implements Serializable {
+public class Codecamp extends EventSummary implements Serializable {
 
-    @DatabaseField(id = true)
-    @SerializedName("Id")
-    long id;
-    @DatabaseField
-    @SerializedName("Title")
-    String title;
-    @DatabaseField
-    @SerializedName("Description")
-    String description;
-    @DatabaseField
-    @SerializedName("ShortName")
-    String shortName;
-    @DatabaseField
-    @SerializedName("StartDate")
-    Date startDate;
-    @DatabaseField
-    @SerializedName("EndDate")
-    Date endDate;
+    private List<SponsorshipPackage> sponsorshipPackages;
+    private List<Sponsor> sponsors;
+    private List<Schedule> schedules;
+    private List<Speaker> speakers;
 
-    @SerializedName("Speakers")
-    Speaker[] speakers;
-
-    @SerializedName("Tracks")
-    Track[] tracks;
-
-    @SerializedName("Sessions")
-    Session[] sessions;
-
-    @SerializedName("Location")
-    Location location;
-
-    @SerializedName("Sponsors")
-    Sponsor[] sponsors;
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public Date getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(Date endDate) {
-        this.endDate = endDate;
-    }
-
-    public Speaker[] getSpeakers() {
+    public List<Speaker> getSpeakers() {
         return speakers;
     }
 
-    public void setSpeakers(Speaker[] speakers) {
+    public void setSpeakers(List<Speaker> speakers) {
         this.speakers = speakers;
     }
 
-    public Track[] getTracks() {
-        return tracks;
+    public List<SponsorshipPackage> getSponsorshipPackages() {
+        return sponsorshipPackages;
     }
 
-    public void setTracks(Track[] tracks) {
-        this.tracks = tracks;
+    public void setSponsorshipPackages(List<SponsorshipPackage> sponsorshipPackages) {
+        this.sponsorshipPackages = sponsorshipPackages;
     }
 
-    public Session[] getSessions() {
-        return sessions;
-    }
-
-    public void setSessions(Session[] sessions) {
-        this.sessions = sessions;
-    }
-
-    public Location getLocation() {
-        return location;
-    }
-
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    public Sponsor[] getSponsors() {
+    public List<Sponsor> getSponsors() {
         return sponsors;
     }
 
-    public void setSponsors(Sponsor[] sponsors) {
+    public void setSponsors(List<Sponsor> sponsors) {
         this.sponsors = sponsors;
     }
+
+    public List<Schedule> getSchedules() {
+        return schedules;
+    }
+
+    public void setSchedules(List<Schedule> schedules) {
+        this.schedules = schedules;
+    }
+
 }

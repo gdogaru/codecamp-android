@@ -3,4 +3,5 @@
     <dimen name="header_1">18sp</dimen>
     <dimen name="header_2">16sp</dimen>
     <dimen name="text_size">14sp</dimen>
+    <dimen name="schedule_item">100dp</dimen>
 </resources>

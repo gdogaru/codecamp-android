@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:paddingTop="10dp">
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="wrap_content">
+
+        <ImageView android:id="@+id/speakerPhoto"
+                   android:layout_width="80dp"
+                   android:layout_height="80dp"
+                   android:minHeight="80dp"
+                   android:minWidth="80dp"
+                   android:scaleType="fitCenter"
+                   android:src="@drawable/person_icon"/>
+
+        <LinearLayout android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                      android:orientation="vertical"
+                        android:layout_gravity="center_vertical">
+            <TextView android:id="@+id/speakerName"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      style="@style/header_2"
+                      tools:text="sdsad"
+                      android:textColor="@color/white"/>
+            <TextView android:id="@+id/company"
+                      android:layout_below="@+id/speakerName"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      style="@style/field_label"
+                      tools:text="Company"/>
+            <TextView android:id="@+id/job_title"
+                      android:layout_below="@+id/speakerName"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_gravity="center_vertical"
+                      style="@style/field_label"
+                      tools:text="job title"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView android:id="@+id/speakerDescription"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              style="@style/description"
+              android:text=""/>
+
+</LinearLayout>

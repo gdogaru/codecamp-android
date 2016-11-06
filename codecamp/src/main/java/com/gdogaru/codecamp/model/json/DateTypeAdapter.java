@@ -1,6 +1,7 @@
 package com.gdogaru.codecamp.model.json;
 
 import com.gdogaru.codecamp.util.StringUtils;
+import com.gdogaru.codecamp.util.Strings;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -20,16 +21,18 @@ import java.util.Locale;
  * Created by Gabriel on 11/5/2015.
  */
 public class DateTypeAdapter implements JsonDeserializer<Date>, JsonSerializer<Date> {
+    public static final String FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
     final DateFormat dateFormat;
 
     public DateTypeAdapter() {
-        dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZZ", Locale.getDefault());
+        dateFormat = new SimpleDateFormat(FORMAT, Locale.getDefault());
     }
 
     @Override
     public Date deserialize(final JsonElement je, final Type type, final JsonDeserializationContext jdc) throws JsonParseException {
         try {
-            return je.getAsString().length() == 0 ? null : dateFormat.parse(je.getAsString());
+            String string = je.getAsString();
+            return Strings.isNullOrEmpty(string) ? null : dateFormat.parse(string);
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }

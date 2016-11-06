@@ -2,19 +2,22 @@ package com.gdogaru.codecamp.view.calendar;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ScrollView;
 
-import com.gdogaru.codecamp.db.DatabaseHelper;
+import com.gdogaru.codecamp.App;
+import com.gdogaru.codecamp.model.Codecamp;
+import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.model.Track;
-import com.gdogaru.codecamp.view.ExpandedSessionsInfoActivity;
-import com.gdogaru.codecamp.view.SessionsUtil;
-import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.gdogaru.codecamp.svc.CodecampClient;
+import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
+import com.google.common.base.Joiner;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -22,24 +25,33 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.inject.Inject;
 
 public class CalendarFragment extends Fragment {
 
     private static final Comparator<? super Session> SESSION_BY_DATE_COMPARATOR = new Comparator<Session>() {
         @Override
         public int compare(Session lhs, Session rhs) {
-            return lhs.getStart().compareTo(rhs.getStart());
+            return lhs.getStartTime().compareTo(rhs.getStartTime());
         }
     };
 
     ScrollView scrollView;
     ArrayList<Integer> sessIds = new ArrayList<Integer>();
+    Timer currentTimer;
+    @Inject
+    CodecampClient codecampClient;
     private int offset;
     private Calendar calendar;
-    Timer currentTimer;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        App.getDiComponent().inject(this);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -86,27 +98,22 @@ public class CalendarFragment extends Fragment {
     }
 
     public void init() {
-        DatabaseHelper dbHelper = OpenHelperManager.getHelper(getActivity(), DatabaseHelper.class);
-
-        List<Session> sessions = dbHelper.getSessionDao().queryForAll();
-        List<Track> tracks = dbHelper.getTrackDao().queryForAll();
-        List<Speaker> speakers = dbHelper.getSpeakerDao().queryForAll();
-
-        Map<Long, String> idToSpeaker = SessionsUtil.extractSpeakers(speakers);
-        Map<Long, String> idToTrack = SessionsUtil.extractTrackDisplay(tracks);
+        Schedule schedule = codecampClient.getSchedule();
+        Codecamp codecamp = codecampClient.getEvent();
+        List<Session> sessions = schedule.getSessions();
+        List<Track> tracks = schedule.getTracks();
+        List<Speaker> speakers = codecamp.getSpeakers();
 
         List<CEvent> events = new ArrayList<CEvent>();
         Collections.sort(sessions, SESSION_BY_DATE_COMPARATOR);
-        int startDay = getDay(sessions.get(0).getStart());
-        for (Session ss : sessions) {
-            if (getDay(ss.getStart()) - startDay == offset) {
-                int preferedIdx = ss.getTrackRefId() == null ? 0 : ss.getTrackRefId().intValue();
-                String descLine2 = idToTrack.get(ss.getTrackRefId());
-                events.add(new CEvent(ss.getId(), ss.getStart(), ss.getEnd(), preferedIdx, ss.getTitle(),
-                        createSpeakerName(ss.getSpeakerRefIds(), idToSpeaker),
-                        descLine2 == null ? "" : descLine2));
-            }
-
+        int startDay = getDay(schedule.getDate());
+        for (int i = 0; i < sessions.size(); i++) {
+            Session ss = sessions.get(i);
+            int preferedIdx = ss.getTrack() == null ? 0 : getTrack(tracks, ss.getTrack()).getDisplayOrder();
+            String descLine2 = ss.getTrack();
+            events.add(new CEvent(ss.getId(), ss.getStartTime(), ss.getEndTime(), preferedIdx, ss.getTitle(),
+                    createSpeakerName(ss),
+                    descLine2 == null ? "" : descLine2));
         }
         initSessionIds(sessions);
 
@@ -137,6 +144,15 @@ public class CalendarFragment extends Fragment {
 
     }
 
+    private Track getTrack(List<Track> tracks, String track) {
+        for (Track t : tracks) {
+            if (t.getName().equals(track)) {
+                return t;
+            }
+        }
+        return null;
+    }
+
     private int getDay(Date date) {
         java.util.Calendar cal = GregorianCalendar.getInstance();
         cal.setTime(date);
@@ -145,33 +161,20 @@ public class CalendarFragment extends Fragment {
 
     private void initSessionIds(List<Session> sessions) {
         List<Session> ss = new ArrayList<Session>(sessions);
-        Collections.sort(ss, Session.SESSION_BY_DATE_COMPARATOR);
+//        Collections.sort(ss, Session.SESSION_BY_DATE_COMPARATOR);
         sessIds = new ArrayList<Integer>();
-        for (Session s : ss) {
-            sessIds.add((int) s.getId());
+        for (int i = 0; i < ss.size(); i++) {
+            sessIds.add((int) i);
         }
     }
 
-    private String createSpeakerName(Long[] descLine1, Map<Long, String> idsToSpeaker) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < descLine1.length; i++) {
-            Long id = descLine1[i];
-            if (id == null) {
-                continue; //retarded api
-            }
-            String str = idsToSpeaker.get(id);
-            if (str != null) {
-                if (i > 0) {
-                    result.append(", ");
-                }
-                result.append(str);
-            }
-        }
-        return result.toString();
+    private String createSpeakerName(Session session) {
+        if (session.getSpeakerIds() == null || session.getSpeakerIds().isEmpty()) return "";
+        return Joiner.on(", ").join(session.getSpeakerIds());
     }
 
-    private void displayEventDetails(long id) {
-        ExpandedSessionsInfoActivity.start(getActivity(), id, 0L, sessIds);
+    private void displayEventDetails(String id) {
+        SessionExpandedActivity.start(getActivity(), id, null);
     }
 
     @Override
@@ -185,7 +188,6 @@ public class CalendarFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        OpenHelperManager.releaseHelper();
     }
 
     public int getOffset() {
