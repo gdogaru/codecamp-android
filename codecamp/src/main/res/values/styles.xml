@@ -1,6 +1,6 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Codecamp" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Codecamp" parent="Theme.AppCompat.NoActionBar">
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
 
@@ -10,10 +10,9 @@
         <item name="colorAccent">@color/colorAccent</item>
 
         <item name="android:windowBackground">@color/windowBgd</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_color</item>
         <item name="android:spinnerItemStyle">@style/CodecampSpinnerItem</item>
         <item name="android:spinnerDropDownItemStyle">@style/CodecampSpinnerExpandedItem</item>
-        <item name="android:actionBarStyle">@style/MyActionBar</item>
     </style>
 
     <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
@@ -43,17 +42,19 @@
         <item name="android:gravity">center_vertical</item>
     </style>
 
-    <style name="CodecampAppBarLayout" parent="@style/Widget.AppCompat.Toolbar">
+    <style name="Codecamp.AppBarLayout">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 
-    <style name="CodecampToolbar" parent="@style/Widget.AppCompat.Toolbar">
+    <style name="Codecamp.Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">?attr/actionBarSize</item>
         <item name="layout_collapseMode">pin</item>
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="contentInsetLeft">0dp</item>
+        <item name="contentInsetStart">0dp</item>
+        <item name="contentInsetStartWithNavigation">0dp</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Dark</item>
     </style>
 
 
@@ -74,9 +75,12 @@
         <item name="android:paddingTop">5dp</item>
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">marquee</item>
+        <item name="fontPath">@string/font_roboto_medium</item>
     </style>
 
     <style name="session_item_time">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/text_size</item>
         <item name="android:maxLines">1</item>
         <item name="android:textColor">@color/sec_list_item</item>
@@ -97,6 +101,7 @@
     <style name="header_2">
         <item name="android:textSize">@dimen/header_2</item>
         <item name="android:textStyle">bold</item>
+        <item name="fontPath">@string/font_roboto_bold</item>
     </style>
 
     <style name="user_input">
@@ -111,7 +116,7 @@
     </style>
 
     <style name="description" parent="field_label">
-        <item name="android:textStyle">italic</item>
+        <item name="android:textStyle">normal</item>
     </style>
 
 
@@ -143,5 +148,52 @@
         <item name="android:src">@drawable/chevron_right</item>
     </style>
 
+    <style name="Codecamp.Widget.Button.Toggle" parent="android:Widget">
+        <item name="android:background">@drawable/ic_toggle_calendar_bg</item>
+        <item name="android:disabledAlpha">?android:attr/disabledAlpha</item>
+    </style>
 
+    <style name="Codecamp.AgendaToggle">
+        <item name="android:buttonStyleToggle">@style/Codecamp.Widget.Button.Toggle</item>
+        <item name="android:textOn"></item>
+        <item name="android:textOff"></item>
+    </style>
+
+
+    <style name="Codecamp.Dialog"/>
+
+    <style name="Codecamp.Dialog.Button">
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="fontPath">@string/font_roboto_regular</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/button_dialog</item>
+    </style>
+
+    <style name="Codecamp.Dialog.Cancel" parent="Codecamp.Dialog.Button">
+        <item name="android:background">@drawable/button_cancel</item>
+    </style>
+
+    <style name="Codecamp.Dialog.Text">
+        <item name="android:textStyle">normal</item>
+        <item name="android:color">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="fontPath">@string/font_roboto_regular</item>
+        <item name="android:gravity">center</item>
+    </style>
+    <!-- Local copy of android:Theme.Holo.Dialog.Alert -->
+    <style name="Codecamp.AlertDialogThemeCompat" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorPrimary" tools:ignore="NewApi">@color/white</item>
+        <item name="android:fitsSystemWindows">false</item>
+    </style>
+
+
+    <color name="text_color">#e7e7e7</color>
 </resources>

@@ -1,4 +1,4 @@
-package com.gdogaru.codecamp.view.sessions;
+package com.gdogaru.codecamp.view.agenda;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.svc.AppPreferences;
 import com.gdogaru.codecamp.view.BaseActivity;
 import com.gdogaru.codecamp.view.calendar.CalendarFragment;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import javax.inject.Inject;
 
@@ -22,7 +23,7 @@ import butterknife.OnCheckedChanged;
 /**
  * Created by Gabriel on 10/23/2014.
  */
-public class EventListActivity extends BaseActivity {
+public class AgendaActivity extends BaseActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
@@ -30,9 +31,11 @@ public class EventListActivity extends BaseActivity {
     ToggleButton viewSwitch;
     @Inject
     AppPreferences appPreferences;
+    @Inject
+    FirebaseAnalytics firebaseAnalytics;
 
     public static void start(Activity activity) {
-        activity.startActivity(new Intent(activity, EventListActivity.class));
+        activity.startActivity(new Intent(activity, AgendaActivity.class));
         activity.overridePendingTransition(R.anim.act_right_left, R.anim.act_left_out);
     }
 
@@ -42,7 +45,7 @@ public class EventListActivity extends BaseActivity {
 
         App.getDiComponent().inject(this);
 
-        setContentView(R.layout.event_list_activity);
+        setContentView(R.layout.agenda_activity);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
@@ -64,13 +67,19 @@ public class EventListActivity extends BaseActivity {
     }
 
     private void showList() {
+        Bundle bundle = new Bundle();
+        String value = appPreferences.getListViewList() ? "list" : "calendar";
+        bundle.putString("view_type", value);
+        firebaseAnalytics.logEvent("agenda_view_" + value, bundle);
+
         FragmentTransaction transaction = getSupportFragmentManager()
-                .beginTransaction();
-        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out); //, 0, R.anim.hold);
+                .beginTransaction()
+                .disallowAddToBackStack()
+                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out); //, 0, R.anim.hold);
         if (appPreferences.getListViewList()) {
-            transaction.replace(R.id.content, new SessionsListFragment());
+            transaction.replace(R.id.content, new SessionsListFragment(), "session_list");
         } else {
-            transaction.replace(R.id.content, new CalendarFragment());
+            transaction.replace(R.id.content, new CalendarFragment(), "calendar");
         }
         transaction.commit();
     }

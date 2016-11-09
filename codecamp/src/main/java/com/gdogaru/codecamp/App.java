@@ -30,9 +30,9 @@ public class App extends MultiDexApplication {
                 .applicationModule(new ApplicationModule(this))
                 .build();
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
-//                .setDefaultFontPath(getString(R.string.font_lato_black))
-                        .setFontAttrId(R.attr.fontPath)
-                        .build()
+                .setDefaultFontPath(getString(R.string.font_roboto_regular))
+                .setFontAttrId(R.attr.fontPath)
+                .build()
         );
     }
 }

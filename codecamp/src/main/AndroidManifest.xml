@@ -42,26 +42,11 @@
         </activity>
         <activity android:name=".view.LoadingDataActivity"/>
         <activity android:name=".view.MainActivity"/>
-        <activity android:name=".view.sessions.EventListActivity"/>
+        <activity android:name=".view.agenda.AgendaActivity"/>
         <activity android:name=".view.session.SessionExpandedActivity"/>
         <activity android:name=".view.SponsorsActivity"/>
-
-        <!-- <activity android:name=".view.calendar.CalendarActivity_"> -->
-        <!--  -->
-        <!-- </activity> -->
-
-
-        <!-- <service android:name=".gcm.CodecampGCMService"/> -->
-
-
-        <!-- <receiver android:name=".gcm.CodecampGCMBroadcastReceiver" -->
-        <!-- android:permission="com.google.android.c2dm.permission.SEND"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="com.google.android.c2dm.intent.RECEIVE"/> -->
-        <!-- <action android:name="com.google.android.c2dm.intent.REGISTRATION"/> -->
-        <!-- <category android:name="com.gdogaru.codecamp"/> -->
-        <!-- </intent-filter> -->
-        <!-- </receiver> -->
+        <activity android:name=".view.SpeakersActivity"/>
+        <activity android:name=".view.speaker.SpeakerExpandedActivity"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -69,14 +54,6 @@
 
         <uses-library android:name="com.google.android.maps"/>
 
-        <!--
-             The API key for Google Maps-based APIs is defined as a string resource.
-             (See the file "res/values/google_maps_api.xml").
-             Note that the API key is linked to the encryption key used to sign the APK.
-             You need a different API key for each encryption key, including the release key that is used to
-             sign the APK for publishing.
-             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
-        -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key"/>

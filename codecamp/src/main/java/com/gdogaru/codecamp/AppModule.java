@@ -6,6 +6,7 @@ import com.gdogaru.codecamp.model.json.DateTypeAdapter;
 import com.gdogaru.codecamp.model.json.LocalTimeTypeAdapter;
 import com.gdogaru.codecamp.svc.AppPreferences;
 import com.gdogaru.codecamp.svc.CodecampClient;
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.path.android.jobqueue.JobManager;
@@ -89,5 +90,10 @@ public class AppModule {
     @Provides
     public EventBus eventBus() {
         return EventBus.getDefault();
+    }
+
+    @Provides
+    public FirebaseAnalytics firebaseAnalytics(App app) {
+        return FirebaseAnalytics.getInstance(app);
     }
 }

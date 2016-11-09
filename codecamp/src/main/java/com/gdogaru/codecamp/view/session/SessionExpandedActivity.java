@@ -36,8 +36,6 @@ import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.Strings;
 import com.gdogaru.codecamp.view.BaseActivity;
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
@@ -93,7 +91,6 @@ public class SessionExpandedActivity extends BaseActivity {
         setContentView(R.layout.session_expanded_activity);
         ButterKnife.bind(this);
 
-
         allTracksString = getString(R.string.all_tracks);
 
         initViews();
@@ -120,14 +117,8 @@ public class SessionExpandedActivity extends BaseActivity {
         trackSessions = codecampClient.getTrackSesssionsIds(allTracksString.equals(trackId) ? null : trackId);
 
         ExpandedSessionsAdapter adapter = new ExpandedSessionsAdapter(getSupportFragmentManager(), getLayoutInflater(), trackSessions);
+        int index = Iterables.indexOf(trackSessions, input -> input.equals(sessionId));
         viewPager.setAdapter(adapter);
-        int index = Iterables.indexOf(trackSessions, new Predicate<String>() {
-            @Override
-            public boolean apply(String input) {
-                return input.equals(sessionId);
-            }
-        });
-        viewPager.getAdapter().notifyDataSetChanged();
         viewPager.setCurrentItem(index < 0 ? 0 : index);
     }
 
@@ -162,14 +153,10 @@ public class SessionExpandedActivity extends BaseActivity {
         Track track = new Track();
         track.setName(allTracksString);
         trackList.add(0, track);
-        List<String> trackNames = Lists.newArrayList(Iterables.transform(trackList, new Function<Track, String>() {
-            @Override
-            public String apply(Track input) {
-                return input.getName();
-            }
-        }));
+        List<String> trackNames = Lists.newArrayList(Iterables.transform(trackList, input -> input.getName()));
         int position = trackNames.indexOf(trackId);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.session_track_item, trackNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.dropdown_item, trackNames);
+        adapter.setDropDownViewResource(R.layout.dropdown_item_drop);
         trackSpinner.setAdapter(adapter);
         trackSpinner.setSelection(position);
     }
@@ -224,7 +211,7 @@ public class SessionExpandedActivity extends BaseActivity {
             super(fm);
             this.layoutInflater = layoutInflater;
             this.trackSessions = trackSessions;
-            LOG.info("Set sessions: {}", trackSessions);
+            LOG.trace("Set sessions: {}", trackSessions);
         }
 
         @Override

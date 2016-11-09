@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="font_roboto_regular">fonts/Roboto-Regular.ttf</string>
+    <string name="font_roboto_bold">fonts/Roboto-Bold.ttf</string>
+    <string name="font_roboto_medium">fonts/Roboto-Medium.ttf</string>
+    <string name="font_roboto_black">fonts/Roboto-Black.ttf</string>
+    <string name="font_robotocondensed_regular">fonts/RobotoCondensed-Regular.ttf</string>
     <!--tab-->
     <string name="overview">Overview</string>
     <string name="tracks">Tracks</string>
@@ -16,7 +21,7 @@
     <string name="email_policy">Use my email:</string>
     <string name="complete_all">Please complete all the fields.</string>
     <string name="track">Track:</string>
-    <string name="speakers">Speakers:</string>
+    <string name="speakers">Speakers</string>
     <string name="comments">Comments:</string>
     <string name="refresh_data">Refresh Event Data</string>
     <string name="no_internet">Codecamp could not refresh, no internet</string>
@@ -72,4 +77,11 @@
     <string name="title_activity_maps">Map</string>
     <string name="refrsh_data">&#8634;Refresh Data</string>
     <string name="sponsors">Sponsors</string>
+
+    <string name="thanks_for_using">Thank you for using the app!</string>
+    <string name="please_rate">Please repay us with a good rating.</string>
+    <string name="rate">Rate</string>
+    <string name="later">Latter</string>
+    <string name="never">Never</string>
+
 </resources>

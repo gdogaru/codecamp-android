@@ -107,7 +107,7 @@ public class SponsorsActivity extends BaseActivity {
             SponsorHolder vh = (SponsorHolder) holder;
             Glide.with(activity)
                     .load(s.getLogoUrl())
-                    .placeholder(R.drawable.person_icon)
+                    .placeholder(R.drawable.background_white)
                     .fitCenter()
                     .into(vh.logo);
             vh.name.setText(s.getName());

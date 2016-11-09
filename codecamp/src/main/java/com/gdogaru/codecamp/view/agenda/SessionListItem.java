@@ -1,4 +1,4 @@
-package com.gdogaru.codecamp.view.sessions;
+package com.gdogaru.codecamp.view.agenda;
 
 import org.joda.time.LocalTime;
 

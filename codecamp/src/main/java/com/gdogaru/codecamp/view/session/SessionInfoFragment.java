@@ -34,6 +34,7 @@ import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.DateUtil;
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Locale;
 
@@ -63,6 +64,8 @@ public class SessionInfoFragment extends Fragment {
 
     @Inject
     CodecampClient codecampClient;
+    @Inject
+    FirebaseAnalytics firebaseAnalytics;
 
     public static SessionInfoFragment newInstance(String id) {
         SessionInfoFragment sessionInfoFragment = new SessionInfoFragment();
@@ -85,7 +88,7 @@ public class SessionInfoFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.session_expanded_info, container, false);
+        return inflater.inflate(R.layout.session_expanded_item, container, false);
     }
 
     @Override
@@ -118,6 +121,10 @@ public class SessionInfoFragment extends Fragment {
                 }
             }
         }
+
+        Bundle bundle = new Bundle();
+        bundle.putString(FirebaseAnalytics.Param.VALUE, session.getTitle());
+        firebaseAnalytics.logEvent("session_view", bundle);
     }
 
     private void addSpeaker(Speaker speaker) {

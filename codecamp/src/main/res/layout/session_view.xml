@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<android.support.v4.widget.NestedScrollView
+<android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:paddingTop="5dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="15dp"
+    android:elevation="3dp">
 
     <LinearLayout
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="10dp">
@@ -15,16 +16,18 @@
         <TextView
             android:id="@+id/sessionTitle"
             style="@style/header_1"
+            fontPath="@string/font_roboto_medium"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="title"/>
+            android:lineSpacingMultiplier="1.2"
+            tools:text="title"/>
 
         <TextView
             android:id="@+id/sessionTime"
             style="@style/field_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="13.06.09 - 14.06.09"/>
+            tools:text="13.06.09 - 14.06.09"/>
 
 
         <LinearLayout
@@ -33,10 +36,11 @@
             android:layout_height="wrap_content">
 
             <TextView
-                style="@style/field_label"
+                style="@style/header_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/track"/>
+                android:text="@string/track"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/sessionTrack"
@@ -45,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="3dp"
                 android:paddingTop="0dp"
-                android:text="track"/>
+                tools:text="track"/>
         </LinearLayout>
 
         <TextView
@@ -53,28 +57,8 @@
             style="@style/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="description sd"/>
+            android:layout_marginTop="10dp"
+            tools:text="description sd"/>
 
-        <LinearLayout
-            android:id="@+id/speakerLayoutOuter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/header_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
-                android:paddingTop="10dp"
-                android:text="@string/speakers"/>
-
-            <LinearLayout
-                android:id="@+id/speakerLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-            </LinearLayout>
-        </LinearLayout>
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</android.support.v7.widget.CardView>

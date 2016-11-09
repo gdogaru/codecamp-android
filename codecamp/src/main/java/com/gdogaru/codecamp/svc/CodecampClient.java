@@ -246,5 +246,22 @@ public class CodecampClient {
         appPreferences.setActiveEvent(id);
         currentCodecamp = null;
     }
+
+    public List<Session> getSessionsBySpeaker(String speakerId) {
+        List<Schedule> schedules = getEvent().getSchedules();
+        List<Session> result = new ArrayList<>();
+        for (Schedule schedule : schedules) {
+            for (Session s : schedule.getSessions()) {
+                if (s.getSpeakerIds() == null || s.getSpeakerIds().size() == 0) continue;
+                for (String sp : s.getSpeakerIds()) {
+                    if (sp != null && sp.equals(speakerId)) {
+                        result.add(s);
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
 }
 

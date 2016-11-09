@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gdogaru.codecamp.view.sessions;
+package com.gdogaru.codecamp.view.agenda;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -82,7 +82,7 @@ public class SessionsListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.sessions_list, container, false);
+        return inflater.inflate(R.layout.agenda_sessions_list, container, false);
     }
 
     @Override
@@ -113,7 +113,7 @@ public class SessionsListFragment extends Fragment {
         for (Track t : tracks) {
             trackList.add(t.getName());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.sessions_fragment_spitem, trackList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.dropdown_item, trackList);
         trackSelector.setAdapter(adapter);
     }
 

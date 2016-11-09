@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:background="@drawable/list_item_background"
@@ -15,14 +16,12 @@
         style="@style/session_item_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Android made simple"/>
+        tools:text="Android made simple"/>
 
     <TextView
         android:id="@+id/sessionSpeaker"
         style="@style/session_item_time"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Gabriel Dogaru"/>
+        tools:text="Gabriel Dogaru"/>
 
 
     <LinearLayout
@@ -36,7 +35,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
-            android:text="10:30"
+            tools:text="10:30"
             android:visibility="gone"/>
 
         <TextView
@@ -44,7 +43,7 @@
             style="@style/session_item_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sala napoli"/>
+            tools:text="sala napoli"/>
     </LinearLayout>
 
 

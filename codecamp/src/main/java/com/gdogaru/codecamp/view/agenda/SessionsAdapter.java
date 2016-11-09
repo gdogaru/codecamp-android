@@ -1,4 +1,4 @@
-package com.gdogaru.codecamp.view.sessions;
+package com.gdogaru.codecamp.view.agenda;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -53,7 +53,7 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
         View view;
         if (convertView != null) view = convertView;
         else {
-            view = mInflater.inflate(R.layout.sessions_list_item, parent, false);
+            view = mInflater.inflate(R.layout.agenda_sessions_list_item, parent, false);
             ViewHolder holder = new ViewHolder();
             holder.title = (TextView) view.findViewById(R.id.sessionName);
             holder.time = (TextView) view.findViewById(R.id.sessionTime);
@@ -77,7 +77,7 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
         HeaderViewHolder holder;
         if (convertView == null) {
             holder = new HeaderViewHolder();
-            convertView = mInflater.inflate(R.layout.list_header, parent, false);
+            convertView = mInflater.inflate(R.layout.agenda_sessions_list_header, parent, false);
             holder.text = (TextView) convertView;
             convertView.setTag(holder);
         } else {
