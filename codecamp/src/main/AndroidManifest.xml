@@ -41,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".view.LoadingDataActivity"/>
-        <activity android:name=".view.MainActivity"/>
+        <activity android:name=".view.main.MainActivity"/>
         <activity android:name=".view.agenda.AgendaActivity"/>
         <activity android:name=".view.session.SessionExpandedActivity"/>
         <activity android:name=".view.SponsorsActivity"/>

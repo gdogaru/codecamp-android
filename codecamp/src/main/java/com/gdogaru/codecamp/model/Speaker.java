@@ -92,4 +92,18 @@ public class Speaker {
     public void setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Speaker{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", photoUrl='").append(photoUrl).append('\'');
+        sb.append(", company='").append(company).append('\'');
+        sb.append(", companyWebsiteUrl='").append(companyWebsiteUrl).append('\'');
+        sb.append(", jobTitle='").append(jobTitle).append('\'');
+        sb.append(", bio='").append(bio).append('\'');
+        sb.append(", displayOrder=").append(displayOrder);
+        sb.append('}');
+        return sb.toString();
+    }
 }

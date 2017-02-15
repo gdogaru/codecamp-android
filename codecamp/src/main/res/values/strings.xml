@@ -83,5 +83,7 @@
     <string name="rate">Rate</string>
     <string name="later">Latter</string>
     <string name="never">Never</string>
+    <string name="location">Location</string>
+    <string name="event_schedule">Event Schedule</string>
 
 </resources>

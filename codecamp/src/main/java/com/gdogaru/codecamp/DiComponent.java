@@ -3,7 +3,7 @@ package com.gdogaru.codecamp;
 
 import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
 import com.gdogaru.codecamp.view.LoadingDataActivity;
-import com.gdogaru.codecamp.view.MainActivity;
+import com.gdogaru.codecamp.view.main.MainActivity;
 import com.gdogaru.codecamp.view.SpeakersActivity;
 import com.gdogaru.codecamp.view.SplashScreenActivity;
 import com.gdogaru.codecamp.view.SponsorsActivity;

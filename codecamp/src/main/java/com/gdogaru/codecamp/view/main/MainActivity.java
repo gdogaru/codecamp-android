@@ -14,10 +14,9 @@
  * limitations under the License.
  */
 
-package com.gdogaru.codecamp.view;
+package com.gdogaru.codecamp.view.main;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,12 +24,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -44,8 +40,13 @@ import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.svc.AppPreferences;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
+import com.gdogaru.codecamp.util.AnalyticsHelper;
 import com.gdogaru.codecamp.util.RatingHelper;
 import com.gdogaru.codecamp.util.Strings;
+import com.gdogaru.codecamp.view.BaseActivity;
+import com.gdogaru.codecamp.view.LoadingDataActivity;
+import com.gdogaru.codecamp.view.SpeakersActivity;
+import com.gdogaru.codecamp.view.SponsorsActivity;
 import com.gdogaru.codecamp.view.agenda.AgendaActivity;
 import com.gdogaru.codecamp.view.common.DividerItemDecoration;
 import com.gdogaru.codecamp.view.common.RecyclerItemClickListener;
@@ -60,8 +61,8 @@ import com.google.common.collect.Lists;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.path.android.jobqueue.JobManager;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -69,7 +70,6 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.OnItemSelected;
 
 
@@ -93,7 +93,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     @BindView(R.id.mapLayout)
     LinearLayout mapLayout;
     @BindView(R.id.agenda)
-    RecyclerView agenda;
+    RecyclerView agendaRecycler;
     @BindView(R.id.location_spinner)
     Spinner locationSpinner;
     private SupportMapFragment mapview;
@@ -151,7 +151,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     public void printData(EventSummary overview) {
         Bundle bundle = new Bundle();
         bundle.putString("event", overview.getTitle());
-        firebaseAnalytics.logEvent("event_view_"+overview.getTitle(), bundle);
+        firebaseAnalytics.logEvent(AnalyticsHelper.normalize("event_" + overview.getTitle()), bundle);
 
         eventTitle.setText(overview.getTitle());
         eventDate.setText(DATE_FORMAT.format(overview.getStartDate()));
@@ -160,21 +160,39 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
 
-        agenda.setLayoutManager(linearLayoutManager);
+        agendaRecycler.setLayoutManager(linearLayoutManager);
         DividerItemDecoration decor = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, ContextCompat.getDrawable(this, R.drawable.list_vertical_divider));
-        agenda.addItemDecoration(decor);
+        agendaRecycler.addItemDecoration(decor);
 
-        schedulesAdapter = new SchedulesAdapter(this, codecampClient.getEvent().getSchedules());
-        agenda.setAdapter(schedulesAdapter);
-        agenda.setHasFixedSize(true);
-        agenda.addOnItemTouchListener(new RecyclerItemClickListener(this, new RecyclerItemClickListener.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                Schedule schedule = schedulesAdapter.getItem(position);
-                appPreferences.setActiveSchedule(position);
-                AgendaActivity.start(MainActivity.this);
-            }
+        schedulesAdapter = new SchedulesAdapter(this, getSchedules());
+        agendaRecycler.setAdapter(schedulesAdapter);
+        agendaRecycler.setHasFixedSize(true);
+        agendaRecycler.addOnItemTouchListener(new RecyclerItemClickListener(this, (view, position) -> {
+            onItemClicked(position, schedulesAdapter.getItem(position));
         }));
+    }
+
+    private List<MainViewItem> getSchedules() {
+        ArrayList<MainViewItem> items = new ArrayList<>();
+        for (Schedule s : codecampClient.getEvent().getSchedules()) {
+            items.add(new MainViewItem.AgendaItem(s));
+        }
+        items.add(new MainViewItem.SpeakersItem());
+        items.add(new MainViewItem.SponsorsItem());
+        return items;
+    }
+
+    private void onItemClicked(int position, MainViewItem item) {
+        if (item instanceof MainViewItem.AgendaItem) {
+            appPreferences.setActiveSchedule(position);
+            AgendaActivity.start(MainActivity.this);
+        } else if (item instanceof MainViewItem.SpeakersItem) {
+            SpeakersActivity.start(this);
+        } else if (item instanceof MainViewItem.SponsorsItem) {
+            SponsorsActivity.start(this);
+        } else {
+            throw new IllegalStateException("Could not show " + item);
+        }
     }
 
     @OnItemSelected(R.id.location_spinner)
@@ -188,16 +206,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                 initDisplay();
             }
         }
-    }
-
-    @OnClick(R.id.sponsors)
-    public void showSponsors() {
-        SponsorsActivity.start(this);
-    }
-
-    @OnClick(R.id.speakers)
-    public void showSpeakers() {
-        SpeakersActivity.start(this);
     }
 
     @Override
@@ -258,15 +266,12 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         googleMap.getUiSettings().setZoomControlsEnabled(false);
         //disable scroll gesture
         googleMap.getUiSettings().setScrollGesturesEnabled(false);
-        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                //geo:latitude,longitude?z=zoom
-                String uri = "geo:" + latitude + "," + longitude + "?z=" + 19;
-                Intent intentMap = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-                intentMap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intentMap);
-            }
+        googleMap.setOnMapClickListener(latLng1 -> {
+            //geo:latitude,longitude?z=zoom
+            String uri = "geo:" + latitude + "," + longitude + "?z=" + 19;
+            Intent intentMap = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            intentMap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intentMap);
         });
     }
 
@@ -277,46 +282,5 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         RatingHelper.tryToRate(this);
     }
 
-    static class ScheduleHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        TextView date;
 
-        public ScheduleHolder(View itemView) {
-            super(itemView);
-            title = (TextView) itemView.findViewById(R.id.title);
-            date = (TextView) itemView.findViewById(R.id.date);
-        }
-    }
-
-    static class SchedulesAdapter extends RecyclerView.Adapter<ScheduleHolder> {
-        private final LayoutInflater layoutInflater;
-        DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM dd, yyyy", Locale.getDefault());
-        List<Schedule> schedules;
-
-        public SchedulesAdapter(Context context, List<Schedule> schedules) {
-            this.schedules = schedules;
-            layoutInflater = LayoutInflater.from(context);
-        }
-
-        @Override
-        public ScheduleHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            return new ScheduleHolder(layoutInflater.inflate(R.layout.main_schedule_item, parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(ScheduleHolder holder, int position) {
-            Schedule schedule = schedules.get(position);
-            holder.title.setText("Event Schedule");
-            holder.date.setText(DATE_FORMAT.format(schedule.getDate()));
-        }
-
-        @Override
-        public int getItemCount() {
-            return schedules.size();
-        }
-
-        public Schedule getItem(int position) {
-            return schedules.get(position);
-        }
-    }
 }

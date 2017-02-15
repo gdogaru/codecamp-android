@@ -1,6 +1,8 @@
 package com.gdogaru.codecamp.svc;
 
 import android.os.Environment;
+import android.support.annotation.Nullable;
+import android.support.v4.util.Pair;
 
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.model.Codecamp;
@@ -221,8 +223,17 @@ public class CodecampClient {
         return Iterables.find(getEvent().getSpeakers(), input -> input.getName().equals(id));
     }
 
+    @Nullable
     public Track getTrack(String track) {
-        return Iterables.find(getSchedule().getTracks(), input -> input.getName().equals(track));
+        return Iterables.find(getSchedule().getTracks(), input -> input.getName().equals(track), null);
+    }
+
+    public Pair<Track, Schedule> getTrackExtended(String track) {
+        for (Schedule s : getEvent().getSchedules()) {
+            Track t = Iterables.find(s.getTracks(), input -> input.getName().equals(track), null);
+            if (t != null) return new Pair<>(t, s);
+        }
+        return null;
     }
 
     public ArrayList<String> getTrackSesssionsIds(String trackId) {

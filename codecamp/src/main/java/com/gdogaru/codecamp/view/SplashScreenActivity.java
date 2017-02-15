@@ -22,6 +22,7 @@ import android.os.Handler;
 
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.svc.AppPreferences;
+import com.gdogaru.codecamp.view.main.MainActivity;
 
 import javax.inject.Inject;
 

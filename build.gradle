@@ -5,11 +5,12 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:0.6.0.RELEASE"
-        classpath 'com.android.tools.build:gradle:2.2.2'
+        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE"
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'me.tatarka:gradle-retrolambda:3.3.0'
-        classpath 'com.google.guava:guava:18.0'
+        classpath 'me.tatarka:gradle-retrolambda:3.5.0'
+        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
+        classpath 'com.google.guava:guava:19.0'
         classpath 'com.google.gms:google-services:3.0.0'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -24,12 +25,12 @@ allprojects {
 }
 
 ext {
-    compileSdkVersion = 24
-    buildToolsVersion = '25.0.0'
-    targetSdkVersion = 23
+    compileSdkVersion = 25
+    buildToolsVersion = '25.0.2'
+    targetSdkVersion = 25
     minSdkVersion = 11
 
-    androidSupportVersion = '24.2.1'
+    androidSupportVersion = '25.1.1'
     gmsVersion = '9.4.0'
 }
 
@@ -48,10 +49,10 @@ allprojects {
             dependency "com.android.support:support-annotations:$androidSupportVersion"
             dependency "com.android.support:cardview-v7:$androidSupportVersion"
 
-            dependency 'org.slf4j:slf4j-android:1.7.12'
+            dependency 'org.slf4j:slf4j-android:1.7.22'
             dependency 'com.parse.bolts:bolts-tasks:1.4.0'
             dependency 'no.nordicsemi.android.support.v18:scanner:0.2.0'
-            dependency 'com.google.code.gson:gson:2.6.2'
+            dependency 'com.google.code.gson:gson:2.8.0'
             dependency 'commons-io:commons-io:2.4'
             dependency 'joda-time:joda-time:2.9.4'
             dependency 'com.sothree.slidinguppanel:library:3.0.0'
@@ -64,18 +65,18 @@ allprojects {
             dependency 'com.android.support.test.espresso:espresso-core:2.2.2'
             dependency 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
 
-            dependency "com.google.dagger:dagger:2.6.1"
-            dependency "com.google.dagger:dagger-compiler:2.6.1"
+            dependency "com.google.dagger:dagger:2.9"
+            dependency "com.google.dagger:dagger-compiler:2.9"
 
             dependency 'uk.co.chrisjenx:calligraphy:2.2.0'
-            dependency 'joda-time:joda-time:2.9.4'
-            dependency 'com.google.guava:guava:19.0'
+            dependency 'joda-time:joda-time:2.9.7'
+            dependency 'com.google.guava:guava:20.0'
             dependency 'com.github.bumptech.glide:glide:3.7.0'
-            dependency 'com.jakewharton:butterknife:8.4.0'
-            dependency 'com.jakewharton:butterknife-compiler:8.4.0'
+            dependency 'com.jakewharton:butterknife:8.5.1'
+            dependency 'com.jakewharton:butterknife-compiler:8.5.1'
 
-            dependency 'com.squareup.okio:okio:1.10.0'
-            dependency 'com.squareup.okhttp3:okhttp:3.3.0'
+            dependency 'com.squareup.okio:okio:1.11.0'
+            dependency 'com.squareup.okhttp3:okhttp:3.6.0'
             dependency 'org.greenrobot:eventbus:3.0.0'
             dependency 'se.emilsjolander:stickylistheaders:2.7.0'
 

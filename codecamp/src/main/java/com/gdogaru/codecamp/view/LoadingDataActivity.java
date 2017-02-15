@@ -26,6 +26,7 @@ import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.svc.jobs.DataLoadingEvent;
 import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
+import com.gdogaru.codecamp.view.main.MainActivity;
 import com.path.android.jobqueue.JobManager;
 
 import org.greenrobot.eventbus.Subscribe;

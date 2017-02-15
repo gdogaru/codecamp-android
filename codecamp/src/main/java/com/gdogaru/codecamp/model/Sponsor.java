@@ -77,4 +77,16 @@ public class Sponsor {
     public void setDisplayOrder(int displayOrder) {
         this.displayOrder = displayOrder;
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Sponsor{");
+        sb.append("name='").append(name).append('\'');
+        sb.append(", websiteUrl='").append(websiteUrl).append('\'');
+        sb.append(", logoUrl='").append(logoUrl).append('\'');
+        sb.append(", sponsorshipPackage='").append(sponsorshipPackage).append('\'');
+        sb.append(", displayOrder=").append(displayOrder);
+        sb.append('}');
+        return sb.toString();
+    }
 }

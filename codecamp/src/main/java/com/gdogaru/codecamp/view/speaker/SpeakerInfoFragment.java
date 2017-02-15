@@ -19,6 +19,7 @@ package com.gdogaru.codecamp.view.speaker;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
+import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.model.Track;
@@ -36,6 +38,8 @@ import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.DateUtil;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,6 +48,7 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 
 public class SpeakerInfoFragment extends Fragment {
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
 
     public static final String SPEAKER_ID = "speakerId";
     String speakerId;
@@ -113,8 +118,13 @@ public class SpeakerInfoFragment extends Fragment {
         String timeString = DateUtil.formatPeriod(session.getStartTime(), session.getEndTime());
         sessionTime.setText(timeString);
         if (session.getTrack() != null) {
-            Track track = codecampClient.getTrack(session.getTrack());
-            sessionTrack.setText(String.format(Locale.getDefault(), "%s, %s seats, %s", track.getName(), track.getCapacity(), track.getDescription()));
+            Pair<Track, Schedule> p = codecampClient.getTrackExtended(session.getTrack());
+            if (p == null) {
+                sessionTrack.setText("");
+            } else {
+                sessionTrack.setText(String.format(Locale.getDefault(), "%s, %s seats, %s \n%s",
+                        p.first.getName(), p.first.getCapacity(), p.first.getDescription(), DATE_FORMAT.format(p.second.getDate())));
+            }
         } else {
             sessionTrackLayout.setVisibility(View.GONE);
         }

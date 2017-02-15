@@ -133,14 +133,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 if (notGranted.size() > 0) {
                     if (getPermissionsNeeded().size() > 0) {
                         showDialogOK("The app cannot function without these permissions.",
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        switch (which) {
-                                            case DialogInterface.BUTTON_POSITIVE:
-                                                checkAndRequestPermissions();
-                                                break;
-                                        }
+                                (dialog, which) -> {
+                                    switch (which) {
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            checkAndRequestPermissions();
+                                            break;
                                     }
                                 });
                     }
@@ -151,5 +148,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        overridePendingTransition(R.anim.hold,R.anim.act_slide_down);
     }
 }

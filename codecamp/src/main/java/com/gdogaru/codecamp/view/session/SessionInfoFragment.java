@@ -107,7 +107,11 @@ public class SessionInfoFragment extends Fragment {
         sessionTime.setText(timeString);
         if (session.getTrack() != null) {
             Track track = codecampClient.getTrack(session.getTrack());
-            sessionTrack.setText(String.format(Locale.getDefault(), "%s, %s seats, %s", track.getName(), track.getCapacity(), track.getDescription()));
+            if (track == null) {
+                sessionTrack.setText("");
+            } else {
+                sessionTrack.setText(String.format(Locale.getDefault(), "%s, %s seats, %s", track.getName(), track.getCapacity(), track.getDescription()));
+            }
         } else {
             sessionTrackLayout.setVisibility(View.GONE);
         }

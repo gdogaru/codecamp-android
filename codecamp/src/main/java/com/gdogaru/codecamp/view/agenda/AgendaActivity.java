@@ -10,6 +10,7 @@ import android.widget.ToggleButton;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.svc.AppPreferences;
+import com.gdogaru.codecamp.util.AnalyticsHelper;
 import com.gdogaru.codecamp.view.BaseActivity;
 import com.gdogaru.codecamp.view.calendar.CalendarFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -70,7 +71,7 @@ public class AgendaActivity extends BaseActivity {
         Bundle bundle = new Bundle();
         String value = appPreferences.getListViewList() ? "list" : "calendar";
         bundle.putString("view_type", value);
-        firebaseAnalytics.logEvent("agenda_view_" + value, bundle);
+        firebaseAnalytics.logEvent(AnalyticsHelper.normalize("agenda_view_" + value), bundle);
 
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction()
@@ -84,4 +85,9 @@ public class AgendaActivity extends BaseActivity {
         transaction.commit();
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.hold, R.anim.act_slide_down);
+    }
 }
