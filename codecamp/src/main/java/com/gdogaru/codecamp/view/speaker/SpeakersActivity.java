@@ -1,4 +1,4 @@
-package com.gdogaru.codecamp.view;
+package com.gdogaru.codecamp.view.speaker;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -19,8 +19,8 @@ import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.svc.CodecampClient;
+import com.gdogaru.codecamp.view.BaseActivity;
 import com.gdogaru.codecamp.view.common.UiUtil;
-import com.gdogaru.codecamp.view.speaker.SpeakerExpandedActivity;
 import com.google.common.collect.ComparisonChain;
 
 import java.util.Collections;

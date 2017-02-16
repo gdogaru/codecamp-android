@@ -9,11 +9,9 @@ import android.widget.TextView;
 
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Schedule;
+import com.gdogaru.codecamp.util.DateUtil;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by Gabriel on 2/15/2017.
@@ -21,7 +19,6 @@ import java.util.Locale;
 
 public class SchedulesAdapter extends RecyclerView.Adapter<SchedulesAdapter.ScheduleHolder> {
     private final LayoutInflater layoutInflater;
-    private final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM dd, yyyy", Locale.getDefault());
     private final List<MainViewItem> schedules;
 
     SchedulesAdapter(Context context, List<MainViewItem> schedules) {
@@ -40,7 +37,7 @@ public class SchedulesAdapter extends RecyclerView.Adapter<SchedulesAdapter.Sche
         if (item instanceof MainViewItem.AgendaItem) {
             Schedule schedule = ((MainViewItem.AgendaItem) item).getSchedule();
             holder.title.setText(R.string.event_schedule);
-            holder.date.setText(DATE_FORMAT.format(schedule.getDate()));
+            holder.date.setText(DateUtil.formatDayOfYear(schedule.getDate()));
             holder.date.setVisibility(View.VISIBLE);
         } else if (item instanceof MainViewItem.SpeakersItem) {
             holder.title.setText(R.string.speakers);

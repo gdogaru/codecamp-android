@@ -1,4 +1,4 @@
-package com.gdogaru.codecamp.view.agenda;
+package com.gdogaru.codecamp.view.agenda.list;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,17 +13,20 @@ import com.gdogaru.codecamp.util.StringUtils;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 
 public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
+    private final Set<String> favorites;
     private LayoutInflater mInflater;
     private List<SessionListItem> sessions;
 
-    public SessionsAdapter(Context context, List<SessionListItem> sessions) {
+    public SessionsAdapter(Context context, List<SessionListItem> sessions, Set<String> favorites) {
         super();
+        this.favorites = favorites;
         Collections.sort(sessions, SessionListItem.SESSION_BY_DATE_COMPARATOR);
         this.sessions = sessions;
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,6 +62,7 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
             holder.time = (TextView) view.findViewById(R.id.sessionTime);
             holder.place = (TextView) view.findViewById(R.id.sessionPlace);
             holder.speaker = (TextView) view.findViewById(R.id.sessionSpeaker);
+            holder.root = view.findViewById(R.id.root);
             view.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) view.getTag();
@@ -69,6 +73,11 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
         holder.place.setText(session.getTrackName());
         String speakerNames = StringUtils.join(session.getSpeakerNames(), ", ");
         holder.speaker.setText(speakerNames);
+        if(favorites.contains(session.getId())){
+            holder.root.setBackgroundResource(R.drawable.list_item_background_favorite);
+        }else{
+            holder.root.setBackgroundResource(R.drawable.list_item_background);
+        }
         return view;
     }
 
@@ -106,6 +115,7 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
         TextView time;
         TextView place;
         TextView speaker;
+        View root;
     }
 
 }

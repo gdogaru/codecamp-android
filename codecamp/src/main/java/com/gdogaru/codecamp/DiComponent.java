@@ -4,14 +4,15 @@ package com.gdogaru.codecamp;
 import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
 import com.gdogaru.codecamp.view.LoadingDataActivity;
 import com.gdogaru.codecamp.view.main.MainActivity;
-import com.gdogaru.codecamp.view.SpeakersActivity;
+import com.gdogaru.codecamp.view.speaker.SpeakersActivity;
 import com.gdogaru.codecamp.view.SplashScreenActivity;
 import com.gdogaru.codecamp.view.SponsorsActivity;
-import com.gdogaru.codecamp.view.calendar.CalendarFragment;
+import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment;
+import com.gdogaru.codecamp.view.main.SidebarFragment;
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
 import com.gdogaru.codecamp.view.session.SessionInfoFragment;
 import com.gdogaru.codecamp.view.agenda.AgendaActivity;
-import com.gdogaru.codecamp.view.agenda.SessionsListFragment;
+import com.gdogaru.codecamp.view.agenda.list.SessionsListFragment;
 import com.gdogaru.codecamp.view.speaker.SpeakerExpandedActivity;
 import com.gdogaru.codecamp.view.speaker.SpeakerInfoFragment;
 
@@ -52,4 +53,6 @@ public interface DiComponent {
     void inject(SpeakerExpandedActivity speakerExpandedActivity);
 
     void inject(SpeakerInfoFragment speakerInfoFragment);
+
+    void inject(SidebarFragment sidebarFragment);
 }

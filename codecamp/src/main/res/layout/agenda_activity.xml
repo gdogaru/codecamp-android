@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
@@ -12,26 +13,31 @@
             android:id="@+id/toolbar"
             style="@style/Codecamp.Toolbar">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <ImageView
+                <TextView
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/codecamp_title"/>
+                    android:layout_weight="1"
+                    android:ellipsize="marquee"
+                    android:maxLines="1"
+                    android:textSize="20sp"
+                    app:fontPath="@string/font_roboto_medium"
+                    tools:text="2017-05-12T Iasi"/>
 
-                <ToggleButton
+                <CheckBox
                     android:id="@+id/view_switch"
-                    style="@style/Codecamp.AgendaToggle"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/ic_toggle_calendar"/>
-            </RelativeLayout>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginStart="8dp"
+                    android:button="@drawable/checkbox_agenda_type"
+                    android:buttonTint="@color/white"/>
+            </LinearLayout>
 
         </android.support.v7.widget.Toolbar>
 

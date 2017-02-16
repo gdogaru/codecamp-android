@@ -1,6 +1,7 @@
 package com.gdogaru.codecamp.model;
 
-import java.util.Date;
+import org.joda.time.LocalDateTime;
+
 import java.util.List;
 
 /**
@@ -8,16 +9,16 @@ import java.util.List;
  */
 
 public class Schedule {
-    Date date;
+    LocalDateTime date;
     List<TimeSlot> timeSlots;
     List<Track> tracks;
     List<Session> sessions;
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

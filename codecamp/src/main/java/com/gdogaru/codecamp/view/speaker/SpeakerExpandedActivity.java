@@ -27,6 +27,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import com.gdogaru.codecamp.App;
@@ -57,6 +58,8 @@ public class SpeakerExpandedActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.track_spinner)
     Spinner trackSpinner;
+    @BindView(R.id.bookmarked)
+    CheckBox bookmarked;
     @Inject
     CodecampClient codecampClient;
     String speakerId;
@@ -79,6 +82,8 @@ public class SpeakerExpandedActivity extends BaseActivity {
         setContentView(R.layout.session_expanded_activity);
         ButterKnife.bind(this);
         trackSpinner.setVisibility(View.GONE);
+        bookmarked.setVisibility(View.GONE);
+
         initViews();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

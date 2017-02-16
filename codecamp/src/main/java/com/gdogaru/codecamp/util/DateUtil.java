@@ -16,7 +16,9 @@
 
 package com.gdogaru.codecamp.util;
 
+import org.joda.time.DateTimeFieldType;
 import org.joda.time.LocalTime;
+import org.joda.time.ReadablePartial;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -30,8 +32,10 @@ import java.util.TimeZone;
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 public class DateUtil {
-    static DateTimeFormatter hourFormat = DateTimeFormat.forPattern("HH:mm");
-
+    private final static DateTimeFormatter hourFormat = DateTimeFormat.forPattern("HH:mm");
+    private final static DateTimeFormatter DATE_DAY_FORMAT = DateTimeFormat.forPattern("EEEE, MMMM dd");
+    private final static DateTimeFormatter DATE_DAY_YEAR_FORMAT = DateTimeFormat.forPattern("EEEE, MMMM dd, yyyy");
+    private final static DateTimeFormatter EVENT_DATE_FORMAT = DateTimeFormat.forPattern("MMMM dd");
 
     public static String formatPeriod(LocalTime start, LocalTime end) {
         if (start == null || end == null) {
@@ -40,8 +44,29 @@ public class DateUtil {
         return String.format("%s - %s", formatTime(start), formatTime(end));
     }
 
+    public static String formatEventPeriod(ReadablePartial start, ReadablePartial end) {
+        if (start == null && end == null) {
+            return "";
+        }
+        if (start == null) {
+            return EVENT_DATE_FORMAT.print(end);
+        }
+        if (end == null) {
+            return EVENT_DATE_FORMAT.print(start);
+        }
+        if (start.equals(end)) {
+            return EVENT_DATE_FORMAT.print(start);
+        }
+        return String.format("%s - %s, %s", EVENT_DATE_FORMAT.print(start), EVENT_DATE_FORMAT.print(end), end.get(DateTimeFieldType.year()));
+    }
+
+
     public static String formatTime(LocalTime start) {
         return hourFormat.print(start);
+    }
+
+    public static String formatDay(ReadablePartial date) {
+        return DATE_DAY_FORMAT.print(date);
     }
 
     public static String formatPeriod(Date start, Date end) {
@@ -51,5 +76,9 @@ public class DateUtil {
         DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm", Locale.getDefault());
         DATE_FORMAT.setTimeZone(TimeZone.getDefault());
         return String.format("%s - %s", DATE_FORMAT.format(start), DATE_FORMAT.format(end));
+    }
+
+    public static String formatDayOfYear(ReadablePartial date) {
+        return DATE_DAY_YEAR_FORMAT.print(date);
     }
 }

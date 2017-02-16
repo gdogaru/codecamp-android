@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/viewer"
-        android:name="com.gdogaru.codecamp.view.calendar.CalendarFragment"
+        android:name="com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

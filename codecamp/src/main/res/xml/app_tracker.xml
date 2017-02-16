@@ -43,7 +43,7 @@
     <screenName name="com.gdogaru.codecamp.view.session.SessionInfoFragment">
         Session Info Fragment
     </screenName>
-    <screenName name="com.gdogaru.codecamp.view.calendar.CalendarFragment">
+    <screenName name="com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment">
         Calendar
     </screenName>
 

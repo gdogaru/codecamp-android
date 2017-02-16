@@ -23,6 +23,7 @@ import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,16 +31,16 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
+import com.gdogaru.codecamp.model.Codecamp;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.model.Track;
+import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.DateUtil;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,12 +49,12 @@ import javax.inject.Inject;
 import butterknife.ButterKnife;
 
 public class SpeakerInfoFragment extends Fragment {
-    private final DateFormat DATE_FORMAT = new SimpleDateFormat("EEEE, MMMM dd", Locale.getDefault());
-
     public static final String SPEAKER_ID = "speakerId";
     String speakerId;
     @Inject
     CodecampClient codecampClient;
+    @Inject
+    BookmarkingService bookmarkingService;
     @Inject
     FirebaseAnalytics firebaseAnalytics;
     private LinearLayout rootView;
@@ -95,9 +96,9 @@ public class SpeakerInfoFragment extends Fragment {
         if (speaker == null) return;
 
         rootView.addView(addSpeaker(speaker));
-        List<Session> sessions = codecampClient.getSessionsBySpeaker(speakerId);
-        for (Session session : sessions) {
-            rootView.addView(addSession(session));
+        List<Pair<Codecamp, Session>> sessions = codecampClient.getSessionsBySpeaker(speakerId);
+        for (Pair<Codecamp, Session> session : sessions) {
+            rootView.addView(addSession(session.second, session.first));
         }
 
         Bundle bundle = new Bundle();
@@ -105,25 +106,28 @@ public class SpeakerInfoFragment extends Fragment {
         firebaseAnalytics.logEvent("speaker_view", bundle);
     }
 
-    private View addSession(Session session) {
+    private View addSession(Session session, Codecamp codecamp) {
         View sessionView = getActivity().getLayoutInflater().inflate(R.layout.session_view, rootView, false);
         TextView sessionTitle = (TextView) sessionView.findViewById(R.id.sessionTitle);
         TextView sessionTime = (TextView) sessionView.findViewById(R.id.sessionTime);
         TextView sessionDescription = (TextView) sessionView.findViewById(R.id.sessionDescription);
         TextView sessionTrack = (TextView) sessionView.findViewById(R.id.sessionTrack);
+        CheckBox bookmarked = (CheckBox) sessionView.findViewById(R.id.bookmarked);
         LinearLayout sessionTrackLayout = (LinearLayout) sessionView.findViewById(R.id.sessionTrackLayout);
 
         sessionTitle.setText(session.getTitle());
         sessionDescription.setText(session.getDescription());
         String timeString = DateUtil.formatPeriod(session.getStartTime(), session.getEndTime());
         sessionTime.setText(timeString);
+        bookmarked.setChecked(bookmarkingService.isBookmarked(codecamp.getTitle(), session.getId()));
+        bookmarked.setOnCheckedChangeListener((buttonView, isChecked) -> bookmarkingService.setBookmarked(codecamp.getTitle(), session.getId(), isChecked));
         if (session.getTrack() != null) {
             Pair<Track, Schedule> p = codecampClient.getTrackExtended(session.getTrack());
             if (p == null) {
                 sessionTrack.setText("");
             } else {
                 sessionTrack.setText(String.format(Locale.getDefault(), "%s, %s seats, %s \n%s",
-                        p.first.getName(), p.first.getCapacity(), p.first.getDescription(), DATE_FORMAT.format(p.second.getDate())));
+                        p.first.getName(), p.first.getCapacity(), p.first.getDescription(), DateUtil.formatDayOfYear(p.second.getDate())));
             }
         } else {
             sessionTrackLayout.setVisibility(View.GONE);

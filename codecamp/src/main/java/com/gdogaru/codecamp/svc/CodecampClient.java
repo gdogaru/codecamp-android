@@ -23,7 +23,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -199,11 +198,10 @@ public class CodecampClient {
 
     void delete(File f) throws IOException {
         if (f.isDirectory()) {
-            for (File c : f.listFiles())
-                delete(c);
+            for (File c : f.listFiles()) delete(c);
+        } else {
+            if (!f.delete()) LOG.warn("Failed to delete file: " + f);
         }
-        if (!f.delete())
-            throw new FileNotFoundException("Failed to delete file: " + f);
     }
 
     public Schedule getSchedule() {
@@ -258,15 +256,16 @@ public class CodecampClient {
         currentCodecamp = null;
     }
 
-    public List<Session> getSessionsBySpeaker(String speakerId) {
-        List<Schedule> schedules = getEvent().getSchedules();
-        List<Session> result = new ArrayList<>();
+    public List<Pair<Codecamp, Session>> getSessionsBySpeaker(String speakerId) {
+        Codecamp event = getEvent();
+        List<Schedule> schedules = event.getSchedules();
+        List<Pair<Codecamp, Session>> result = new ArrayList<>();
         for (Schedule schedule : schedules) {
             for (Session s : schedule.getSessions()) {
                 if (s.getSpeakerIds() == null || s.getSpeakerIds().size() == 0) continue;
                 for (String sp : s.getSpeakerIds()) {
                     if (sp != null && sp.equals(speakerId)) {
-                        result.add(s);
+                        result.add(new Pair<>(event, s));
                         break;
                     }
                 }

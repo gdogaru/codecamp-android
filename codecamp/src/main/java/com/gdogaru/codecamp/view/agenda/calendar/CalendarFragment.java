@@ -1,4 +1,4 @@
-package com.gdogaru.codecamp.view.calendar;
+package com.gdogaru.codecamp.view.agenda.calendar;
 
 
 import android.os.Bundle;
@@ -18,6 +18,8 @@ import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
 import com.google.common.base.Joiner;
+
+import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -153,10 +155,8 @@ public class CalendarFragment extends Fragment {
         return null;
     }
 
-    private int getDay(Date date) {
-        java.util.Calendar cal = GregorianCalendar.getInstance();
-        cal.setTime(date);
-        return cal.get(java.util.Calendar.DAY_OF_YEAR);
+    private int getDay(LocalDateTime date) {
+        return date.getDayOfYear();
     }
 
     private void initSessionIds(List<Session> sessions) {

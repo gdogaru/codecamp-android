@@ -2,7 +2,7 @@
     <color name="colorPrimary">@color/material_grey_900</color>
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#e7e7e7</color>
-    <color name="windowBgd">@color/material_grey_900</color>
+    <color name="background_window">@color/material_grey_900</color>
 
     <color name="material_grey_900">#ff212121</color>
     <color name="material_grey_850">#ff303030</color>
@@ -28,4 +28,5 @@
     <color name="button_cancel_tap">#151414</color>
     <color name="button_dialog">@color/material_grey_600</color>
     <color name="button_dialog_tap">@color/material_grey_850</color>
+    <color name="favorite_item">#4b2828</color>
 </resources>

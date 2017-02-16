@@ -22,14 +22,17 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.gdogaru.codecamp.App;
@@ -39,17 +42,16 @@ import com.gdogaru.codecamp.model.EventSummary;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.svc.AppPreferences;
 import com.gdogaru.codecamp.svc.CodecampClient;
-import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
 import com.gdogaru.codecamp.util.AnalyticsHelper;
 import com.gdogaru.codecamp.util.RatingHelper;
 import com.gdogaru.codecamp.util.Strings;
 import com.gdogaru.codecamp.view.BaseActivity;
 import com.gdogaru.codecamp.view.LoadingDataActivity;
-import com.gdogaru.codecamp.view.SpeakersActivity;
 import com.gdogaru.codecamp.view.SponsorsActivity;
 import com.gdogaru.codecamp.view.agenda.AgendaActivity;
 import com.gdogaru.codecamp.view.common.DividerItemDecoration;
 import com.gdogaru.codecamp.view.common.RecyclerItemClickListener;
+import com.gdogaru.codecamp.view.speaker.SpeakersActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -61,21 +63,21 @@ import com.google.common.collect.Lists;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.path.android.jobqueue.JobManager;
 
-import java.text.SimpleDateFormat;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnItemSelected;
 
 
 public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
-    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd MMMM yyyy", Locale.US);
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd MMMM yyyy");
     @Inject
     CodecampClient codecampClient;
     @Inject
@@ -94,15 +96,18 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     LinearLayout mapLayout;
     @BindView(R.id.agenda)
     RecyclerView agendaRecycler;
-    @BindView(R.id.location_spinner)
-    Spinner locationSpinner;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+
     private SupportMapFragment mapview;
     private SchedulesAdapter schedulesAdapter;
     private GoogleMap googleMap;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         activity.startActivity(intent);
     }
 
@@ -113,17 +118,41 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
         App.getDiComponent().inject(this);
         ButterKnife.bind(this);
-
         RatingHelper.logUsage(this);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setLogo(R.drawable.codecamp_title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        toggle.setDrawerIndicatorEnabled(true);
+        toggle.syncState();
+
+        toolbar.setNavigationOnClickListener(v -> {
+            if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+                drawerLayout.openDrawer(Gravity.LEFT);
+            } else {
+                onBackPressed();
+            }
+        });
+
+        drawerLayout.addDrawerListener(toggle);
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        agendaRecycler.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration decor = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, ContextCompat.getDrawable(this, R.drawable.list_vertical_divider));
+        agendaRecycler.addItemDecoration(decor);
 
         initSpinner();
         setMap();
         initDisplay();
     }
 
-    private void initDisplay() {
+    public void initDisplay() {
         printData(codecampClient.getEvent());
         displayMap();
+        drawerLayout.closeDrawer(Gravity.LEFT);
     }
 
     private void initSpinner() {
@@ -132,9 +161,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         names.add(getString(R.string.refrsh_data));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.dropdown_item, names);
         adapter.setDropDownViewResource(R.layout.dropdown_item_drop);
-        locationSpinner.setAdapter(adapter);
-        int position = Iterables.indexOf(el, input -> input.getRefId() == codecampClient.getEvent().getRefId());
-        locationSpinner.setSelection(position);
+//        locationSpinner.setAdapter(adapter);
+//        int position = Iterables.indexOf(el, input -> input.getRefId() == codecampClient.getEvent().getRefId());
+//        locationSpinner.setSelection(position);
     }
 
     private void setMap() {
@@ -154,15 +183,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         firebaseAnalytics.logEvent(AnalyticsHelper.normalize("event_" + overview.getTitle()), bundle);
 
         eventTitle.setText(overview.getTitle());
-        eventDate.setText(DATE_FORMAT.format(overview.getStartDate()));
+        eventDate.setText(DATE_FORMAT.print(overview.getStartDate()));
         location.setText(overview.getVenue().getName());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-
-        agendaRecycler.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration decor = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, ContextCompat.getDrawable(this, R.drawable.list_vertical_divider));
-        agendaRecycler.addItemDecoration(decor);
 
         schedulesAdapter = new SchedulesAdapter(this, getSchedules());
         agendaRecycler.setAdapter(schedulesAdapter);
@@ -195,18 +217,18 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         }
     }
 
-    @OnItemSelected(R.id.location_spinner)
-    public void onLocationSelected(Spinner spinner, int position) {
-        if (position == spinner.getAdapter().getCount() - 1) {
-            LoadingDataActivity.startUpdate(this);
-        } else {
-            long refId = codecampClient.getEventsSummary().get(position).getRefId();
-            if (refId != codecampClient.getEvent().getRefId()) {
-                codecampClient.setActiveEvent(refId);
-                initDisplay();
-            }
-        }
-    }
+//    @OnItemSelected(R.id.location_spinner)
+//    public void onLocationSelected(Spinner spinner, int position) {
+//        if (position == spinner.getAdapter().getCount() - 1) {
+//            LoadingDataActivity.startUpdate(this);
+//        } else {
+//            long refId = codecampClient.getEventsSummary().get(position).getRefId();
+//            if (refId != codecampClient.getEvent().getRefId()) {
+//                codecampClient.setActiveEvent(refId);
+//                initDisplay();
+//            }
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -234,7 +256,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     @Override
     public void onPermissionGranted() {
-        jobManager.addJob(new UpdateDataJob());
+        LoadingDataActivity.startUpdate(this);
+//        jobManager.addJob(new UpdateDataJob());
     }
 
     @Override

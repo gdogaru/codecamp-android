@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -74,7 +75,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                this.onBackPressed();
+                NavUtils.navigateUpFromSameTask(this);
+                overridePendingTransition(R.anim.hold, R.anim.act_slide_down);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -136,7 +138,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                                 (dialog, which) -> {
                                     switch (which) {
                                         case DialogInterface.BUTTON_POSITIVE:
-                                            checkAndRequestPermissions();
+//                                            checkAndRequestPermissions();
                                             break;
                                     }
                                 });
@@ -153,6 +155,5 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        overridePendingTransition(R.anim.hold,R.anim.act_slide_down);
     }
 }

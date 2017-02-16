@@ -5,14 +5,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
-import android.widget.ToggleButton;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
+import com.gdogaru.codecamp.model.Codecamp;
+import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.svc.AppPreferences;
+import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.AnalyticsHelper;
+import com.gdogaru.codecamp.util.DateUtil;
 import com.gdogaru.codecamp.view.BaseActivity;
-import com.gdogaru.codecamp.view.calendar.CalendarFragment;
+import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment;
+import com.gdogaru.codecamp.view.agenda.list.SessionsListFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import javax.inject.Inject;
@@ -29,11 +35,16 @@ public class AgendaActivity extends BaseActivity {
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.view_switch)
-    ToggleButton viewSwitch;
+    CheckBox viewSwitch;
+    @BindView(R.id.title)
+    TextView titleView;
+
     @Inject
     AppPreferences appPreferences;
     @Inject
     FirebaseAnalytics firebaseAnalytics;
+    @Inject
+    CodecampClient codecampClient;
 
     public static void start(Activity activity) {
         activity.startActivity(new Intent(activity, AgendaActivity.class));
@@ -57,10 +68,14 @@ public class AgendaActivity extends BaseActivity {
         }
 
         viewSwitch.setChecked(appPreferences.getListViewList());
+
+        Schedule schedule = codecampClient.getSchedule();
+        Codecamp event = codecampClient.getEvent();
+        titleView.setText(String.format("%s - %s", DateUtil.formatDay(schedule.getDate()), event.getVenue().getCity()));
     }
 
     @OnCheckedChanged(R.id.view_switch)
-    public void onViewTypeChange() {
+    public void onViewTypeChange(boolean checked) {
         if (appPreferences.getListViewList() != viewSwitch.isChecked()) {
             appPreferences.setListViewList(viewSwitch.isChecked());
             showList();
@@ -83,11 +98,5 @@ public class AgendaActivity extends BaseActivity {
             transaction.replace(R.id.content, new CalendarFragment(), "calendar");
         }
         transaction.commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();
-        overridePendingTransition(R.anim.hold, R.anim.act_slide_down);
     }
 }

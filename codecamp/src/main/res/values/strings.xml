@@ -81,9 +81,11 @@
     <string name="thanks_for_using">Thank you for using the app!</string>
     <string name="please_rate">Please repay us with a good rating.</string>
     <string name="rate">Rate</string>
-    <string name="later">Latter</string>
+    <string name="later">Later</string>
     <string name="never">Never</string>
     <string name="location">Location</string>
     <string name="event_schedule">Event Schedule</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 </resources>

@@ -1,4 +1,4 @@
-package com.gdogaru.codecamp.view.calendar;
+package com.gdogaru.codecamp.view.agenda.calendar;
 
 import android.app.Activity;
 import android.content.Context;
@@ -284,12 +284,7 @@ public class Calendar extends ScrollView {
             lp.width = pxPerIdx;
             lp.height = (int) (getEventLengthMinutes(ev.event) * PX_PER_MINUTE);
 //            lp.setMargins(1, 1, 1, 1);
-            layout.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    clicked(ev);
-                }
-            });
+            layout.setOnClickListener(view -> clicked(ev));
             parent.addView(layout, lp);
         }
 

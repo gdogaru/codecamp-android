@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.gdogaru.codecamp.view.agenda;
+package com.gdogaru.codecamp.view.agenda.list;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -32,6 +32,7 @@ import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Track;
+import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.Strings;
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
@@ -60,16 +61,14 @@ public class SessionsListFragment extends Fragment {
     Spinner trackSelector;
     @Inject
     CodecampClient codecampClient;
+    @Inject
+    BookmarkingService bookmarkingService;
     private List<Track> tracks;
     private SessionsAdapter sessionsAdapter;
     private ArrayList<SessionListItem> sessionListItems = null;
     private String trackId;
     final private AdapterView.OnItemClickListener mOnClickListener
-            = new AdapterView.OnItemClickListener() {
-        public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-            onListItemClick((ListView) parent, v, position, id);
-        }
-    };
+            = (parent, v, position, id) -> onListItemClick((ListView) parent, v, position, id);
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -156,7 +155,7 @@ public class SessionsListFragment extends Fragment {
         }
         this.trackId = trackId;
         List<SessionListItem> currentSessions = getFilterSessions(trackId);
-        sessionsAdapter = new SessionsAdapter(getActivity(), currentSessions);
+        sessionsAdapter = new SessionsAdapter(getActivity(), currentSessions, bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
         listView.post(new Runnable() {
             @Override
             public void run() {
@@ -165,12 +164,7 @@ public class SessionsListFragment extends Fragment {
         });
         final int position = findNext(currentSessions);
         if (position > 0) {
-            listView.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    listView.setSelection(position);
-                }
-            }, 300);
+            listView.postDelayed(() -> listView.setSelection(position), 300);
         }
     }
 
@@ -188,7 +182,7 @@ public class SessionsListFragment extends Fragment {
     }
 
     private List<SessionListItem> getFilterSessions(String trackId) {
-        List<SessionListItem> result = new ArrayList<SessionListItem>();
+        List<SessionListItem> result = new ArrayList<>();
         for (SessionListItem item : sessionListItems) {
             if (Strings.isNullOrEmpty(item.getTrackName()) || Strings.isNullOrEmpty(trackId) || item.getTrackName().equals(trackId)) {
                 result.add(item);
@@ -201,7 +195,7 @@ public class SessionsListFragment extends Fragment {
         Schedule schedule = codecampClient.getSchedule();
         List<Session> sessions = schedule.getSessions();
 
-        sessionListItems = new ArrayList<SessionListItem>();
+        sessionListItems = new ArrayList<>();
         if (sessions == null) return;
 
         for (Session s : sessions) {

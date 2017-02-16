@@ -27,12 +27,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.Spinner;
 
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
-import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Track;
+import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.Strings;
 import com.gdogaru.codecamp.view.BaseActivity;
@@ -42,18 +43,18 @@ import com.google.common.collect.Lists;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnItemSelected;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
-public class SessionExpandedActivity extends BaseActivity {
+public class SessionExpandedActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
 
     private static final String TRACK_ID = "trackID";
     private static final String SESSION_ID = "sessionId";
@@ -64,13 +65,18 @@ public class SessionExpandedActivity extends BaseActivity {
     Toolbar toolbar;
     @BindView(R.id.track_spinner)
     Spinner trackSpinner;
+    @BindView(R.id.bookmarked)
+    CheckBox bookmarked;
     @Inject
     CodecampClient codecampClient;
+    @Inject
+    BookmarkingService bookmarkingService;
     String sessionId;
     String trackId;
     ArrayList<String> trackSessions;
     private List<Track> trackList;
     private String allTracksString;
+    private ExpandedSessionsAdapter adapter;
 
     public static void start(Activity activity, String id, String trackId) {
         Intent intent = new Intent(activity, SessionExpandedActivity.class);
@@ -116,8 +122,9 @@ public class SessionExpandedActivity extends BaseActivity {
     private void initPager() {
         trackSessions = codecampClient.getTrackSesssionsIds(allTracksString.equals(trackId) ? null : trackId);
 
-        ExpandedSessionsAdapter adapter = new ExpandedSessionsAdapter(getSupportFragmentManager(), getLayoutInflater(), trackSessions);
+        adapter = new ExpandedSessionsAdapter(getSupportFragmentManager(), getLayoutInflater(), trackSessions);
         int index = Iterables.indexOf(trackSessions, input -> input.equals(sessionId));
+        viewPager.addOnPageChangeListener(this);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(index < 0 ? 0 : index);
     }
@@ -171,35 +178,25 @@ public class SessionExpandedActivity extends BaseActivity {
         }
     }
 
-    void changeTracks(Track track) {
-        List<Session> sessions = null;
-//        try {
-//            if (track == null || track.getId() == 0) {
-//                sessions = dbHelper.getSessionDao().queryForAll();
-//            } else {
-//                QueryBuilder<Session, Long> builder = dbHelper.getSessionDao().queryBuilder();
-//                Where<Session, Long> where = builder.where();
-//                sessions = where.or(where.isNull("trackRefId"), where.eq("trackRefId", track.getId())).query();
-//            }
-//        } catch (Exception e) {
-//            throw new RuntimeException(e);
-//        }
+    @OnCheckedChanged(R.id.bookmarked)
+    public void onBookmarkChanged(boolean checked) {
+        bookmarkingService.setBookmarked(codecampClient.getEvent().getTitle(), adapter.getElement(viewPager.getCurrentItem()), checked);
+    }
 
-        final ArrayList<String> ids = new ArrayList<String>();
-        Collections.sort(sessions, Session.SESSION_BY_DATE_COMPARATOR);
-        for (Session s : sessions) {
-//            ids.add((int) s.getId());
-        }
-        trackSessions.clear();
-        trackSessions.addAll(ids);
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        viewPager.post(new Runnable() {
-            @Override
-            public void run() {
-                viewPager.setAdapter(new ExpandedSessionsAdapter(getSupportFragmentManager(), getLayoutInflater(), ids));
-                viewPager.setCurrentItem(0);
-            }
-        });
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        String s = adapter.getElement(position);
+        bookmarked.setChecked(bookmarkingService.isBookmarked(codecampClient.getEvent().getTitle(), s));
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 
     private class ExpandedSessionsAdapter extends FragmentStatePagerAdapter {
@@ -222,6 +219,10 @@ public class SessionExpandedActivity extends BaseActivity {
         @Override
         public int getCount() {
             return trackSessions.size();
+        }
+
+        public String getElement(int idx) {
+            return trackSessions.get(idx);
         }
 
         @Override
