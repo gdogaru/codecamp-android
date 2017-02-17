@@ -73,4 +73,16 @@ public class BookmarkingService {
                     .apply();
         }
     }
+
+    @SuppressWarnings("unchecked")
+    public void keepOnlyEvents(Set<String> events) {
+        Map<String, Set<String>> data = (Map<String, Set<String>>) getPref().getAll();
+        Set<String> existing = new HashSet<>(data.keySet());
+        existing.removeAll(events);
+        SharedPreferences.Editor p = getPref().edit();
+        for (String s : existing) {
+            p.remove(s);
+        }
+        p.apply();
+    }
 }

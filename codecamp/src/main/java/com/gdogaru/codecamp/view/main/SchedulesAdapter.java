@@ -1,12 +1,15 @@
 package com.gdogaru.codecamp.view.main;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.internal.util.Predicate;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.util.DateUtil;
@@ -19,10 +22,13 @@ import java.util.List;
 
 public class SchedulesAdapter extends RecyclerView.Adapter<SchedulesAdapter.ScheduleHolder> {
     private final LayoutInflater layoutInflater;
+    @NonNull
+    private final Predicate<Pair<MainViewItem, Integer>> listener;
     private final List<MainViewItem> schedules;
 
-    SchedulesAdapter(Context context, List<MainViewItem> schedules) {
+    SchedulesAdapter(Context context, List<MainViewItem> schedules, @NonNull Predicate<Pair<MainViewItem, Integer>> listener) {
         this.schedules = schedules;
+        this.listener = listener;
         layoutInflater = LayoutInflater.from(context);
     }
 
@@ -48,7 +54,7 @@ public class SchedulesAdapter extends RecyclerView.Adapter<SchedulesAdapter.Sche
         } else {
             throw new IllegalStateException("Could not treat " + item);
         }
-
+        holder.itemView.setOnClickListener(v -> listener.apply(new Pair<>(item, position)));
     }
 
     @Override

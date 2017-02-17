@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
+import android.support.annotation.NonNull;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -17,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.gdogaru.codecamp.R;
+import com.google.common.base.Preconditions;
 
 import org.joda.time.LocalTime;
 
@@ -50,6 +52,7 @@ public class Calendar extends ScrollView {
     private Date currentTime;
     private int maxInRow = 1;
     private LinearLayout currentTimeLayout;
+    private Set<String> bookmarked = new HashSet<>();
 
     public Calendar(Context context) {
         super(context);
@@ -266,14 +269,15 @@ public class Calendar extends ScrollView {
         for (final DisplayEvent ev : events) {
             int pxPerIdx = width / ev.rowTotal;
             View layout = LayoutInflater.from(context).inflate(R.layout.c_event_layout2, null);
-            TextView tv = (TextView) layout.findViewById(R.id.title);
-            tv.setText(trim(ev.event.title));
+            TextView title = (TextView) layout.findViewById(R.id.title);
+            TextView desc1 = (TextView) layout.findViewById(R.id.desc1);
+            TextView desc2 = (TextView) layout.findViewById(R.id.desc2);
+            View content = layout.findViewById(R.id.content);
 
-            tv = (TextView) layout.findViewById(R.id.desc1);
-            tv.setText(ev.event.descLine1);
-
-            tv = (TextView) layout.findViewById(R.id.desc2);
-            tv.setText(ev.event.descLine2);
+            title.setText(trim(ev.event.title));
+            desc1.setText(ev.event.descLine1);
+            desc2.setText(ev.event.descLine2);
+            content.setBackgroundResource(bookmarked.contains(ev.event.id) ? R.drawable.list_item_background_favorite : R.drawable.list_item_background);
 
             RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) layout.getLayoutParams();
             if (lp == null) {
@@ -352,6 +356,16 @@ public class Calendar extends ScrollView {
         int top = (int) (getDateStartDiffMinutes(currentTime) * PX_PER_MINUTE);
         lp.setMargins(0, top, 0, 0);
         currentTimeLayout.setLayoutParams(lp);
+    }
+
+    public Set<String> getBookmarked() {
+        return bookmarked;
+    }
+
+    public void setBookmarked(@NonNull Set<String> bookmarked) {
+        Preconditions.checkNotNull(bookmarked);
+        this.bookmarked = bookmarked;
+        drawEvents();
     }
 
     public interface EventListener {

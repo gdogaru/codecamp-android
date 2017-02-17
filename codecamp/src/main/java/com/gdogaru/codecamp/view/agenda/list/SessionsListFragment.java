@@ -156,12 +156,7 @@ public class SessionsListFragment extends Fragment {
         this.trackId = trackId;
         List<SessionListItem> currentSessions = getFilterSessions(trackId);
         sessionsAdapter = new SessionsAdapter(getActivity(), currentSessions, bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
-        listView.post(new Runnable() {
-            @Override
-            public void run() {
-                listView.setAdapter(sessionsAdapter);
-            }
-        });
+        listView.post(() -> listView.setAdapter(sessionsAdapter));
         final int position = findNext(currentSessions);
         if (position > 0) {
             listView.postDelayed(() -> listView.setSelection(position), 300);

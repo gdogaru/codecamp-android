@@ -10,11 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 
 import com.gdogaru.codecamp.App;
-import com.gdogaru.codecamp.model.Codecamp;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.model.Session;
-import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.model.Track;
+import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
 import com.google.common.base.Joiner;
@@ -46,6 +45,8 @@ public class CalendarFragment extends Fragment {
     Timer currentTimer;
     @Inject
     CodecampClient codecampClient;
+    @Inject
+    BookmarkingService bookmarkingService;
     private int offset;
     private Calendar calendar;
 
@@ -57,17 +58,13 @@ public class CalendarFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-//        ZoomView zv = new ZoomView(getActivity());
         calendar = new Calendar(getActivity());
-//        zv.addView(calendar);
         return calendar;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-//        calendar = (Calendar) view;
-//        scrollView = (ScrollView) view.findViewById(R.id.scrollView);
         init();
     }
 
@@ -81,14 +78,11 @@ public class CalendarFragment extends Fragment {
                 java.util.Calendar cal = GregorianCalendar.getInstance();
 //                cal.set(2014, java.util.Calendar.OCTOBER, 25, 17, 25, 10);
                 final Date currentTime = cal.getTime();
-                calendar.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        calendar.updateCurrentTime(currentTime);
-                    }
-                });
+                calendar.post(() -> calendar.updateCurrentTime(currentTime));
             }
         }, 10000, 10000);
+
+        calendar.setBookmarked(bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
     }
 
     @Override
@@ -101,14 +95,11 @@ public class CalendarFragment extends Fragment {
 
     public void init() {
         Schedule schedule = codecampClient.getSchedule();
-        Codecamp codecamp = codecampClient.getEvent();
         List<Session> sessions = schedule.getSessions();
         List<Track> tracks = schedule.getTracks();
-        List<Speaker> speakers = codecamp.getSpeakers();
 
         List<CEvent> events = new ArrayList<CEvent>();
         Collections.sort(sessions, SESSION_BY_DATE_COMPARATOR);
-        int startDay = getDay(schedule.getDate());
         for (int i = 0; i < sessions.size(); i++) {
             Session ss = sessions.get(i);
             int preferedIdx = ss.getTrack() == null ? 0 : getTrack(tracks, ss.getTrack()).getDisplayOrder();
@@ -123,26 +114,10 @@ public class CalendarFragment extends Fragment {
 //        cal.set(2014, java.util.Calendar.OCTOBER, 25, 17, 5, 10);
         Date currentTime = cal.getTime();
 
-//        Calendar calendar = new Calendar(getActivity());
         calendar.setCurrentTime(currentTime);
         calendar.setEvents(events);
 
-//        ViewGroup.LayoutParams lp = calendar.getLayoutParams();
-//        if (lp == null) {
-//            lp = new ViewGroup.LayoutParams(getActivity().getWindowManager().getDefaultDisplay().getWidth(), getActivity().getWindowManager().getDefaultDisplay().getHeight());
-//        }
-//        calendar.setLayoutParams(lp);
-
-
-//        scrollView.addView(calendar);
-        calendar.setEventListener(new Calendar.EventListener() {
-            @Override
-            public void eventCLicked(DisplayEvent event) {
-                displayEventDetails(event.event.id);
-            }
-        });
-
-//        GestureDetector gd = new GestureDetector(this,new OnPinchListener(scrollView));
+        calendar.setEventListener(event -> displayEventDetails(event.event.id));
 
     }
 
@@ -160,11 +135,10 @@ public class CalendarFragment extends Fragment {
     }
 
     private void initSessionIds(List<Session> sessions) {
-        List<Session> ss = new ArrayList<Session>(sessions);
-//        Collections.sort(ss, Session.SESSION_BY_DATE_COMPARATOR);
-        sessIds = new ArrayList<Integer>();
+        List<Session> ss = new ArrayList<>(sessions);
+        sessIds = new ArrayList<>();
         for (int i = 0; i < ss.size(); i++) {
-            sessIds.add((int) i);
+            sessIds.add(i);
         }
     }
 

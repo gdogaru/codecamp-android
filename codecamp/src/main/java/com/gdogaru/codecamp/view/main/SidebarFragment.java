@@ -1,6 +1,7 @@
 package com.gdogaru.codecamp.view.main;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.internal.util.Predicate;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.EventList;
@@ -18,7 +20,6 @@ import com.gdogaru.codecamp.model.EventSummary;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.DateUtil;
 import com.gdogaru.codecamp.view.common.DividerItemDecoration;
-import com.gdogaru.codecamp.view.common.RecyclerItemClickListener;
 
 import javax.inject.Inject;
 
@@ -58,16 +59,16 @@ public class SidebarFragment extends Fragment {
         DividerItemDecoration decor = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST, ContextCompat.getDrawable(getActivity(), R.drawable.list_vertical_divider_sidebar));
         eventsRecycler.addItemDecoration(decor);
 
-        eventsAdapter = new EventsAdapter(LayoutInflater.from(getActivity()), codecampClient.getEventsSummary());
+        eventsAdapter = new EventsAdapter(LayoutInflater.from(getActivity()), codecampClient.getEventsSummary(), eventSummary -> {
+            onItemClicked(eventSummary);
+            return true;
+        });
         eventsRecycler.setAdapter(eventsAdapter);
 
-        eventsRecycler.addOnItemTouchListener(new RecyclerItemClickListener(getActivity(), (v, position) -> {
-            onItemClicked(position, eventsAdapter.getItem(position));
-        }));
     }
 
-    private void onItemClicked(int position, EventSummary item) {
-        long refId = codecampClient.getEventsSummary().get(position).getRefId();
+    private void onItemClicked(EventSummary item) {
+        long refId = item.getRefId();
         codecampClient.setActiveEvent(refId);
         ((MainActivity) getActivity()).initDisplay();
     }
@@ -90,10 +91,12 @@ public class SidebarFragment extends Fragment {
 
         private final LayoutInflater inflater;
         private final EventList eventList;
+        private final Predicate<EventSummary> listener;
 
-        EventsAdapter(LayoutInflater inflater, EventList eventList) {
+        EventsAdapter(LayoutInflater inflater, EventList eventList, @NonNull Predicate<EventSummary> listener) {
             this.inflater = inflater;
             this.eventList = eventList;
+            this.listener = listener;
         }
 
 
@@ -109,6 +112,7 @@ public class SidebarFragment extends Fragment {
             holder.eventTitle.setText(summary.getTitle());
             holder.eventDate.setText(DateUtil.formatEventPeriod(summary.getStartDate(), summary.getEndDate()));
             holder.city.setText(summary.getVenue().getCity());
+            holder.itemView.setOnClickListener(v -> listener.apply(summary));
         }
 
         @Override

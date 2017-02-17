@@ -29,8 +29,13 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -43,22 +48,26 @@ import static org.slf4j.LoggerFactory.getLogger;
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
+@Singleton
 public class CodecampClient {
     private static final Logger LOG = getLogger(CodecampClient.class);
-    private final Gson gson;
-    private final App app;
-    private final OkHttpClient client;
-    private final AppPreferences appPreferences;
-    private final EventBus eventBus;
+    @Inject
+    Gson gson;
+    @Inject
+    App app;
+    @Inject
+    OkHttpClient client;
+    @Inject
+    AppPreferences appPreferences;
+    @Inject
+    EventBus eventBus;
+    @Inject
+    BookmarkingService bookmarkingService;
     private Codecamp currentCodecamp;
     private EventList eventList;
 
-    public CodecampClient(Gson gson, App app, OkHttpClient client, AppPreferences appPreferences, EventBus eventBus) {
-        this.gson = gson;
-        this.app = app;
-        this.client = client;
-        this.appPreferences = appPreferences;
-        this.eventBus = eventBus;
+    @Inject
+    public CodecampClient() {
     }
 
     public File download(String url, String root, String fileName) throws Exception {
@@ -191,9 +200,18 @@ public class CodecampClient {
             long prev = appPreferences.getLastUpdated();
             appPreferences.setLastUpdated(now);
             delete(new File(app.getFilesDir(), String.valueOf(prev)));
+            removeExpiredPreferences();
         } else {
             appPreferences.setActiveEvent(0L);
         }
+    }
+
+    private void removeExpiredPreferences() {
+        Set<String> events = new HashSet<>();
+        for (EventSummary e : getEventsSummary()) {
+          events.add(e.getTitle());
+        }
+        bookmarkingService.keepOnlyEvents(events);
     }
 
     void delete(File f) throws IOException {

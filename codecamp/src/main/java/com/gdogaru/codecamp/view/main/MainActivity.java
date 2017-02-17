@@ -50,7 +50,6 @@ import com.gdogaru.codecamp.view.LoadingDataActivity;
 import com.gdogaru.codecamp.view.SponsorsActivity;
 import com.gdogaru.codecamp.view.agenda.AgendaActivity;
 import com.gdogaru.codecamp.view.common.DividerItemDecoration;
-import com.gdogaru.codecamp.view.common.RecyclerItemClickListener;
 import com.gdogaru.codecamp.view.speaker.SpeakersActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -186,12 +185,12 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         eventDate.setText(DATE_FORMAT.print(overview.getStartDate()));
         location.setText(overview.getVenue().getName());
 
-        schedulesAdapter = new SchedulesAdapter(this, getSchedules());
+        schedulesAdapter = new SchedulesAdapter(this, getSchedules(), p -> {
+            onItemClicked(p.second, p.first);
+            return true;
+        });
         agendaRecycler.setAdapter(schedulesAdapter);
         agendaRecycler.setHasFixedSize(true);
-        agendaRecycler.addOnItemTouchListener(new RecyclerItemClickListener(this, (view, position) -> {
-            onItemClicked(position, schedulesAdapter.getItem(position));
-        }));
     }
 
     private List<MainViewItem> getSchedules() {

@@ -6,7 +6,6 @@ import com.gdogaru.codecamp.model.json.DateTypeAdapter;
 import com.gdogaru.codecamp.model.json.LocalDateTimeTypeAdapter;
 import com.gdogaru.codecamp.model.json.LocalTimeTypeAdapter;
 import com.gdogaru.codecamp.svc.AppPreferences;
-import com.gdogaru.codecamp.svc.CodecampClient;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -53,13 +52,6 @@ public class AppModule {
     @Singleton
     public OkHttpClient okHttpClient() {
         return new OkHttpClient();
-    }
-
-    @Provides
-    @Singleton
-    public CodecampClient getCodecampClient(App app, OkHttpClient client, Gson gson, AppPreferences appPreferences, EventBus eventBus) {
-        return new CodecampClient(gson, app, client, appPreferences, eventBus);
-
     }
 
     @Provides

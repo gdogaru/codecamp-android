@@ -28,5 +28,5 @@
     <color name="button_cancel_tap">#151414</color>
     <color name="button_dialog">@color/material_grey_600</color>
     <color name="button_dialog_tap">@color/material_grey_850</color>
-    <color name="favorite_item">#4b2828</color>
+    <color name="favorite_item">#3d3e34</color>
 </resources>
