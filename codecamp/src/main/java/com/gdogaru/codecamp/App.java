@@ -29,6 +29,7 @@ public class App extends MultiDexApplication {
                 .builder()
                 .applicationModule(new ApplicationModule(this))
                 .build();
+
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder()
                 .setDefaultFontPath(getString(R.string.font_roboto_regular))
                 .setFontAttrId(R.attr.fontPath)

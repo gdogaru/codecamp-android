@@ -64,6 +64,7 @@ import com.path.android.jobqueue.JobManager;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,10 +74,13 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static org.slf4j.LoggerFactory.getLogger;
+
 
 public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd MMMM yyyy");
+    private static final Logger LOG = getLogger(MainActivity.class);
     @Inject
     CodecampClient codecampClient;
     @Inject
@@ -99,9 +103,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-
     private SupportMapFragment mapview;
-    private SchedulesAdapter schedulesAdapter;
     private GoogleMap googleMap;
 
     public static void start(Activity activity) {
@@ -185,7 +187,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         eventDate.setText(DATE_FORMAT.print(overview.getStartDate()));
         location.setText(overview.getVenue().getName());
 
-        schedulesAdapter = new SchedulesAdapter(this, getSchedules(), p -> {
+        SchedulesAdapter schedulesAdapter = new SchedulesAdapter(this, getSchedules(), p -> {
             onItemClicked(p.second, p.first);
             return true;
         });
@@ -203,19 +205,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         return items;
     }
 
-    private void onItemClicked(int position, MainViewItem item) {
-        if (item instanceof MainViewItem.AgendaItem) {
-            appPreferences.setActiveSchedule(position);
-            AgendaActivity.start(MainActivity.this);
-        } else if (item instanceof MainViewItem.SpeakersItem) {
-            SpeakersActivity.start(this);
-        } else if (item instanceof MainViewItem.SponsorsItem) {
-            SponsorsActivity.start(this);
-        } else {
-            throw new IllegalStateException("Could not show " + item);
-        }
-    }
-
 //    @OnItemSelected(R.id.location_spinner)
 //    public void onLocationSelected(Spinner spinner, int position) {
 //        if (position == spinner.getAdapter().getCount() - 1) {
@@ -228,6 +217,19 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 //            }
 //        }
 //    }
+
+    private void onItemClicked(int position, MainViewItem item) {
+        if (item instanceof MainViewItem.AgendaItem) {
+            appPreferences.setActiveSchedule(position);
+            AgendaActivity.start(MainActivity.this);
+        } else if (item instanceof MainViewItem.SpeakersItem) {
+            SpeakersActivity.start(this);
+        } else if (item instanceof MainViewItem.SponsorsItem) {
+            SponsorsActivity.start(this);
+        } else {
+            throw new IllegalStateException("Could not show " + item);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -272,29 +274,33 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     private void displayMap() {
         if (googleMap == null) return;
-        String d = codecampClient.getEvent().getVenue().getDirections();
-        if (Strings.isNullOrEmpty(d)) return;
-        String[] dd = d.split(", ");
-        final double latitude = Double.parseDouble(dd[0]);
-        final double longitude = Double.parseDouble(dd[1]);
-        LatLng latLng = new LatLng(latitude, longitude);
+        try {
+            String d = codecampClient.getEvent().getVenue().getDirections();
+            if (Strings.isNullOrEmpty(d)) return;
+            String[] dd = d.split(",");
+            final double latitude = Double.parseDouble(dd[0].trim());
+            final double longitude = Double.parseDouble(dd[1].trim());
+            LatLng latLng = new LatLng(latitude, longitude);
 
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-        //set zoom level
-        googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
-        //add marker to map
-        googleMap.addMarker(new MarkerOptions().position(latLng));
-        // disables zoom gestures
-        googleMap.getUiSettings().setZoomControlsEnabled(false);
-        //disable scroll gesture
-        googleMap.getUiSettings().setScrollGesturesEnabled(false);
-        googleMap.setOnMapClickListener(latLng1 -> {
-            //geo:latitude,longitude?z=zoom
-            String uri = "geo:" + latitude + "," + longitude + "?z=" + 19;
-            Intent intentMap = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
-            intentMap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            startActivity(intentMap);
-        });
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
+            //set zoom level
+            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            //add marker to map
+            googleMap.addMarker(new MarkerOptions().position(latLng));
+            // disables zoom gestures
+            googleMap.getUiSettings().setZoomControlsEnabled(false);
+            //disable scroll gesture
+            googleMap.getUiSettings().setScrollGesturesEnabled(false);
+            googleMap.setOnMapClickListener(latLng1 -> {
+                //geo:latitude,longitude?z=zoom
+                String uri = "geo:" + latitude + "," + longitude + "?z=" + 19;
+                Intent intentMap = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+                intentMap.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intentMap);
+            });
+        } catch (Exception e) {
+            LOG.error("Could not parse location", e);
+        }
     }
 
     @Override

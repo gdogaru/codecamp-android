@@ -16,6 +16,8 @@
 
 package com.gdogaru.codecamp.view;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -23,6 +25,8 @@ import android.os.Handler;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.svc.AppPreferences;
 import com.gdogaru.codecamp.view.main.MainActivity;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GoogleApiAvailability;
 
 import javax.inject.Inject;
 
@@ -34,8 +38,7 @@ public class SplashScreenActivity extends BaseActivity {
     private static final long ONE_DAY_MILLIS = 86400000;
     private static final double SPLASH_TIME = 0.3; //in seconds
     private static final int USER_DATA_CODE = 1;
-
-
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 923;
     @Inject
     AppPreferences appPreferences;
 
@@ -48,8 +51,43 @@ public class SplashScreenActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (!checkPlayServices()) return;
+
         triggerNextActivity();
     }
+
+    private boolean checkPlayServices() {
+        GoogleApiAvailability googleAPI = GoogleApiAvailability.getInstance();
+        int result = googleAPI.isGooglePlayServicesAvailable(this);
+        if (result != ConnectionResult.SUCCESS) {
+            if (googleAPI.isUserResolvableError(result)) {
+                Dialog errorDialog = googleAPI.getErrorDialog(this, result, PLAY_SERVICES_RESOLUTION_REQUEST);
+                errorDialog.setOnDismissListener(dialog -> SplashScreenActivity.this.finish());
+                errorDialog.show();
+            }
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == USER_DATA_CODE) {
+            startMainActivity();
+        }
+
+        switch (requestCode) {
+            case PLAY_SERVICES_RESOLUTION_REQUEST:
+                if (resultCode == Activity.RESULT_OK) {
+                    triggerNextActivity();
+                } else {
+                    finish();
+                }
+                break;
+        }
+    }
+
 
     private void triggerNextActivity() {
         if (appPreferences.isUpdating()) {
@@ -70,12 +108,5 @@ public class SplashScreenActivity extends BaseActivity {
     private void startMainActivity() {
         MainActivity.start(this);
         finish();
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == USER_DATA_CODE) {
-            startMainActivity();
-        }
     }
 }

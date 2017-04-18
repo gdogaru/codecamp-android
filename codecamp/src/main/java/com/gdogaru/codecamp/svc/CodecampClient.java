@@ -17,9 +17,11 @@ import com.gdogaru.codecamp.util.IOUtils;
 import com.gdogaru.codecamp.util.Throwables;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
+import com.google.common.collect.Ordering;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
+import org.joda.time.LocalDateTime;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -43,6 +45,7 @@ import okhttp3.Response;
 import okio.BufferedSink;
 import okio.Okio;
 
+import static com.google.common.collect.Iterables.find;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
@@ -196,11 +199,19 @@ public class CodecampClient {
         }
 
         if (eventList.size() > 0) {
-            appPreferences.setActiveEvent(eventList.get(0).getRefId());
             long prev = appPreferences.getLastUpdated();
             appPreferences.setLastUpdated(now);
             delete(new File(app.getFilesDir(), String.valueOf(prev)));
             removeExpiredPreferences();
+
+            //set first
+            Collections.sort(eventList, Ordering.natural().nullsLast().onResultOf(EventSummary::getStartDate));
+            EventSummary es = Iterables.find(eventList, e -> e!= null && e.getStartDate() != null && !e.getStartDate().isBefore(LocalDateTime.now()), null);
+            if (es != null) {
+                appPreferences.setActiveEvent(es.getRefId());
+            } else {
+                appPreferences.setActiveEvent(eventList.get(0).getRefId());
+            }
         } else {
             appPreferences.setActiveEvent(0L);
         }
@@ -209,7 +220,7 @@ public class CodecampClient {
     private void removeExpiredPreferences() {
         Set<String> events = new HashSet<>();
         for (EventSummary e : getEventsSummary()) {
-          events.add(e.getTitle());
+            events.add(e.getTitle());
         }
         bookmarkingService.keepOnlyEvents(events);
     }
@@ -227,7 +238,7 @@ public class CodecampClient {
     }
 
     public Session getSession(String id) {
-        return Iterables.find(getSchedule().getSessions(), new Predicate<Session>() {
+        return find(getSchedule().getSessions(), new Predicate<Session>() {
             @Override
             public boolean apply(Session input) {
                 return input.getId().equals(id);
@@ -236,17 +247,17 @@ public class CodecampClient {
     }
 
     public Speaker getSpeaker(String id) {
-        return Iterables.find(getEvent().getSpeakers(), input -> input.getName().equals(id));
+        return find(getEvent().getSpeakers(), input -> input.getName().equals(id));
     }
 
     @Nullable
     public Track getTrack(String track) {
-        return Iterables.find(getSchedule().getTracks(), input -> input.getName().equals(track), null);
+        return find(getSchedule().getTracks(), input -> input.getName().equals(track), null);
     }
 
     public Pair<Track, Schedule> getTrackExtended(String track) {
         for (Schedule s : getEvent().getSchedules()) {
-            Track t = Iterables.find(s.getTracks(), input -> input.getName().equals(track), null);
+            Track t = find(s.getTracks(), input -> input.getName().equals(track), null);
             if (t != null) return new Pair<>(t, s);
         }
         return null;

@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'me.tatarka.retrolambda'
-
+apply plugin: 'com.google.firebase.firebase-crash'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -12,8 +12,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
 
         applicationId "com.gdogaru.codecamp"
-        versionCode 13
-        versionName "4.3"
+        versionCode 14
+        versionName "4.4"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -116,7 +116,7 @@ dependencies {
     compile 'se.emilsjolander:stickylistheaders'
 
     compile "com.google.firebase:firebase-core:$gmsVersion"
-    compile "com.google.firebase:firebase-crash:$gmsVersion"
+    releaseCompile "com.google.firebase:firebase-crash:$gmsVersion"
 
     compile "com.google.android.gms:play-services-maps:$gmsVersion"
 }
