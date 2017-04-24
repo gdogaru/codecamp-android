@@ -3,7 +3,6 @@ package com.gdogaru.codecamp.view.main;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,6 +18,7 @@ import com.gdogaru.codecamp.model.EventList;
 import com.gdogaru.codecamp.model.EventSummary;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.DateUtil;
+import com.gdogaru.codecamp.view.BaseFragment;
 import com.gdogaru.codecamp.view.common.DividerItemDecoration;
 
 import javax.inject.Inject;
@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
  * Created by Gabriel on 2/16/2017.
  */
 
-public class SidebarFragment extends Fragment {
+public class SidebarFragment extends BaseFragment {
 
     @BindView(R.id.events)
     RecyclerView eventsRecycler;

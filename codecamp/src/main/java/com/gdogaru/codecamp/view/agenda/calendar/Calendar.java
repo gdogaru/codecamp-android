@@ -128,8 +128,8 @@ public class Calendar extends ScrollView {
     }
 
     private void drawCurrentTime() {
-        //todo fix this
-        if (true || currentTime == null || scheduleDate == null || !currentTime.toLocalDate().equals(scheduleDate.toLocalDate())
+//        if(scheduleDate!=null) currentTime = scheduleDate.toDateTime();
+        if (currentTime == null || scheduleDate == null || !currentTime.toLocalDate().equals(scheduleDate.toLocalDate())
                 || events == null || events.isEmpty()) {
             return;
         }
@@ -271,7 +271,7 @@ public class Calendar extends ScrollView {
 
         for (final DisplayEvent ev : events) {
             int pxPerIdx = width / ev.rowTotal;
-            View layout = LayoutInflater.from(context).inflate(R.layout.c_event_layout2, null);
+            View layout = LayoutInflater.from(context).inflate(R.layout.c_event_layout2, parent, false);
             TextView title = (TextView) layout.findViewById(R.id.title);
             TextView desc1 = (TextView) layout.findViewById(R.id.desc1);
             TextView desc2 = (TextView) layout.findViewById(R.id.desc2);
@@ -384,7 +384,7 @@ public class Calendar extends ScrollView {
     }
 
 
-    static class Point implements Serializable {
+    private static class Point implements Serializable {
         public final int x, y;
 
         public Point(int x, int y) {

@@ -18,7 +18,6 @@ package com.gdogaru.codecamp.view.speaker;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +38,7 @@ import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.DateUtil;
+import com.gdogaru.codecamp.view.BaseFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
@@ -48,7 +48,7 @@ import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 
-public class SpeakerInfoFragment extends Fragment {
+public class SpeakerInfoFragment extends BaseFragment {
     public static final String SPEAKER_ID = "speakerId";
     String speakerId;
     @Inject
@@ -86,7 +86,7 @@ public class SpeakerInfoFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        manage(ButterKnife.bind(this, view));
         rootView = (LinearLayout) view.findViewById(R.id.content);
         initView();
     }

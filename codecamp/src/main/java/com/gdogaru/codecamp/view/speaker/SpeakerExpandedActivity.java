@@ -106,7 +106,7 @@ public class SpeakerExpandedActivity extends BaseActivity {
     private void initPager() {
         List<Speaker> speakers = codecampClient.getEvent().getSpeakers();
         SpeakerAdapter adapter = new SpeakerAdapter(getSupportFragmentManager(), getLayoutInflater(), speakers);
-        int index = Iterables.indexOf(speakers, input -> input.getName() != null && input.getName().equals(speakerId));
+        int index = Iterables.indexOf(speakers, input -> input != null && input.getName() != null && input.getName().equals(speakerId));
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(index < 0 ? 0 : index);
     }

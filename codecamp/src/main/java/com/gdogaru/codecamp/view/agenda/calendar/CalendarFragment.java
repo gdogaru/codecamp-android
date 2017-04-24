@@ -71,7 +71,6 @@ public class CalendarFragment extends BaseFragment {
         currentTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-//                cal.set(2014, java.util.Calendar.OCTOBER, 25, 17, 25, 10);
                 calendar.post(() -> calendar.updateCurrentTime(DateTime.now()));
             }
         }, 1000, 10000);
@@ -96,11 +95,15 @@ public class CalendarFragment extends BaseFragment {
         List<Session> sessions = schedule.getSessions();
         List<Track> tracks = schedule.getTracks();
 
-        List<CEvent> events = new ArrayList<CEvent>();
+        List<CEvent> events = new ArrayList<>();
         Collections.sort(sessions, SESSION_BY_DATE_COMPARATOR);
         for (int i = 0; i < sessions.size(); i++) {
             Session ss = sessions.get(i);
-            int preferedIdx = ss.getTrack() == null ? 0 : getTrack(tracks, ss.getTrack()).getDisplayOrder();
+            int preferedIdx = 0;
+            if (ss.getTrack() != null) {
+                Track track = getTrack(tracks, ss.getTrack());
+                if (track != null) preferedIdx = track.getDisplayOrder();
+            }
             String descLine2 = ss.getTrack();
             events.add(new CEvent(ss.getId(), ss.getStartTime(), ss.getEndTime(), preferedIdx, ss.getTitle(),
                     createSpeakerName(ss),
@@ -109,7 +112,8 @@ public class CalendarFragment extends BaseFragment {
         initSessionIds(sessions);
         calendar.setCurrentTime(DateTime.now());
         calendar.setEvents(events);
-        calendar.setScheduleDate(schedule.getDate());
+        calendar.setScheduleDate(LocalDateTime.now());
+//todo        calendar.setScheduleDate(schedule.getDate());
 
         calendar.setEventListener(event -> displayEventDetails(event.event.id));
     }
@@ -123,9 +127,6 @@ public class CalendarFragment extends BaseFragment {
         return null;
     }
 
-    private int getDay(LocalDateTime date) {
-        return date.getDayOfYear();
-    }
 
     private void initSessionIds(List<Session> sessions) {
         List<Session> ss = new ArrayList<>(sessions);
@@ -156,13 +157,4 @@ public class CalendarFragment extends BaseFragment {
     public void onDestroy() {
         super.onDestroy();
     }
-
-    public int getOffset() {
-        return offset;
-    }
-
-    public void setOffset(int offset) {
-        this.offset = offset;
-    }
-
 }

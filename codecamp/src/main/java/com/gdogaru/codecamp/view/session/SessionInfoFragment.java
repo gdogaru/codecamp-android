@@ -18,7 +18,6 @@ package com.gdogaru.codecamp.view.session;
 
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +33,7 @@ import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.DateUtil;
+import com.gdogaru.codecamp.view.BaseFragment;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.Locale;
@@ -43,7 +43,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class SessionInfoFragment extends Fragment {
+public class SessionInfoFragment extends BaseFragment {
 
     public static final String SESSION_ID = "sessionId";
     @BindView(R.id.sessionTitle)
@@ -94,7 +94,7 @@ public class SessionInfoFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        manage(ButterKnife.bind(this, view));
 
         initView();
     }
