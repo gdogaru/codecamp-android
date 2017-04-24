@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="1dp">
@@ -18,27 +20,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="3"
-            android:text="Title"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="12sp"
+            tools:text="Title"/>
 
         <TextView
             android:id="@+id/desc1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="2"
-
-            android:text="desc1"
             android:textSize="8sp"
-            android:layout_marginTop="2dp"
-            android:layout_marginBottom="2dp"/>
+            tools:text="desc1"/>
 
         <TextView
             android:id="@+id/desc2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lines="1"
-            android:text="roma napoli"
-            android:textSize="8sp" />
+            android:textSize="8sp"
+            tools:text="roma napoli"/>
     </LinearLayout>
 </RelativeLayout>

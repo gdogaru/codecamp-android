@@ -40,6 +40,7 @@ allprojects {
 
     repositories {
         jcenter()
+        maven { url "https://clojars.org/repo/" }
     }
     dependencyManagement {
         dependencies {
@@ -79,6 +80,8 @@ allprojects {
             dependency 'com.squareup.okhttp3:okhttp:3.6.0'
             dependency 'org.greenrobot:eventbus:3.0.0'
             dependency 'se.emilsjolander:stickylistheaders:2.7.0'
+            dependency 'frankiesardo:icepick:3.2.0'
+            dependency 'frankiesardo:icepick-processor:3.2.0'
 
         }
     }

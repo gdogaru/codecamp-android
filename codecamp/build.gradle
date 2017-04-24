@@ -115,6 +115,9 @@ dependencies {
     compile 'org.greenrobot:eventbus'
     compile 'se.emilsjolander:stickylistheaders'
 
+    compile 'frankiesardo:icepick'
+    provided 'frankiesardo:icepick-processor'
+
     compile "com.google.firebase:firebase-core:$gmsVersion"
     releaseCompile "com.google.firebase:firebase-crash:$gmsVersion"
 

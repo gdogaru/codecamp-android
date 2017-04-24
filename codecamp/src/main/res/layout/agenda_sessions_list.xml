@@ -6,14 +6,6 @@
               android:layout_height="fill_parent"
               android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="45dp"
-        android:gravity="center"
-        android:visibility="gone"
-        style="@style/Base.Widget.AppCompat.DropDownItem.Spinner"/>
-
     <se.emilsjolander.stickylistheaders.StickyListHeadersListView
         android:id="@android:id/list"
         tools:listitem="@layout/agenda_sessions_list_item"

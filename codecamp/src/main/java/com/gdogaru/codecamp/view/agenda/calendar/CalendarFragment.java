@@ -3,11 +3,9 @@ package com.gdogaru.codecamp.view.agenda.calendar;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ScrollView;
 
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.model.Schedule;
@@ -15,38 +13,36 @@ import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
+import com.gdogaru.codecamp.view.BaseFragment;
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
 import com.google.common.base.Joiner;
 
+import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import javax.inject.Inject;
 
-public class CalendarFragment extends Fragment {
+import icepick.State;
 
-    private static final Comparator<? super Session> SESSION_BY_DATE_COMPARATOR = new Comparator<Session>() {
-        @Override
-        public int compare(Session lhs, Session rhs) {
-            return lhs.getStartTime().compareTo(rhs.getStartTime());
-        }
-    };
+public class CalendarFragment extends BaseFragment {
 
-    ScrollView scrollView;
+    private static final Comparator<? super Session> SESSION_BY_DATE_COMPARATOR = (Comparator<Session>) (lhs, rhs) -> lhs.getStartTime().compareTo(rhs.getStartTime());
+
     ArrayList<Integer> sessIds = new ArrayList<Integer>();
     Timer currentTimer;
     @Inject
     CodecampClient codecampClient;
     @Inject
     BookmarkingService bookmarkingService;
+    @State
+    Calendar.CalendarState calendarState;
     private int offset;
     private Calendar calendar;
 
@@ -75,14 +71,15 @@ public class CalendarFragment extends Fragment {
         currentTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                java.util.Calendar cal = GregorianCalendar.getInstance();
 //                cal.set(2014, java.util.Calendar.OCTOBER, 25, 17, 25, 10);
-                final Date currentTime = cal.getTime();
-                calendar.post(() -> calendar.updateCurrentTime(currentTime));
+                calendar.post(() -> calendar.updateCurrentTime(DateTime.now()));
             }
-        }, 10000, 10000);
+        }, 1000, 10000);
 
         calendar.setBookmarked(bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
+        if (calendarState != null) {
+            calendar.postDelayed(() -> calendar.setState(calendarState), 300);
+        }
     }
 
     @Override
@@ -91,6 +88,7 @@ public class CalendarFragment extends Fragment {
         if (currentTimer != null) {
             currentTimer.cancel();
         }
+        calendarState = calendar.getState();
     }
 
     public void init() {
@@ -109,16 +107,11 @@ public class CalendarFragment extends Fragment {
                     descLine2 == null ? "" : descLine2));
         }
         initSessionIds(sessions);
-
-        java.util.Calendar cal = GregorianCalendar.getInstance();
-//        cal.set(2014, java.util.Calendar.OCTOBER, 25, 17, 5, 10);
-        Date currentTime = cal.getTime();
-
-        calendar.setCurrentTime(currentTime);
+        calendar.setCurrentTime(DateTime.now());
         calendar.setEvents(events);
+        calendar.setScheduleDate(schedule.getDate());
 
         calendar.setEventListener(event -> displayEventDetails(event.event.id));
-
     }
 
     private Track getTrack(List<Track> tracks, String track) {
@@ -171,4 +164,5 @@ public class CalendarFragment extends Fragment {
     public void setOffset(int offset) {
         this.offset = offset;
     }
+
 }

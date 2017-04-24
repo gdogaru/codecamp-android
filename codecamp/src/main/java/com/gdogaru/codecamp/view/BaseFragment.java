@@ -1,26 +1,39 @@
 package com.gdogaru.codecamp.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.view.inputmethod.InputMethodManager;
+
+import butterknife.Unbinder;
+import icepick.Icepick;
 
 /**
  *
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
-    InputMethodManager inputMethodManager;
+    private Unbinder unbinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        inputMethodManager = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        Icepick.restoreInstanceState(this, savedInstanceState);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if (unbinder != null) unbinder.unbind();
     }
+
+    protected void manage(Unbinder unbinder) {
+        this.unbinder = unbinder;
+    }
+
 }

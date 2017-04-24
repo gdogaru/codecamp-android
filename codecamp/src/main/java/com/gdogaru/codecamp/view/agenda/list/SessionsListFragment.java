@@ -17,15 +17,13 @@
 package com.gdogaru.codecamp.view.agenda.list;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Spinner;
 
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
@@ -35,6 +33,7 @@ import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.Strings;
+import com.gdogaru.codecamp.view.BaseFragment;
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
 
 import java.util.ArrayList;
@@ -45,38 +44,40 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnItemSelected;
+import icepick.Icepick;
+import icepick.State;
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
+
+import static android.R.id.list;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 
-public class SessionsListFragment extends Fragment {
-
-    private static final String TRACK_ID = "TrackId";
-    @BindView(android.R.id.list)
+public class SessionsListFragment extends BaseFragment {
+    public static final String LIST_STATE = "LIST_STATE";
+    @BindView(list)
     StickyListHeadersListView listView;
-    @BindView(R.id.spinner)
-    Spinner trackSelector;
+    //    @BindView(R.id.spinner)
+//    Spinner trackSelector;
     @Inject
     CodecampClient codecampClient;
     @Inject
     BookmarkingService bookmarkingService;
+    @State
+    String trackId;
     private List<Track> tracks;
     private SessionsAdapter sessionsAdapter;
-    private ArrayList<SessionListItem> sessionListItems = null;
-    private String trackId;
     final private AdapterView.OnItemClickListener mOnClickListener
             = (parent, v, position, id) -> onListItemClick((ListView) parent, v, position, id);
+    private ArrayList<SessionListItem> sessionListItems = null;
+    private Parcelable listState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getDiComponent().inject(this);
-        if (savedInstanceState != null && savedInstanceState.containsKey(TRACK_ID)) {
-            trackId = savedInstanceState.getString(TRACK_ID);
-        }
+        tryGetListState(savedInstanceState);
     }
 
     @Override
@@ -87,9 +88,8 @@ public class SessionsListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+        manage(ButterKnife.bind(this, view));
 
-        trackId = savedInstanceState == null ? null : savedInstanceState.getString(TRACK_ID);
         initView();
         initTrackSelector();
     }
@@ -112,17 +112,8 @@ public class SessionsListFragment extends Fragment {
         for (Track t : tracks) {
             trackList.add(t.getName());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.dropdown_item, trackList);
-        trackSelector.setAdapter(adapter);
-    }
-
-    @OnItemSelected(R.id.spinner)
-    public void onTrackSelected(Spinner spinner, int position) {
-        String newTrack = position == 0 ? null : (String) trackSelector.getAdapter().getItem(position);
-        if ((newTrack == null && trackId != null) || (newTrack != null && !newTrack.equals(trackId))) {
-            trackId = newTrack;
-            refreshListData(trackId);
-        }
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.dropdown_item, trackList);
+//        trackSelector.setAdapter(adapter);
     }
 
     public void onListItemClick(ListView l, View v, int position, long id) {
@@ -140,13 +131,20 @@ public class SessionsListFragment extends Fragment {
     @Override
     public void onViewStateRestored(@Nullable Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-        trackId = savedInstanceState == null ? null : savedInstanceState.getString(TRACK_ID);
+        Icepick.restoreInstanceState(this, savedInstanceState);
+        tryGetListState(savedInstanceState);
+    }
+
+    private void tryGetListState(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState != null && savedInstanceState.containsKey(LIST_STATE)) {
+            listState = savedInstanceState.getParcelable(LIST_STATE);
+        }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putString(TRACK_ID, trackId);
         super.onSaveInstanceState(outState);
+        outState.putParcelable(LIST_STATE, listView.onSaveInstanceState());
     }
 
     void refreshListData(String trackId) {
@@ -156,10 +154,9 @@ public class SessionsListFragment extends Fragment {
         this.trackId = trackId;
         List<SessionListItem> currentSessions = getFilterSessions(trackId);
         sessionsAdapter = new SessionsAdapter(getActivity(), currentSessions, bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
-        listView.post(() -> listView.setAdapter(sessionsAdapter));
-        final int position = findNext(currentSessions);
-        if (position > 0) {
-            listView.postDelayed(() -> listView.setSelection(position), 300);
+        listView.setAdapter(sessionsAdapter);
+        if (listState != null) {
+            listView.onRestoreInstanceState(listState);
         }
     }
 

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -20,12 +21,14 @@ import android.widget.TextView;
 import com.gdogaru.codecamp.R;
 import com.google.common.base.Preconditions;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -44,35 +47,24 @@ public class Calendar extends ScrollView {
     RelativeLayout hourParent;
     private double PX_PER_MINUTE;
     private int HOUR_BAR_WIDTH;
-    private List<DisplayEvent> events = new ArrayList<DisplayEvent>();
+    private List<DisplayEvent> events = new ArrayList<>();
     private LocalTime startDate;
     private LocalTime endDate;
     private long dateDiff;
     private EventListener eventListener;
-    private Date currentTime;
+    private DateTime currentTime;
     private int maxInRow = 1;
     private LinearLayout currentTimeLayout;
     private Set<String> bookmarked = new HashSet<>();
+    private HorizontalScrollView hz;
+    private LocalDateTime scheduleDate;
 
     public Calendar(Context context) {
         super(context);
         this.context = (Activity) context;
         initSizes();
         addParent();
-
-
         drawEvents();
-//        initZoom();
-
-//        setOnTouchListener(new OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent) {
-//                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-//
-//                }
-//                return false;
-//            }
-//        });
     }
 
     public Calendar(Context context, AttributeSet attrs) {
@@ -90,6 +82,18 @@ public class Calendar extends ScrollView {
         addParent();
     }
 
+    public CalendarState getState() {
+        return new CalendarState(
+                new Point(getScrollX(), getScrollY()),
+                new Point(hz == null ? -1 : hz.getScrollX(), hz == null ? -1 : hz.getScrollY())
+        );
+    }
+
+    public void setState(CalendarState state) {
+        scrollTo(state.vertical.x, state.vertical.y);
+        hz.scrollTo(state.horizontal.x, state.horizontal.y);
+    }
+
     private void initSizes() {
         HOUR_BAR_WIDTH = dptopx(15);
         PX_PER_MINUTE = dptopx(1.9);
@@ -103,7 +107,7 @@ public class Calendar extends ScrollView {
         ScrollView.LayoutParams lp = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         addView(linearLayout, lp);
         linearLayout.addView(hourParent);
-        HorizontalScrollView hz = new HorizontalScrollView(context);
+        hz = new HorizontalScrollView(context);
         linearLayout.addView(hz);
         hz.addView(parent);
     }
@@ -124,37 +128,34 @@ public class Calendar extends ScrollView {
     }
 
     private void drawCurrentTime() {
-        if (currentTime == null || startDate.getMillisOfDay() / MILLIS_IN_DAY != currentTime.getTime() / MILLIS_IN_DAY) {
+        //todo fix this
+        if (true || currentTime == null || scheduleDate == null || !currentTime.toLocalDate().equals(scheduleDate.toLocalDate())
+                || events == null || events.isEmpty()) {
             return;
         }
+        RelativeLayout.LayoutParams lp;
+        if (currentTimeLayout == null) {
+            currentTimeLayout = new LinearLayout(context);
+            currentTimeLayout.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.time_bar));
+            lp = new RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, dptopx(3));
+            hourParent.addView(currentTimeLayout, lp);
+        } else {
+            lp = (RelativeLayout.LayoutParams) currentTimeLayout.getLayoutParams();
+        }
+        CEvent lastEvent = events.get(events.size() - 1).event;
+        DateTime last = lastEvent.end.toDateTimeToday();
+//        if(currentTime.isAfter(last)) return;
 
-        currentTimeLayout = new LinearLayout(context);
-        currentTimeLayout.setBackgroundColor(getResources().getColor(R.color.time_bar));
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, dptopx(3));
-
-        int top = (int) (getDateStartDiffMinutes(currentTime) * PX_PER_MINUTE);
+        int dateDiffMinutes = currentTime.minuteOfDay().getDifference(events.get(0).event.start.toDateTimeToday());
+        int top = (int) (dateDiffMinutes * PX_PER_MINUTE);
         lp.setMargins(0, top, 0, 0);
 
-        hourParent.addView(currentTimeLayout, lp);
-
-        final int y = (int) (top - PX_PER_MINUTE * 60);
-        if (top > 0) {
-            this.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    scrollTo(0, y);
-                }
-            }, 500);
-        }
-    }
-
-    private int getDateStartDiffMinutes(Date date) {
-        return (int) (((date.getTime() % MILLIS_IN_DAY) - dateDiff) / MILLIS_IN_MINUTE);
+        currentTimeLayout.setLayoutParams(lp);
     }
 
 
     public void setEvents(List<CEvent> events) {
-        List<DisplayEvent> devs = new ArrayList<DisplayEvent>();
+        List<DisplayEvent> devs = new ArrayList<>();
         for (CEvent ev : events) {
             devs.add(new DisplayEvent(ev));
         }
@@ -260,7 +261,9 @@ public class Calendar extends ScrollView {
         }
         recalculateDisplay();
 
-        int width = context.getWindowManager().getDefaultDisplay().getWidth() - HOUR_BAR_WIDTH;
+        android.graphics.Point screenSize = new android.graphics.Point();
+        context.getWindowManager().getDefaultDisplay().getSize(screenSize);
+        int width = screenSize.x - HOUR_BAR_WIDTH;
         int neededWidth = maxInRow * dptopx(100);
         width = Math.max(width, neededWidth);
 
@@ -317,7 +320,7 @@ public class Calendar extends ScrollView {
         for (int i = startHour; i <= endHour; i++) {
             View layout = LayoutInflater.from(context).inflate(R.layout.c_hour, null);
             TextView tv = (TextView) layout.findViewById(R.id.text);
-            tv.setText(i + "");
+            tv.setText(String.valueOf(i));
             RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams) layout.getLayoutParams();
             if (lp == null) {
                 lp = new RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, (int) (PX_PER_MINUTE * 60));
@@ -343,19 +346,13 @@ public class Calendar extends ScrollView {
         this.eventListener = eventListener;
     }
 
-    public void setCurrentTime(Date currentTime) {
+    public void setCurrentTime(DateTime currentTime) {
         this.currentTime = currentTime;
     }
 
-    public void updateCurrentTime(Date date) {
+    public void updateCurrentTime(DateTime date) {
         currentTime = date;
-        if (currentTime == null || currentTimeLayout == null || startDate.getMillisOfDay() / MILLIS_IN_DAY != currentTime.getTime() / MILLIS_IN_DAY) {
-            return;
-        }
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, dptopx(3));
-        int top = (int) (getDateStartDiffMinutes(currentTime) * PX_PER_MINUTE);
-        lp.setMargins(0, top, 0, 0);
-        currentTimeLayout.setLayoutParams(lp);
+        drawCurrentTime();
     }
 
     public Set<String> getBookmarked() {
@@ -366,6 +363,10 @@ public class Calendar extends ScrollView {
         Preconditions.checkNotNull(bookmarked);
         this.bookmarked = bookmarked;
         drawEvents();
+    }
+
+    public void setScheduleDate(LocalDateTime scheduleDate) {
+        this.scheduleDate = scheduleDate;
     }
 
     public interface EventListener {
@@ -383,4 +384,22 @@ public class Calendar extends ScrollView {
     }
 
 
+    static class Point implements Serializable {
+        public final int x, y;
+
+        public Point(int x, int y) {
+            this.x = x;
+            this.y = y;
+        }
+    }
+
+    public static class CalendarState implements Serializable {
+        final public Point vertical;
+        final public Point horizontal;
+
+        public CalendarState(Point vertical, Point horizontal) {
+            this.vertical = vertical;
+            this.horizontal = horizontal;
+        }
+    }
 }

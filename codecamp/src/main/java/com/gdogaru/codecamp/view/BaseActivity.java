@@ -23,6 +23,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import icepick.Icepick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
@@ -41,6 +42,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Icepick.restoreInstanceState(this, savedInstanceState);
 
         if (getActionBar() != null) {
             getActionBar().setDisplayShowTitleEnabled(false);
@@ -120,6 +122,12 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .setPositiveButton("OK", okListener)
                 .create()
                 .show();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
     }
 
     @Override
