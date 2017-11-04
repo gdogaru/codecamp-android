@@ -3,16 +3,13 @@
 buildscript {
     repositories {
         jcenter()
+        google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.1'
-        classpath "io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE"
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-        classpath 'me.tatarka:gradle-retrolambda:3.5.0'
-        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
-        classpath 'com.google.guava:guava:19.0'
-        classpath 'com.google.firebase:firebase-plugins:1.0.5'
-        classpath 'com.google.gms:google-services:3.0.0'
+        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.3.RELEASE"
+        classpath 'com.google.firebase:firebase-plugins:1.1.1'
+        classpath 'com.google.gms:google-services:3.1.0'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -26,25 +23,26 @@ allprojects {
 }
 
 ext {
-    compileSdkVersion = 25
-    buildToolsVersion = '25.0.2'
-    targetSdkVersion = 25
+    compileSdkVersion = 26
+    buildToolsVersion = '26.0.2'
+    targetSdkVersion = 26
     minSdkVersion = 14
 
-    androidSupportVersion = '25.3.1'
-    gmsVersion = '10.2.1'
+    androidSupportVersion = '26.0.1'
+    gmsVersion = '11.4.2'
 }
 
 allprojects {
     apply plugin: 'io.spring.dependency-management'
 
     repositories {
+        google()
         jcenter()
-        maven { url "https://clojars.org/repo/" }
+        maven { url 'https://clojars.org/repo/' }
     }
     dependencyManagement {
         dependencies {
-            dependency 'com.android.support:multidex:1.0.1'
+            dependency 'com.android.support:multidex:1.0.2'
             dependency "com.android.support:support-v4:$androidSupportVersion"
             dependency "com.android.support:appcompat-v7:$androidSupportVersion"
             dependency "com.android.support:design:$androidSupportVersion"
@@ -52,32 +50,31 @@ allprojects {
             dependency "com.android.support:cardview-v7:$androidSupportVersion"
 
             dependency 'org.slf4j:slf4j-android:1.7.25'
-            dependency 'com.parse.bolts:bolts-tasks:1.4.0'
-            dependency 'com.google.code.gson:gson:2.8.0'
-            dependency 'commons-io:commons-io:2.4'
+            dependency 'com.google.code.gson:gson:2.8.1'
+            dependency 'commons-io:commons-io:2.5'
             dependency 'joda-time:joda-time:2.9.9'
-            dependency 'com.sothree.slidinguppanel:library:3.0.0'
+            dependency 'com.sothree.slidinguppanel:library:3.3.1'
             dependency 'com.squareup:otto:1.3.8'
 
             dependency 'junit:junit:4.12'
             dependency 'org.mockito:mockito-core:1.10.19'
             dependency 'com.squareup.assertj:assertj-android:1.1.1'
             dependency 'org.hamcrest:hamcrest-library:1.3'
-            dependency 'com.android.support.test.espresso:espresso-core:2.2.2'
-            dependency 'com.android.support.test.uiautomator:uiautomator-v18:2.1.2'
+            dependency 'com.android.support.test.espresso:espresso-core:3.0.1'
+            dependency 'com.android.support.test.uiautomator:uiautomator-v18:3.0.1'
 
-            dependency "com.google.dagger:dagger:2.10"
-            dependency "com.google.dagger:dagger-compiler:2.10"
+            dependency "com.google.dagger:dagger:2.11"
+            dependency "com.google.dagger:dagger-compiler:2.11"
 
-            dependency 'uk.co.chrisjenx:calligraphy:2.2.0'
-            dependency 'joda-time:joda-time:2.9.7'
-            dependency 'com.google.guava:guava:20.0'
-            dependency 'com.github.bumptech.glide:glide:3.7.0'
-            dependency 'com.jakewharton:butterknife:8.5.1'
-            dependency 'com.jakewharton:butterknife-compiler:8.5.1'
+            dependency 'uk.co.chrisjenx:calligraphy:2.3.0'
+            dependency 'joda-time:joda-time:2.9.9'
+            dependency 'com.google.guava:guava:23.0-android'
+            dependency 'com.github.bumptech.glide:glide:3.8.0'
+            dependency 'com.jakewharton:butterknife:8.8.1'
+            dependency 'com.jakewharton:butterknife-compiler:8.8.1'
 
-            dependency 'com.squareup.okio:okio:1.12.0'
-            dependency 'com.squareup.okhttp3:okhttp:3.6.0'
+            dependency 'com.squareup.okio:okio:1.13.0'
+            dependency 'com.squareup.okhttp3:okhttp:3.9.0'
             dependency 'org.greenrobot:eventbus:3.0.0'
             dependency 'se.emilsjolander:stickylistheaders:2.7.0'
             dependency 'frankiesardo:icepick:3.2.0'

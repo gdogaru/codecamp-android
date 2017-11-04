@@ -55,7 +55,7 @@ import static android.R.id.list;
  */
 
 public class SessionsListFragment extends BaseFragment {
-    public static final String LIST_STATE = "LIST_STATE";
+    private static final String LIST_STATE = "LIST_STATE";
     @BindView(list)
     StickyListHeadersListView listView;
     //    @BindView(R.id.spinner)
@@ -66,12 +66,13 @@ public class SessionsListFragment extends BaseFragment {
     BookmarkingService bookmarkingService;
     @State
     String trackId;
+    @State
+    Parcelable listState;
     private List<Track> tracks;
     private SessionsAdapter sessionsAdapter;
     final private AdapterView.OnItemClickListener mOnClickListener
             = (parent, v, position, id) -> onListItemClick((ListView) parent, v, position, id);
     private ArrayList<SessionListItem> sessionListItems = null;
-    private Parcelable listState;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +93,8 @@ public class SessionsListFragment extends BaseFragment {
 
         initView();
         initTrackSelector();
+
+        refreshListData(trackId);
     }
 
     public void initView() {
@@ -103,7 +106,6 @@ public class SessionsListFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        refreshListData(trackId);
     }
 
     private void initTrackSelector() {
