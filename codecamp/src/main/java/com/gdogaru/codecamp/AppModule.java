@@ -2,6 +2,9 @@ package com.gdogaru.codecamp;
 
 import android.util.Log;
 
+import com.birbit.android.jobqueue.JobManager;
+import com.birbit.android.jobqueue.config.Configuration;
+import com.birbit.android.jobqueue.log.CustomLogger;
 import com.gdogaru.codecamp.model.json.DateTypeAdapter;
 import com.gdogaru.codecamp.model.json.LocalDateTimeTypeAdapter;
 import com.gdogaru.codecamp.model.json.LocalTimeTypeAdapter;
@@ -9,9 +12,6 @@ import com.gdogaru.codecamp.svc.AppPreferences;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.path.android.jobqueue.JobManager;
-import com.path.android.jobqueue.config.Configuration;
-import com.path.android.jobqueue.log.CustomLogger;
 
 import org.greenrobot.eventbus.EventBus;
 import org.joda.time.LocalDateTime;
@@ -80,13 +80,18 @@ public class AppModule {
                     public void e(String text, Object... args) {
                         Log.e(TAG, String.format(text, args));
                     }
+
+                    @Override
+                    public void v(String text, Object... args) {
+                        Log.v(TAG, String.format(text, args));
+                    }
                 })
                 .minConsumerCount(1)//always keep at least one consumer alive
                 .maxConsumerCount(3)//up to 3 consumers at a time
                 .loadFactor(3)//3 jobs per consumer
                 .consumerKeepAlive(120)//wait 2 minute
                 .build();
-        return new JobManager(app, configuration);
+        return new JobManager(configuration);
     }
 
     @Provides

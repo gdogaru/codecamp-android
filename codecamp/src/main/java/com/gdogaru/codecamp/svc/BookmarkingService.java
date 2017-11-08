@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.gdogaru.codecamp.App;
+import com.gdogaru.codecamp.model.Session;
 import com.google.gson.Gson;
 
 import java.util.HashSet;
@@ -45,9 +46,14 @@ public class BookmarkingService {
                     .apply();
     }
 
-    public boolean isBookmarked(String eventId, String itemId) {
+    public boolean isBookmarked(String eventId, Session session) {
         Set<String> s = new HashSet<>(getBookmarked(eventId));
-        return s.contains(itemId);
+        return s.contains(session.getTitle());
+    }
+
+    public boolean isBookmarked(String eventId, String sessionTitle) {
+        Set<String> s = new HashSet<>(getBookmarked(eventId));
+        return s.contains(sessionTitle);
     }
 
     @SuppressWarnings("unchecked")

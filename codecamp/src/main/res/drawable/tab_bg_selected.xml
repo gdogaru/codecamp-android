@@ -4,10 +4,7 @@
     <item>
 
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <gradient android:startColor="@color/navbar100"
-                      android:endColor="@color/navbar0"
-                      android:angle="90"
-                    />
+            <gradient android:startColor="@color/navbar100" android:endColor="@color/navbar0" android:angle="90" />
         </shape>
 
     </item>

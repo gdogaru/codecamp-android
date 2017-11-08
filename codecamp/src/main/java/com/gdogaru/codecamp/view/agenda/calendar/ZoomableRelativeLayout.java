@@ -28,7 +28,7 @@ public class ZoomableRelativeLayout extends RelativeLayout {
     }
 
     protected void dispatchDraw(Canvas canvas) {
-        canvas.save(Canvas.MATRIX_SAVE_FLAG);
+        canvas.save(Canvas.ALL_SAVE_FLAG);
         canvas.scale(mScaleFactor, mScaleFactor, mPivotX, mPivotY);
         super.dispatchDraw(canvas);
         canvas.restore();

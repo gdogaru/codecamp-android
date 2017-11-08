@@ -20,7 +20,7 @@ public class AppPreferences {
     private static final String ACTIVE_SCHEDULE = "ACTIVE_SCHEDULE";
     private static final String LIST_VIEW = "LIST_VIEW";
     private static final Logger LOG = getLogger(AppPreferences.class);
-    Context app;
+    private final Context app;
 
     public AppPreferences(Context app) {
         this.app = app;
@@ -58,7 +58,7 @@ public class AppPreferences {
         LOG.info("Last update set to {}", value);
         getPref().edit()
                 .putLong(LAST_UPDATE, value)
-                .commit();
+                .apply();
     }
 
     public long getActiveEvent() {
@@ -68,7 +68,7 @@ public class AppPreferences {
     public void setActiveEvent(Long value) {
         getPref().edit()
                 .putLong(ACTIVE_EVENT, value)
-                .commit();
+                .apply();
     }
 
     public int getActiveSchedule() {
@@ -78,7 +78,7 @@ public class AppPreferences {
     public void setActiveSchedule(int position) {
         getPref().edit()
                 .putInt(ACTIVE_SCHEDULE, position)
-                .commit();
+                .apply();
     }
 
     public boolean getListViewList() {
@@ -88,7 +88,7 @@ public class AppPreferences {
     public void setListViewList(boolean b) {
         getPref().edit()
                 .putBoolean(LIST_VIEW, b)
-                .commit();
+                .apply();
     }
 
 }

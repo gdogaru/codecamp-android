@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Speaker;
@@ -96,8 +97,9 @@ public class SpeakersActivity extends BaseActivity {
             SpeakerHolder vh = (SpeakerHolder) holder;
             Glide.with(activity)
                     .load(s.getPhotoUrl())
-                    .placeholder(R.drawable.person_icon)
-                    .fitCenter()
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.person_icon)
+                            .fitCenter())
                     .into(vh.logo);
             vh.name.setText(s.getName());
             vh.job.setText(s.getJobTitle());

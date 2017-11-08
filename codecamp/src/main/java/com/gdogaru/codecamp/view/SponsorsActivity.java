@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Sponsor;
@@ -107,8 +108,9 @@ public class SponsorsActivity extends BaseActivity {
             SponsorHolder vh = (SponsorHolder) holder;
             Glide.with(activity)
                     .load(s.getLogoUrl())
-                    .placeholder(R.drawable.background_white)
-                    .fitCenter()
+                    .apply(new RequestOptions()
+                            .placeholder(R.drawable.background_white)
+                            .fitCenter())
                     .into(vh.logo);
             vh.name.setText(s.getName());
             vh.description.setText(s.getSponsorshipPackage());

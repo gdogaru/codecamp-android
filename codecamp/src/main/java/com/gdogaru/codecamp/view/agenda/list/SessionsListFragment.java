@@ -33,7 +33,7 @@ import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.Strings;
-import com.gdogaru.codecamp.view.BaseFragment;
+import com.gdogaru.codecamp.view.agenda.SessionsFragment;
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
 
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ import static android.R.id.list;
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 
-public class SessionsListFragment extends BaseFragment {
+public class SessionsListFragment extends SessionsFragment {
     private static final String LIST_STATE = "LIST_STATE";
     @BindView(list)
     StickyListHeadersListView listView;
@@ -94,7 +94,7 @@ public class SessionsListFragment extends BaseFragment {
         initView();
         initTrackSelector();
 
-        refreshListData(trackId);
+        updateDisplay();
     }
 
     public void initView() {
@@ -149,11 +149,10 @@ public class SessionsListFragment extends BaseFragment {
         outState.putParcelable(LIST_STATE, listView.onSaveInstanceState());
     }
 
-    void refreshListData(String trackId) {
+    public void updateDisplay() {
         if (sessionListItems == null) {
             loadSessions();
         }
-        this.trackId = trackId;
         List<SessionListItem> currentSessions = getFilterSessions(trackId);
         sessionsAdapter = new SessionsAdapter(getActivity(), currentSessions, bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
         listView.setAdapter(sessionsAdapter);

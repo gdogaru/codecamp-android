@@ -28,6 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Codecamp;
@@ -47,6 +48,8 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 public class SpeakerInfoFragment extends BaseFragment {
     public static final String SPEAKER_ID = "speakerId";
@@ -150,9 +153,10 @@ public class SpeakerInfoFragment extends BaseFragment {
 
         Glide.with(speakerView.getContext())
                 .load(speaker.getPhotoUrl())
-                .placeholder(R.drawable.person_icon)
-                .centerCrop()
-                .crossFade()
+                .apply(new RequestOptions()
+                        .placeholder(R.drawable.person_icon)
+                        .centerCrop())
+                .transition(withCrossFade(R.anim.fade_in, 300))
                 .into(picture);
         return speakerView;
     }

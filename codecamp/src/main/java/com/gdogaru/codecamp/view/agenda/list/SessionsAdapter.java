@@ -73,9 +73,9 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
         holder.place.setText(session.getTrackName());
         String speakerNames = StringUtils.join(session.getSpeakerNames(), ", ");
         holder.speaker.setText(speakerNames);
-        if(favorites.contains(session.getId())){
+        if (favorites.contains(session.getId())) {
             holder.root.setBackgroundResource(R.drawable.list_item_background_favorite);
-        }else{
+        } else {
             holder.root.setBackgroundResource(R.drawable.list_item_background);
         }
         return view;

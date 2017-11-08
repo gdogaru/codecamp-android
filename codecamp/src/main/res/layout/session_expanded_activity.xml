@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
-              android:orientation="vertical">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
 
     <android.support.design.widget.AppBarLayout style="@style/Codecamp.AppBarLayout">
 
@@ -23,28 +23,32 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
                     android:gravity="right|end"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <ImageView
                     android:visibility="invisible"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingEnd="16dp"
+                    android:paddingRight="16dp"
                     android:paddingStart="8dp"
-                    android:src="@drawable/button_share"/>
+                    android:paddingLeft="8dp"
+                    android:src="@drawable/button_share" />
 
                 <CheckBox
                     android:id="@+id/bookmarked"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:paddingRight="16dp"
                     android:paddingEnd="16dp"
+                    android:paddingLeft="8dp"
                     android:paddingStart="8dp"
-                    android:button="@drawable/checkbox_bookmark"/>
+                    android:button="@drawable/checkbox_bookmark" />
 
             </LinearLayout>
 
@@ -54,6 +58,6 @@
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </LinearLayout>

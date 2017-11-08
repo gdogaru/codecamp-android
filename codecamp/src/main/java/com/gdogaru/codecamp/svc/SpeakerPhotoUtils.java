@@ -29,6 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.Locale;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -67,7 +68,7 @@ public class SpeakerPhotoUtils {
     public static Bitmap getLocalSpeakerPhoto(Context context, long id) {
         InputStream i = null;
         try {
-            i = context.getApplicationContext().openFileInput(String.format(FILENAME_MASK, id));
+            i = context.getApplicationContext().openFileInput(String.format(Locale.US, FILENAME_MASK, id));
         } catch (FileNotFoundException e) {
             return null;
         }
@@ -77,7 +78,7 @@ public class SpeakerPhotoUtils {
     public static void savePhoto(Context context, Bitmap bitmap, long id) {
         FileOutputStream fos = null;
         try {
-            fos = context.getApplicationContext().openFileOutput(String.format(FILENAME_MASK, id), Context.MODE_PRIVATE);
+            fos = context.getApplicationContext().openFileOutput(String.format(Locale.US, FILENAME_MASK, id), Context.MODE_PRIVATE);
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
             fos.close();
         } catch (Exception e) {

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
@@ -19,24 +18,37 @@
 
                 <TextView
                     android:id="@+id/title"
-                    android:layout_width="wrap_content"
+                    fontPath="@string/font_roboto_medium"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:layout_weight="1"
                     android:ellipsize="marquee"
-                    android:maxLines="1"
-                    android:textSize="20sp"
-                    app:fontPath="@string/font_roboto_medium"
-                    tools:text="2017-05-12T Iasi"/>
+                    android:singleLine="true"
+                    android:textSize="18sp"
+                    tools:text="2017-05-12T Iasi" />
+
+                <CheckBox
+                    android:id="@+id/favorite_switch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="6dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="6dp"
+                    android:layout_marginStart="5dp"
+                    android:button="@drawable/checkbox_bookmark"
+                    android:buttonTint="@color/white"
+                    android:visibility="gone" />
 
                 <CheckBox
                     android:id="@+id/view_switch"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginStart="5dp"
                     android:button="@drawable/checkbox_agenda_type"
-                    android:buttonTint="@color/white"/>
+                    android:buttonTint="@color/white" />
             </LinearLayout>
 
         </android.support.v7.widget.Toolbar>

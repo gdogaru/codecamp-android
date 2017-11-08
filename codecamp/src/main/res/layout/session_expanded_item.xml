@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -20,14 +19,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:lineSpacingMultiplier="1.2"
-            tools:text="title"/>
+            tools:text="title" />
 
         <TextView
             android:id="@+id/sessionTime"
             style="@style/field_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="13.06.09 - 14.06.09"/>
+            tools:text="13.06.09 - 14.06.09" />
 
 
         <LinearLayout
@@ -40,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/track"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/sessionTrack"
@@ -49,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="3dp"
                 android:paddingTop="0dp"
-                tools:text="track"/>
+                tools:text="track" />
         </LinearLayout>
 
         <TextView
@@ -58,7 +57,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="description sd"/>
+            tools:text="description sd" />
 
         <LinearLayout
             android:id="@+id/speakerLayoutOuter"
@@ -72,14 +71,13 @@
                 android:layout_height="wrap_content"
                 android:paddingBottom="5dp"
                 android:paddingTop="15dp"
-                android:text="@string/speakers"/>
+                android:text="@string/speakers" />
 
             <LinearLayout
                 android:id="@+id/speakerLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-            </LinearLayout>
+                android:orientation="vertical"></LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

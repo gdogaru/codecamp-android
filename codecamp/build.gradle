@@ -1,17 +1,18 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.firebase.firebase-crash'
+apply plugin: 'com.google.firebase.firebase-perf'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+//    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
 
         applicationId "com.gdogaru.codecamp"
-        versionCode 15
-        versionName "4.4.2"
+        versionCode 16
+        versionName "4.4.3"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -19,9 +20,9 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('certificate/codecamp2-release-key.keystore')
+            storeFile file('certificate/upload-keystore.jks')
             storePassword "C0decamp"
-            keyAlias "codecamp2"
+            keyAlias "upload"
             keyPassword "C0decamp"
         }
     }
@@ -47,7 +48,7 @@ android {
     productFlavors {
         dev {
             dimension "stage"
-            minSdkVersion 21
+            minSdkVersion 24
             applicationId "com.gdogaru.codecamp.dev"
 
             resValue "string", "app_name", "Codecamp-DEV"
@@ -75,29 +76,38 @@ android {
     }
 
     lintOptions {
-        abortOnError false
+        abortOnError true
+        warning 'MissingPrefix'
+        warning 'InvalidPackage'
+        warning 'RestrictedApi'
     }
 
 }
 
-dependencies {
-    compile('com.path:android-priority-jobqueue:1.1.2') {
-        exclude group: 'com.google.android', module: 'android'
+android.applicationVariants.all {
+    // Set this to false to disable Firebase Performance Monitoring at compile time
+    FirebasePerformance {
+        instrumentationEnabled true
     }
+}
 
+
+dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation 'com.android.support:multidex'
     implementation 'com.android.support:support-v4'
     implementation 'com.android.support:appcompat-v7'
     implementation 'com.android.support:design'
-    compile"com.android.support:cardview-v7"
+    implementation "com.android.support:cardview-v7"
 
     implementation 'uk.co.chrisjenx:calligraphy'
 
     implementation 'com.google.dagger:dagger'
     annotationProcessor 'com.google.dagger:dagger-compiler'
+
     annotationProcessor 'com.google.guava:guava'
+    implementation 'com.birbit:android-priority-jobqueue'
 
     implementation 'com.jakewharton:butterknife'
     annotationProcessor 'com.jakewharton:butterknife-compiler'
@@ -117,9 +127,10 @@ dependencies {
     implementation 'se.emilsjolander:stickylistheaders'
 
     implementation 'frankiesardo:icepick'
-    provided 'frankiesardo:icepick-processor'
+    compileOnly 'frankiesardo:icepick-processor'
     annotationProcessor 'frankiesardo:icepick-processor'
 
+    implementation "com.google.firebase:firebase-perf:$gmsVersion"
     implementation "com.google.firebase:firebase-core:$gmsVersion"
     releaseImplementation "com.google.firebase:firebase-crash:$gmsVersion"
 

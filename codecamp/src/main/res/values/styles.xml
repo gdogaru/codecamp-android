@@ -160,7 +160,7 @@
     </style>
 
 
-    <style name="Codecamp.Dialog"/>
+    <style name="Codecamp.Dialog" />
 
     <style name="Codecamp.Dialog.Button">
         <item name="android:layout_width">fill_parent</item>

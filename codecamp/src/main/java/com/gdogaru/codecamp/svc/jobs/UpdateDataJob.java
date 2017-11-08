@@ -3,13 +3,16 @@ package com.gdogaru.codecamp.svc.jobs;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
+import com.birbit.android.jobqueue.Job;
+import com.birbit.android.jobqueue.Params;
+import com.birbit.android.jobqueue.RetryConstraint;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.svc.AppPreferences;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.google.gson.Gson;
-import com.path.android.jobqueue.Job;
-import com.path.android.jobqueue.Params;
 
 import org.greenrobot.eventbus.EventBus;
 import org.slf4j.Logger;
@@ -63,21 +66,24 @@ public class UpdateDataJob extends Job {
         signalEnd();
     }
 
+    @Override
+    protected void onCancel(int cancelReason, @Nullable Throwable throwable) {
+        LOG.info("Canceling job....");
+        signalEnd();
+    }
+
+    @Override
+    protected RetryConstraint shouldReRunOnThrowable(@NonNull Throwable throwable, int runCount, int maxRunCount) {
+        signalEnd();
+        return RetryConstraint.CANCEL;
+
+    }
+
 
     public void downloadData() throws Exception {
         codecampClient.fetchAllData();
     }
 
-    @Override
-    protected void onCancel() {
-        signalEnd();
-    }
-
-    @Override
-    protected boolean shouldReRunOnThrowable(Throwable throwable) {
-        signalEnd();
-        return false;
-    }
 
     private void signalStart() {
         eventBus.post(new DataLoadingEvent(0));

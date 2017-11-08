@@ -35,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.birbit.android.jobqueue.JobManager;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.EventList;
@@ -60,7 +61,6 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.google.firebase.analytics.FirebaseAnalytics;
-import com.path.android.jobqueue.JobManager;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;

@@ -18,6 +18,7 @@ import com.gdogaru.codecamp.util.Throwables;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Ordering;
+import com.google.firebase.perf.metrics.AddTrace;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
@@ -29,7 +30,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -73,6 +73,7 @@ public class CodecampClient {
     public CodecampClient() {
     }
 
+    @AddTrace(name = "downloadEventData")
     public File download(String url, String root, String fileName) throws Exception {
         LOG.info("Downloading {} to {} {}", url, root, fileName);
         Request request = new Request.Builder().url(url).build();
@@ -116,6 +117,7 @@ public class CodecampClient {
         return currentCodecamp;
     }
 
+    @AddTrace(name = "loadCodecampEvent")
     private void loadCodecamp() {
         eventList = readData("events.json", EventList.class);
         //try to load from preferences
@@ -130,6 +132,7 @@ public class CodecampClient {
             }
         }
         //if no preferences load first
+        //todo load next by date
         if (id == 0 && eventList.size() > 0) {
             id = eventList.get(0).getRefId();
             appPreferences.setActiveEvent(id);
@@ -144,15 +147,12 @@ public class CodecampClient {
             trackPositions.put("", -1);
             trackPositions.put(null, -1);
 
-            Collections.sort(schedule.getSessions(), new Comparator<Session>() {
-                @Override
-                public int compare(Session o1, Session o2) {
-                    int result = o1.getStartTime().compareTo(o2.getStartTime());
-                    if (result == 0) {
-                        result = trackPositions.get(o1.getTrack()) - trackPositions.get(o2.getTrack());
-                    }
-                    return result;
+            Collections.sort(schedule.getSessions(), (o1, o2) -> {
+                int result = o1.getStartTime().compareTo(o2.getStartTime());
+                if (result == 0) {
+                    result = trackPositions.get(o1.getTrack()) - trackPositions.get(o2.getTrack());
                 }
+                return result;
             });
         }
     }
@@ -184,6 +184,7 @@ public class CodecampClient {
         }
     }
 
+    @AddTrace(name = "fetchAllData")
     public void fetchAllData() throws Exception {
         long now = System.currentTimeMillis();
         String root = String.valueOf(now);
@@ -206,7 +207,7 @@ public class CodecampClient {
 
             //set first
             Collections.sort(eventList, Ordering.natural().nullsLast().onResultOf(EventSummary::getStartDate));
-            EventSummary es = Iterables.find(eventList, e -> e!= null && e.getStartDate() != null && !e.getStartDate().isBefore(LocalDateTime.now()), null);
+            EventSummary es = Iterables.find(eventList, e -> e != null && e.getStartDate() != null && !e.getStartDate().isBefore(LocalDateTime.now()), null);
             if (es != null) {
                 appPreferences.setActiveEvent(es.getRefId());
             } else {

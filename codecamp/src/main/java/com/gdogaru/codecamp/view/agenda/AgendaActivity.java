@@ -32,10 +32,13 @@ import butterknife.OnCheckedChanged;
  */
 public class AgendaActivity extends BaseActivity {
 
+    public static final String FAVORITES_ONLY = "FAVORITES_ONLY";
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.view_switch)
     CheckBox viewSwitch;
+    @BindView(R.id.favorite_switch)
+    CheckBox favoriteSwitch;
     @BindView(R.id.title)
     TextView titleView;
 
@@ -45,6 +48,7 @@ public class AgendaActivity extends BaseActivity {
     FirebaseAnalytics firebaseAnalytics;
     @Inject
     CodecampClient codecampClient;
+    private Boolean favoritesOnly;
 
     public static void start(Activity activity) {
         activity.startActivity(new Intent(activity, AgendaActivity.class));
@@ -63,15 +67,18 @@ public class AgendaActivity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        if (getSupportFragmentManager().findFragmentById(R.id.content) == null) {
-            showList();
-        }
-
         viewSwitch.setChecked(appPreferences.getListViewList());
+
+        favoritesOnly = savedInstanceState != null && savedInstanceState.getBoolean(FAVORITES_ONLY, false);
+        favoriteSwitch.setChecked(favoritesOnly);
 
         Schedule schedule = codecampClient.getSchedule();
         Codecamp event = codecampClient.getEvent();
         titleView.setText(String.format("%s - %s", DateUtil.formatDay(schedule.getDate()), event.getVenue().getCity()));
+
+        if (getSupportFragmentManager().findFragmentById(R.id.content) == null) {
+            showList();
+        }
     }
 
     @OnCheckedChanged(R.id.view_switch)
@@ -79,6 +86,17 @@ public class AgendaActivity extends BaseActivity {
         if (appPreferences.getListViewList() != viewSwitch.isChecked()) {
             appPreferences.setListViewList(viewSwitch.isChecked());
             showList();
+        }
+    }
+
+    @OnCheckedChanged(R.id.favorite_switch)
+    public void onFavoriteChecked(boolean checked) {
+        if (checked != favoritesOnly) {
+            favoritesOnly = checked;
+            SessionsFragment f = (SessionsFragment) getSupportFragmentManager().findFragmentById(R.id.content);
+            if (f != null) {
+                f.setFavoritesOnly(favoritesOnly);
+            }
         }
     }
 
@@ -92,11 +110,13 @@ public class AgendaActivity extends BaseActivity {
                 .beginTransaction()
                 .disallowAddToBackStack()
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out); //, 0, R.anim.hold);
+        SessionsFragment sessionsFragment;
         if (appPreferences.getListViewList()) {
-            transaction.replace(R.id.content, new SessionsListFragment(), "session_list");
+            sessionsFragment = new SessionsListFragment();
         } else {
-            transaction.replace(R.id.content, new CalendarFragment(), "calendar");
+            sessionsFragment = new CalendarFragment();
         }
+        transaction.replace(R.id.content, sessionsFragment, sessionsFragment.getClass().getName());
         transaction.commit();
     }
 }

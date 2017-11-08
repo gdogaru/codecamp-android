@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item >
+    <item>
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <gradient android:startColor="@color/navbar0"
-                      android:endColor="@color/navbar100"
-                      android:angle="90"
-                    />
+            <gradient
+                android:startColor="@color/navbar0"
+                android:endColor="@color/navbar100"
+                android:angle="90" />
         </shape>
     </item>
     <!--<item >-->
 
-        <!--<bitmap xmlns:android="http://schemas.android.com/apk/res/android"-->
-                <!--android:src="@drawable/navbar_pattern"-->
-                <!--android:tileMode="repeat" />-->
+    <!--<bitmap xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:src="@drawable/navbar_pattern"-->
+    <!--android:tileMode="repeat" />-->
     <!--</item>-->
 
 </layer-list>

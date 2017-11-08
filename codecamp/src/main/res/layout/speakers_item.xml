@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:background="@drawable/list_item_background"
-              android:orientation="vertical"
-              android:padding="5dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/list_item_background"
+    android:orientation="vertical"
+    android:padding="5dp">
 
     <com.gdogaru.codecamp.view.common.SquareImageView
         android:id="@+id/logo"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
     <TextView
         android:id="@+id/name"
@@ -21,7 +21,7 @@
         android:singleLine="true"
         android:textColor="@color/white"
         android:textSize="16sp"
-        tools:text="Iasi-jug"/>
+        tools:text="Iasi-jug" />
 
     <TextView
         android:id="@+id/job"
@@ -31,7 +31,7 @@
         android:singleLine="true"
         android:textColor="@color/white"
         android:textSize="12sp"
-        tools:text="Partner communities"/>
+        tools:text="Partner communities" />
 
 
     <TextView
@@ -42,6 +42,6 @@
         android:singleLine="true"
         android:textColor="@color/white"
         android:textSize="12sp"
-        tools:text="Partner communities"/>
+        tools:text="Partner communities" />
 
 </LinearLayout>
