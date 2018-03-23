@@ -21,7 +21,7 @@
 -optimizationpasses 5
 -dontusemixedcaseclassnames
 -dontskipnonpubliclibraryclasses
--dontpreverify
+#-dontpreverify
 -verbose
 
 -keepattributes Signature
@@ -49,7 +49,8 @@
 -dontwarn org.ietf.jgss.**
 -dontwarn org.w3c.dom.bootstrap.**
 
-
+#otto
+-keepattributes *Annotation*
 -keepclassmembers class ** {
     @com.squareup.otto.Subscribe public *;
     @com.squareup.otto.Produce public *;
@@ -156,15 +157,18 @@
 
 #Glide
 -keep public class * implements com.bumptech.glide.module.GlideModule
--keep public enum com.bumptech.glide.load.resource.bitmap.ImageHeaderParser$** {
+-keep public class * extends com.bumptech.glide.module.AppGlideModule
+-keep public enum com.bumptech.glide.load.ImageHeaderParser$** {
   **[] $VALUES;
   public *;
 }
+# Uncomment for DexGuard only
+#-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
+#glide end
 
 # rxjava
--keep class rx.schedulers.Schedulers {
-    public static <methods>;
-}
+-keep class rx.schedulers.** { *; }
 -keep class rx.schedulers.ImmediateScheduler {
     public <methods>;
 }
@@ -185,6 +189,7 @@
 
 -keep class rx.internal.** { *; }
 -dontwarn rx.internal.util.unsafe.**
+-keepclassmembers class rx.internal.** {*;}
 
 
 # Butterknife
@@ -218,6 +223,7 @@
 -dontwarn javax.**
 -dontwarn lombok.**
 -dontwarn org.apache.**
+-keep class org.apache.** { *; }
 -dontwarn com.squareup.**
 -dontwarn com.sun.**
 -dontwarn **retrofit**
@@ -242,13 +248,36 @@
 -keepattributes *Annotation*
 
 # Gson specific classes
--keep class sun.misc.Unsafe { *; }
+-dontwarn sun.misc.**
 #-keep class com.google.gson.stream.** { *; }
 
 # Application classes that will be serialized/deserialized over Gson
 -keep class com.google.gson.examples.android.model.** { *; }
 
+# Prevent proguard from stripping interface information from TypeAdapterFactory,
+# JsonSerializer, JsonDeserializer instances (so they can be used in @JsonAdapter)
+-keep class * implements com.google.gson.TypeAdapterFactory
+-keep class * implements com.google.gson.JsonSerializer
+-keep class * implements com.google.gson.JsonDeserializer
+
 ##---------------End: proguard configuration for Gson  ----------
+
+# Dagger ProGuard rules.
+# https://github.com/square/dagger
+
+-dontwarn dagger.internal.codegen.**
+-keepclassmembers,allowobfuscation class * {
+    @javax.inject.* *;
+    @dagger.* *;
+    <init>();
+}
+
+-keep class dagger.* { *; }
+-keep class javax.inject.* { *; }
+-keep class * extends dagger.internal.Binding
+-keep class * extends dagger.internal.ModuleAdapter
+-keep class * extends dagger.internal.StaticInjection
+#end dagger
 
 -keep class org.apache.http.** { *; }
 -keep interface org.apache.http.** { *; }
@@ -281,3 +310,44 @@
     @icepick.* <fields>;
 }
 -keepnames class * { @icepick.State *;}
+
+# OkHttp3
+-keepattributes Signature
+-keepattributes *Annotation*
+-keep class okhttp3.** { *; }
+-keep interface okhttp3.** { *; }
+-dontwarn okhttp3.**
+
+#checkerframework
+-dontwarn afu.org.checkerframework.**
+
+#maps
+-keep class com.google.android.gms.maps.** { *; }
+-keep interface com.google.android.gms.maps.** { *; }
+
+-optimizations !code/simplification/variable
+-keep public class * extends android.app.Activity
+-keep public class * extends android.app.Fragment
+-keep public class * extends android.support.v4.app.Fragment
+# The Maps Android API uses custom parcelables.
+# Use this rule (which is slightly broader than the standard recommended one)
+# to avoid obfuscating them.
+-keepclassmembers class * implements android.os.Parcelable {
+    static *** CREATOR;
+}
+# The Maps Android API uses serialization.
+-keepclassmembers class * implements java.io.Serializable {
+    static final long serialVersionUID;
+    static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
+
+#crashlytics
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**

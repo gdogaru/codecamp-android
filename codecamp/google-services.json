@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "771082214216-ep2g5qeuk5upno5uek07sb7s5u4ps54r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdogaru.codecamp",
+            "certificate_hash": "194d53bb46aa2c5c1da0f40b5881e269458ced34"
+          }
+        },
+        {
           "client_id": "771082214216-7q0fidfdmna4h4kdossh9nei2koaa1gp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -29,7 +37,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAIxoDBg6glhRY7D8zDhtDYWpB2faxffNU"
+          "current_key": "AIzaSyB6Wg5H-LgrUG3v2FGG_Ms-2Y3jrrz0h_w"
         }
       ],
       "services": {
@@ -54,13 +62,21 @@
       },
       "oauth_client": [
         {
+          "client_id": "771082214216-sqnepmmu9bpjs0qp5u0itk6sbju95c1k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdogaru.codecamp.dev",
+            "certificate_hash": "194d53bb46aa2c5c1da0f40b5881e269458ced34"
+          }
+        },
+        {
           "client_id": "771082214216-5fa1lfmtebnt0jb64kc1jqgqcbarvfld.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAIxoDBg6glhRY7D8zDhtDYWpB2faxffNU"
+          "current_key": "AIzaSyB6Wg5H-LgrUG3v2FGG_Ms-2Y3jrrz0h_w"
         }
       ],
       "services": {
@@ -68,8 +84,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "771082214216-5fa1lfmtebnt0jb64kc1jqgqcbarvfld.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

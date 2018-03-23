@@ -188,6 +188,7 @@ public class Calendar extends ScrollView {
 //        }
 
         Set<DisplayEvent> bag = new HashSet<DisplayEvent>();
+        maxInRow = 0;
         for (DisplayEvent ev : events) {
             removeExpired(bag, ev.event.start);
             ev.index = getNextFreeIdx(bag);
@@ -260,6 +261,8 @@ public class Calendar extends ScrollView {
             return;
         }
         recalculateDisplay();
+
+        parent.removeAllViews();
 
         android.graphics.Point screenSize = new android.graphics.Point();
         context.getWindowManager().getDefaultDisplay().getSize(screenSize);

@@ -20,22 +20,22 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.birbit.android.jobqueue.JobManager;
+import com.crashlytics.android.Crashlytics;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.EventList;
@@ -95,16 +95,13 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     TextView eventDate;
     @BindView(R.id.location)
     TextView location;
-    @BindView(R.id.mapLayout)
-    LinearLayout mapLayout;
     @BindView(R.id.agenda)
     RecyclerView agendaRecycler;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
-    private SupportMapFragment mapview;
-    private GoogleMap googleMap;
+    private SupportMapFragment mapFragment;
 
     public static void start(Activity activity) {
         Intent intent = new Intent(activity, MainActivity.class);
@@ -152,7 +149,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     public void initDisplay() {
         printData(codecampClient.getEvent());
-        displayMap();
         drawerLayout.closeDrawer(Gravity.LEFT);
     }
 
@@ -168,14 +164,9 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     }
 
     private void setMap() {
-        if (getSupportFragmentManager().findFragmentById(R.id.content) == null) {
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            mapview = new SupportMapFragment();
-            transaction.add(R.id.mapLayout, mapview);
-            transaction.commit();
-        }
-
-        mapview.getMapAsync(this);
+        LOG.info("Adding map");
+        mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
     public void printData(EventSummary overview) {
@@ -268,23 +259,27 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        this.googleMap = googleMap;
-        displayMap();
+        LOG.info("On map ready {}", googleMap);
+        displayMap(googleMap);
     }
 
-    private void displayMap() {
-        if (googleMap == null) return;
+    private void displayMap(GoogleMap googleMap) {
+        if (googleMap == null) {
+            Crashlytics.log("No map loaded");
+            LOG.error("No map...");
+            return;
+        }
         try {
             String d = codecampClient.getEvent().getVenue().getDirections();
+            LOG.info("Centering map to destination {}", d);
             if (Strings.isNullOrEmpty(d)) return;
             String[] dd = d.split(",");
             final double latitude = Double.parseDouble(dd[0].trim());
             final double longitude = Double.parseDouble(dd[1].trim());
             LatLng latLng = new LatLng(latitude, longitude);
+            LOG.debug("Moving camera to {}", latLng);
 
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-            //set zoom level
-            googleMap.animateCamera(CameraUpdateFactory.zoomTo(15));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
             //add marker to map
             googleMap.addMarker(new MarkerOptions().position(latLng));
             // disables zoom gestures
@@ -300,6 +295,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
             });
         } catch (Exception e) {
             LOG.error("Could not parse location", e);
+            Crashlytics.log(Log.ERROR, "Map", "Could not parse location: " + e.getMessage());
         }
     }
 

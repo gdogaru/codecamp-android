@@ -37,7 +37,7 @@
                     android:layout_marginStart="5dp"
                     android:button="@drawable/checkbox_bookmark"
                     android:buttonTint="@color/white"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
                 <CheckBox
                     android:id="@+id/view_switch"

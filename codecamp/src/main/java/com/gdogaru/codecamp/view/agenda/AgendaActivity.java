@@ -7,12 +7,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Codecamp;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.svc.AppPreferences;
+import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.util.AnalyticsHelper;
 import com.gdogaru.codecamp.util.DateUtil;
@@ -26,6 +28,7 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
+import icepick.State;
 
 /**
  * Created by Gabriel on 10/23/2014.
@@ -48,7 +51,11 @@ public class AgendaActivity extends BaseActivity {
     FirebaseAnalytics firebaseAnalytics;
     @Inject
     CodecampClient codecampClient;
-    private Boolean favoritesOnly;
+    @State
+    boolean favoritesOnly = false;
+    @Inject
+    BookmarkingService bookmarkingService;
+    private Codecamp event;
 
     public static void start(Activity activity) {
         activity.startActivity(new Intent(activity, AgendaActivity.class));
@@ -69,15 +76,17 @@ public class AgendaActivity extends BaseActivity {
 
         viewSwitch.setChecked(appPreferences.getListViewList());
 
-        favoritesOnly = savedInstanceState != null && savedInstanceState.getBoolean(FAVORITES_ONLY, false);
         favoriteSwitch.setChecked(favoritesOnly);
 
         Schedule schedule = codecampClient.getSchedule();
-        Codecamp event = codecampClient.getEvent();
+        event = codecampClient.getEvent();
         titleView.setText(String.format("%s - %s", DateUtil.formatDay(schedule.getDate()), event.getVenue().getCity()));
 
-        if (getSupportFragmentManager().findFragmentById(R.id.content) == null) {
+        SessionsFragment fragmentById = (SessionsFragment) getSupportFragmentManager().findFragmentById(R.id.content);
+        if (fragmentById == null) {
             showList();
+        } else {
+            fragmentById.setFavoritesOnly(favoritesOnly);
         }
     }
 
@@ -92,6 +101,13 @@ public class AgendaActivity extends BaseActivity {
     @OnCheckedChanged(R.id.favorite_switch)
     public void onFavoriteChecked(boolean checked) {
         if (checked != favoritesOnly) {
+            if (checked && bookmarkingService.getBookmarked(event.getTitle()).isEmpty()) {
+                favoritesOnly = false;
+                favoriteSwitch.setChecked(false);
+                Toast.makeText(this, R.string.no_favorites_yet, Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             favoritesOnly = checked;
             SessionsFragment f = (SessionsFragment) getSupportFragmentManager().findFragmentById(R.id.content);
             if (f != null) {

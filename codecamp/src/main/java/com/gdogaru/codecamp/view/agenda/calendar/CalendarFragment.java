@@ -94,9 +94,10 @@ public class CalendarFragment extends SessionsFragment {
         Schedule schedule = codecampClient.getSchedule();
         List<Session> sessions = new ArrayList<>(schedule.getSessions());
         List<Track> tracks = new ArrayList<>(schedule.getTracks());
+        Set<String> bookmarked = bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle());
 
         if (getFavoritesOnly()) {
-            keepFavoritesOnly(sessions, tracks, codecampClient.getEvent().getTitle());
+            keepFavoritesOnly(sessions, tracks, codecampClient.getEvent().getTitle(), bookmarked);
         }
 
         List<CEvent> events = new ArrayList<>();
@@ -122,10 +123,10 @@ public class CalendarFragment extends SessionsFragment {
         calendar.setEventListener(event -> displayEventDetails(event.event.id));
     }
 
-    private void keepFavoritesOnly(List<Session> sessions, List<Track> tracks, String eventId) {
+    private void keepFavoritesOnly(List<Session> sessions, List<Track> tracks, String eventId, Set<String> bookmarked) {
         for (Iterator<Session> iterator = sessions.iterator(); iterator.hasNext(); ) {
             Session s = iterator.next();
-            if (bookmarkingService.isBookmarked(eventId, s)) {
+            if (!bookmarked.contains(s.getId())) {
                 iterator.remove();
             }
         }
@@ -135,7 +136,6 @@ public class CalendarFragment extends SessionsFragment {
             Track t = iterator.next();
             if (!rt.contains(t.getName())) iterator.remove();
         }
-
     }
 
     private Track getTrack(List<Track> tracks, String track) {

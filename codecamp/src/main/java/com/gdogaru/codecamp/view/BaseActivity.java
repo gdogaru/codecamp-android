@@ -77,12 +77,16 @@ public abstract class BaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                navigateHome();
                 overridePendingTransition(R.anim.hold, R.anim.act_slide_down);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    protected void navigateHome() {
+        NavUtils.navigateUpFromSameTask(this);
     }
 
     @Override

@@ -1,6 +1,9 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.google.firebase.firebase-crash'
+apply plugin: 'io.fabric'
 apply plugin: 'com.google.firebase.firebase-perf'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
@@ -11,33 +14,37 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
 
         applicationId "com.gdogaru.codecamp"
-        versionCode 16
-        versionName "4.4.3"
+        versionCode 18
+        versionName "4.5.1"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     signingConfigs {
-        release {
+        upload {
             storeFile file('certificate/upload-keystore.jks')
             storePassword "C0decamp"
             keyAlias "upload"
+            keyPassword "C0decamp"
+        }
+        release {
+            storeFile file('certificate/codecamp2-release-key.keystore')
+            storePassword "C0decamp"
+            keyAlias "codecamp2"
             keyPassword "C0decamp"
         }
     }
 
     buildTypes {
         debug {
-
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.upload
             minifyEnabled false
             shrinkResources false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
 
         release {
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.upload
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -48,12 +55,15 @@ android {
     productFlavors {
         dev {
             dimension "stage"
+            signingConfig signingConfigs.upload
             minSdkVersion 24
-            applicationId "com.gdogaru.codecamp.dev"
+            applicationIdSuffix '.dev'
+            versionNameSuffix "-dev"
 
             resValue "string", "app_name", "Codecamp-DEV"
         }
         prod {
+            signingConfig signingConfigs.upload
             dimension "stage"
             resValue "string", "app_name", "Codecamp"
         }
@@ -76,7 +86,7 @@ android {
     }
 
     lintOptions {
-        abortOnError true
+        abortOnError false
         warning 'MissingPrefix'
         warning 'InvalidPackage'
         warning 'RestrictedApi'
@@ -91,7 +101,6 @@ android.applicationVariants.all {
     }
 }
 
-
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -104,13 +113,14 @@ dependencies {
     implementation 'uk.co.chrisjenx:calligraphy'
 
     implementation 'com.google.dagger:dagger'
-    annotationProcessor 'com.google.dagger:dagger-compiler'
+    implementation 'com.google.android.gms:play-services-maps:11.8.0'
+    implementation 'com.android.support:appcompat-v7:27.1.0'
+    kapt 'com.google.dagger:dagger-compiler'
 
-    annotationProcessor 'com.google.guava:guava'
     implementation 'com.birbit:android-priority-jobqueue'
 
     implementation 'com.jakewharton:butterknife'
-    annotationProcessor 'com.jakewharton:butterknife-compiler'
+    kapt 'com.jakewharton:butterknife-compiler'
 
     implementation 'org.slf4j:slf4j-android'
 
@@ -127,14 +137,15 @@ dependencies {
     implementation 'se.emilsjolander:stickylistheaders'
 
     implementation 'frankiesardo:icepick'
-    compileOnly 'frankiesardo:icepick-processor'
-    annotationProcessor 'frankiesardo:icepick-processor'
+    kapt 'frankiesardo:icepick-processor'
 
     implementation "com.google.firebase:firebase-perf:$gmsVersion"
     implementation "com.google.firebase:firebase-core:$gmsVersion"
-    releaseImplementation "com.google.firebase:firebase-crash:$gmsVersion"
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.1'
 
+    implementation "com.google.android.gms:play-services-base:$gmsVersion"
     implementation "com.google.android.gms:play-services-maps:$gmsVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

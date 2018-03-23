@@ -156,7 +156,7 @@ public class SpeakerInfoFragment extends BaseFragment {
                 .apply(new RequestOptions()
                         .placeholder(R.drawable.person_icon)
                         .centerCrop())
-                .transition(withCrossFade(R.anim.fade_in, 300))
+//                .transition(withCrossFade(R.anim.fade_in))
                 .into(picture);
         return speakerView;
     }

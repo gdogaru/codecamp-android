@@ -12,6 +12,7 @@ import com.gdogaru.codecamp.util.DateUtil;
 import com.gdogaru.codecamp.util.StringUtils;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -20,9 +21,10 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
-    private final Set<String> favorites;
+    private Set<String> favorites;
     private LayoutInflater mInflater;
     private List<SessionListItem> sessions;
+    private Set<String> bookmarked;
 
     public SessionsAdapter(Context context, List<SessionListItem> sessions, Set<String> favorites) {
         super();
@@ -104,6 +106,11 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
         SessionListItem session = sessions.get(position);
         return DateUtil.formatPeriod(session.getStart(), session.getEnd()).hashCode();
 //        return sessions.get(i).getStart().getTime();
+    }
+
+    public void setBookmarked(Set<String> bookmarked) {
+        this.favorites = new HashSet<>(bookmarked);
+        notifyDataSetChanged();
     }
 
     class HeaderViewHolder {

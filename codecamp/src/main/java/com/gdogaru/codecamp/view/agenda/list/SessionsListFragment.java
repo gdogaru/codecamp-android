@@ -39,6 +39,7 @@ import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Set;
 
 import javax.inject.Inject;
 
@@ -106,6 +107,7 @@ public class SessionsListFragment extends SessionsFragment {
     @Override
     public void onResume() {
         super.onResume();
+       if(sessionsAdapter!= null) sessionsAdapter.setBookmarked(bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
     }
 
     private void initTrackSelector() {
@@ -153,8 +155,12 @@ public class SessionsListFragment extends SessionsFragment {
         if (sessionListItems == null) {
             loadSessions();
         }
-        List<SessionListItem> currentSessions = getFilterSessions(trackId);
-        sessionsAdapter = new SessionsAdapter(getActivity(), currentSessions, bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
+        List<SessionListItem> currentSessions = getTrackSessions(trackId);
+        Set<String> bookmarked = bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle());
+        if (getFavoritesOnly()) {
+            currentSessions = extractFavorites(currentSessions, bookmarked);
+        }
+        sessionsAdapter = new SessionsAdapter(getActivity(), currentSessions, bookmarked);
         listView.setAdapter(sessionsAdapter);
         if (listState != null) {
             listView.onRestoreInstanceState(listState);
@@ -174,7 +180,15 @@ public class SessionsListFragment extends SessionsFragment {
         return -1;
     }
 
-    private List<SessionListItem> getFilterSessions(String trackId) {
+    protected List<SessionListItem> extractFavorites(List<SessionListItem> currentSessions, Set<String> bookmarked) {
+        ArrayList<SessionListItem> result = new ArrayList<>();
+        for (SessionListItem li : currentSessions) {
+            if (bookmarked.contains(li.getId())) result.add(li);
+        }
+        return result;
+    }
+
+    private List<SessionListItem> getTrackSessions(String trackId) {
         List<SessionListItem> result = new ArrayList<>();
         for (SessionListItem item : sessionListItems) {
             if (Strings.isNullOrEmpty(item.getTrackName()) || Strings.isNullOrEmpty(trackId) || item.getTrackName().equals(trackId)) {

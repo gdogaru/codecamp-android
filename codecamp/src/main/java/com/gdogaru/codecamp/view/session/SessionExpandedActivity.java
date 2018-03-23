@@ -199,6 +199,11 @@ public class SessionExpandedActivity extends BaseActivity implements ViewPager.O
 
     }
 
+    @Override
+    protected void navigateHome() {
+        finish();
+    }
+
     private class ExpandedSessionsAdapter extends FragmentStatePagerAdapter {
 
         private final ArrayList<String> trackSessions;

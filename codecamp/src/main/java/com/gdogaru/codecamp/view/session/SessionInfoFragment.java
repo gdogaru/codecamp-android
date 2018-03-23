@@ -148,12 +148,12 @@ public class SessionInfoFragment extends BaseFragment {
         speakerDesc.setText(speaker.getBio());
         speakerLayout.addView(speakerView);
 
-        Glide.with(speakerView.getContext())
+        Glide.with(getActivity())
                 .load(speaker.getPhotoUrl())
                 .apply(new RequestOptions()
                         .centerCrop()
                         .placeholder(R.drawable.person_icon))
-                .transition(withCrossFade(R.anim.fade_in, 300))
+//                .transition(withCrossFade(R.anim.fade_in))
                 .into(picture);
     }
 
