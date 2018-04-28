@@ -17,13 +17,13 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical">
 
-                <Spinner
-                    android:id="@+id/track_spinner"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:gravity="right|end"
-                    android:visibility="gone" />
+                <!--<Spinner-->
+                    <!--android:id="@+id/track_spinner"-->
+                    <!--android:layout_width="fill_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="5dp"-->
+                    <!--android:gravity="right|end"-->
+                    <!--android:visibility="gone" />-->
 
                 <android.support.v4.widget.Space
                     android:layout_width="0dp"

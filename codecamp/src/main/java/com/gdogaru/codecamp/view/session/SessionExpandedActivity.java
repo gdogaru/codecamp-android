@@ -26,11 +26,11 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
-import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.BookmarkingService;
@@ -39,8 +39,6 @@ import com.gdogaru.codecamp.util.Strings;
 import com.gdogaru.codecamp.view.BaseActivity;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
-import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,29 +49,36 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnItemSelected;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+import icepick.State;
+import timber.log.Timber;
 
-import static org.slf4j.LoggerFactory.getLogger;
+public class SessionExpandedActivity extends BaseActivity implements ViewPager.OnPageChangeListener, HasSupportFragmentInjector {
 
-public class SessionExpandedActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
-
+    public static final String VIEWPAGER = "viewpager";
     private static final String TRACK_ID = "trackID";
     private static final String SESSION_ID = "sessionId";
-    private static final Logger LOG = getLogger(SessionExpandedActivity.class);
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.track_spinner)
-    Spinner trackSpinner;
+//    @BindView(R.id.track_spinner)
+//    Spinner trackSpinner;
     @BindView(R.id.bookmarked)
     CheckBox bookmarked;
     @Inject
     CodecampClient codecampClient;
     @Inject
     BookmarkingService bookmarkingService;
+    @State
     String sessionId;
+    @State
     String trackId;
     ArrayList<String> trackSessions;
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
     private List<Track> trackList;
     private String allTracksString;
     private ExpandedSessionsAdapter adapter;
@@ -90,18 +95,22 @@ public class SessionExpandedActivity extends BaseActivity implements ViewPager.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        App.getDiComponent().inject(this);
-
-        restoreState(savedInstanceState);
         setContentView(R.layout.session_expanded_activity);
+
         ButterKnife.bind(this);
+
+        if (savedInstanceState == null) {
+            trackId = getIntent().getStringExtra(TRACK_ID);
+            sessionId = getIntent().getStringExtra(SESSION_ID);
+        }
 
         allTracksString = getString(R.string.all_tracks);
 
-        initViews();
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        initViews();
+
     }
 
     @Override
@@ -115,68 +124,42 @@ public class SessionExpandedActivity extends BaseActivity implements ViewPager.O
     }
 
     public void initViews() {
-        initSelector();
+//        initSelector();
         initPager();
     }
 
     private void initPager() {
-        trackSessions = codecampClient.getTrackSesssionsIds(allTracksString.equals(trackId) ? null : trackId);
+        trackSessions = codecampClient.getTrackSessionsIds(allTracksString.equals(trackId) ? null : trackId);
+        int index = Iterables.indexOf(trackSessions, input -> input.equals(sessionId));
 
         adapter = new ExpandedSessionsAdapter(getSupportFragmentManager(), getLayoutInflater(), trackSessions);
-        int index = Iterables.indexOf(trackSessions, input -> input.equals(sessionId));
         viewPager.addOnPageChangeListener(this);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(index < 0 ? 0 : index);
     }
 
-    private void restoreState(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            if (savedInstanceState.containsKey(SESSION_ID)) {
-                sessionId = savedInstanceState.getString(SESSION_ID);
-            }
-            if (savedInstanceState.containsKey(TRACK_ID)) {
-                trackId = savedInstanceState.getString(TRACK_ID);
-            }
-        } else if (getIntent().getExtras().size() > 0) {
-            if (getIntent().hasExtra(SESSION_ID)) {
-                sessionId = getIntent().getStringExtra(SESSION_ID);
-            }
-            if (getIntent().hasExtra(TRACK_ID)) {
-                trackId = getIntent().getStringExtra(TRACK_ID);
-            }
-        }
-        if (Strings.isNullOrEmpty(trackId)) trackId = allTracksString;
-    }
+//    private void initSelector() {
+//        trackList = codecampClient.getSchedule().getTracks();
+//        Track track = new Track();
+//        track.setName(allTracksString);
+//        trackList.add(0, track);
+//        List<String> trackNames = Lists.newArrayList(Iterables.transform(trackList, Track::getName));
+//        int position = trackNames.indexOf(trackId);
+//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.dropdown_item, trackNames);
+//        adapter.setDropDownViewResource(R.layout.dropdown_item_drop);
+//        trackSpinner.setAdapter(adapter);
+//        trackSpinner.setSelection(position);
+//    }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(SESSION_ID, sessionId);
-        outState.putString(TRACK_ID, trackId);
-    }
-
-    private void initSelector() {
-        trackList = codecampClient.getSchedule().getTracks();
-        Track track = new Track();
-        track.setName(allTracksString);
-        trackList.add(0, track);
-        List<String> trackNames = Lists.newArrayList(Iterables.transform(trackList, input -> input.getName()));
-        int position = trackNames.indexOf(trackId);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.dropdown_item, trackNames);
-        adapter.setDropDownViewResource(R.layout.dropdown_item_drop);
-        trackSpinner.setAdapter(adapter);
-        trackSpinner.setSelection(position);
-    }
-
-    @OnItemSelected(R.id.track_spinner)
-    public void onTrackSelected(Spinner spinner, int position) {
-        String newTrackId = trackList.get(position).getName();
-
-        if (!Strings.nullToEmpty(newTrackId).equals(trackId)) {
-            trackId = newTrackId;
-            initPager();
-        }
-    }
+//    @OnItemSelected(R.id.track_spinner)
+//    public void onTrackSelected(Spinner spinner, int position) {
+//        String newTrackId = trackList.get(position).getName();
+//
+//        if (!Strings.nullToEmpty(newTrackId).equals(trackId)) {
+//            trackId = newTrackId;
+//            initPager();
+//        }
+//    }
 
     @OnCheckedChanged(R.id.bookmarked)
     public void onBookmarkChanged(boolean checked) {
@@ -204,6 +187,11 @@ public class SessionExpandedActivity extends BaseActivity implements ViewPager.O
         finish();
     }
 
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
+    }
+
     private class ExpandedSessionsAdapter extends FragmentStatePagerAdapter {
 
         private final ArrayList<String> trackSessions;
@@ -213,7 +201,7 @@ public class SessionExpandedActivity extends BaseActivity implements ViewPager.O
             super(fm);
             this.layoutInflater = layoutInflater;
             this.trackSessions = trackSessions;
-            LOG.trace("Set sessions: {}", trackSessions);
+            Timber.v("Set sessions: %s", trackSessions);
         }
 
         @Override
@@ -228,6 +216,11 @@ public class SessionExpandedActivity extends BaseActivity implements ViewPager.O
 
         public String getElement(int idx) {
             return trackSessions.get(idx);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
         }
 
         @Override

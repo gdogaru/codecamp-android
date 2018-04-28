@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -23,6 +24,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 import icepick.Icepick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -30,13 +34,15 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 /**
  * Created by Gabriel on 10/22/2014.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements HasSupportFragmentInjector {
     public static final List<String> ALL_PERMISSIONS = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 999;
     @Inject
     EventBus eventBus;
 
     boolean allPermissionsGranted = false;
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
     private ArrayList<String> permissionsNeeded = new ArrayList<>();
 
     @Override
@@ -96,7 +102,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected void checkAndRequestPermissions() {
         permissionsNeeded = getPermissionsNeeded();
-        if (!permissionsNeeded.isEmpty()) {
+        if (false && !permissionsNeeded.isEmpty()) {
             allPermissionsGranted = false;
             ActivityCompat.requestPermissions(this, permissionsNeeded.toArray(new String[permissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
         } else {
@@ -167,5 +173,10 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
     }
 }

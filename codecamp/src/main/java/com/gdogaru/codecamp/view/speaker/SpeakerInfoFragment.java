@@ -31,6 +31,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
+import com.gdogaru.codecamp.di.Injectable;
 import com.gdogaru.codecamp.model.Codecamp;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.model.Session;
@@ -51,7 +52,7 @@ import butterknife.ButterKnife;
 
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
-public class SpeakerInfoFragment extends BaseFragment {
+public class SpeakerInfoFragment extends BaseFragment  implements Injectable{
     public static final String SPEAKER_ID = "speakerId";
     String speakerId;
     @Inject
@@ -72,7 +73,6 @@ public class SpeakerInfoFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getDiComponent().inject(this);
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SPEAKER_ID)) {
             speakerId = savedInstanceState.getString(SPEAKER_ID);

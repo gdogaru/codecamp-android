@@ -20,12 +20,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
-import com.birbit.android.jobqueue.JobManager;
-import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
-import com.gdogaru.codecamp.svc.jobs.DataLoadingEvent;
+import com.gdogaru.codecamp.svc.events.DataLoadingEvent;
 import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
 import com.gdogaru.codecamp.view.main.MainActivity;
 
@@ -36,17 +36,21 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
-public class LoadingDataActivity extends BaseActivity {
+public class LoadingDataActivity extends BaseActivity implements HasSupportFragmentInjector {
 
     private static final String START_UPDATE = "start_update";
-    @Inject
-    JobManager jobManager;
+
     @BindView(R.id.progress)
     ProgressBar progressBar;
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
     public static void startTop(Context context) {
         Intent intent = new Intent(context, LoadingDataActivity.class);
@@ -64,7 +68,6 @@ public class LoadingDataActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getDiComponent().inject(this);
 
         setContentView(R.layout.loading_data);
         ButterKnife.bind(this);
@@ -73,29 +76,38 @@ public class LoadingDataActivity extends BaseActivity {
             getActionBar().hide();
         }
         if (getIntent().hasExtra(START_UPDATE)) {
-            jobManager.addJobInBackground(new UpdateDataJob());
+            UpdateDataJob.schedule();
         }
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
         eventBus.register(this);
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onStop() {
+        super.onStop();
         eventBus.unregister(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onDataLoading(DataLoadingEvent event) {
-        if (event.progress >= 100) {
+        if (event.progress < 0) {
+            Toast.makeText(this, "Could not update", Toast.LENGTH_SHORT).show();
+            MainActivity.start(this);
+            finish();
+        } else if (event.progress >= 100) {
             MainActivity.start(this);
             finish();
         } else {
             progressBar.setProgress(event.progress);
         }
+    }
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
     }
 }

@@ -22,8 +22,6 @@ import android.graphics.BitmapFactory;
 
 import com.gdogaru.codecamp.util.IOUtils;
 
-import org.slf4j.Logger;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,14 +29,12 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Locale;
 
-import static org.slf4j.LoggerFactory.getLogger;
+import timber.log.Timber;
 
 /**
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 public class SpeakerPhotoUtils {
-    private static final Logger LOG = getLogger(SpeakerPhotoUtils.class);
-
     private static final String FILENAME_MASK = "speaker_%d.jpg";
 
     public static Bitmap getSpeakerPhoto(Context context, long id, String url) {
@@ -51,7 +47,7 @@ public class SpeakerPhotoUtils {
             savePhoto(context, imageFromUrl, id);
             return imageFromUrl;
         } catch (Exception e) {
-            LOG.error("Error saving photo.", e);
+            Timber.e(e, "Error saving photo.");
         }
         return null;
     }
@@ -82,7 +78,7 @@ public class SpeakerPhotoUtils {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
             fos.close();
         } catch (Exception e) {
-            LOG.error("Error saving overview.", e);
+            Timber.e(e, "Error saving overview.");
         } finally {
             IOUtils.closeQuietly(fos);
         }

@@ -88,5 +88,6 @@
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="no_favorites_yet">No favorites defined yet!</string>
+    <string name="no_internet_connection">No internet connnection!!!</string>
 
 </resources>

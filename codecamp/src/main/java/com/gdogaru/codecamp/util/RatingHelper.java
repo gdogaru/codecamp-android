@@ -30,7 +30,7 @@ public class RatingHelper {
 
     public static SharedPreferences prefs() {
         if (prefs == null) {
-            prefs = App.instance().getSharedPreferences(MY_RATING_PREFS, Context.MODE_PRIVATE);
+            prefs = App.Companion.instance().getSharedPreferences(MY_RATING_PREFS, Context.MODE_PRIVATE);
         }
         return prefs;
     }
@@ -73,7 +73,7 @@ public class RatingHelper {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://details?id=" + context.getPackageName()));
 
-        PackageManager manager = App.instance().getPackageManager();
+        PackageManager manager = App.Companion.instance().getPackageManager();
         List<ResolveInfo> list = manager.queryIntentActivities(intent, 0);
         if (list.size() > 0) {
             context.startActivity(intent);
@@ -118,6 +118,6 @@ public class RatingHelper {
     private static void logEvent(String name) {
         Bundle bundle = new Bundle();
         bundle.putInt("value", 1);
-        FirebaseAnalytics.getInstance(App.instance()).logEvent(AnalyticsHelper.normalize(name), bundle);
+        FirebaseAnalytics.getInstance(App.Companion.instance()).logEvent(AnalyticsHelper.normalize(name), bundle);
     }
 }

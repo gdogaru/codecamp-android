@@ -14,8 +14,8 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
 
         applicationId "com.gdogaru.codecamp"
-        versionCode 18
-        versionName "4.5.1"
+        versionCode 19
+        versionName "4.5.2"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -104,25 +104,37 @@ android.applicationVariants.all {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
     implementation 'com.android.support:multidex'
     implementation 'com.android.support:support-v4'
     implementation 'com.android.support:appcompat-v7'
     implementation 'com.android.support:design'
     implementation "com.android.support:cardview-v7"
 
+
+    implementation "com.google.firebase:firebase-perf:$gmsVersion"
+    implementation "com.google.firebase:firebase-core:$gmsVersion"
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.2'
+
+    implementation "com.google.android.gms:play-services-maps:$gmsVersion"
+    implementation "com.google.android.gms:play-services-base:$gmsVersion"
+    implementation "com.google.android.gms:play-services-gcm:$gmsVersion"
+
     implementation 'uk.co.chrisjenx:calligraphy'
 
-    implementation 'com.google.dagger:dagger'
-    implementation 'com.google.android.gms:play-services-maps:11.8.0'
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    kapt 'com.google.dagger:dagger-compiler'
+    implementation "com.google.dagger:dagger"
+    implementation "com.google.dagger:dagger-android"
+    implementation "com.google.dagger:dagger-android-support"
+    kapt 'com.google.dagger:dagger-android-processor'
+    kapt "com.google.dagger:dagger-compiler"
 
-    implementation 'com.birbit:android-priority-jobqueue'
+    implementation 'com.evernote:android-job'
 
     implementation 'com.jakewharton:butterknife'
     kapt 'com.jakewharton:butterknife-compiler'
 
-    implementation 'org.slf4j:slf4j-android'
+    implementation 'com.jakewharton.timber:timber'
 
     implementation 'com.squareup.okio:okio'
     implementation 'com.squareup.okhttp3:okhttp'
@@ -139,13 +151,6 @@ dependencies {
     implementation 'frankiesardo:icepick'
     kapt 'frankiesardo:icepick-processor'
 
-    implementation "com.google.firebase:firebase-perf:$gmsVersion"
-    implementation "com.google.firebase:firebase-core:$gmsVersion"
-    implementation 'com.crashlytics.sdk.android:crashlytics:2.9.1'
-
-    implementation "com.google.android.gms:play-services-base:$gmsVersion"
-    implementation "com.google.android.gms:play-services-maps:$gmsVersion"
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

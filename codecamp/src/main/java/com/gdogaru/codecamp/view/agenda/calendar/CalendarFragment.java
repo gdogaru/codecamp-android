@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gdogaru.codecamp.App;
+import com.gdogaru.codecamp.di.Injectable;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Track;
@@ -17,7 +18,6 @@ import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
 import com.google.common.base.Joiner;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,7 +33,7 @@ import javax.inject.Inject;
 
 import icepick.State;
 
-public class CalendarFragment extends SessionsFragment {
+public class CalendarFragment extends SessionsFragment  implements Injectable{
 
     private static final Comparator<? super Session> SESSION_BY_DATE_COMPARATOR = (Comparator<Session>) (lhs, rhs) -> lhs.getStartTime().compareTo(rhs.getStartTime());
 
@@ -49,7 +49,6 @@ public class CalendarFragment extends SessionsFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getDiComponent().inject(this);
     }
 
     @Override
@@ -73,7 +72,7 @@ public class CalendarFragment extends SessionsFragment {
             public void run() {
                 calendar.post(() -> calendar.updateCurrentTime(DateTime.now()));
             }
-        }, 100, 10000);
+        }, 500, 30_000);
 
         calendar.setBookmarked(bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
         if (calendarState != null) {
@@ -117,8 +116,7 @@ public class CalendarFragment extends SessionsFragment {
         initSessionIds(sessions);
         calendar.setCurrentTime(DateTime.now());
         calendar.setEvents(events);
-        calendar.setScheduleDate(LocalDateTime.now());
-//todo        calendar.setScheduleDate(schedule.getDate());
+        calendar.setScheduleDate(schedule.getDate());
 
         calendar.setEventListener(event -> displayEventDetails(event.event.id));
     }

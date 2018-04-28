@@ -3,9 +3,7 @@ package com.gdogaru.codecamp.svc;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import org.slf4j.Logger;
-
-import static org.slf4j.LoggerFactory.getLogger;
+import timber.log.Timber;
 
 /**
  * Created by Gabriel on 10/22/2014.
@@ -15,11 +13,11 @@ public class AppPreferences {
     public static final String DATA_UPDATE_SETTINGS = "data_update_settings";
     public static final String UPDATING = "updating";
     private static final String LAST_UPDATE = "LAST_UPDATE";
+    private static final String LAST_AUTO_SELECT = "LAST_AUTOSELECT";
     private static final String LAST_VERSION = "LAST_VERSION";
     private static final String ACTIVE_EVENT = "ACTIVE_EVENT";
     private static final String ACTIVE_SCHEDULE = "ACTIVE_SCHEDULE";
     private static final String LIST_VIEW = "LIST_VIEW";
-    private static final Logger LOG = getLogger(AppPreferences.class);
     private final Context app;
 
     public AppPreferences(Context app) {
@@ -35,6 +33,7 @@ public class AppPreferences {
         settings.edit()
                 .remove(UPDATING)
                 .remove(LAST_UPDATE)
+                .remove(LAST_AUTO_SELECT)
                 .apply();
     }
 
@@ -55,10 +54,21 @@ public class AppPreferences {
     }
 
     public void setLastUpdated(Long value) {
-        LOG.info("Last update set to {}", value);
+        Timber.i("Last update set to %s", value);
         getPref().edit()
                 .putLong(LAST_UPDATE, value)
                 .apply();
+    }
+
+    public void setLastAutoSelect(Long value) {
+        Timber.i("Last autoselect set to %s", value);
+        getPref().edit()
+                .putLong(LAST_AUTO_SELECT, value)
+                .apply();
+    }
+
+    public long getLastAutoselect() {
+        return getPref().getLong(LAST_AUTO_SELECT, 0);
     }
 
     public long getActiveEvent() {

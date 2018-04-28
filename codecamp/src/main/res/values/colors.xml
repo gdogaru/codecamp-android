@@ -4,6 +4,7 @@
     <color name="colorAccent">#e7e7e7</color>
     <color name="background_window">@color/grey_900</color>
 
+    <color name="grey_950">#121212</color>
     <color name="grey_900">#ff212121</color>
     <color name="grey_850">#ff303030</color>
     <color name="grey_800">#ff424242</color>

@@ -78,7 +78,6 @@ public class SessionsListFragment extends SessionsFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getDiComponent().inject(this);
         tryGetListState(savedInstanceState);
     }
 

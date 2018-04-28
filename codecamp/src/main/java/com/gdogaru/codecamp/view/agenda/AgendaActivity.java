@@ -9,7 +9,6 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Codecamp;
 import com.gdogaru.codecamp.model.Schedule;
@@ -65,8 +64,6 @@ public class AgendaActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        App.getDiComponent().inject(this);
 
         setContentView(R.layout.agenda_activity);
         ButterKnife.bind(this);

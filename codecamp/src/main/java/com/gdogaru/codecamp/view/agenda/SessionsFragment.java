@@ -23,7 +23,7 @@ public abstract class SessionsFragment extends BaseFragment {
 
     public void setFavoritesOnly(Boolean favoritesOnly) {
         this.favoritesOnly = favoritesOnly;
-        updateDisplay();
+        if (getView() != null) updateDisplay();
     }
 
     public abstract void updateDisplay();

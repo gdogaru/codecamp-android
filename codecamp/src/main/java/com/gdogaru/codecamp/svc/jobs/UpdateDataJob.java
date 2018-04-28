@@ -4,22 +4,20 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 
-import com.birbit.android.jobqueue.Job;
-import com.birbit.android.jobqueue.Params;
-import com.birbit.android.jobqueue.RetryConstraint;
+import com.evernote.android.job.Job;
+import com.evernote.android.job.JobRequest;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.svc.AppPreferences;
 import com.gdogaru.codecamp.svc.CodecampClient;
+import com.gdogaru.codecamp.svc.events.DataLoadingEvent;
 import com.google.gson.Gson;
 
 import org.greenrobot.eventbus.EventBus;
-import org.slf4j.Logger;
 
 import javax.inject.Inject;
 
-import static org.slf4j.LoggerFactory.getLogger;
+import timber.log.Timber;
 
 /**
  * Created by Gabriel on 10/22/2014.
@@ -28,7 +26,7 @@ public class UpdateDataJob extends Job {
     public static final byte LOADED_FROM_ASSETS = 10;
     public static final byte ERROR_LOADING = -1;
     public static final byte SUCCESS = 0;
-    private static final Logger LOG = getLogger(UpdateDataJob.class);
+    public static final String TAG = "UpdateDataJob";
 
     @Inject
     Gson gson;
@@ -41,49 +39,47 @@ public class UpdateDataJob extends Job {
     @Inject
     AppPreferences appPreferences;
 
-    public UpdateDataJob() {
-        super(new Params(1000));
+    @Inject
+    public UpdateDataJob(Gson gson, EventBus eventBus, CodecampClient codecampClient, App app, AppPreferences appPreferences) {
+        this.gson = gson;
+        this.eventBus = eventBus;
+        this.codecampClient = codecampClient;
+        this.app = app;
+        this.appPreferences = appPreferences;
     }
 
+    public static void schedule() {
+        new JobRequest.Builder(TAG)
+                .setExecutionWindow(1, 600_000)
+                .setBackoffCriteria(5_000L, JobRequest.BackoffPolicy.EXPONENTIAL)
+                .setRequiresCharging(false)
+                .setRequiresDeviceIdle(false)
+                .build()
+                .schedule();
+    }
+
+    @NonNull
     @Override
-    public void onAdded() {
+    protected Result onRunJob(@NonNull Params params) {
+        Timber.i("Refreshing data....");
+        try {
+            signalStart();
 
+            downloadData();
+            signalEnd();
+        } catch (Throwable t) {
+            Timber.w(t, "Could not get data");
+            signalError();
+            return Result.FAILURE;
+        }
+        return Result.SUCCESS;
     }
 
-    private boolean isNetworkConnected() {
-        ConnectivityManager cm = (ConnectivityManager) App.instance().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo ni = cm.getActiveNetworkInfo();
-        return ni != null;
-    }
-
-    @Override
-    public void onRun() throws Throwable {
-        LOG.info("Refreshing data....");
-        App.getDiComponent().inject(this);
-        signalStart();
-
-        downloadData();
-        signalEnd();
-    }
-
-    @Override
-    protected void onCancel(int cancelReason, @Nullable Throwable throwable) {
-        LOG.info("Canceling job....");
-        signalEnd();
-    }
-
-    @Override
-    protected RetryConstraint shouldReRunOnThrowable(@NonNull Throwable throwable, int runCount, int maxRunCount) {
-        signalEnd();
-        return RetryConstraint.CANCEL;
-
-    }
 
 
     public void downloadData() throws Exception {
         codecampClient.fetchAllData();
     }
-
 
     private void signalStart() {
         eventBus.post(new DataLoadingEvent(0));
@@ -95,4 +91,8 @@ public class UpdateDataJob extends Job {
         eventBus.post(new DataLoadingEvent(100));
     }
 
+    void signalError() {
+        appPreferences.setUpdating(false);
+        eventBus.post(new DataLoadingEvent(-1));
+    }
 }

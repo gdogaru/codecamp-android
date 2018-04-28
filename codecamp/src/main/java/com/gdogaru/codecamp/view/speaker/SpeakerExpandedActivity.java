@@ -30,14 +30,11 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.Spinner;
 
-import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.svc.CodecampClient;
 import com.gdogaru.codecamp.view.BaseActivity;
 import com.google.common.collect.Iterables;
-
-import org.slf4j.Logger;
 
 import java.util.List;
 
@@ -45,13 +42,14 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+import timber.log.Timber;
 
-import static org.slf4j.LoggerFactory.getLogger;
-
-public class SpeakerExpandedActivity extends BaseActivity {
+public class SpeakerExpandedActivity extends BaseActivity implements HasSupportFragmentInjector {
 
     private static final String SPEAKER_ID = "speakerId";
-    private static final Logger LOG = getLogger(SpeakerExpandedActivity.class);
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     @BindView(R.id.toolbar)
@@ -63,6 +61,8 @@ public class SpeakerExpandedActivity extends BaseActivity {
     @Inject
     CodecampClient codecampClient;
     String speakerId;
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
     public static void start(Activity activity, String id) {
         Intent intent = new Intent(activity, SpeakerExpandedActivity.class);
@@ -75,8 +75,6 @@ public class SpeakerExpandedActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        App.getDiComponent().inject(this);
 
         restoreState(savedInstanceState);
         setContentView(R.layout.session_expanded_activity);
@@ -131,6 +129,10 @@ public class SpeakerExpandedActivity extends BaseActivity {
         outState.putString(SPEAKER_ID, speakerId);
     }
 
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
+    }
 
     private class SpeakerAdapter extends FragmentStatePagerAdapter {
 
@@ -141,7 +143,7 @@ public class SpeakerExpandedActivity extends BaseActivity {
             super(fm);
             this.layoutInflater = layoutInflater;
             this.trackSessions = trackSessions;
-            LOG.trace("Set sessions: {}", trackSessions);
+            Timber.v("Set sessions: %s", trackSessions);
         }
 
         @Override

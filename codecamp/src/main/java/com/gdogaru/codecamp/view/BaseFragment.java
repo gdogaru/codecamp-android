@@ -4,13 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.gdogaru.codecamp.di.Injectable;
+
 import butterknife.Unbinder;
 import icepick.Icepick;
 
 /**
  *
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment implements Injectable {
 
     private Unbinder unbinder;
 

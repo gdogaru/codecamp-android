@@ -54,7 +54,6 @@ public class SpeakersActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getDiComponent().inject(this);
         setContentView(R.layout.speakers);
 
         ButterKnife.bind(this);

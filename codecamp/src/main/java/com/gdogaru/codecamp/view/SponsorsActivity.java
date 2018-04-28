@@ -6,6 +6,7 @@ import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -35,12 +36,15 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
 
 /**
  * Created by Gabriel on 10/14/2016.
  */
 
-public class SponsorsActivity extends BaseActivity {
+public class SponsorsActivity extends BaseActivity  implements HasSupportFragmentInjector{
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;
@@ -58,7 +62,6 @@ public class SponsorsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getDiComponent().inject(this);
         setContentView(R.layout.sponsors);
 
         ButterKnife.bind(this);
@@ -182,5 +185,13 @@ public class SponsorsActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
     }
 }

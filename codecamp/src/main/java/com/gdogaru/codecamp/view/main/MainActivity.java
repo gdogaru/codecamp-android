@@ -17,12 +17,17 @@
 package com.gdogaru.codecamp.view.main;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -33,8 +38,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.birbit.android.jobqueue.JobManager;
 import com.crashlytics.android.Crashlytics;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
@@ -50,7 +55,6 @@ import com.gdogaru.codecamp.view.BaseActivity;
 import com.gdogaru.codecamp.view.LoadingDataActivity;
 import com.gdogaru.codecamp.view.SponsorsActivity;
 import com.gdogaru.codecamp.view.agenda.AgendaActivity;
-import com.gdogaru.codecamp.view.common.DividerItemDecoration;
 import com.gdogaru.codecamp.view.speaker.SpeakersActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -64,29 +68,28 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.slf4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjector;
+import dagger.android.DispatchingAndroidInjector;
+import dagger.android.support.HasSupportFragmentInjector;
+import timber.log.Timber;
 
-import static org.slf4j.LoggerFactory.getLogger;
 
-
-public class MainActivity extends BaseActivity implements OnMapReadyCallback {
+public class MainActivity extends BaseActivity implements OnMapReadyCallback, HasSupportFragmentInjector {
 
     private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern("dd MMMM yyyy");
-    private static final Logger LOG = getLogger(MainActivity.class);
     @Inject
     CodecampClient codecampClient;
     @Inject
     AppPreferences appPreferences;
-    @Inject
-    JobManager jobManager;
     @Inject
     FirebaseAnalytics firebaseAnalytics;
     @BindView(R.id.eventTitle)
@@ -101,6 +104,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     Toolbar toolbar;
     @BindView(R.id.drawer_layout)
     DrawerLayout drawerLayout;
+    @Inject
+    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
     private SupportMapFragment mapFragment;
 
     public static void start(Activity activity) {
@@ -114,7 +119,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
 
-        App.getDiComponent().inject(this);
         ButterKnife.bind(this);
         RatingHelper.logUsage(this);
 
@@ -139,7 +143,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         agendaRecycler.setLayoutManager(linearLayoutManager);
-        DividerItemDecoration decor = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST, ContextCompat.getDrawable(this, R.drawable.list_vertical_divider));
+        DividerItemDecoration decor = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
+        decor.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.list_vertical_divider)));
         agendaRecycler.addItemDecoration(decor);
 
         initSpinner();
@@ -164,7 +169,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     }
 
     private void setMap() {
-        LOG.info("Adding map");
+        Timber.i("Adding map");
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
@@ -186,16 +191,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         agendaRecycler.setHasFixedSize(true);
     }
 
-    private List<MainViewItem> getSchedules() {
-        ArrayList<MainViewItem> items = new ArrayList<>();
-        for (Schedule s : codecampClient.getEvent().getSchedules()) {
-            items.add(new MainViewItem.AgendaItem(s));
-        }
-        items.add(new MainViewItem.SpeakersItem());
-        items.add(new MainViewItem.SponsorsItem());
-        return items;
-    }
-
 //    @OnItemSelected(R.id.location_spinner)
 //    public void onLocationSelected(Spinner spinner, int position) {
 //        if (position == spinner.getAdapter().getCount() - 1) {
@@ -208,6 +203,16 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 //            }
 //        }
 //    }
+
+    private List<MainViewItem> getSchedules() {
+        ArrayList<MainViewItem> items = new ArrayList<>();
+        for (Schedule s : codecampClient.getEvent().getSchedules()) {
+            items.add(new MainViewItem.AgendaItem(s));
+        }
+        items.add(new MainViewItem.SpeakersItem());
+        items.add(new MainViewItem.SponsorsItem());
+        return items;
+    }
 
     private void onItemClicked(int position, MainViewItem item) {
         if (item instanceof MainViewItem.AgendaItem) {
@@ -243,7 +248,17 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
     }
 
     private void refreshData() {
-        checkAndRequestPermissions();
+        if (!isNetworkConnected()) {
+            Toast.makeText(this, R.string.no_internet_connection, Toast.LENGTH_SHORT).show();
+        } else {
+            checkAndRequestPermissions();
+        }
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) App.Companion.instance().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        return ni != null;
     }
 
     @Override
@@ -259,26 +274,24 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        LOG.info("On map ready {}", googleMap);
-        displayMap(googleMap);
-    }
+        Timber.i("On map ready %s", googleMap);
 
-    private void displayMap(GoogleMap googleMap) {
         if (googleMap == null) {
             Crashlytics.log("No map loaded");
-            LOG.error("No map...");
+            Timber.e("No map...");
             return;
         }
         try {
             String d = codecampClient.getEvent().getVenue().getDirections();
-            LOG.info("Centering map to destination {}", d);
+            Timber.i("Centering map to destination %s", d);
             if (Strings.isNullOrEmpty(d)) return;
             String[] dd = d.split(",");
             final double latitude = Double.parseDouble(dd[0].trim());
             final double longitude = Double.parseDouble(dd[1].trim());
             LatLng latLng = new LatLng(latitude, longitude);
-            LOG.debug("Moving camera to {}", latLng);
+            Timber.d("Moving camera to %s", latLng);
 
+//            googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
             //add marker to map
             googleMap.addMarker(new MarkerOptions().position(latLng));
@@ -294,7 +307,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
                 startActivity(intentMap);
             });
         } catch (Exception e) {
-            LOG.error("Could not parse location", e);
+            Timber.e(e, "Could not parse location");
             Crashlytics.log(Log.ERROR, "Map", "Could not parse location: " + e.getMessage());
         }
     }
@@ -306,5 +319,8 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback {
         RatingHelper.tryToRate(this);
     }
 
-
+    @Override
+    public AndroidInjector<Fragment> supportFragmentInjector() {
+        return dispatchingAndroidInjector;
+    }
 }

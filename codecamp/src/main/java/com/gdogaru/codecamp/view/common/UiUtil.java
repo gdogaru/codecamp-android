@@ -18,14 +18,14 @@ import com.gdogaru.codecamp.App;
 public class UiUtil {
 
     public static int pxToDp(final int px) {
-        Resources resources = App.instance().getResources();
+        Resources resources = App.Companion.instance().getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         float dp = px / (metrics.densityDpi / 160f);
         return (int) dp;
     }
 
     public static int dpToPx(final float dp) {
-        App instance = App.instance();
+        App instance = App.Companion.instance();
         if (instance == null) return (int) dp; //in ide preview
         Resources r = instance.getResources();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());

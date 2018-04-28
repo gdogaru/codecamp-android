@@ -23,35 +23,33 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/speakerName"
+                style="@style/header_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                style="@style/header_2"
-                tools:text="sdsad"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"
+                tools:text="sdsad" />
 
             <TextView
                 android:id="@+id/company"
-                android:layout_below="@+id/speakerName"
+                style="@style/field_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                style="@style/field_label"
                 tools:text="Company" />
 
             <TextView
                 android:id="@+id/job_title"
-                android:layout_below="@+id/speakerName"
+                style="@style/field_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                style="@style/field_label"
                 tools:text="job title" />
         </LinearLayout>
 
@@ -59,9 +57,9 @@
 
     <TextView
         android:id="@+id/speakerDescription"
+        style="@style/description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/description"
         android:text="" />
 
 </LinearLayout>

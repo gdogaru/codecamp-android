@@ -30,7 +30,7 @@ public class BookmarkingService {
     }
 
     private SharedPreferences getPref() {
-        return App.instance().getSharedPreferences(BPREFERENECES, Context.MODE_PRIVATE);
+        return App.Companion.instance().getSharedPreferences(BPREFERENECES, Context.MODE_PRIVATE);
     }
 
     public Set<String> getBookmarked(String eventId) {

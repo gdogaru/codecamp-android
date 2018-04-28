@@ -29,6 +29,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
+import com.gdogaru.codecamp.di.Injectable;
 import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.model.Track;
@@ -43,10 +44,9 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import icepick.State;
 
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
-
-public class SessionInfoFragment extends BaseFragment {
+public class SessionInfoFragment extends BaseFragment  implements Injectable {
 
     public static final String SESSION_ID = "sessionId";
     @BindView(R.id.sessionTitle)
@@ -63,6 +63,7 @@ public class SessionInfoFragment extends BaseFragment {
     LinearLayout sessionTrackLayout;
     @BindView(R.id.speakerLayoutOuter)
     ViewGroup speakerLayoutOuter;
+    @State
     String sessionId;
 
     @Inject
@@ -80,11 +81,8 @@ public class SessionInfoFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getDiComponent().inject(this);
 
-        if (savedInstanceState != null && savedInstanceState.containsKey(SESSION_ID)) {
-            sessionId = savedInstanceState.getString(SESSION_ID);
-        } else {
+        if (savedInstanceState == null) {
             sessionId = getArguments().getString(SESSION_ID);
         }
     }
@@ -155,11 +153,5 @@ public class SessionInfoFragment extends BaseFragment {
                         .placeholder(R.drawable.person_icon))
 //                .transition(withCrossFade(R.anim.fade_in))
                 .into(picture);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(SESSION_ID, sessionId);
     }
 }

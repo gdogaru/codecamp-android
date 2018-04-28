@@ -128,9 +128,10 @@ public class Calendar extends ScrollView {
     }
 
     private void drawCurrentTime() {
-//        if(scheduleDate!=null) currentTime = scheduleDate.toDateTime();
-        if (currentTime == null || scheduleDate == null || !currentTime.toLocalDate().equals(scheduleDate.toLocalDate())
-                || events == null || events.isEmpty()) {
+//        if (scheduleDate != null) currentTime = scheduleDate.toDateTime();
+
+        if (currentTime == null || scheduleDate == null || events == null || events.isEmpty()
+                || !currentTime.toLocalDate().equals(scheduleDate.toLocalDate())) {
             return;
         }
         RelativeLayout.LayoutParams lp;
@@ -144,9 +145,10 @@ public class Calendar extends ScrollView {
         }
         CEvent lastEvent = events.get(events.size() - 1).event;
         DateTime last = lastEvent.end.toDateTimeToday();
-//        if(currentTime.isAfter(last)) return;
 
-        int dateDiffMinutes = currentTime.minuteOfDay().getDifference(events.get(0).event.start.toDateTimeToday());
+        if (currentTime.isAfter(last)) return;
+
+        int dateDiffMinutes = currentTime.minuteOfDay().getDifference(events.get(0).event.start.toDateTimeToday().withMinuteOfHour(0).withSecondOfMinute(0));
         int top = (int) (dateDiffMinutes * PX_PER_MINUTE);
         lp.setMargins(0, top, 0, 0);
 
