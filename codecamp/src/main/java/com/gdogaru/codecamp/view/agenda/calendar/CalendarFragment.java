@@ -7,15 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.di.Injectable;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.model.Session;
 import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.CodecampClient;
+import com.gdogaru.codecamp.util.Joiner;
 import com.gdogaru.codecamp.view.agenda.SessionsFragment;
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity;
-import com.google.common.base.Joiner;
 
 import org.joda.time.DateTime;
 
@@ -33,7 +32,7 @@ import javax.inject.Inject;
 
 import icepick.State;
 
-public class CalendarFragment extends SessionsFragment  implements Injectable{
+public class CalendarFragment extends SessionsFragment implements Injectable {
 
     private static final Comparator<? super Session> SESSION_BY_DATE_COMPARATOR = (Comparator<Session>) (lhs, rhs) -> lhs.getStartTime().compareTo(rhs.getStartTime());
 

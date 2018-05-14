@@ -33,8 +33,8 @@ import android.widget.Spinner;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.svc.CodecampClient;
+import com.gdogaru.codecamp.util.Iterables;
 import com.gdogaru.codecamp.view.BaseActivity;
-import com.google.common.collect.Iterables;
 
 import java.util.List;
 

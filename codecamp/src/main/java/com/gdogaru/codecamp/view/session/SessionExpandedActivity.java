@@ -27,18 +27,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.Spinner;
 
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Track;
 import com.gdogaru.codecamp.svc.BookmarkingService;
 import com.gdogaru.codecamp.svc.CodecampClient;
-import com.gdogaru.codecamp.util.Strings;
 import com.gdogaru.codecamp.view.BaseActivity;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +43,6 @@ import javax.inject.Inject;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
-import butterknife.OnItemSelected;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
@@ -64,7 +58,7 @@ public class SessionExpandedActivity extends BaseActivity implements ViewPager.O
     ViewPager viewPager;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-//    @BindView(R.id.track_spinner)
+    //    @BindView(R.id.track_spinner)
 //    Spinner trackSpinner;
     @BindView(R.id.bookmarked)
     CheckBox bookmarked;
@@ -130,7 +124,15 @@ public class SessionExpandedActivity extends BaseActivity implements ViewPager.O
 
     private void initPager() {
         trackSessions = codecampClient.getTrackSessionsIds(allTracksString.equals(trackId) ? null : trackId);
-        int index = Iterables.indexOf(trackSessions, input -> input.equals(sessionId));
+
+        int index = -1;
+        for (int i = 0; i < trackSessions.size(); i++) {
+            String t = trackSessions.get(i);
+            if (t.equals(sessionId)) {
+                index = i;
+                break;
+            }
+        }
 
         adapter = new ExpandedSessionsAdapter(getSupportFragmentManager(), getLayoutInflater(), trackSessions);
         viewPager.addOnPageChangeListener(this);

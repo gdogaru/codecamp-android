@@ -23,9 +23,9 @@ import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Sponsor;
 import com.gdogaru.codecamp.model.SponsorshipPackage;
 import com.gdogaru.codecamp.svc.CodecampClient;
+import com.gdogaru.codecamp.util.ComparisonChain;
 import com.gdogaru.codecamp.util.Strings;
 import com.gdogaru.codecamp.view.common.UiUtil;
-import com.google.common.collect.ComparisonChain;
 
 import java.util.Collections;
 import java.util.HashMap;

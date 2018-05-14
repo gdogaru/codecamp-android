@@ -16,13 +16,12 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Speaker;
 import com.gdogaru.codecamp.svc.CodecampClient;
+import com.gdogaru.codecamp.util.ComparisonChain;
 import com.gdogaru.codecamp.view.BaseActivity;
 import com.gdogaru.codecamp.view.common.UiUtil;
-import com.google.common.collect.ComparisonChain;
 
 import java.util.Collections;
 import java.util.List;

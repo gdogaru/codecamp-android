@@ -62,8 +62,6 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import org.joda.time.format.DateTimeFormat;
@@ -159,7 +157,15 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Ha
 
     private void initSpinner() {
         EventList el = codecampClient.getEventsSummary();
-        List<String> names = Lists.newArrayList(Iterables.transform(el, input -> input.getVenue().getCity()));
+
+        List<String> names = new ArrayList<>();
+        if (el != null) {
+            for (EventSummary e : el) {
+                if (e.getVenue() != null && e.getVenue().getCity() != null) {
+                    names.add(e.getVenue().getCity());
+                }
+            }
+        }
         names.add(getString(R.string.refrsh_data));
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.dropdown_item, names);
         adapter.setDropDownViewResource(R.layout.dropdown_item_drop);

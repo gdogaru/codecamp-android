@@ -19,7 +19,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.gdogaru.codecamp.R;
-import com.google.common.base.Preconditions;
+import com.gdogaru.codecamp.util.Preconditions;
 
 import org.joda.time.DateTime;
 import org.joda.time.LocalDateTime;
