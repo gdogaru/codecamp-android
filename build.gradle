@@ -1,94 +1,30 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext.kotlin_version = '1.2.41'
 
-    repositories {
-        jcenter()
-        google()
-        maven { url 'https://plugins.gradle.org/m2/' }
-        maven { url 'https://maven.fabric.io/public' }
-    }
+    apply from: 'versions.gradle'
+
+    addRepos(repositories)
+
     dependencies {
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath 'com.android.tools.build:gradle:3.1.2'
-        classpath 'io.spring.gradle:dependency-management-plugin:1.0.4.RELEASE'
-        classpath 'com.google.gms:google-services:3.2.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
+        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath 'com.google.gms:google-services:4.0.1'
         classpath 'com.google.firebase:firebase-plugins:1.1.5'
-        classpath 'io.fabric.tools:gradle:1.25.2'
+        classpath 'io.fabric.tools:gradle:1.25.4'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
-ext {
-    compileSdkVersion = 27
-    buildToolsVersion = '27.0.3'
-    targetSdkVersion = 27
-    minSdkVersion = 16
-
-    androidSupportVersion = '27.1.1'
-    gmsVersion = '15.0.1'
-    guavaVersion = '23.3-jre'
-    daggerVersion = '2.15'
-
-}
-
 allprojects {
-    apply plugin: 'io.spring.dependency-management'
-
-    repositories {
-        google()
-        jcenter()
-        maven { url 'https://clojars.org/repo/' }
-    }
-    dependencyManagement {
-        dependencies {
-            dependency 'com.android.support:multidex:1.0.3'
-            dependency "com.android.support:support-v4:$androidSupportVersion"
-            dependency "com.android.support:appcompat-v7:$androidSupportVersion"
-            dependency "com.android.support:design:$androidSupportVersion"
-            dependency "com.android.support:support-annotations:$androidSupportVersion"
-            dependency "com.android.support:cardview-v7:$androidSupportVersion"
-
-            dependency "com.google.android.gms:play-services-maps:$gmsVersion"
-
-            dependency 'com.jakewharton.timber:timber:4.7.0'
-            dependency 'org.slf4j:slf4j-android:1.7.25'
-            dependency 'com.google.code.gson:gson:2.8.2'
-            dependency 'commons-io:commons-io:2.6'
-            dependency 'joda-time:joda-time:2.9.9'
-            dependency 'com.sothree.slidinguppanel:library:3.3.1'
-            dependency 'com.squareup:otto:1.3.8'
-
-            dependency 'junit:junit:4.12'
-            dependency 'org.mockito:mockito-core:2.7.19'
-            dependency 'com.squareup.assertj:assertj-android:1.1.1'
-            dependency 'org.hamcrest:hamcrest-library:1.3'
-            dependency 'com.android.support.test.espresso:espresso-core:3.0.2'
-            dependency 'com.android.support.test.uiautomator:uiautomator-v18:3.0.1'
-
-            dependency "com.google.dagger:dagger:$daggerVersion"
-            dependency "com.google.dagger:dagger-android:$daggerVersion"
-            dependency "com.google.dagger:dagger-android-support:$daggerVersion"
-            dependency "com.google.dagger:dagger-compiler:$daggerVersion"
-            dependency "com.google.dagger:dagger-android-processor:$daggerVersion"
-
-            dependency 'uk.co.chrisjenx:calligraphy:2.3.0'
-            dependency 'joda-time:joda-time:2.9.9'
-
-            dependency 'com.github.bumptech.glide:glide:4.6.1'
-            dependency 'com.jakewharton:butterknife:8.8.1'
-            dependency 'com.jakewharton:butterknife-compiler:8.8.1'
-
-            dependency 'com.evernote:android-job:1.2.4'
-            dependency 'com.birbit:android-priority-jobqueue:2.0.1'
-            dependency 'com.squareup.okio:okio:1.13.0'
-            dependency 'com.squareup.okhttp3:okhttp:3.9.0'
-            dependency 'org.greenrobot:eventbus:3.1.1'
-            dependency 'se.emilsjolander:stickylistheaders:2.7.0'
-            dependency 'frankiesardo:icepick:3.2.0'
-            dependency 'frankiesardo:icepick-processor:3.2.0'
-
-        }
-    }
+    addRepos(repositories)
 }
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+ext {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+}
+

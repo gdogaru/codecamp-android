@@ -26,6 +26,7 @@ import com.gdogaru.codecamp.view.main.MainActivity
 import com.gdogaru.codecamp.view.main.SidebarFragment
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity
 import com.gdogaru.codecamp.view.session.SessionInfoFragment
+import com.gdogaru.codecamp.view.speaker.SpeakerExpandedActivity
 import com.gdogaru.codecamp.view.speaker.SpeakerInfoFragment
 import com.gdogaru.codecamp.view.speaker.SpeakersActivity
 import dagger.Module
@@ -48,6 +49,9 @@ interface ActivitiesModule {
 
     @ContributesAndroidInjector(modules = [(SessionSpeakerBuildersModule::class)])
     fun contributeSpeakersActivity(): SpeakersActivity
+
+    @ContributesAndroidInjector(modules = [(SpeakerExpandedBuildersModule::class)])
+    fun contributeSpeakerExpandedActivity(): SpeakerExpandedActivity
 
     @ContributesAndroidInjector()
     fun contributeSponsorsActivity(): SponsorsActivity
@@ -80,6 +84,13 @@ interface SessionSpeakerBuildersModule {
     @ContributesAndroidInjector()
     fun sessionInfoFragment(): SessionInfoFragment
 
+    @ContributesAndroidInjector()
+    fun speakerInfoFragment(): SpeakerInfoFragment
+
+}
+
+@Module
+interface SpeakerExpandedBuildersModule {
     @ContributesAndroidInjector()
     fun speakerInfoFragment(): SpeakerInfoFragment
 }

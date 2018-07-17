@@ -54,10 +54,6 @@ public class SpeakerExpandedActivity extends BaseActivity implements HasSupportF
     ViewPager viewPager;
     @BindView(R.id.toolbar)
     Toolbar toolbar;
-    @BindView(R.id.track_spinner)
-    Spinner trackSpinner;
-    @BindView(R.id.bookmarked)
-    CheckBox bookmarked;
     @Inject
     CodecampClient codecampClient;
     String speakerId;
@@ -77,10 +73,8 @@ public class SpeakerExpandedActivity extends BaseActivity implements HasSupportF
         super.onCreate(savedInstanceState);
 
         restoreState(savedInstanceState);
-        setContentView(R.layout.session_expanded_activity);
+        setContentView(R.layout.speaker_expanded_activity);
         ButterKnife.bind(this);
-        trackSpinner.setVisibility(View.GONE);
-        bookmarked.setVisibility(View.GONE);
 
         initViews();
         setSupportActionBar(toolbar);
