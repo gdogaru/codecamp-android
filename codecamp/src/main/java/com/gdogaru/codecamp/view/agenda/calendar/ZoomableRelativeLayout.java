@@ -13,22 +13,19 @@ public class ZoomableRelativeLayout extends RelativeLayout {
 
     public ZoomableRelativeLayout(Context context) {
         super(context);
-        // TODO Auto-generated constructor stub
     }
 
     public ZoomableRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-        // TODO Auto-generated constructor stub
     }
 
-    public ZoomableRelativeLayout(Context context, AttributeSet attrs,
-                                  int defStyle) {
+    public ZoomableRelativeLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        // TODO Auto-generated constructor stub
     }
 
     protected void dispatchDraw(Canvas canvas) {
-        canvas.save(Canvas.ALL_SAVE_FLAG);
+//todo        canvas.save(Canvas.ALL_SAVE_FLAG);
+        canvas.save();
         canvas.scale(mScaleFactor, mScaleFactor, mPivotX, mPivotY);
         super.dispatchDraw(canvas);
         canvas.restore();

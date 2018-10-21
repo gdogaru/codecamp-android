@@ -191,7 +191,6 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Ha
 
         SchedulesAdapter schedulesAdapter = new SchedulesAdapter(this, getSchedules(), p -> {
             onItemClicked(p.second, p.first);
-            return true;
         });
         agendaRecycler.setAdapter(schedulesAdapter);
         agendaRecycler.setHasFixedSize(true);

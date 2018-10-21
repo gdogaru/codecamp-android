@@ -61,7 +61,7 @@ class SplashScreenActivity : BaseActivity() {
         return true
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == USER_DATA_CODE) {
             startMainActivity()

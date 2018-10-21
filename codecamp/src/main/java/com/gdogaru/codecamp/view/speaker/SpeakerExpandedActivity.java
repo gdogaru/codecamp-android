@@ -26,9 +26,6 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.CheckBox;
-import android.widget.Spinner;
 
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Speaker;
@@ -108,12 +105,11 @@ public class SpeakerExpandedActivity extends BaseActivity implements HasSupportF
             if (savedInstanceState.containsKey(SPEAKER_ID)) {
                 speakerId = savedInstanceState.getString(SPEAKER_ID);
             }
-
-        } else if (getIntent().getExtras().size() > 0) {
-            if (getIntent().hasExtra(SPEAKER_ID)) {
-                speakerId = getIntent().getStringExtra(SPEAKER_ID);
-            }
-
+        } else if (getIntent() != null && getIntent().hasExtra(SPEAKER_ID)) {
+            speakerId = getIntent().getStringExtra(SPEAKER_ID);
+        } else {
+            Timber.e("Could not show speaker");
+            finish();
         }
     }
 

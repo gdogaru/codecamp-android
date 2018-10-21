@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.android.internal.util.Predicate;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.util.DateUtil;
@@ -23,10 +22,10 @@ import java.util.List;
 public class SchedulesAdapter extends RecyclerView.Adapter<SchedulesAdapter.ScheduleHolder> {
     private final LayoutInflater layoutInflater;
     @NonNull
-    private final Predicate<Pair<MainViewItem, Integer>> listener;
+    private final Listener<Pair<MainViewItem, Integer>> listener;
     private final List<MainViewItem> schedules;
 
-    SchedulesAdapter(Context context, List<MainViewItem> schedules, @NonNull Predicate<Pair<MainViewItem, Integer>> listener) {
+    SchedulesAdapter(Context context, List<MainViewItem> schedules, @NonNull Listener<Pair<MainViewItem, Integer>> listener) {
         this.schedules = schedules;
         this.listener = listener;
         layoutInflater = LayoutInflater.from(context);
@@ -64,6 +63,10 @@ public class SchedulesAdapter extends RecyclerView.Adapter<SchedulesAdapter.Sche
 
     public MainViewItem getItem(int position) {
         return schedules.get(position);
+    }
+
+    public interface Listener<T> {
+        void apply(T t);
     }
 
     static class ScheduleHolder extends RecyclerView.ViewHolder {

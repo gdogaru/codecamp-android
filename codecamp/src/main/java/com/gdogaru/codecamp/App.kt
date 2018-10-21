@@ -2,16 +2,17 @@ package com.gdogaru.codecamp
 
 import android.app.Activity
 import android.app.Application
-import android.app.Fragment
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.support.multidex.MultiDexApplication
+import android.support.v4.app.Fragment
 import android.util.Log
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.evernote.android.job.JobManager
 import com.gdogaru.codecamp.di.AppInjector
 import dagger.android.*
+import dagger.android.support.HasSupportFragmentInjector
 import io.fabric.sdk.android.Fabric
 import timber.log.Timber
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
@@ -19,7 +20,7 @@ import javax.inject.Inject
 
 /**
  */
-class App : MultiDexApplication(), HasActivityInjector, HasFragmentInjector, HasServiceInjector, HasBroadcastReceiverInjector {
+class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector, HasBroadcastReceiverInjector {
 
     @Inject
     lateinit var activityInjector: DispatchingAndroidInjector<Activity>
@@ -93,7 +94,7 @@ class App : MultiDexApplication(), HasActivityInjector, HasFragmentInjector, Has
 
     override fun activityInjector() = activityInjector
 
-    override fun fragmentInjector() = fragmentInjector
+    override fun supportFragmentInjector() = fragmentInjector
 
     override fun broadcastReceiverInjector() = broadcastReceiverInjector
 
