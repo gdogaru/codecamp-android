@@ -148,7 +148,8 @@ class CodecampClient
         val root = appPreferences.lastUpdated
         val myDir = File(app.filesDir, root.toString())
         val outputFile = File(myDir, file)
-        return gson.fromJson(FileReader(outputFile), clazz)
+        val fileReader = FileReader(outputFile)
+        fileReader.use { return gson.fromJson(it, clazz) }
     }
 
     private fun <T> readFromAssets(fileName: String, clazz: Class<T>): T {
@@ -168,7 +169,7 @@ class CodecampClient
 
         val file = download("https://connect.codecamp.ro/api/Conferences", root, "events.json")
         eventBus.post(DataLoadingEvent(20))
-        val eventList = gson.fromJson(IOUtils.toString(FileReader(file)), EventList::class.java)
+        val eventList = gson.fromJson(file.readText(), EventList::class.java)
         var progress = 20
         for (es in eventList) {
             download("https://connect.codecamp.ro/api/Conferences/" + es.refId, root, "codecamp_" + es.refId + ".json")

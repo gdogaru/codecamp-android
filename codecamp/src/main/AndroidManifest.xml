@@ -90,16 +90,13 @@
 
         <uses-library android:name="com.google.android.maps" />
 
-        <service
-            android:name="com.evernote.android.job.gcm.PlatformGcmService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="com.google.android.gms.permission.BIND_NETWORK_TASK_SERVICE"
-            tools:replace="android:enabled" >
+        <receiver
+            android:name=".svc.jobs.AddReceiver"
+            android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.gcm.ACTION_TASK_READY" />
+                <action android:name="com.evernote.android.job.ADD_JOB_CREATOR"/>
             </intent-filter>
-        </service>
+        </receiver>
 
         <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
 
@@ -110,6 +107,11 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <uses-library
+            android:name="org.apache.http.legacy"
+            android:required="false" />
+
     </application>
 
 </manifest>

@@ -1,6 +1,7 @@
 package com.gdogaru.codecamp.svc.jobs
 
 import android.app.Application
+import android.content.Context
 import com.evernote.android.job.Job
 import com.evernote.android.job.JobCreator
 import com.evernote.android.job.JobManager
@@ -16,6 +17,9 @@ import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
+import android.support.annotation.NonNull
+
+
 
 
 /**
@@ -47,5 +51,12 @@ class AppJobCreator
 
     override fun create(tag: String): Job? {
         return jobs[tag]?.get()
+    }
+
+}
+
+class AddReceiver : JobCreator.AddJobCreatorReceiver() {
+    override fun addJobCreator(context: Context, manager: JobManager) {
+        // manager.addJobCreator(new DemoJobCreator());
     }
 }

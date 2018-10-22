@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.app.Service
 import android.content.BroadcastReceiver
+import android.os.StrictMode
 import android.support.multidex.MultiDexApplication
 import android.support.v4.app.Fragment
 import android.util.Log
@@ -17,6 +18,7 @@ import io.fabric.sdk.android.Fabric
 import timber.log.Timber
 import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import javax.inject.Inject
+
 
 /**
  */
@@ -39,12 +41,31 @@ class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInject
     override fun onCreate() {
         super.onCreate()
         instance = this
+        initDebugState()
 
         initCalligraphy()
         initCrashlytics()
         initTimber()
 
         injectIfNecessary()
+    }
+
+    private fun initDebugState() {
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(
+                    StrictMode.ThreadPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog()
+//                            .penaltyDeath()
+                            .build())
+
+            StrictMode.setVmPolicy(
+                    StrictMode.VmPolicy.Builder()
+                            .detectAll()
+                            .penaltyLog()
+//                            .penaltyDeath()
+                            .build())
+        }
     }
 
     /**

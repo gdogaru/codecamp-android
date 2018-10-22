@@ -14,8 +14,8 @@ android {
         targetSdkVersion build_versions.target_sdk
 
         applicationId "com.gdogaru.codecamp"
-        versionCode 22
-        versionName "4.5.5"
+        versionCode 23
+        versionName "4.5.6"
         multiDexEnabled true
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -120,7 +120,7 @@ dependencies {
 
     implementation "com.google.android.gms:play-services-maps:$versions.gmsVersion"
     implementation "com.google.android.gms:play-services-base:$versions.gmsVersion"
-    implementation "com.google.android.gms:play-services-gcm:$versions.gmsVersion"
+//    implementation "com.google.android.gms:play-services-gcm:$versions.gmsVersion"
 
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
 
