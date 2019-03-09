@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Canvas;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -34,6 +32,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 
 public class Calendar extends ScrollView {

@@ -1,9 +1,6 @@
 package com.gdogaru.codecamp.view.main;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.v4.util.Pair;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +11,10 @@ import com.gdogaru.codecamp.model.Schedule;
 import com.gdogaru.codecamp.util.DateUtil;
 
 import java.util.List;
+
+import androidx.annotation.NonNull;
+import androidx.core.util.Pair;
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  * Created by Gabriel on 2/15/2017.

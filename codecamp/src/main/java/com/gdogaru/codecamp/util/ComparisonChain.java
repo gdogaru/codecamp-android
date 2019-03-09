@@ -1,8 +1,8 @@
 package com.gdogaru.codecamp.util;
 
-import android.support.annotation.Nullable;
-
 import java.util.Comparator;
+
+import androidx.annotation.Nullable;
 
 public abstract class ComparisonChain {
     private static final ComparisonChain LESS = new InactiveComparisonChain(-1);

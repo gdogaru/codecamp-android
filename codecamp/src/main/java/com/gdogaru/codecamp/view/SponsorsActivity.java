@@ -5,11 +5,6 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.model.Sponsor;
 import com.gdogaru.codecamp.model.SponsorshipPackage;
@@ -34,6 +28,11 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjector;
@@ -44,7 +43,7 @@ import dagger.android.support.HasSupportFragmentInjector;
  * Created by Gabriel on 10/14/2016.
  */
 
-public class SponsorsActivity extends BaseActivity  implements HasSupportFragmentInjector{
+public class SponsorsActivity extends BaseActivity implements HasSupportFragmentInjector {
 
     @BindView(R.id.recycler)
     RecyclerView recyclerView;

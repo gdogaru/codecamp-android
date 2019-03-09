@@ -23,14 +23,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
@@ -73,6 +65,14 @@ import java.util.Objects;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjector;
@@ -139,7 +139,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Ha
 
         drawerLayout.addDrawerListener(toggle);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
         agendaRecycler.setLayoutManager(linearLayoutManager);
         DividerItemDecoration decor = new DividerItemDecoration(this, DividerItemDecoration.VERTICAL);
         decor.setDrawable(Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.list_vertical_divider)));

@@ -1,6 +1,6 @@
 package com.gdogaru.codecamp.util;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 /**
  * <p>As this interface extends {@code java.util.function.Predicate}, an instance of this type may

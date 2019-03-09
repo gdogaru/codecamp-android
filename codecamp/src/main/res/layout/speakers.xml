@@ -9,7 +9,7 @@
 
     <android.support.design.widget.AppBarLayout style="@style/Codecamp.AppBarLayout">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/Codecamp.Toolbar">
 
@@ -25,10 +25,10 @@
                     android:textSize="20sp" />
             </LinearLayout>
 
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

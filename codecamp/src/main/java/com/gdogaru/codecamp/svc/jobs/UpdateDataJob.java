@@ -1,10 +1,5 @@
 package com.gdogaru.codecamp.svc.jobs;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.annotation.NonNull;
-
 import com.evernote.android.job.Job;
 import com.evernote.android.job.JobRequest;
 import com.gdogaru.codecamp.App;
@@ -17,6 +12,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
 import timber.log.Timber;
 
 /**

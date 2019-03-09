@@ -3,8 +3,6 @@ package com.gdogaru.codecamp.view.agenda;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.Toolbar;
 import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +22,8 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;

@@ -26,14 +26,14 @@ build_versions.build_tools = "28.0.3"
 ext.build_versions = build_versions
 
 def versions = [:]
-versions.kotlin=  '1.2.71'
-versions.gmsVersion = '16.0.0'
+versions.kotlin=  '1.3.21'
+versions.gmsVersion = '16.1.0'
 versions.arch_core = "1.1.1"
 versions.room = "1.1.0-beta2"
 versions.lifecycle = "1.1.1"
 versions.support = "28.0.0"
 versions.multidex = "1.0.3"
-versions.dagger = "2.17"
+versions.dagger = "2.19"
 versions.junit = "4.12"
 versions.espresso = "3.0.2"
 versions.okHttp3 = '3.8.1'
@@ -54,7 +54,7 @@ versions.atsl_runner = "1.0.2"
 versions.atsl_rules = "1.0.1"
 versions.hamcrest = "1.3"
 versions.paging = "1.0.0-beta1"
-versions.crashlytics = '2.9.5'
+versions.crashlytics = '2.9.9'
 ext.versions = versions
 
 //in case I want deps

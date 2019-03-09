@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -18,6 +17,8 @@ import com.gdogaru.codecamp.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.List;
+
+import androidx.appcompat.app.AlertDialog;
 
 
 public class RatingHelper {

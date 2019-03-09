@@ -20,11 +20,6 @@ package com.gdogaru.codecamp.view.speaker;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 
 import com.gdogaru.codecamp.R;
@@ -37,6 +32,11 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.AndroidInjector;

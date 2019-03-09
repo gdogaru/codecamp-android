@@ -1,8 +1,9 @@
 package com.gdogaru.codecamp.view.common;
 
 import android.content.Context;
-import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+
+import androidx.appcompat.widget.AppCompatImageView;
 
 /**
  * Created by Gabriel on 10/14/2016.

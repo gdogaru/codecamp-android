@@ -17,9 +17,6 @@ import org.greenrobot.eventbus.EventBus
 import javax.inject.Inject
 import javax.inject.Provider
 import javax.inject.Singleton
-import android.support.annotation.NonNull
-
-
 
 
 /**

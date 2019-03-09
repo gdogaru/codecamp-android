@@ -1,12 +1,12 @@
 package com.gdogaru.codecamp.util;
 
-import android.support.annotation.Nullable;
-
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by Gabriel on 8/18/2015.

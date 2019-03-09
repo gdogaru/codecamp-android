@@ -3,7 +3,6 @@ package com.gdogaru.codecamp.view.common;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.graphics.Point;
-import android.support.annotation.NonNull;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Display;
@@ -11,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gdogaru.codecamp.App;
+
+import androidx.annotation.NonNull;
 
 /**
  * Created by Gabriel on 9/29/2015.

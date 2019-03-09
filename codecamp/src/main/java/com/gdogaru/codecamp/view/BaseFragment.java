@@ -1,11 +1,11 @@
 package com.gdogaru.codecamp.view;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 
 import com.gdogaru.codecamp.di.Injectable;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import butterknife.Unbinder;
 import icepick.Icepick;
 

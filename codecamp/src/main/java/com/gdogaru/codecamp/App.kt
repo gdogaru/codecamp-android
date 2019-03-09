@@ -5,9 +5,9 @@ import android.app.Application
 import android.app.Service
 import android.content.BroadcastReceiver
 import android.os.StrictMode
-import android.support.multidex.MultiDexApplication
-import android.support.v4.app.Fragment
 import android.util.Log
+import androidx.fragment.app.Fragment
+import androidx.multidex.MultiDexApplication
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.evernote.android.job.JobManager

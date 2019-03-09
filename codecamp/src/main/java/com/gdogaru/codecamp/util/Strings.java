@@ -1,8 +1,8 @@
 package com.gdogaru.codecamp.util;
 
 
-import android.support.annotation.Nullable;
-import android.support.annotation.VisibleForTesting;
+import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 
 import static com.gdogaru.codecamp.util.Preconditions.checkArgument;
 import static com.gdogaru.codecamp.util.Preconditions.checkNotNull;

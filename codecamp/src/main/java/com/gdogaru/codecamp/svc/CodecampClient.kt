@@ -1,7 +1,6 @@
 package com.gdogaru.codecamp.svc
 
 import android.os.Environment
-import android.support.v4.util.Pair
 import com.gdogaru.codecamp.App
 import com.gdogaru.codecamp.model.*
 import com.gdogaru.codecamp.svc.events.DataLoadingEvent
@@ -212,7 +211,7 @@ class CodecampClient
 
     fun getTrack(track: String) = schedule.tracks?.find { it.name == track }
 
-    fun getTrackExtended(track: String): Pair<Track, Schedule>? {
+    fun getTrackExtended(track: String): Pair<Track?, Schedule>? {
         for (s in event!!.schedules) {
             s.tracks.find { input -> input.name == track }
                     .let { return@getTrackExtended Pair(it, s) }

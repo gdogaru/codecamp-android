@@ -1,14 +1,14 @@
 package com.gdogaru.codecamp.view.main
 
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.DividerItemDecoration
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import butterknife.BindView
 import butterknife.ButterKnife
 import com.gdogaru.codecamp.R
@@ -43,7 +43,7 @@ class SidebarFragment : BaseFragment(), Injectable {
         super.onViewCreated(view, savedInstanceState)
         ButterKnife.bind(this, view)
 
-        eventsRecycler.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        eventsRecycler.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         val decor = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         decor.setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.list_vertical_divider_sidebar)!!)
         eventsRecycler.addItemDecoration(decor)

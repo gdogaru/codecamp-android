@@ -8,7 +8,7 @@
 
     <android.support.design.widget.AppBarLayout style="@style/Codecamp.AppBarLayout">
 
-        <android.support.v7.widget.Toolbar
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/Codecamp.Toolbar">
 
@@ -51,7 +51,7 @@
                     android:buttonTint="@color/white" />
             </LinearLayout>
 
-        </android.support.v7.widget.Toolbar>
+        </androidx.appcompat.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
 

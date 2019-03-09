@@ -18,7 +18,6 @@ package com.gdogaru.codecamp.view.speaker;
 
 
 import android.os.Bundle;
-import android.support.v4.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
-import com.gdogaru.codecamp.App;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.di.Injectable;
 import com.gdogaru.codecamp.model.Codecamp;
@@ -49,8 +47,7 @@ import java.util.Locale;
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
-
-import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+import kotlin.Pair;
 
 public class SpeakerInfoFragment extends BaseFragment  implements Injectable{
     public static final String SPEAKER_ID = "speakerId";
@@ -101,7 +98,7 @@ public class SpeakerInfoFragment extends BaseFragment  implements Injectable{
         rootView.addView(addSpeaker(speaker));
         List<Pair<Codecamp, Session>> sessions = codecampClient.getSessionsBySpeaker(speakerId);
         for (Pair<Codecamp, Session> session : sessions) {
-            rootView.addView(addSession(session.second, session.first));
+            rootView.addView(addSession(session.getSecond(), session.getFirst()));
         }
 
         Bundle bundle = new Bundle();
@@ -130,7 +127,7 @@ public class SpeakerInfoFragment extends BaseFragment  implements Injectable{
                 sessionTrack.setText("");
             } else {
                 sessionTrack.setText(String.format(Locale.getDefault(), "%s, %s seats, %s \n%s",
-                        p.first.getName(), p.first.getCapacity(), p.first.getDescription(), DateUtil.formatDayOfYear(p.second.getDate())));
+                        p.getFirst().getName(), p.getFirst().getCapacity(), p.getFirst().getDescription(), DateUtil.formatDayOfYear(p.getSecond().getDate())));
             }
         } else {
             sessionTrackLayout.setVisibility(View.GONE);
