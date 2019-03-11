@@ -33,11 +33,13 @@
         android:name=".App"
         android:allowBackup="true"
         android:fullBackupContent="false"
-        android:icon="@drawable/icon"
+        android:appComponentFactory="androidx"
         android:label="@string/app_name"
         android:logo="@drawable/codecamp_title"
         android:theme="@style/Codecamp"
-        tools:ignore="GoogleAppIndexingWarning">
+        android:icon="@mipmap/ic_launcher"
+        tools:ignore="GoogleAppIndexingWarning"
+        tools:replace="android:appComponentFactory">
         <activity
             android:name=".view.SplashScreenActivity"
             android:noHistory="true"

@@ -122,7 +122,7 @@ public class MainActivity extends BaseActivity implements OnMapReadyCallback, Ha
 
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("");
-        getSupportActionBar().setLogo(R.drawable.codecamp_title);
+        getSupportActionBar().setLogo(R.drawable.codecamp_logo);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);

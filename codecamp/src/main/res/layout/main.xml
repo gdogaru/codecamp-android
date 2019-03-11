@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
@@ -10,12 +10,12 @@
     android:foregroundGravity="left"
     tools:context=".view.main.MainActivity">
 
-    <android.support.design.widget.CoordinatorLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
 
-        <android.support.design.widget.AppBarLayout style="@style/Codecamp.AppBarLayout">
+        <com.google.android.material.appbar.AppBarLayout style="@style/Codecamp.AppBarLayout">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -28,9 +28,9 @@
 
             </androidx.appcompat.widget.Toolbar>
 
-        </android.support.design.widget.AppBarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
@@ -104,9 +104,9 @@
                     android:orientation="vertical" />
 
             </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-    </android.support.design.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <fragment
         android:id="@+id/left_drawer"
@@ -116,4 +116,4 @@
         android:layout_gravity="start"
         tools:layout="@layout/main_sidebar" />
 
-</android.support.v4.widget.DrawerLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

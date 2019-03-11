@@ -31,25 +31,19 @@ class SidebarFragment : BaseFragment(), Injectable {
     lateinit var codecampClient: CodecampClient
     private lateinit var eventsAdapter: EventsAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.main_sidebar, container, false)
-    }
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.main_sidebar, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ButterKnife.bind(this, view)
 
-        eventsRecycler.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        eventsRecycler.layoutManager = LinearLayoutManager(activity!!, RecyclerView.VERTICAL, false)
         val decor = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
         decor.setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.list_vertical_divider_sidebar)!!)
         eventsRecycler.addItemDecoration(decor)
 
         val events = codecampClient.eventsSummary?.sortedBy { it.startDate }
-        eventsAdapter = EventsAdapter(LayoutInflater.from(activity), events!!, { eventSummary -> onItemClicked(eventSummary) })
+        eventsAdapter = EventsAdapter(LayoutInflater.from(activity), events!!) { eventSummary -> onItemClicked(eventSummary) }
         eventsRecycler.adapter = eventsAdapter
 
     }
@@ -61,9 +55,9 @@ class SidebarFragment : BaseFragment(), Injectable {
     }
 
     internal class EventHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        @BindView(R.id.eventTitle)
+        @BindView(R.id.title)
         lateinit var eventTitle: TextView
-        @BindView(R.id.eventDate)
+        @BindView(R.id.date)
         lateinit var eventDate: TextView
         @BindView(R.id.city)
         lateinit var city: TextView

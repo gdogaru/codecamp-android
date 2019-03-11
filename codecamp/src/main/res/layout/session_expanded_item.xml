@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
@@ -54,9 +54,9 @@
         <TextView
             android:id="@+id/sessionDescription"
             style="@style/description"
-            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             tools:text="description sd" />
 
         <LinearLayout
@@ -69,15 +69,15 @@
                 style="@style/header_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingBottom="5dp"
                 android:paddingTop="15dp"
+                android:paddingBottom="5dp"
                 android:text="@string/speakers" />
 
             <LinearLayout
                 android:id="@+id/speakerLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical" />
         </LinearLayout>
     </LinearLayout>
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

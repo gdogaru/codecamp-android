@@ -4,9 +4,10 @@
     android:id="@+id/textView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/transparent"
-    android:paddingBottom="5dp"
     android:paddingLeft="5dp"
+    android:paddingRight="5dp"
     android:paddingTop="26dp"
+    android:paddingBottom="5dp"
     android:text="@string/copyright"
+    android:textColor="@color/white"
     android:textStyle="italic" />

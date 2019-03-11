@@ -6,7 +6,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/codecamp_title" />
+            android:src="@drawable/codecamp_logo" />
     </item>
 
 </layer-list>

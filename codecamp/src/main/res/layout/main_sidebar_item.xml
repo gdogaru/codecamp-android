@@ -6,14 +6,14 @@
     android:layout_height="wrap_content"
     android:background="@drawable/list_item_background_sidebar"
     android:orientation="vertical"
-    android:paddingBottom="6dp"
-    android:paddingStart="10dp"
     android:paddingLeft="10dp"
     android:paddingTop="6dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="6dp"
     app:paddingEnd="10dp">
 
     <TextView
-        android:id="@+id/eventTitle"
+        android:id="@+id/title"
         style="@style/header_1"
         fontPath="@string/font_roboto_bold"
         android:layout_width="wrap_content"
@@ -23,7 +23,7 @@
         tools:text="title" />
 
     <TextView
-        android:id="@+id/eventDate"
+        android:id="@+id/date"
         style="@style/field_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,5 +36,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        tools:text="10 November 2012" />
+        tools:text="Iasi" />
 </LinearLayout>
