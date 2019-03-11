@@ -1,9 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'io.fabric'
 apply plugin: 'com.google.firebase.firebase-perf'
+
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-allopen'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
+
+apply plugin: 'jacoco'
 
 android {
     compileSdkVersion build_versions.target_sdk
@@ -106,6 +111,10 @@ android.applicationVariants.all {
     }
 }
 
+jacoco {
+    toolVersion = "0.7.4+"
+}
+
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -119,6 +128,7 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation "androidx.annotation:annotation:1.0.2"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
+    implementation  "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
 
     implementation "android.arch.work:work-runtime:1.0.0"
 

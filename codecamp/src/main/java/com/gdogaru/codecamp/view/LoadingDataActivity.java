@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.svc.events.DataLoadingEvent;
 import com.gdogaru.codecamp.svc.jobs.UpdateDataJob;
-import com.gdogaru.codecamp.view.main.MainActivity;
+import com.gdogaru.codecamp.view.home.MainActivity;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -96,10 +96,10 @@ public class LoadingDataActivity extends BaseActivity implements HasSupportFragm
     public void onDataLoading(DataLoadingEvent event) {
         if (event.progress < 0) {
             Toast.makeText(this, "Could not update", Toast.LENGTH_SHORT).show();
-            MainActivity.start(this);
+            MainActivity.Companion.start(this);
             finish();
         } else if (event.progress >= 100) {
-            MainActivity.start(this);
+            MainActivity.Companion.start(this);
             finish();
         } else {
             progressBar.setProgress(event.progress);

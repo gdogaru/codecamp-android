@@ -30,6 +30,7 @@ versions.kotlin=  '1.3.21'
 versions.gmsVersion = '16.1.0'
 versions.arch_core = "1.1.1"
 versions.room = "1.1.0-beta2"
+versions.navigation = "2.0.0-rc02"
 versions.lifecycle = "1.1.1"
 versions.support = "28.0.0"
 versions.multidex = "1.0.3"

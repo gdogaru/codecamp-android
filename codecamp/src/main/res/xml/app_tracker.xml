@@ -20,7 +20,7 @@
         Loading Data
     </screenName>
 
-    <screenName name="com.gdogaru.codecamp.view.main.MainActivity">
+    <screenName name="com.gdogaru.codecamp.view.home.MainActivity">
         Main
     </screenName>
     <screenName name="com.gdogaru.codecamp.view.CalendarActivity">

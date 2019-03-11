@@ -1,4 +1,4 @@
-package com.gdogaru.codecamp.view.main;
+package com.gdogaru.codecamp.view.home;
 
 import com.gdogaru.codecamp.model.Schedule;
 

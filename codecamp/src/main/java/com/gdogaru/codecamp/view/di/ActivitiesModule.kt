@@ -22,8 +22,8 @@ import com.gdogaru.codecamp.view.SponsorsActivity
 import com.gdogaru.codecamp.view.agenda.AgendaActivity
 import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment
 import com.gdogaru.codecamp.view.agenda.list.SessionsListFragment
-import com.gdogaru.codecamp.view.main.MainActivity
-import com.gdogaru.codecamp.view.main.SidebarFragment
+import com.gdogaru.codecamp.view.home.MainActivity
+import com.gdogaru.codecamp.view.home.SidebarFragment
 import com.gdogaru.codecamp.view.session.SessionExpandedActivity
 import com.gdogaru.codecamp.view.session.SessionInfoFragment
 import com.gdogaru.codecamp.view.speaker.SpeakerExpandedActivity

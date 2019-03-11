@@ -21,7 +21,6 @@ import android.content.Intent
 import android.os.Handler
 import com.gdogaru.codecamp.svc.AppPreferences
 import com.gdogaru.codecamp.svc.CodecampClient
-import com.gdogaru.codecamp.view.main.MainActivity
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import javax.inject.Inject
@@ -94,15 +93,15 @@ class SplashScreenActivity : BaseActivity() {
                     ?.run { appPreferences.activeEvent = refId }
         }
 
-        MainActivity.start(this)
+        val intent = Intent(this, com.gdogaru.codecamp.view.MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivity(intent)
         finish()
     }
 
     companion object {
-        val TWO_WEEKS_MILLIS = 1209600000
-        private val ONE_DAY_MILLIS: Long = 86400000
-        private val SPLASH_TIME = 0.3 //in seconds
-        private val USER_DATA_CODE = 1
-        private val PLAY_SERVICES_RESOLUTION_REQUEST = 923
+        private const val ONE_DAY_MILLIS: Long = 8640000
+        private const val USER_DATA_CODE = 1
+        private const val PLAY_SERVICES_RESOLUTION_REQUEST = 923
     }
 }

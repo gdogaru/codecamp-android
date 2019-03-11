@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.gdogaru.codecamp">
 
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
@@ -52,14 +52,14 @@
         </activity>
         <activity android:name=".view.LoadingDataActivity" />
         <activity
-            android:name=".view.main.MainActivity"
+            android:name=".view.home.MainActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".view.agenda.AgendaActivity"
-            android:parentActivityName=".view.main.MainActivity">
+            android:parentActivityName=".view.home.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.main.MainActivity" />
+                android:value=".view.home.MainActivity" />
         </activity>
         <activity
             android:name=".view.session.SessionExpandedActivity"
@@ -70,17 +70,17 @@
         </activity>
         <activity
             android:name=".view.SponsorsActivity"
-            android:parentActivityName=".view.main.MainActivity">
+            android:parentActivityName=".view.home.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.main.MainActivity" />
+                android:value=".view.home.MainActivity" />
         </activity>
         <activity
             android:name=".view.speaker.SpeakersActivity"
-            android:parentActivityName=".view.main.MainActivity">
+            android:parentActivityName=".view.home.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.main.MainActivity" />
+                android:value=".view.home.MainActivity" />
         </activity>
         <activity
             android:name=".view.speaker.SpeakerExpandedActivity"

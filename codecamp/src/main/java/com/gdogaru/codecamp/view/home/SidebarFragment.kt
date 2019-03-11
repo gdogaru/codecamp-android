@@ -1,4 +1,4 @@
-package com.gdogaru.codecamp.view.main
+package com.gdogaru.codecamp.view.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
