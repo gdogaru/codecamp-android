@@ -19,8 +19,8 @@ package com.gdogaru.codecamp.view
 import android.app.Activity
 import android.content.Intent
 import android.os.Handler
-import com.gdogaru.codecamp.svc.AppPreferences
-import com.gdogaru.codecamp.svc.CodecampClient
+import com.gdogaru.codecamp.repository.AppPreferences
+import com.gdogaru.codecamp.repository.InternalStorage
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import javax.inject.Inject
@@ -32,7 +32,8 @@ class SplashScreenActivity : BaseActivity() {
     @Inject
     lateinit var appPreferences: AppPreferences
     @Inject
-    lateinit var codecampClient: CodecampClient
+    lateinit var internalStorage: InternalStorage
+
 
     override fun onResume() {
         super.onResume()
@@ -72,27 +73,18 @@ class SplashScreenActivity : BaseActivity() {
 
 
     private fun triggerNextActivity() {
-        if (appPreferences.isUpdating) {
-            LoadingDataActivity.startTop(this)
+        if (appPreferences.hasUpdated()) {
+            startMainActivity()
             finish()
             return
         }
-        Handler().postDelayed({
-            val lastUpdated = appPreferences.lastUpdated
-            if (lastUpdated == 0L || System.currentTimeMillis() - lastUpdated > ONE_DAY_MILLIS) {
-                LoadingDataActivity.startUpdate(this@SplashScreenActivity)
-            } else {
-                startMainActivity()
-            }
-        }, 10)
+        Handler().post {
+            LoadingDataActivity.startUpdate(this@SplashScreenActivity)
+            finish()
+        }
     }
 
     private fun startMainActivity() {
-        if (System.currentTimeMillis() - appPreferences.lastAutoselect > ONE_DAY_MILLIS) {
-            codecampClient.eventsSummary?.find { org.joda.time.LocalDate.now() == it.startDate?.toLocalDate() }
-                    ?.run { appPreferences.activeEvent = refId }
-        }
-
         val intent = Intent(this, com.gdogaru.codecamp.view.MainActivity::class.java)
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)

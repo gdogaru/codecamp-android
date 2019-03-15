@@ -18,7 +18,8 @@
             android:minHeight="80dp"
             android:minWidth="80dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/person_icon" />
+            android:src="@drawable/person_icon"
+            android:transitionName="speakerPhoto" />
 
         <LinearLayout
             android:layout_width="wrap_content"

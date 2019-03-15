@@ -1,0 +1,63 @@
+package com.gdogaru.codecamp.api
+
+import com.gdogaru.codecamp.App
+import com.google.firebase.perf.metrics.AddTrace
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okio.Okio
+import timber.log.Timber
+import java.io.File
+import javax.inject.Inject
+import javax.inject.Singleton
+
+/**
+ * Created by Gabriel Dogaru (gdogaru@gmail.com)
+ */
+@Singleton
+class CodecampClient
+@Inject constructor() {
+    @Inject
+    lateinit var app: App
+
+    var okHttpClient: OkHttpClient
+
+
+    init {
+        okHttpClient = OkHttpClient()
+//        okHttpClient.s
+    }
+
+    @AddTrace(name = "downloadEventData")
+    @Throws(Exception::class)
+    private fun downloadToFile(url: String, outputFile: File): ApiResponse<File> {
+        val myDir = outputFile.parentFile
+        try {
+            Timber.i("Downloading %s to %s", url, outputFile)
+            val request = Request.Builder().url(url).build()
+            val response = okHttpClient.newCall(request).execute()
+
+            if (myDir.exists().not() && myDir.mkdirs().not()) {
+                return ApiResponse.create(IllegalStateException("Could not create dir structure: " + myDir.path))
+            }
+            if (outputFile.exists().not() && outputFile.createNewFile().not()) {
+                return ApiResponse.create(IllegalStateException("Could not create events file: " + outputFile.path))
+            }
+
+            val sink = Okio.buffer(Okio.sink(outputFile))
+            // you can access body of response
+            sink.writeAll(response.body()!!.source())
+            sink.close()
+            return ApiResponse.create(outputFile)
+        } catch (t: Throwable) {
+            return ApiResponse.create(t)
+        }
+    }
+
+    fun downloadEvents(file: File): ApiResponse<File> = downloadToFile("https://connect.codecamp.ro/api/Conferences", file)
+
+    fun downloadEvent(id: Long, file: File) = downloadToFile("https://connect.codecamp.ro/api/Conferences/$id", file)
+
+
+}
+
+

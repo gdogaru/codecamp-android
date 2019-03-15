@@ -1,6 +1,6 @@
 package com.gdogaru.codecamp.view.agenda.list;
 
-import org.joda.time.LocalTime;
+import org.threeten.bp.LocalTime;
 
 import java.util.Comparator;
 import java.util.List;

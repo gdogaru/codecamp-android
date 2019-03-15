@@ -1,17 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     app:startDestination="@+id/home">
 
     <fragment
-        android:id="@+id/titleScreen"
-        android:name="com.example.android.navigationadvancedsample.homescreen.Title"
-        tools:layout="@layout/fragment_title"
-        android:label="@string/title_home">
+        android:id="@+id/home"
+        android:name="com.gdogaru.codecamp.view.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/home">
+
         <action
-            android:id="@+id/action_title_to_about"
-            app:destination="@id/aboutScreen" />
+            android:id="@+id/showAgenda"
+            app:destination="@id/agenda"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/showSpeakers"
+            app:destination="@id/speakers"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/showSponsors"
+            app:destination="@id/sponsors"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+
+    <fragment
+        android:id="@+id/speakers"
+        android:name="com.gdogaru.codecamp.view.speaker.SpeakersFragment"
+        android:label="Speakers"
+        tools:layout="@layout/speakers">
+
+        <action
+            android:id="@+id/showSpeaker"
+            app:destination="@id/speakerInfo" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/speakerInfo"
+        android:name="com.gdogaru.codecamp.view.speaker.SpeakerExpandedFragment"
+        android:label="Speaker"
+        tools:layout="@layout/speaker_expanded">
+
+        <argument
+            android:name="speakerId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/agenda"
+        android:name="com.gdogaru.codecamp.view.agenda.AgendaFragment"
+        android:label="Agenda"
+        tools:layout="@layout/agenda_activity">
+
+        <action
+            android:id="@+id/showSessionInfo"
+            app:destination="@id/sessionInfo" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/sessionInfo"
+        android:name="com.gdogaru.codecamp.view.session.SessionExpandedFragment"
+        android:label="Session Info"
+        tools:layout="@layout/session_expanded_activity">
+
+        <argument
+            android:name="trackId"
+            app:argType="string" />
+        <argument
+            android:name="sessionId"
+            app:argType="string" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/sponsors"
+        android:name="com.gdogaru.codecamp.view.sponsors.SponsorsFragment"
+        android:label="Sponsors"
+        tools:layout="@layout/sponsors">
+
     </fragment>
 
 </navigation>

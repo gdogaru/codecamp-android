@@ -11,6 +11,7 @@ import com.gdogaru.codecamp.R;
 import com.gdogaru.codecamp.util.DateUtil;
 import com.gdogaru.codecamp.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -21,17 +22,24 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
 public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAdapter {
 
-    private Set<String> favorites;
-    private LayoutInflater mInflater;
-    private List<SessionListItem> sessions;
-    private Set<String> bookmarked;
+    private Set<String> favorites = new HashSet<>();
+    private LayoutInflater inflater;
+    private List<SessionListItem> sessions = new ArrayList<>();
 
-    public SessionsAdapter(Context context, List<SessionListItem> sessions, Set<String> favorites) {
+    public SessionsAdapter(Context context) {
         super();
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    }
+
+    public void setFavorites(Set<String> favorites) {
         this.favorites = favorites;
-        Collections.sort(sessions, SessionListItem.SESSION_BY_DATE_COMPARATOR);
+        notifyDataSetChanged();
+    }
+
+    public void setSessions(List<SessionListItem> sessions) {
         this.sessions = sessions;
-        mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        Collections.sort(sessions, SessionListItem.SESSION_BY_DATE_COMPARATOR);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -58,7 +66,7 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
         View view;
         if (convertView != null) view = convertView;
         else {
-            view = mInflater.inflate(R.layout.agenda_sessions_list_item, parent, false);
+            view = inflater.inflate(R.layout.agenda_sessions_list_item, parent, false);
             ViewHolder holder = new ViewHolder();
             holder.title = (TextView) view.findViewById(R.id.sessionName);
             holder.time = (TextView) view.findViewById(R.id.sessionTime);
@@ -88,7 +96,7 @@ public class SessionsAdapter extends BaseAdapter implements StickyListHeadersAda
         HeaderViewHolder holder;
         if (convertView == null) {
             holder = new HeaderViewHolder();
-            convertView = mInflater.inflate(R.layout.agenda_sessions_list_header, parent, false);
+            convertView = inflater.inflate(R.layout.agenda_sessions_list_header, parent, false);
             holder.text = (TextView) convertView;
             convertView.setTag(holder);
         } else {

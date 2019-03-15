@@ -10,8 +10,6 @@ import android.view.MenuItem;
 
 import com.gdogaru.codecamp.R;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,7 +25,6 @@ import androidx.fragment.app.Fragment;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import icepick.Icepick;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
@@ -37,8 +34,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public abstract class BaseActivity extends AppCompatActivity implements HasSupportFragmentInjector {
     public static final List<String> ALL_PERMISSIONS = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 999;
-    @Inject
-    EventBus eventBus;
 
     boolean allPermissionsGranted = false;
     @Inject
@@ -48,8 +43,6 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Icepick.restoreInstanceState(this, savedInstanceState);
-
         if (getActionBar() != null) {
             getActionBar().setDisplayShowTitleEnabled(false);
         }
@@ -132,12 +125,6 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
                 .setPositiveButton("OK", okListener)
                 .create()
                 .show();
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Icepick.saveInstanceState(this, outState);
     }
 
     @Override

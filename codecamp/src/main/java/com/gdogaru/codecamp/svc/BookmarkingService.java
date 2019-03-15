@@ -3,9 +3,9 @@ package com.gdogaru.codecamp.svc;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gdogaru.codecamp.App;
-import com.gdogaru.codecamp.model.Session;
-import com.google.gson.Gson;
+import com.gdogaru.codecamp.api.model.Session;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -23,7 +23,7 @@ public class BookmarkingService {
     public static final String BPREFERENECES = "booking_preferencea";
 
     @Inject
-    Gson gson;
+    ObjectMapper mapper;
 
     @Inject
     public BookmarkingService() {

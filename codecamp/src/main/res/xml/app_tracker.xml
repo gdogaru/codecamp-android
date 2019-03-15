@@ -20,17 +20,17 @@
         Loading Data
     </screenName>
 
-    <screenName name="com.gdogaru.codecamp.view.home.MainActivity">
+    <screenName name="com.gdogaru.codecamp.view.home.HomeFragment">
         Main
     </screenName>
     <screenName name="com.gdogaru.codecamp.view.CalendarActivity">
         Calendar
     </screenName>
-    <screenName name="com.gdogaru.codecamp.view.agenda.AgendaActivity">
+    <screenName name="com.gdogaru.codecamp.view.agenda.AgendaFragment">
         Session List
     </screenName>
 
-    <screenName name="com.gdogaru.codecamp.view.session.SessionExpandedActivity">
+    <screenName name="com.gdogaru.codecamp.view.session.SessionExpandedFragment">
         Session Info
     </screenName>
 

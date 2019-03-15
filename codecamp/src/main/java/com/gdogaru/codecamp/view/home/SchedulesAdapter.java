@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gdogaru.codecamp.R;
-import com.gdogaru.codecamp.model.Schedule;
+import com.gdogaru.codecamp.api.model.Schedule;
 import com.gdogaru.codecamp.util.DateUtil;
 
 import java.util.List;

@@ -89,7 +89,7 @@
 -keep interface com.j256.**
 -keepclassmembers interface com.j256.** { *; }
 
--keep class com.gdogaru.codecamp.model.** {*;}
+-keep class com.gdogaru.codecamp.api.model.** {*;}
 -keep class com.gdogaru.codecamp.db.** {*;}
 
 #greenbus

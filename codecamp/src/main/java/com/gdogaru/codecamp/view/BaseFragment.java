@@ -7,7 +7,6 @@ import com.gdogaru.codecamp.di.Injectable;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import butterknife.Unbinder;
-import icepick.Icepick;
 
 /**
  *
@@ -19,13 +18,11 @@ public abstract class BaseFragment extends Fragment implements Injectable {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Icepick.restoreInstanceState(this, savedInstanceState);
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        Icepick.saveInstanceState(this, outState);
     }
 
     @Override

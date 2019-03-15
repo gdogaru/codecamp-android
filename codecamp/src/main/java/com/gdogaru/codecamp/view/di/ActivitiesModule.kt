@@ -17,18 +17,19 @@
 package com.gdogaru.codecamp.view.di
 
 import com.gdogaru.codecamp.view.LoadingDataActivity
+import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.SplashScreenActivity
-import com.gdogaru.codecamp.view.SponsorsActivity
-import com.gdogaru.codecamp.view.agenda.AgendaActivity
+import com.gdogaru.codecamp.view.agenda.AgendaFragment
 import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment
 import com.gdogaru.codecamp.view.agenda.list.SessionsListFragment
-import com.gdogaru.codecamp.view.home.MainActivity
+import com.gdogaru.codecamp.view.home.HomeFragment
 import com.gdogaru.codecamp.view.home.SidebarFragment
-import com.gdogaru.codecamp.view.session.SessionExpandedActivity
+import com.gdogaru.codecamp.view.session.SessionExpandedFragment
 import com.gdogaru.codecamp.view.session.SessionInfoFragment
-import com.gdogaru.codecamp.view.speaker.SpeakerExpandedActivity
+import com.gdogaru.codecamp.view.speaker.SpeakerExpandedFragment
 import com.gdogaru.codecamp.view.speaker.SpeakerInfoFragment
-import com.gdogaru.codecamp.view.speaker.SpeakersActivity
+import com.gdogaru.codecamp.view.speaker.SpeakersFragment
+import com.gdogaru.codecamp.view.sponsors.SponsorsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
@@ -41,20 +42,8 @@ interface ActivitiesModule {
     @ContributesAndroidInjector(modules = [(MainActivityBuildersModule::class)])
     fun contributeMainActivity(): MainActivity
 
-    @ContributesAndroidInjector(modules = [(AgendaActivityBuildersModule::class)])
-    fun contributeAgendaActivity(): AgendaActivity
-
-    @ContributesAndroidInjector(modules = [(SessionSpeakerBuildersModule::class)])
-    fun contributeSessionExpandedActivity(): SessionExpandedActivity
-
-    @ContributesAndroidInjector(modules = [(SessionSpeakerBuildersModule::class)])
-    fun contributeSpeakersActivity(): SpeakersActivity
-
-    @ContributesAndroidInjector(modules = [(SpeakerExpandedBuildersModule::class)])
-    fun contributeSpeakerExpandedActivity(): SpeakerExpandedActivity
-
     @ContributesAndroidInjector()
-    fun contributeSponsorsActivity(): SponsorsActivity
+    fun contributeSponsorsActivity(): SponsorsFragment
 
     @ContributesAndroidInjector()
     fun contributeLoadingDataActivity(): LoadingDataActivity
@@ -64,33 +53,34 @@ interface ActivitiesModule {
 @Module
 interface MainActivityBuildersModule {
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     fun contributeSidebarFragment(): SidebarFragment
 
-}
+    @ContributesAndroidInjector
+    fun contributeHomeFragment(): HomeFragment
 
-@Module
-interface AgendaActivityBuildersModule {
+    @ContributesAndroidInjector
+    fun contributeAgendaFragment(): AgendaFragment
+
     @ContributesAndroidInjector()
     fun sessionsListFragment(): SessionsListFragment
 
     @ContributesAndroidInjector()
     fun calendarFragment(): CalendarFragment
-}
 
+    @ContributesAndroidInjector
+    fun contributeSpeakersFragment(): SpeakersFragment
 
-@Module
-interface SessionSpeakerBuildersModule {
+    @ContributesAndroidInjector
+    fun contributeSpeakerExpandedFragment(): SpeakerExpandedFragment
+
     @ContributesAndroidInjector()
     fun sessionInfoFragment(): SessionInfoFragment
 
     @ContributesAndroidInjector()
     fun speakerInfoFragment(): SpeakerInfoFragment
 
-}
-
-@Module
-interface SpeakerExpandedBuildersModule {
     @ContributesAndroidInjector()
-    fun speakerInfoFragment(): SpeakerInfoFragment
+    fun aessionExpandedFragment(): SessionExpandedFragment
+
 }

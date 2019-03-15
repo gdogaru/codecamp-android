@@ -10,8 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.multidex.MultiDexApplication
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
-import com.evernote.android.job.JobManager
+import com.evernote.android.state.StateSaver
 import com.gdogaru.codecamp.di.AppInjector
+import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.*
 import dagger.android.support.HasSupportFragmentInjector
 import io.fabric.sdk.android.Fabric
@@ -35,17 +36,17 @@ class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInject
     @Volatile
     private var needToInject = true
 
-    @Inject
-    lateinit var jobManager: JobManager
-
     override fun onCreate() {
         super.onCreate()
         instance = this
-        initDebugState()
 
-        initCalligraphy()
-        initCrashlytics()
         initTimber()
+        initCrashlytics()
+        AndroidThreeTen.init(this)
+
+//        initDebugState()
+        initCalligraphy()
+        StateSaver.setEnabledForAllActivitiesAndSupportFragments(this, true)
 
         injectIfNecessary()
     }
@@ -102,7 +103,9 @@ class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInject
     }
 
     private fun initTimber() {
-        Timber.plant(Timber.DebugTree())
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
         Timber.plant(CrashlyticsTree())
     }
 
