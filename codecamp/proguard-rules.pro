@@ -26,6 +26,12 @@
 
 -keepattributes Signature
 
+
+-keep interface kotlin.reflect.jvm.internal.impl.**
+-keep class kotlin.reflect.jvm.internal.impl.**
+-keep class kotlin.Metadata { *; }
+
+
 -dontwarn org.mockito.**
 -dontwarn sun.reflect.**
 -dontwarn android.test.**
@@ -91,6 +97,9 @@
 
 -keep class com.gdogaru.codecamp.api.model.** {*;}
 -keep class com.gdogaru.codecamp.db.** {*;}
+-keepclassmembers public class com.gdogaru.codecamp.api.** {
+    public synthetic <methods>;
+}
 
 #greenbus
 -keepclassmembers class ** {

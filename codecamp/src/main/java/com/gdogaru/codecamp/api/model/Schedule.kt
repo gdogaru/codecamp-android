@@ -18,8 +18,8 @@ data class Schedule(
 
 
 data class TimeSlot(
-        var startTime: LocalTime,
-        var endTime: LocalTime
+        var startTime: LocalTime?,
+        var endTime: LocalTime?
 )
 
 data class Track(

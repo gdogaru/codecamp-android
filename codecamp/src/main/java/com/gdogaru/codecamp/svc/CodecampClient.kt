@@ -22,7 +22,7 @@ class CodecampClient
 //    @Inject
 //    lateinit var eventBus: EventBus
 //    @Inject
-//    lateinit var bookmarkingService: BookmarkingService
+//    lateinit var bookmarkingService: BookmarkRepository
 //    private var currentCodecamp: Codecamp? = null
 //    private var eventList: EventList? = null
 //

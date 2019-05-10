@@ -18,6 +18,7 @@ package com.gdogaru.codecamp.di
 
 import com.firstpremier.mypremiercreditcard.ui.di.ViewModelModule
 import com.gdogaru.codecamp.App
+import com.gdogaru.codecamp.db.DatabaseModule
 import com.gdogaru.codecamp.tasks.UpdateDataWorker
 import com.gdogaru.codecamp.view.di.ActivitiesModule
 import com.procliq.walkie.di.modules.CoreModule
@@ -29,7 +30,7 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [(AndroidInjectionModule::class), (AndroidSupportInjectionModule::class),
     (ApplicationModule::class),
-    (CoreModule::class),
+    (CoreModule::class), (DatabaseModule::class),
     (ActivitiesModule::class), (ViewModelModule::class)])
 interface AppComponent {
 

@@ -74,12 +74,11 @@ class SessionsListFragment : SessionsFragment() {
 
     fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
         val session = sessionsAdapter.getItem(position) as SessionListItem
-        findNavController().navigate(AgendaFragmentDirections.showSessionInfo("", session.id))
+        findNavController().navigate(AgendaFragmentDirections.showSessionInfo(session.id))
     }
 
     override fun onViewStateRestored(savedInstanceState: Bundle?) {
         super.onViewStateRestored(savedInstanceState)
-//        Icepick.restoreInstanceState<SessionsListFragment>(this, savedInstanceState)
         tryGetListState(savedInstanceState)
     }
 
@@ -95,6 +94,7 @@ class SessionsListFragment : SessionsFragment() {
     }
 
     override fun updateDisplay() {
+        val k = 1;
         //        if (sessionListItems == null) {
         //            loadSessions();
         //        }

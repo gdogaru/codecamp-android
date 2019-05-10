@@ -1,7 +1,7 @@
 package com.gdogaru.codecamp.view.agenda;
 
 import com.evernote.android.state.State;
-import com.gdogaru.codecamp.svc.BookmarkingService;
+import com.gdogaru.codecamp.repository.BookmarkRepository;
 import com.gdogaru.codecamp.view.BaseFragment;
 
 import javax.inject.Inject;
@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 public abstract class SessionsFragment extends BaseFragment {
     @Inject
-    protected BookmarkingService bookmarkingService;
+    protected BookmarkRepository bookmarkingService;
     @State
     boolean favoritesOnly = false;
 

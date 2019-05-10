@@ -135,6 +135,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         setMap()
 
         viewModel.currentEvent.observe(this, androidx.lifecycle.Observer { showEvent(it) })
+        setHasOptionsMenu(true)
     }
 
     private fun showEvent(overview: Codecamp) {
@@ -183,11 +184,10 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         }
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        val inflater = menuInflater
-//        inflater.inflate(R.menu.menu, menu)
-//        return true
-//    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {

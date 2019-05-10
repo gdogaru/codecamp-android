@@ -3,16 +3,21 @@ package com.gdogaru.codecamp.view
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gdogaru.codecamp.api.model.*
 import com.gdogaru.codecamp.repository.AppPreferences
+import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.repository.CodecampRepository
-import com.gdogaru.codecamp.svc.BookmarkingService
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class MainViewModel
 @Inject constructor(val repository: CodecampRepository,
                     val preferences: AppPreferences,
-                    val bookmarkingService: BookmarkingService) : ViewModel() {
+                    val bookmarkingService: BookmarkRepository) : ViewModel() {
 
     val currentEvent: LiveData<Codecamp> = Transformations.switchMap(preferences.activeEventLiveData) { repository.eventData(it) }
 
@@ -59,14 +64,17 @@ class MainViewModel
     }
 
     fun setBookmarked(element: String, checked: Boolean) {
-        return bookmarkingService.setBookmarked(preferences.activeEvent.toString(), element, checked)
+        viewModelScope.launch {
+            Timber.i("Bookmarking %s to %s", element, checked)
+            bookmarkingService.setBookmarked(preferences.activeEvent.toString(), element, checked)
+        }
     }
 
-    fun isBookmarked(s: String): Boolean {
+    fun isBookmarked(s: String): LiveData<Boolean> {
         return bookmarkingService.isBookmarked(preferences.activeEvent.toString(), s)
     }
 
-    fun getBookmarked(): Set<String> {
+    fun getBookmarked(): LiveData<Set<String>> {
         return bookmarkingService.getBookmarked(preferences.activeEvent.toString())
     }
 
@@ -74,6 +82,15 @@ class MainViewModel
 
     fun selectSchedule(idx: Int) {
         preferences.activeSchedule = idx
+    }
+
+    /**
+     * Cancel all coroutines when the ViewModel is cleared.
+     */
+    @ExperimentalCoroutinesApi
+    override fun onCleared() {
+        super.onCleared()
+        viewModelScope.cancel()
     }
 }
 

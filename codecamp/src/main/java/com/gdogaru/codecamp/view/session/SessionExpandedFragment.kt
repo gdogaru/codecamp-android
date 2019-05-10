@@ -25,14 +25,15 @@ import android.widget.CheckBox
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnCheckedChanged
-import com.evernote.android.state.State
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Schedule
 import com.gdogaru.codecamp.view.BaseFragment
@@ -49,13 +50,7 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
     @BindView(R.id.bookmarked)
     lateinit var bookmarked: CheckBox
 
-    @State
-    lateinit var sessionId: String
-    @State
-    lateinit var trackId: String
-
-
-    private var allTracksString: String? = null
+    private val args: SessionExpandedFragmentArgs by navArgs()
     private var adapter by autoCleared<ExpandedSessionsAdapter>()
 
 
@@ -66,9 +61,6 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(MainViewModel::class.java)
-        val args = SessionExpandedFragmentArgs.fromBundle(arguments!!)
-        trackId = args.trackId
-        sessionId = args.sessionId
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.session_expanded_activity, container, false)
@@ -76,8 +68,6 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         ButterKnife.bind(this, view)
-
-        allTracksString = getString(R.string.all_tracks)
 
         val ma = activity as MainActivity?
         ma!!.setSupportActionBar(toolbar)
@@ -99,7 +89,7 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
         var index = -1
         for (i in trackSessions.indices) {
             val t = trackSessions[i]
-            if (t == sessionId) {
+            if (t == args.sessionId) {
                 index = i
                 break
             }
@@ -144,7 +134,9 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
 
     override fun onPageSelected(position: Int) {
         val s = adapter.getElement(position)
-        bookmarked.setChecked(viewModel.isBookmarked(s));
+        viewModel.isBookmarked(s).observe(this, Observer {
+            bookmarked.isChecked = it
+        })
     }
 
     override fun onPageScrollStateChanged(state: Int) {

@@ -16,7 +16,6 @@
 
 package com.gdogaru.codecamp.view.di
 
-import com.gdogaru.codecamp.view.LoadingDataActivity
 import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.SplashScreenActivity
 import com.gdogaru.codecamp.view.agenda.AgendaFragment
@@ -44,10 +43,6 @@ interface ActivitiesModule {
 
     @ContributesAndroidInjector()
     fun contributeSponsorsActivity(): SponsorsFragment
-
-    @ContributesAndroidInjector()
-    fun contributeLoadingDataActivity(): LoadingDataActivity
-
 }
 
 @Module
@@ -62,10 +57,10 @@ interface MainActivityBuildersModule {
     @ContributesAndroidInjector
     fun contributeAgendaFragment(): AgendaFragment
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     fun sessionsListFragment(): SessionsListFragment
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     fun calendarFragment(): CalendarFragment
 
     @ContributesAndroidInjector
@@ -74,13 +69,13 @@ interface MainActivityBuildersModule {
     @ContributesAndroidInjector
     fun contributeSpeakerExpandedFragment(): SpeakerExpandedFragment
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     fun sessionInfoFragment(): SessionInfoFragment
 
-    @ContributesAndroidInjector()
+    @ContributesAndroidInjector
     fun speakerInfoFragment(): SpeakerInfoFragment
 
-    @ContributesAndroidInjector()
-    fun aessionExpandedFragment(): SessionExpandedFragment
+    @ContributesAndroidInjector
+    fun sessionExpandedFragment(): SessionExpandedFragment
 
 }

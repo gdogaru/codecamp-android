@@ -12,8 +12,7 @@ import javax.inject.Singleton
 class CodecampRepository @Inject constructor(
         val storage: InternalStorage,
         val dataUpdater: DataUpdater,
-        val preferences: AppPreferences,
-        val appExecutors: AppExecutors) {
+        val preferences: AppPreferences) {
 
 
     private val events: LiveData<List<EventSummary>> =

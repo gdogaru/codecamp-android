@@ -28,11 +28,11 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.evernote.android.state.State
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.Speaker
@@ -48,11 +48,11 @@ class SpeakerExpandedFragment : BaseFragment() {
     lateinit var viewPager: ViewPager
     @BindView(R.id.toolbar)
     lateinit var toolbar: Toolbar
-    @State
-    lateinit var speakerId: String
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val args: SpeakerExpandedFragmentArgs by navArgs()
+
     private lateinit var viewModel: MainViewModel
 
     private var adapter by autoCleared<SpeakerAdapter>()
@@ -60,7 +60,6 @@ class SpeakerExpandedFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(MainViewModel::class.java)
-        speakerId = SpeakerExpandedFragmentArgs.fromBundle(arguments!!).speakerId
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.speaker_expanded, container, false)
@@ -85,7 +84,7 @@ class SpeakerExpandedFragment : BaseFragment() {
         val speakers = event.speakers.orEmpty()
         adapter.updateItems(speakers)
 
-        val index = speakers.indexOfFirst { input -> input.name == speakerId }
+        val index = speakers.indexOfFirst { input -> input.name == args.speakerId }
         viewPager.currentItem = if (index < 0) 0 else index
     }
 

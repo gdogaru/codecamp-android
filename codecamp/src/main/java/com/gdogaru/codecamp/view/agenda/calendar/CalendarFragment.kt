@@ -82,7 +82,7 @@ class CalendarFragment : SessionsFragment(), Injectable {
     fun updateDisplay(schedule: Schedule) {
         var sessions = schedule.sessions
         var tracks = schedule.tracks
-        var bookmarked = viewModel.getBookmarked()
+        var bookmarked = setOf<String>() //viewModel.getBookmarked()
 
         if (getFavoritesOnly()) {
             keepFavoritesOnly(sessions, tracks, "schedule", bookmarked);
@@ -157,7 +157,7 @@ class CalendarFragment : SessionsFragment(), Injectable {
     }
 
     private fun displayEventDetails(id: String) {
-        findNavController().navigate(AgendaFragmentDirections.showSessionInfo("", id))
+        findNavController().navigate(AgendaFragmentDirections.showSessionInfo(id))
     }
 
     override fun onSaveInstanceState(outState: Bundle) {

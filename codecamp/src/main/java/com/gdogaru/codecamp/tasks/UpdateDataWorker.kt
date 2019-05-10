@@ -11,9 +11,10 @@ import com.gdogaru.codecamp.api.CodecampClient
 import com.gdogaru.codecamp.api.model.EventSummary
 import com.gdogaru.codecamp.di.AppInjector
 import com.gdogaru.codecamp.repository.AppPreferences
+import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.repository.FileType
 import com.gdogaru.codecamp.repository.InternalStorage
-import com.gdogaru.codecamp.svc.BookmarkingService
+import kotlinx.coroutines.runBlocking
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
@@ -32,7 +33,7 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
     @Inject
     lateinit var client: CodecampClient
     @Inject
-    lateinit var bookmarkingService: BookmarkingService
+    lateinit var bookmarkingService: BookmarkRepository
 
     init {
         AppInjector.appComponent.inject(this)
@@ -93,8 +94,8 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
     }
 
     private fun removeExpiredPreferences(eventList: List<EventSummary>) {
-        eventList.map { it.title }
-                .let { bookmarkingService.keepOnlyEvents(it.toSet()) }
+        eventList.map { it.title.orEmpty() }
+                .let { runBlocking { bookmarkingService.keepOnlyEvents(it.toSet()) } }
     }
 
 }

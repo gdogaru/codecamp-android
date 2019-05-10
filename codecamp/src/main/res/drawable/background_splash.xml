@@ -3,7 +3,7 @@
 
     <item android:drawable="@color/background_window" />
 
-    <item>
+    <item android:bottom="120dp">
         <bitmap
             android:gravity="center"
             android:src="@drawable/codecamp_logo" />

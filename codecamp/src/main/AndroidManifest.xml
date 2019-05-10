@@ -25,12 +25,12 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:fullBackupContent="false"
         android:appComponentFactory="androidx"
+        android:fullBackupContent="false"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:logo="@drawable/codecamp_title"
         android:theme="@style/Codecamp"
-        android:icon="@mipmap/ic_launcher"
         tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:appComponentFactory">
 
@@ -40,51 +40,19 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.LoadingDataActivity" />
-
         <activity
             android:name=".view.MainActivity"
             android:launchMode="singleTop" />
-        <activity android:name=".view.agenda.AgendaFragment">
-
-        </activity>
-        <activity
-            android:name=".view.session.SessionExpandedFragment"
-            android:parentActivityName=".view.agenda.AgendaFragment">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.agenda.AgendaFragment" />
-        </activity>
-        <activity android:name=".view.sponsors.SponsorsFragment">
-
-        </activity>
-        <activity android:name=".view.speaker.SpeakersFragment">
-
-        </activity>
-        <activity
-            android:name=".view.speaker.SpeakerExpandedFragment"
-            android:parentActivityName=".view.speaker.SpeakersFragment">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".view.speaker.SpeakersFragment" />
-        </activity>
 
         <uses-library android:name="com.google.android.maps" />
 
-        <receiver
-            android:name=".svc.jobs.AddReceiver"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.evernote.android.job.ADD_JOB_CREATOR"/>
-            </intent-filter>
-        </receiver>
-
-        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -5,9 +5,10 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.gdogaru.codecamp.repository.AppPreferences
-import com.gdogaru.codecamp.svc.BookmarkingService
+import com.gdogaru.codecamp.repository.BookmarkRepository
 import org.threeten.bp.Instant
 import org.threeten.bp.temporal.ChronoUnit
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,7 +16,7 @@ import javax.inject.Singleton
 @Singleton
 class DataUpdater @Inject constructor(
         val appPreferences: AppPreferences,
-        val bookmarkingService: BookmarkingService) {
+        val bookmarkingService: BookmarkRepository) {
 
     fun shouldUpdate(): Boolean {
         return isDone() && appPreferences.lastUpdated.isBefore(Instant.now().minus(6, ChronoUnit.HOURS))
@@ -36,7 +37,14 @@ class DataUpdater @Inject constructor(
 
     fun lastJobStatus() = Transformations
             .switchMap(appPreferences.activeJobLiveData)
-            { id -> WorkManager.getInstance().getWorkInfoByIdLiveData(UUID.fromString(id)) }
+            { id ->
+                try {
+                    WorkManager.getInstance().getWorkInfoByIdLiveData(UUID.fromString(id))
+                } catch (e: java.lang.Exception) {
+                    Timber.w(e, "could not get status")
+                    null
+                }
+            }
 
 
     fun update() {

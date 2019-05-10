@@ -101,7 +101,7 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
         sessionDescription.text = session.description
         val timeString = DateUtil.formatPeriod(session.startTime, session.endTime)
         sessionTime.text = timeString
-        bookmarked.isChecked = viewModel.isBookmarked(session.id)
+        viewModel.isBookmarked(session.id).observe(this, Observer { v -> bookmarked.isChecked = v })
         bookmarked.setOnCheckedChangeListener { _, isChecked -> viewModel.setBookmarked(session.id, isChecked) }
         if (track.track != null) {
             sessionTrackLayout.visibility = View.VISIBLE

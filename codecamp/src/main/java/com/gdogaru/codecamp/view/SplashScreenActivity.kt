@@ -18,9 +18,19 @@ package com.gdogaru.codecamp.view
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Handler
+import android.os.Bundle
+import android.view.View
+import android.widget.ProgressBar
+import androidx.constraintlayout.widget.Group
+import androidx.lifecycle.Observer
+import androidx.work.WorkInfo
+import butterknife.BindView
+import butterknife.ButterKnife
+import butterknife.OnClick
+import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.repository.AppPreferences
 import com.gdogaru.codecamp.repository.InternalStorage
+import com.gdogaru.codecamp.tasks.DataUpdater
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import javax.inject.Inject
@@ -29,20 +39,74 @@ import javax.inject.Inject
  * Created by Gabriel Dogaru (gdogaru@gmail.com)
  */
 class SplashScreenActivity : BaseActivity() {
+    @BindView(R.id.progress)
+    lateinit var progressBar: ProgressBar
+    @BindView(R.id.loadingGroup)
+    lateinit var loadingGroup: Group
+    @BindView(R.id.errorGroup)
+    lateinit var errorGroup: Group
+
     @Inject
-    lateinit var appPreferences: AppPreferences
+    lateinit var dataUpdater: DataUpdater
+    @Inject
+    lateinit var preferences: AppPreferences
     @Inject
     lateinit var internalStorage: InternalStorage
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.loading_data)
+        ButterKnife.bind(this)
+        actionBar?.hide()
+
+        dataUpdater.lastJobStatus().observe(this, Observer { onWorkerStatus(it.state) })
+        preferences.updateProgressLiveData.observe(this, Observer { onProgress(it) })
+    }
 
     override fun onResume() {
         super.onResume()
-        if (!checkPlayServices()) return
-
-        triggerNextActivity()
+        checkPlayServices()
     }
 
-    private fun checkPlayServices(): Boolean {
+    private fun onWorkerStatus(state: WorkInfo.State) {
+        when (state) {
+            WorkInfo.State.ENQUEUED,
+            WorkInfo.State.BLOCKED,
+            WorkInfo.State.RUNNING -> onDataLoading()
+            WorkInfo.State.SUCCEEDED -> onReady()
+            WorkInfo.State.CANCELLED,
+            WorkInfo.State.FAILED -> onDataError()
+        }
+    }
+
+    private fun onReady() {
+        startMainActivity()
+    }
+
+    @OnClick(R.id.retry)
+    fun onRetry() {
+        reloadData()
+    }
+
+    private fun reloadData() {
+        dataUpdater.update()
+    }
+
+    private fun onDataError() {
+        loadingGroup.visibility = View.GONE
+        errorGroup.visibility = View.VISIBLE
+    }
+
+    private fun onDataLoading() {
+        loadingGroup.visibility = View.VISIBLE
+        errorGroup.visibility = View.GONE
+    }
+
+    private fun onProgress(progress: Float) {
+        progressBar.progress = (progress * 100).toInt()
+    }
+
+    private fun checkPlayServices() {
         val googleAPI = GoogleApiAvailability.getInstance()
         val result = googleAPI.isGooglePlayServicesAvailable(this)
         if (result != ConnectionResult.SUCCESS) {
@@ -51,9 +115,10 @@ class SplashScreenActivity : BaseActivity() {
                 errorDialog.setOnDismissListener { this@SplashScreenActivity.finish() }
                 errorDialog.show()
             }
-            return false
+            finish()
+        } else {
+            onPlayServicesAvailable()
         }
-        return true
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -64,23 +129,18 @@ class SplashScreenActivity : BaseActivity() {
 
         when (requestCode) {
             PLAY_SERVICES_RESOLUTION_REQUEST -> if (resultCode == Activity.RESULT_OK) {
-                triggerNextActivity()
+                onPlayServicesAvailable()
             } else {
                 finish()
             }
         }
     }
 
-
-    private fun triggerNextActivity() {
-        if (appPreferences.hasUpdated()) {
+    private fun onPlayServicesAvailable() {
+        if (preferences.hasUpdated().not()) {
+            reloadData()
+        } else {
             startMainActivity()
-            finish()
-            return
-        }
-        Handler().post {
-            LoadingDataActivity.startUpdate(this@SplashScreenActivity)
-            finish()
         }
     }
 
@@ -89,6 +149,7 @@ class SplashScreenActivity : BaseActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()
+        overridePendingTransition(R.anim.act_fade_in, R.anim.act_fade_out)
     }
 
     companion object {

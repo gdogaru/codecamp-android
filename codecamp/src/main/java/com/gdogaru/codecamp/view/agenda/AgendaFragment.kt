@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -18,7 +17,7 @@ import com.evernote.android.state.State
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.repository.AppPreferences
-import com.gdogaru.codecamp.svc.BookmarkingService
+import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.util.AnalyticsHelper
 import com.gdogaru.codecamp.util.DateUtil
 import com.gdogaru.codecamp.view.BaseFragment
@@ -47,7 +46,7 @@ class AgendaFragment : BaseFragment() {
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
     @Inject
-    lateinit var bookmarkingService: BookmarkingService
+    lateinit var bookmarkingService: BookmarkRepository
 
     @State
     var favoritesOnly = false
@@ -102,18 +101,18 @@ class AgendaFragment : BaseFragment() {
 
     @OnCheckedChanged(R.id.favorite_switch)
     fun onFavoriteChecked(checked: Boolean) {
-        if (checked != favoritesOnly) {
-            if (checked && bookmarkingService.getBookmarked(event.title).isEmpty()) {
-                favoritesOnly = false
-                favoriteSwitch.isChecked = false
-                Toast.makeText(activity, R.string.no_favorites_yet, Toast.LENGTH_SHORT).show()
-                return
-            }
-
-            favoritesOnly = checked
-            val f = childFragmentManager.findFragmentById(R.id.content) as SessionsFragment?
-            f?.setFavoritesOnly(favoritesOnly)
-        }
+//        if (checked != favoritesOnly) {
+//            if (checked && bookmarkingService.getBookmarked(event.title.orEmpty())) {
+//                favoritesOnly = false
+//                favoriteSwitch.isChecked = false
+//                Toast.makeText(activity, R.string.no_favorites_yet, Toast.LENGTH_SHORT).show()
+//                return
+//            }
+//
+//            favoritesOnly = checked
+//            val f = childFragmentManager.findFragmentById(R.id.content) as SessionsFragment?
+//            f?.setFavoritesOnly(favoritesOnly)
+//        }
     }
 
     private fun showList() {
