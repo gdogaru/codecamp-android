@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2019 Gabriel Dogaru - gdogaru@gmail.com
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package com.gdogaru.codecamp.view.home
 
 import android.content.Context
@@ -25,7 +43,7 @@ import com.gdogaru.codecamp.view.util.autoCleared
 import javax.inject.Inject
 
 /**
- * Created by Gabriel on 2/16/2017.
+ * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
 
 class SidebarFragment : BaseFragment(), Injectable {
@@ -39,7 +57,7 @@ class SidebarFragment : BaseFragment(), Injectable {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.main_sidebar, container, false)!!
@@ -48,12 +66,12 @@ class SidebarFragment : BaseFragment(), Injectable {
         super.onViewCreated(view, savedInstanceState)
         ButterKnife.bind(this, view)
 
-        eventsRecycler.layoutManager = LinearLayoutManager(activity!!, RecyclerView.VERTICAL, false)
+        eventsRecycler.layoutManager = LinearLayoutManager(requireActivity(), RecyclerView.VERTICAL, false)
         val decor = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-        decor.setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.list_vertical_divider_sidebar)!!)
+        decor.setDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.list_vertical_divider_sidebar)!!)
         eventsRecycler.addItemDecoration(decor)
 
-        eventsAdapter = EventsAdapter(activity!!) { eventSummary -> onItemClicked(eventSummary) }
+        eventsAdapter = EventsAdapter(requireActivity()) { eventSummary -> onItemClicked(eventSummary) }
         eventsRecycler.adapter = eventsAdapter
 
         viewModel.allEvents().observe(this, Observer { list ->

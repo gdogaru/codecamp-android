@@ -1,0 +1,65 @@
+version: 2.1
+
+jobs:
+  build:
+    docker:
+      - image: circleci/android:api-28
+
+    working_directory: ~/code
+
+    environment:
+      _JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx2000m -XX:ParallelGCThreads=1 -XX:ConcGCThreads=1 -Djava.util.concurrent.ForkJoinPool.common.parallelism=1 -Dkotlin.compiler.execution.strategy=in-process"
+      GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx1000m"'
+
+    steps:
+      - checkout
+
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
+      - run:
+          name: Prepare Env
+          command: |
+            chmod +x gradlew
+            echo $ENCODED_KEYSTORE | openssl base64 -d -A -out ${HOME}/keystore.jks
+            echo 'export KEYSTORE=${HOME}/keystore.jks' >> $BASH_ENV
+            echo $DEPLOYMENT_PRIVATE_KEY >> ${HOME}/deployment-private-key.json
+            echo 'export PRIVATE_KEY=${HOME}/deployment-private-key.json' >> $BASH_ENV
+
+      - run:
+          name: Download Dependencies
+          command: ./gradlew androidDependencies
+
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "app/build.gradle" }}
+
+      - run:
+          name: Build
+          command: |
+            ./gradlew lint test bundleProdRelease -Pkotlin.incremental=false --stacktrace  --max-workers 1
+          no_output_timeout: 300000
+
+      - run:
+          name: Publish to Play Alpha
+          no_output_timeout: 300000
+          command: |
+            if [ "$CIRCLE_BRANCH" == "master" ];
+            then
+              ./gradlew publishProdRelease -Pkotlin.incremental=false --stacktrace  --max-workers 1
+            else
+              echo "Not running on $CIRCLE_BRANCH"
+            fi
+
+      - store_artifacts:
+          path: app/build/outputs/bundle
+          destination: aab
+
+      - store_artifacts:
+          path: app/build/reports
+          destination: reports
+
+      - store_test_results:
+          path: app/build/test-results
+          destination: test-results

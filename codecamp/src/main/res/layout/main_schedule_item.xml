@@ -1,52 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/schedule_item"
-    android:background="@drawable/list_item_background"
-    android:clickable="true"
-    android:focusable="true"
-    android:gravity="center_vertical"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/main_padding"
-    android:paddingRight="@dimen/main_padding">
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2019 Gabriel Dogaru - gdogaru@gmail.com
+  ~
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~  *
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <data>
+
+        <variable
+            name="item"
+            type="com.gdogaru.codecamp.view.home.MainViewItem" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
+        android:layout_height="@dimen/schedule_item"
+        android:background="@drawable/list_item_background"
+        android:clickable="true"
+        android:focusable="true"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/main_padding"
+        android:paddingRight="@dimen/main_padding">
 
-        <LinearLayout
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/header_2"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            app:layout_constraintVertical_chainStyle="packed"
+            tools:text="Main Event"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/date"
+            app:layout_constraintEnd_toStartOf="@id/chevron" />
 
-            <TextView
-                android:id="@+id/title"
-                style="@style/header_2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="0dp"
-                tools:text="Main Event" />
-
-            <TextView
-                android:id="@+id/date"
-                style="@style/field_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp"
-                tools:text="Saturday 19 28 238" />
+        <TextView
+            android:id="@+id/date"
+            style="@style/field_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            tools:text="Saturday 19 28 238"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title"
+            app:layout_constraintEnd_toStartOf="@id/chevron" />
 
 
-        </LinearLayout>
+        <ImageView
+            android:id="@+id/chevron"
+            style="@style/ChevronLarge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
 
-        <ImageView style="@style/ChevronLarge" />
-    </LinearLayout>
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

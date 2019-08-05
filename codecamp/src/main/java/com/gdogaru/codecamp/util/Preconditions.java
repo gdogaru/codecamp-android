@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2019 Gabriel Dogaru - gdogaru@gmail.com
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package com.gdogaru.codecamp.util;
 
 
@@ -237,31 +255,31 @@ public final class Preconditions {
         return reference;
     }
 
-  /*
-   * All recent hotspots (as of 2009) *really* like to have the natural code
-   *
-   * if (guardExpression) {
-   *    throw new BadException(messageExpression);
-   * }
-   *
-   * refactored so that messageExpression is moved to a separate String-returning method.
-   *
-   * if (guardExpression) {
-   *    throw new BadException(badMsg(...));
-   * }
-   *
-   * The alternative natural refactorings into void or Exception-returning methods are much slower.
-   * This is a big deal - we're talking factors of 2-8 in microbenchmarks, not just 10-20%.  (This
-   * is a hotspot optimizer bug, which should be fixed, but that's a separate, big project).
-   *
-   * The coding pattern above is heavily used in java.util, e.g. in ArrayList.  There is a
-   * RangeCheckMicroBenchmark in the JDK that was used to test this.
-   *
-   * But the methods in this class want to throw different exceptions, depending on the args, so it
-   * appears that this pattern is not directly applicable.  But we can use the ridiculous, devious
-   * trick of throwing an exception in the middle of the construction of another exception.  Hotspot
-   * is fine with that.
-   */
+    /*
+     * All recent hotspots (as of 2009) *really* like to have the natural code
+     *
+     * if (guardExpression) {
+     *    throw new BadException(messageExpression);
+     * }
+     *
+     * refactored so that messageExpression is moved to a separate String-returning method.
+     *
+     * if (guardExpression) {
+     *    throw new BadException(badMsg(...));
+     * }
+     *
+     * The alternative natural refactorings into void or Exception-returning methods are much slower.
+     * This is a big deal - we're talking factors of 2-8 in microbenchmarks, not just 10-20%.  (This
+     * is a hotspot optimizer bug, which should be fixed, but that's a separate, big project).
+     *
+     * The coding pattern above is heavily used in java.util, e.g. in ArrayList.  There is a
+     * RangeCheckMicroBenchmark in the JDK that was used to test this.
+     *
+     * But the methods in this class want to throw different exceptions, depending on the args, so it
+     * appears that this pattern is not directly applicable.  But we can use the ridiculous, devious
+     * trick of throwing an exception in the middle of the construction of another exception.  Hotspot
+     * is fine with that.
+     */
 
     /**
      * Ensures that {@code index} specifies a valid <i>element</i> in an array, list or string of size

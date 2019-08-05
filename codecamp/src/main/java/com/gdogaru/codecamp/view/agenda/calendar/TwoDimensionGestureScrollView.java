@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2019 Gabriel Dogaru - gdogaru@gmail.com
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 package com.gdogaru.codecamp.view.agenda.calendar;
 
 import android.content.Context;
@@ -65,10 +83,10 @@ public class TwoDimensionGestureScrollView extends FrameLayout {
     }
 
     /*
-    * Override the measureChild... implementations to guarantee that the child view
-    * gets measured to be as large as it wants to be.  The default implementation will
-    * force some children to be only as large as this view.
-    */
+     * Override the measureChild... implementations to guarantee that the child view
+     * gets measured to be as large as it wants to be.  The default implementation will
+     * force some children to be only as large as this view.
+     */
     @Override
     protected void measureChild(View child, int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
         int childWidthMeasureSpec;

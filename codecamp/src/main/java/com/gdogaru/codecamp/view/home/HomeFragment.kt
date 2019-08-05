@@ -1,17 +1,19 @@
 /*
- * Copyright (C) 2008 Gabriel Dogaru (gdogaru@gmail.com)
+ * Copyright (c) 2019 Gabriel Dogaru - gdogaru@gmail.com
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
  *
- * http://www.apache.org/licenses/LICENSE-2.0
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *  *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
  */
 
 package com.gdogaru.codecamp.view.home
@@ -23,29 +25,26 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.crashlytics.android.Crashlytics
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Codecamp
+import com.gdogaru.codecamp.databinding.HomeBinding
 import com.gdogaru.codecamp.util.AnalyticsHelper
+import com.gdogaru.codecamp.util.AppExecutors
 import com.gdogaru.codecamp.util.RatingHelper
 import com.gdogaru.codecamp.util.Strings
 import com.gdogaru.codecamp.view.BaseFragment
 import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.MainViewModel
+import com.gdogaru.codecamp.view.util.autoCleared
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -59,21 +58,25 @@ import javax.inject.Inject
 
 
 class HomeFragment : BaseFragment(), OnMapReadyCallback {
+    var binding by autoCleared<HomeBinding>()
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
+    @Inject
+    lateinit var appExecutors: AppExecutors
 
-    @BindView(R.id.eventTitle)
-    lateinit var eventTitle: TextView
-    @BindView(R.id.eventDate)
-    lateinit var eventDate: TextView
-    @BindView(R.id.location)
-    lateinit var location: TextView
-    @BindView(R.id.agenda)
-    lateinit var agendaRecycler: RecyclerView
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
-    @BindView(R.id.drawer_layout)
-    lateinit var drawerLayout: DrawerLayout
+
+//    @BindView(R.id.eventTitle)
+//    lateinit var eventTitle: TextView
+//    @BindView(R.id.eventDate)
+//    lateinit var eventDate: TextView
+//    @BindView(R.id.location)
+//    lateinit var location: TextView
+//    @BindView(R.id.agenda)
+//    lateinit var agendaRecycler: RecyclerView
+//    @BindView(R.id.toolbar)
+//    lateinit var toolbar: Toolbar
+//    @BindView(R.id.drawer_layout)
+//    lateinit var drawerLayout: DrawerLayout
 
     private var mapFragment: SupportMapFragment? = null
 
@@ -81,87 +84,85 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     lateinit var viewModel: MainViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!, viewModelFactory).get(MainViewModel::class.java)
-    }
-
-
-    //    @OnItemSelected(R.id.location_spinner)
-    //    public void onLocationSelected(Spinner spinner, int position) {
-    //        if (position == spinner.getAdapter().getCount() - 1) {
-    //            LoadingDataActivity.startUpdate(this);
-    //        } else {
-    //            long refId = codecampClient.getEventsSummary().get(position).getRefId();
-    //            if (refId != codecampClient.getEvent().getRefId()) {
-    //                codecampClient.setActiveEvent(refId);
-    //                initDisplay();
-    //            }
-    //        }
-    //    }
-
+    var adapter by autoCleared<BindingScheduleAdapter>()
 
     private val isNetworkConnected: Boolean
         get() {
-            val cm = activity!!.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val cm = requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val ni = cm.activeNetworkInfo
             return ni != null
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.home, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.home,
+                container,
+                false,
+                dataBindingComponent
+        )
+        return binding.root
+    }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        ButterKnife.bind(this, view)
-        RatingHelper.logUsage(activity)
+        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
+        binding.lifecycleOwner = this
+
+        setHasOptionsMenu(true)
+
 
         val ma = activity as MainActivity
-        ma.setSupportActionBar(toolbar)
+        ma.setSupportActionBar(binding.toolbar)
         ma.supportActionBar!!.title = ""
         ma.supportActionBar!!.setLogo(R.drawable.codecamp_logo)
         ma.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        val toggle = ActionBarDrawerToggle(activity, drawerLayout, toolbar, R.string.open, R.string.close)
+        val toggle = ActionBarDrawerToggle(activity, binding.drawerLayout, binding.toolbar, R.string.open, R.string.close)
         toggle.isDrawerIndicatorEnabled = true
         toggle.syncState()
 
-        drawerLayout.addDrawerListener(toggle)
+        binding.drawerLayout.addDrawerListener(toggle)
 
-        agendaRecycler.layoutManager = LinearLayoutManager(activity!!, RecyclerView.VERTICAL, false)
+
         val decor = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-        decor.setDrawable(ContextCompat.getDrawable(activity!!, R.drawable.list_vertical_divider)!!)
-        agendaRecycler.addItemDecoration(decor)
+        decor.setDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.list_vertical_divider)!!)
+        binding.agenda.addItemDecoration(decor)
 
+        adapter = BindingScheduleAdapter(dataBindingComponent, appExecutors) { onItemClicked(it) }
+        binding.agenda.adapter = adapter
+//        binding.agenda.setHasFixedSize(true)
+
+        RatingHelper.logUsage(activity)
         setMap()
-
         viewModel.currentEvent.observe(this, androidx.lifecycle.Observer { showEvent(it) })
-        setHasOptionsMenu(true)
+
     }
 
-    private fun showEvent(overview: Codecamp) {
-        val bundle = Bundle()
-        bundle.putString("event", overview.title)
-        firebaseAnalytics.logEvent(AnalyticsHelper.normalize("event_" + overview.title), bundle)
+    private fun showEvent(currentEvent: Codecamp) {
+        val bundle = Bundle().apply { putString("event", currentEvent.title) }
 
-        eventTitle.text = overview.title
-        eventDate.text = DATE_FORMAT.format(overview.startDate)
-        location.text = overview.venue?.name
+        firebaseAnalytics.logEvent(AnalyticsHelper.normalize("event_" + currentEvent.title), bundle)
 
-        val schedulesAdapter = SchedulesAdapter(activity, schedules(overview)) { p -> onItemClicked(p.first) }
-        agendaRecycler.adapter = schedulesAdapter
-        agendaRecycler.setHasFixedSize(true)
+        binding.summary = currentEvent
 
+//        eventTitle.text = currentEvent.title
+//        eventDate.text = DATE_FORMAT.format(currentEvent.startDate)
+//        location.text = currentEvent.venue?.name
+//
+        adapter.submitList(schedules(currentEvent))
 
-        drawerLayout.closeDrawer(Gravity.LEFT)
+        binding.drawerLayout.closeDrawer(Gravity.LEFT)
     }
 
     private fun schedules(codecamp: Codecamp): List<MainViewItem> {
         val items = ArrayList<MainViewItem>()
         codecamp.schedules.orEmpty().forEachIndexed { idx, s ->
-            items.add(MainViewItem.AgendaItem(idx, s))
+            items.add(MainViewItem.AgendaItem(getString(R.string.event_schedule), idx, s))
         }
-        items.add(MainViewItem.SpeakersItem())
-        items.add(MainViewItem.SponsorsItem())
+        items.add(MainViewItem.SpeakersItem(getString(R.string.speakers)))
+        items.add(MainViewItem.SponsorsItem(getString(R.string.sponsors)))
         return items
     }
 
@@ -172,7 +173,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
     }
 
 
-    private fun onItemClicked(item: MainViewItem?) {
+    private fun onItemClicked(item: MainViewItem) {
         when (item) {
             is MainViewItem.AgendaItem -> {
                 viewModel.selectSchedule(item.index)
@@ -203,6 +204,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         if (!isNetworkConnected) {
             Toast.makeText(activity, R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
         } else {
+//            todo fix this asap
 //            checkAndRequestPermissions()
         }
     }
@@ -253,7 +255,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onResume() {
         super.onResume()
-        RatingHelper.tryToRate(activity!!)
+        RatingHelper.tryToRate(requireActivity())
     }
 
 
