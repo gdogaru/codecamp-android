@@ -19,7 +19,6 @@
 package com.gdogaru.codecamp.tasks
 
 import android.content.Context
-import androidx.work.ListenableWorker
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.gdogaru.codecamp.api.ApiErrorResponse
@@ -35,12 +34,7 @@ import com.gdogaru.codecamp.repository.InternalStorage
 import kotlinx.coroutines.runBlocking
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
-
-
-const val PROGRESS_ERROR = -1
-const val PROGRESS_PENDING = -2
 
 class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
 
@@ -57,16 +51,15 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
         AppInjector.appComponent.inject(this)
     }
 
-    override fun doWork(): ListenableWorker.Result {
-        val result = fetchAllData()
-        return when (result) {
+    override fun doWork(): Result {
+        return when (val result = fetchAllData()) {
             is ApiSuccessResponse -> Result.success()
             is ApiErrorResponse -> Result.failure()
             else -> throw IllegalStateException("Unexpected result: $result")
         }
     }
 
-    fun fetchAllData(): ApiResponse<Float> {
+    private fun fetchAllData(): ApiResponse<Float> {
         val startTime = Instant.now()
 
         val resp = client.downloadEvents(storage.file(startTime, FileType.EVENTS))
@@ -93,15 +86,18 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
             removeExpiredPreferences(eventList)
 
             //set first
-            eventList.sortedWith(compareBy(nullsLast<LocalDateTime>()) { it.startDate })
+            eventList.sortedWith(compareBy(nullsLast()) { it.startDate })
 
-            appPreferences.activeEvent = eventList
-                    .filter {
-                        it.startDate?.toLocalDate()?.isBefore(LocalDate.now())?.not()
-                                ?: false
-                    }
-                    .sortedBy { it.startDate }
-                    .first().refId
+            //replace active if events changed
+            if (eventList.map { it.refId }.contains(appPreferences.activeEvent).not()) {
+                appPreferences.activeEvent = eventList
+                        .filter {
+                            it.startDate?.toLocalDate()?.isBefore(LocalDate.now())?.not()
+                                    ?: false
+                        }
+                        .minBy { it.startDate!! }!!
+                        .refId
+            }
         }
         postProgress(1F)
         return ApiResponse.create(1F)
@@ -112,8 +108,7 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
     }
 
     private fun removeExpiredPreferences(eventList: List<EventSummary>) {
-        eventList.map { it.title.orEmpty() }
-                .let { runBlocking { bookmarkingService.keepOnlyEvents(it.toSet()) } }
+        runBlocking { bookmarkingService.keepOnlyEvents(eventList.map { it.title.orEmpty() }.toSet()) }
     }
 
 }

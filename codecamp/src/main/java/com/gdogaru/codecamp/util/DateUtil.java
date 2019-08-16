@@ -34,7 +34,7 @@ import java.util.TimeZone;
  */
 public class DateUtil {
     private final static DateTimeFormatter hourFormat = DateTimeFormatter.ofPattern("HH:mm");
-    private final static DateTimeFormatter DATE_DAY_FORMAT = DateTimeFormatter.ofPattern("EEEE, MMMM dd");
+    private final static DateTimeFormatter DATE_DAY_FORMAT = DateTimeFormatter.ofPattern("EEEE, MMM dd");
     private final static DateTimeFormatter DATE_DAY_YEAR_FORMAT = DateTimeFormatter.ofPattern("EEEE, MMMM dd, yyyy");
     private final static DateTimeFormatter EVENT_DATE_FORMAT = DateTimeFormatter.ofPattern("MMMM dd");
 

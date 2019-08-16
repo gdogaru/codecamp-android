@@ -39,22 +39,6 @@ class MainViewModel
 
     val currentEvent: LiveData<Codecamp> = Transformations.switchMap(preferences.activeEventLiveData) { repository.eventData(it) }
 
-    fun allEvents() = repository.events()
-
-    fun setActiveEvent(refId: Long) {
-        preferences.activeEvent = refId
-    }
-
-    fun getSession(sessionId: String): LiveData<FullSessionData?> {
-        return Transformations.map(currentEvent) { event ->
-            val session = event.schedules.orEmpty().map { it.sessions }.flatten().firstOrNull { it.id == sessionId }
-                    ?: return@map null
-            val track = event.schedules.orEmpty().map { it.tracks }.flatten().firstOrNull { it.name == session.track }
-            val speakers = event.speakers.orEmpty().filter { session.speakerIds.orEmpty().contains(it.name) }
-            FullSessionData(session, track, speakers)
-        }
-    }
-
     fun getSpeaker(speakerId: String): LiveData<Speaker> {
         return Transformations.map(currentEvent) { event ->
             event.speakers.orEmpty().first { it.name == speakerId }
@@ -64,20 +48,6 @@ class MainViewModel
     fun currentSchedule(): LiveData<Schedule?> {
         return Transformations.switchMap(preferences.activeScheduleLiveData) { s ->
             Transformations.map(currentEvent) { if (it.schedules?.size ?: 0 <= s) null else it.schedules!![s] }
-        }
-    }
-
-    fun getSpeakerFull(speakerId: String): LiveData<FullSpeakerData?> {
-        return Transformations.map(currentEvent) { event ->
-            val speaker = event.speakers.orEmpty().firstOrNull { it.name == speakerId }!!
-            val allTracks = event.schedules.orEmpty().map { s -> s.tracks.map { t -> t to s } }.flatten().map { it.first.name to it }.toMap()
-            val sessions = event.schedules.orEmpty()
-                    .map { it.sessions }.flatten().filter { it.speakerIds.orEmpty().contains(speakerId) }
-                    .map {
-                        val p = allTracks[it.track]
-                        it to TrackData(p?.first, p?.second!!)
-                    }
-            FullSpeakerData(speaker, sessions)
         }
     }
 
@@ -98,10 +68,6 @@ class MainViewModel
 
     fun loadingProgress() = preferences.updateProgressLiveData
 
-    fun selectSchedule(idx: Int) {
-        preferences.activeSchedule = idx
-    }
-
     /**
      * Cancel all coroutines when the ViewModel is cleared.
      */
@@ -110,19 +76,15 @@ class MainViewModel
         super.onCleared()
         viewModelScope.cancel()
     }
+
+    fun startUpdate() {
+        repository.startUpdate()
+        //    override fun onPermissionGranted() {
+//        LoadingDataActivity.startUpdate(activity)
+//        //        jobManager.addJob(new UpdateDataJob());
+//    }
+    }
 }
-
-
-data class FullSessionData(
-        val session: Session,
-        val track: Track?,
-        val speakers: List<Speaker>
-)
-
-data class FullSpeakerData(
-        val speaker: Speaker,
-        val sessions: List<Pair<Session, TrackData>>
-)
 
 data class TrackData(
         val track: Track?,

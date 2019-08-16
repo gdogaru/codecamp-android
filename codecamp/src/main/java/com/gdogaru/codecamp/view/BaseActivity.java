@@ -112,7 +112,7 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    protected void checkAndRequestPermissions() {
+    public void checkAndRequestPermissions() {
         permissionsNeeded = getPermissionsNeeded();
         if (false && !permissionsNeeded.isEmpty()) {
             allPermissionsGranted = false;

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2019 Gabriel Dogaru - gdogaru@gmail.com
+  ~
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~  *
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+<layout>
+
+    <data>
+
+        <import type="com.gdogaru.codecamp.R" />
+
+        <variable
+            name="speaker"
+            type="com.gdogaru.codecamp.api.model.Speaker" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/speakerPhoto"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:minHeight="80dp"
+            android:minWidth="80dp"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:imageUrl="@{speaker.photoUrl}"
+            app:placeholder="@{R.drawable.person_icon}"
+            android:src="@drawable/person_icon"
+            android:transitionName="speakerPhoto" />
+
+        <TextView
+            android:id="@+id/speakerName"
+            style="@style/header_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/text_white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/speakerPhoto"
+            android:text="@{speaker.name}"
+            tools:text="sdsad" />
+
+        <TextView
+            android:id="@+id/company"
+            style="@style/field_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="@id/speakerName"
+            app:layout_constraintTop_toBottomOf="@id/speakerName"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{speaker.company}"
+            tools:text="Company" />
+
+        <TextView
+            android:id="@+id/job_title"
+            style="@style/field_label"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            app:layout_constraintStart_toStartOf="@id/speakerName"
+            app:layout_constraintTop_toBottomOf="@id/company"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@{speaker.jobTitle}"
+            tools:text="job title" />
+
+        <TextView
+            android:id="@+id/speakerDescription"
+            style="@style/description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@{speaker.bio}"
+            tools:text="@string/lorem_ipsum"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/speakerPhoto"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

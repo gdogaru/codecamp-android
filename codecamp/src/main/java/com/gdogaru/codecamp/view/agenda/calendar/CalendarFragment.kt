@@ -29,19 +29,19 @@ import androidx.navigation.fragment.findNavController
 import com.evernote.android.state.State
 import com.gdogaru.codecamp.api.model.Schedule
 import com.gdogaru.codecamp.api.model.Session
-import com.gdogaru.codecamp.api.model.Track
 import com.gdogaru.codecamp.di.Injectable
-import com.gdogaru.codecamp.util.Joiner
-import com.gdogaru.codecamp.view.MainViewModel
 import com.gdogaru.codecamp.view.agenda.AgendaFragmentDirections
-import com.gdogaru.codecamp.view.agenda.SessionsFragment
+import com.gdogaru.codecamp.view.agenda.AbstractSessionsListFragment
+import com.gdogaru.codecamp.view.agenda.calendar.component.CEvent
+import com.gdogaru.codecamp.view.agenda.calendar.component.Calendar
+import com.gdogaru.codecamp.view.agenda.calendar.component.DisplayEvent
+import com.gdogaru.codecamp.view.agenda.calendar.component.EventListener
 import org.threeten.bp.LocalDateTime
-import org.threeten.bp.LocalTime
 import java.util.*
 import javax.inject.Inject
 
 
-class CalendarFragment : SessionsFragment(), Injectable {
+class CalendarFragment : AbstractSessionsListFragment(), Injectable {
 
     private var sessIds = ArrayList<Int>()
     private var currentTimer: Timer? = null
@@ -51,11 +51,11 @@ class CalendarFragment : SessionsFragment(), Injectable {
     lateinit var calendarState: Calendar.CalendarState
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: CalendarFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(CalendarFragmentViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -65,25 +65,20 @@ class CalendarFragment : SessionsFragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        updateDisplay()
-        viewModel.currentSchedule().observe(this, androidx.lifecycle.Observer { s ->
-            s?.let { updateDisplay(it) }
+        viewModel.eventList().observe(this, androidx.lifecycle.Observer { s ->
+            s?.let { updateDisplay(it.first, it.second) }
         })
     }
+
 
     override fun onResume() {
         super.onResume()
         currentTimer = Timer()
         currentTimer!!.schedule(object : TimerTask() {
             override fun run() {
-                calendar!!.post { calendar!!.updateCurrentTime(LocalDateTime.now()) }
+                calendar.post { calendar.updateCurrentTime(LocalDateTime.now()) }
             }
         }, 500, 30000)
-
-        //        calendar.setBookmarked(bookmarkingService.getBookmarked(codecampClient.getEvent().getTitle()));
-        //        if (calendarState != null) {
-        //            calendar.postDelayed(() -> calendar.setState(calendarState), 300);
-        //        }
     }
 
     override fun onPause() {
@@ -94,34 +89,12 @@ class CalendarFragment : SessionsFragment(), Injectable {
         calendarState = calendar.state
     }
 
-    override fun updateDisplay() {
+    override fun setFavoritesOnly(favoritesOnly: Boolean) {
+        viewModel.setFavoritesOnly(favoritesOnly)
     }
 
-    fun updateDisplay(schedule: Schedule) {
-        var sessions = schedule.sessions
-        var tracks = schedule.tracks
-        var bookmarked = setOf<String>() //viewModel.getBookmarked()
-
-        if (getFavoritesOnly()) {
-            keepFavoritesOnly(sessions, tracks, "schedule", bookmarked);
-        }
-
-        val events = mutableListOf<CEvent>()
-        Collections.sort(sessions, SESSION_BY_DATE_COMPARATOR)
-
-        sessions.map { ss ->
-            var preferedIdx = 0
-            if (ss.track != null) {
-                val track = getTrack(tracks, ss.track!!)
-                if (track != null) preferedIdx = track.displayOrder
-            }
-            val descLine2 = ss.track
-            events.add(CEvent(ss.id, ss.startTime ?: LocalTime.MIN, ss.endTime
-                    ?: LocalTime.MIN, preferedIdx, ss.title,
-                    createSpeakerName(ss),
-                    if (descLine2 == null) "" else descLine2))
-        }
-        initSessionIds(sessions)
+    private fun updateDisplay(events: List<CEvent>, schedule: Schedule) {
+        initSessionIds(schedule.sessions)
         calendar.setCurrentTime(LocalDateTime.now())
         calendar.setEvents(events)
         calendar.setScheduleDate(schedule.date)
@@ -133,35 +106,6 @@ class CalendarFragment : SessionsFragment(), Injectable {
         })
     }
 
-    private fun keepFavoritesOnly(sessions: List<Session>, tracks: List<Track>, eventId: String, bookmarked: Set<String>) {
-//        run {
-//            val iterator = sessions.iterator()
-//            while (iterator.hasNext()) {
-//                val s = iterator.next()
-//                if (!bookmarked.contains(s.id)) {
-//                    iterator.remove()
-//                }
-//            }
-//        }
-//        val rt = HashSet<String>()
-//        for ((_, _, _, _, _, _, _, _, track) in sessions) rt.add(track)
-//        val iterator = tracks.iterator()
-//        while (iterator.hasNext()) {
-//            val (name) = iterator.next()
-//            if (!rt.contains(name)) iterator.remove()
-//        }
-    }
-
-    private fun getTrack(tracks: List<Track>, track: String): Track? {
-        for (t in tracks) {
-            if (t.name == track) {
-                return t
-            }
-        }
-        return null
-    }
-
-
     private fun initSessionIds(sessions: List<Session>) {
         val ss = ArrayList(sessions)
         sessIds = ArrayList()
@@ -170,9 +114,6 @@ class CalendarFragment : SessionsFragment(), Injectable {
         }
     }
 
-    private fun createSpeakerName(session: Session): String {
-        return if (session.speakerIds == null || session.speakerIds!!.isEmpty()) "" else Joiner.on(", ").join(session.speakerIds!!)
-    }
 
     private fun displayEventDetails(id: String) {
         findNavController().navigate(AgendaFragmentDirections.showSessionInfo(id))
@@ -185,7 +126,4 @@ class CalendarFragment : SessionsFragment(), Injectable {
         super.onSaveInstanceState(outState)
     }
 
-    companion object {
-        private val SESSION_BY_DATE_COMPARATOR = Comparator<Session> { lhs: Session, rhs: Session -> lhs.startTime!!.compareTo(rhs.startTime!!) }
-    }
 }

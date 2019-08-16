@@ -32,7 +32,7 @@
     android:paddingTop="3dp"
     android:singleLine="true"
     android:textAlignment="inherit"
-    android:textColor="@color/white"
+    android:textColor="@color/text_white"
     android:textSize="20sp"
     fontPath="@string/font_robotocondensed_regular"
     tools:text="Iasi" />

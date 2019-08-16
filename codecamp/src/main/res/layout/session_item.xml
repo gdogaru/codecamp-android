@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2019 Gabriel Dogaru - gdogaru@gmail.com
+  ~
+  ~  This program is free software: you can redistribute it and/or modify
+  ~  it under the terms of the GNU General Public License as published by
+  ~  the Free Software Foundation, either version 3 of the License, or
+  ~  (at your option) any later version.
+  ~
+  ~  This program is distributed in the hope that it will be useful,
+  ~  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~  GNU General Public License for more details.
+  ~  *
+  ~  You should have received a copy of the GNU General Public License
+  ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+  ~
+  -->
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:elevation="3dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <CheckBox
+                android:id="@+id/bookmarked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_bookmark"
+                android:padding="3dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/sessionTitle"
+                style="@style/header_1"
+                fontPath="@string/font_roboto_medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@{session.title}"
+                app:layout_constraintEnd_toStartOf="@+id/bookmarked"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="title" />
+
+            <TextView
+                android:id="@+id/sessionTime"
+                style="@style/field_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{session.formattedInterval}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sessionTitle"
+                tools:text="13.06.09 - 14.06.09" />
+
+
+            <TextView
+                android:id="@+id/trackHeader"
+                style="@style/header_2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/track"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sessionTime" />
+
+            <TextView
+                android:id="@+id/sessionTrack"
+                style="@style/field_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dp"
+                android:paddingTop="0dp"
+                android:text="@{track.fullDescription}"
+                app:layout_constraintBaseline_toBaselineOf="@id/trackHeader"
+                app:layout_constraintStart_toEndOf="@id/trackHeader"
+                tools:text="track" />
+
+            <TextView
+                android:id="@+id/sessionDescription"
+                style="@style/description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{session.description}"
+                app:layout_constraintTop_toBottomOf="@+id/trackHeader"
+                tools:text="description sd" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <data>
+
+        <variable
+            name="session"
+            type="com.gdogaru.codecamp.api.model.Session" />
+
+        <variable
+            name="track"
+            type="com.gdogaru.codecamp.api.model.Track" />
+
+    </data>
+</layout>

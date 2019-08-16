@@ -106,5 +106,8 @@
     <string name="close">Close</string>
     <string name="no_favorites_yet">No favorites defined yet!</string>
     <string name="no_internet_connection">No internet connnection!!!</string>
+    <string name="retry">Retry</string>
+    <string name="there_was_a_problem_loading_events_data">There was a problem loading events data...</string>
+    <string name="lorem_ipsum">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc</string>
 
 </resources>

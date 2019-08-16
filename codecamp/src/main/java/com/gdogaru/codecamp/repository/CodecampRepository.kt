@@ -19,9 +19,11 @@
 package com.gdogaru.codecamp.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.EventSummary
+import com.gdogaru.codecamp.api.model.Schedule
 import com.gdogaru.codecamp.tasks.DataUpdater
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -34,6 +36,8 @@ class CodecampRepository @Inject constructor(
         val storage: InternalStorage,
         val dataUpdater: DataUpdater,
         val preferences: AppPreferences) {
+
+
 
 
     private val events: LiveData<List<EventSummary>> =
@@ -53,5 +57,18 @@ class CodecampRepository @Inject constructor(
         dataUpdater.updateIfNecessary()
         return events
     }
+
+    fun startUpdate() {
+        dataUpdater.update()
+    }
+
+    val currentEvent: LiveData<Codecamp> = Transformations.switchMap(preferences.activeEventLiveData) { eventData(it) }
+
+    fun currentSchedule(): LiveData<Schedule?> {
+        return Transformations.switchMap(preferences.activeScheduleLiveData) { s ->
+            Transformations.map(currentEvent) { if (it.schedules?.size ?: 0 <= s) null else it.schedules!![s] }
+        }
+    }
+
 
 }

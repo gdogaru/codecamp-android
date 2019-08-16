@@ -87,7 +87,7 @@
     </style>
 
     <style name="session_item_title">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_white</item>
         <item name="android:textSize">@dimen/header_2</item>
         <item name="android:textStyle">bold</item>
         <item name="android:paddingTop">5dp</item>
@@ -106,11 +106,11 @@
 
     <style name="text">
         <item name="android:textSize">@dimen/text_size</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_white</item>
     </style>
 
     <style name="header_1">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_white</item>
         <item name="android:textSize">@dimen/header_1</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginBottom">10dp</item>
@@ -154,7 +154,7 @@
 
     <style name="ListPopupWindow">
         <item name="android:popupBackground">@color/black</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/text_white</item>
     </style>
 
     <style name="ChevronLarge">
@@ -206,9 +206,9 @@
     </style>
     <!-- Local copy of android:Theme.Holo.Dialog.Alert -->
     <style name="Codecamp.AlertDialogThemeCompat" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="colorPrimary" tools:ignore="NewApi">@color/white</item>
+        <item name="android:textColor">@color/text_white</item>
+        <item name="android:textColorPrimary">@color/text_white</item>
+        <item name="colorPrimary" tools:ignore="NewApi">@color/text_white</item>
         <item name="android:fitsSystemWindows">false</item>
     </style>
 

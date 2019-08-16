@@ -23,129 +23,69 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import butterknife.ButterKnife
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import androidx.recyclerview.widget.RecyclerView
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Session
 import com.gdogaru.codecamp.api.model.Speaker
+import com.gdogaru.codecamp.databinding.SessionExpandedSpeakerItemBinding
+import com.gdogaru.codecamp.databinding.SessionItemBinding
+import com.gdogaru.codecamp.databinding.SpeakersInfoBinding
 import com.gdogaru.codecamp.di.Injectable
-import com.gdogaru.codecamp.util.DateUtil
 import com.gdogaru.codecamp.view.BaseFragment
-import com.gdogaru.codecamp.view.MainViewModel
-import com.gdogaru.codecamp.view.TrackData
+import com.gdogaru.codecamp.view.common.DataBoundViewHolder
+import com.gdogaru.codecamp.view.util.autoCleared
 import com.google.firebase.analytics.FirebaseAnalytics
-import java.util.*
 import javax.inject.Inject
 
 class SpeakerInfoFragment : BaseFragment(), Injectable {
     lateinit var speakerId: String
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
-    private var rootView: LinearLayout? = null
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MainViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
-
-        speakerId = if (savedInstanceState != null && savedInstanceState.containsKey(SPEAKER_ID)) {
-            savedInstanceState.getString(SPEAKER_ID)!!
-        } else {
-            arguments!!.getString(SPEAKER_ID)!!
-        }
-    }
+    private lateinit var viewModel: SpeakerInfoViewModel
+    private var binding by autoCleared<SpeakersInfoBinding>()
+    private var adapter by autoCleared<SpeakerInfoDataAdapter>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.frame_vertical, container, false)
+        binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.speakers_info,
+                container,
+                false,
+                dataBindingComponent
+        )
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        manage(ButterKnife.bind(this, view))
-        rootView = view.findViewById<View>(R.id.content) as LinearLayout
+        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(SpeakerInfoViewModel::class.java)
 
-        viewModel.getSpeakerFull(speakerId).observe(this, Observer { d ->
-            d?.let { initView(it.speaker, it.sessions) }
-        })
-    }
-
-    fun initView(speaker: Speaker, sessions: List<Pair<Session, TrackData>>) {
-        rootView!!.addView(addSpeaker(speaker))
-        for (session in sessions) {
-            rootView!!.addView(addSession(session.first, session.second))
-        }
+        speakerId = arguments!!.getString(SPEAKER_ID)!!
 
         val bundle = Bundle()
         bundle.putString("speaker", speakerId)
         firebaseAnalytics.logEvent("speaker_view", bundle)
-    }
 
-    private fun addSession(session: Session, track: TrackData): View {
-        val sessionView = requireActivity().layoutInflater.inflate(R.layout.session_view, rootView, false)
-        val sessionTitle = sessionView.findViewById<View>(R.id.sessionTitle) as TextView
-        val sessionTime = sessionView.findViewById<View>(R.id.sessionTime) as TextView
-        val sessionDescription = sessionView.findViewById<View>(R.id.sessionDescription) as TextView
-        val sessionTrack = sessionView.findViewById<View>(R.id.sessionTrack) as TextView
-        val bookmarked = sessionView.findViewById<View>(R.id.bookmarked) as CheckBox
-        val sessionTrackLayout = sessionView.findViewById<View>(R.id.sessionTrackLayout) as LinearLayout
+        adapter = SpeakerInfoDataAdapter(dataBindingComponent) { s, b -> viewModel.setBookmarked(s.id, b) }
+        binding.dataRecycler.adapter = adapter
 
-        sessionTitle.text = session.title
-        sessionDescription.text = session.description
-        val timeString = DateUtil.formatPeriod(session.startTime, session.endTime)
-        sessionTime.text = timeString
-        viewModel.isBookmarked(session.id).observe(this, Observer { v -> bookmarked.isChecked = v })
-        bookmarked.setOnCheckedChangeListener { _, isChecked -> viewModel.setBookmarked(session.id, isChecked) }
-        if (track.track != null) {
-            sessionTrackLayout.visibility = View.VISIBLE
-            sessionTrack.text = String.format(Locale.ENGLISH, "%s, %s seats, %s \n%s",
-                    track.track.name, track.track.capacity, track.track.description, DateUtil.formatDayOfYear(track.schedule.date))
-
-        } else {
-            sessionTrackLayout.visibility = View.GONE
-        }
-        return sessionView
-    }
-
-    private fun addSpeaker(speaker: Speaker): View {
-        val speakerView = requireActivity().layoutInflater.inflate(R.layout.session_speaker_info, rootView, false)
-        val speakerName = speakerView.findViewById<View>(R.id.speakerName) as TextView
-        val speakerDesc = speakerView.findViewById<View>(R.id.speakerDescription) as TextView
-        val company = speakerView.findViewById<View>(R.id.company) as TextView
-        val job = speakerView.findViewById<View>(R.id.job_title) as TextView
-        val picture = speakerView.findViewById<View>(R.id.speakerPhoto) as ImageView
-
-        speakerName.text = speaker.name
-        company.text = speaker.company
-        job.text = speaker.jobTitle
-        speakerDesc.text = speaker.bio
-
-        Glide.with(speakerView.context)
-                .load(speaker.photoUrl)
-                .apply(RequestOptions()
-                        .placeholder(R.drawable.person_icon)
-                        .centerCrop())
-                //                .transition(withCrossFade(R.anim.fade_in))
-                .into(picture)
-        return speakerView
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(SPEAKER_ID, speakerId)
+        viewModel.getSpeakerFull(speakerId).observe(this, Observer { d ->
+            d?.let { adapter.submitData(it) }
+        })
     }
 
     companion object {
-        val SPEAKER_ID = "speakerId"
+        const val SPEAKER_ID = "speakerId"
 
         fun newInstance(speakerName: String): SpeakerInfoFragment {
             val sessionInfoFragment = SpeakerInfoFragment()
@@ -153,5 +93,80 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
             sessionInfoFragment.arguments!!.putString(SPEAKER_ID, speakerName)
             return sessionInfoFragment
         }
+    }
+}
+
+class SpeakerInfoDataAdapter(
+        private val dataBindingComponent: DataBindingComponent,
+        private val sessionBookmarkListener: (Session, Boolean) -> Unit
+) : RecyclerView.Adapter<DataBoundViewHolder<ViewDataBinding>>() {
+
+
+    private var data: FullSpeakerData? = null
+
+    override fun getItemCount(): Int {
+        return if (data == null) 0 else data!!.sessions.size + 1
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (val item = getItem(position)) {
+            is Speaker -> 1
+            is Session -> 2
+            else -> throw IllegalStateException("unknown $item")
+        }
+    }
+
+    private fun getItem(position: Int): Any {
+        return when (position) {
+            0 -> data!!.speaker
+            else -> data!!.sessions[position - 1].session
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBoundViewHolder<ViewDataBinding> {
+        return when (viewType) {
+            1 -> DataBoundViewHolder(DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.session_expanded_speaker_item,
+                    parent,
+                    false,
+                    dataBindingComponent
+            ))
+
+            2 -> DataBoundViewHolder(DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.context),
+                    R.layout.session_item,
+                    parent,
+                    false,
+                    dataBindingComponent
+            ))
+            else -> throw IllegalStateException("unknown viewType $viewType")
+        }
+    }
+
+
+    override fun onBindViewHolder(holder: DataBoundViewHolder<ViewDataBinding>, position: Int) {
+        when (val binding = holder.binding) {
+            is SessionItemBinding -> {
+                val d = data!!.sessions[position - 1]
+                binding.session = d.session
+                binding.track = d.track
+                binding.bookmarked.isChecked = d.isBookmarked
+                binding.bookmarked.setOnCheckedChangeListener { _, isChecked ->
+                    if (isChecked != d.isBookmarked) {
+                        sessionBookmarkListener.invoke(d.session, isChecked)
+                    }
+                }
+            }
+            is SessionExpandedSpeakerItemBinding -> {
+                binding.speaker = data!!.speaker
+            }
+            else -> throw  java.lang.IllegalStateException("unknown")
+        }
+    }
+
+    fun submitData(data: FullSpeakerData) {
+        this.data = data
+        notifyDataSetChanged()
     }
 }

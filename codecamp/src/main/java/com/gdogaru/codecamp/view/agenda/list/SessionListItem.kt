@@ -16,22 +16,19 @@
  *
  */
 
-package com.gdogaru.codecamp.view
+package com.gdogaru.codecamp.view.agenda.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
-import com.gdogaru.codecamp.api.model.Codecamp
-import com.gdogaru.codecamp.repository.AppPreferences
-import com.gdogaru.codecamp.repository.CodecampRepository
-import javax.inject.Inject
+import org.threeten.bp.LocalTime
 
-
-class AgendaViewModel @Inject constructor(
-        val repository: CodecampRepository,
-        val preferences: AppPreferences)
-    : ViewModel() {
-
-    val currentEvent: LiveData<Codecamp> = Transformations.switchMap(preferences.activeEventLiveData) { repository.eventData(it) }
-
-}
+/**
+ * @author Gabriel Dogaru (gdogaru@gmail.com)
+ */
+data class SessionListItem(
+        var id: String? = null,
+        var name: String? = null,
+        var start: LocalTime? = null,
+        var end: LocalTime? = null,
+        var trackName: String? = null,
+        var speakerNames: List<String>? = null,
+        var bookmarked: Boolean = false
+)

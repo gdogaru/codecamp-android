@@ -16,11 +16,22 @@
  *
  */
 
-package com.firstpremier.mypremiercreditcard.ui.di
+package com.gdogaru.codecamp.view.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.firstpremier.mypremiercreditcard.ui.di.ViewModelFactory
+import com.firstpremier.mypremiercreditcard.ui.di.ViewModelKey
 import com.gdogaru.codecamp.view.MainViewModel
+import com.gdogaru.codecamp.view.agenda.AgendaViewModel
+import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragmentViewModel
+import com.gdogaru.codecamp.view.agenda.list.SessionsListViewModel
+import com.gdogaru.codecamp.view.home.HomeViewModel
+import com.gdogaru.codecamp.view.home.SidebarViewModel
+import com.gdogaru.codecamp.view.session.SessionExpandedViewModel
+import com.gdogaru.codecamp.view.session.SessionInfoViewModel
+import com.gdogaru.codecamp.view.speaker.SpeakerInfoViewModel
+import com.gdogaru.codecamp.view.splash.SplashViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.multibindings.IntoMap
@@ -30,8 +41,54 @@ internal interface ViewModelModule {
 
     @Binds
     @IntoMap
+    @ViewModelKey(SplashViewModel::class)
+    fun bindSplashViewModel(viewModel: SplashViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(HomeViewModel::class)
+    fun bindHomeViewModel(viewModel: HomeViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SidebarViewModel::class)
+    fun bindSidebarViewModel(viewModel: SidebarViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SessionsListViewModel::class)
+    fun bindSessionsListViewModel(viewModel: SessionsListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CalendarFragmentViewModel::class)
+    fun bindCalendarFragmentViewModel(viewModel: CalendarFragmentViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(AgendaViewModel::class)
+    fun bindAgendaViewModel(viewModel: AgendaViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SessionExpandedViewModel::class)
+    fun bindSessionExpandedViewModel(viewModel: SessionExpandedViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SessionInfoViewModel::class)
+    fun bindSessionInfoViewModel(viewModel: SessionInfoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(SpeakerInfoViewModel::class)
+    fun bindSpeakerInfoViewModel(viewModel: SpeakerInfoViewModel): ViewModel
+
+    @Binds
+    @IntoMap
     @ViewModelKey(MainViewModel::class)
-    fun toolbarProfileViewModel(viewModel: MainViewModel): ViewModel
+    fun bindMainViewModel(viewModel: MainViewModel): ViewModel
+
 
     @Binds
     fun bindViewModelFactory(factory: ViewModelFactory): ViewModelProvider.Factory

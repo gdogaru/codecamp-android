@@ -30,7 +30,7 @@
     <!--Enable automatic exception tracking-->
     <bool name="ga_reportUncaughtExceptions">true</bool>
 
-    <screenName name="com.gdogaru.codecamp.view.SplashScreenActivity">
+    <screenName name="com.gdogaru.codecamp.view.splash.SplashActivity">
         SplashScreen
     </screenName>
 

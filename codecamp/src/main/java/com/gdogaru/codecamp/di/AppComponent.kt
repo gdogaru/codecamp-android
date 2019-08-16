@@ -18,7 +18,7 @@
 
 package com.gdogaru.codecamp.di
 
-import com.firstpremier.mypremiercreditcard.ui.di.ViewModelModule
+import com.gdogaru.codecamp.view.di.ViewModelModule
 import com.gdogaru.codecamp.App
 import com.gdogaru.codecamp.db.DatabaseModule
 import com.gdogaru.codecamp.tasks.UpdateDataWorker

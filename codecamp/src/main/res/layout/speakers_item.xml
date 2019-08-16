@@ -15,51 +15,65 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/list_item_background"
-    android:orientation="vertical"
-    android:padding="5dp">
+    <data>
 
-    <com.gdogaru.codecamp.view.common.SquareImageView
-        android:id="@+id/logo"
-        android:transitionName="speakerPhoto"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <variable
+            name="speaker"
+            type="com.gdogaru.codecamp.api.model.Speaker" />
+    </data>
 
-    <TextView
-        android:id="@+id/name"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="4dp"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        tools:text="Iasi-jug" />
+        android:background="@drawable/list_item_background"
+        android:orientation="vertical"
+        android:padding="5dp">
 
-    <TextView
-        android:id="@+id/job"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        tools:text="Partner communities" />
+        <com.gdogaru.codecamp.view.common.SquareImageView
+            android:id="@+id/logo"
+            android:transitionName="speakerPhoto"
+            android:layout_width="match_parent"
+            app:imageUrl="@{speaker.photoUrl}"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:padding="4dp"
+            android:singleLine="true"
+            android:text="@{speaker.name}"
+            android:textColor="@color/text_white"
+            android:textSize="16sp"
+            tools:text="Iasi-jug" />
+
+        <TextView
+            android:id="@+id/job"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@{speaker.jobTitle}"
+            android:textColor="@color/text_white"
+            android:textSize="12sp"
+            tools:text="Partner communities" />
 
 
-    <TextView
-        android:id="@+id/company"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:singleLine="true"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        tools:text="Partner communities" />
+        <TextView
+            android:id="@+id/company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@{speaker.company}"
+            android:singleLine="true"
+            android:textColor="@color/text_white"
+            android:textSize="12sp"
+            tools:text="Partner communities" />
 
-</LinearLayout>
+    </LinearLayout>
+</layout>

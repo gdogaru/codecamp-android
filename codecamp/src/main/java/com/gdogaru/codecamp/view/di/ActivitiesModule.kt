@@ -19,7 +19,7 @@
 package com.gdogaru.codecamp.view.di
 
 import com.gdogaru.codecamp.view.MainActivity
-import com.gdogaru.codecamp.view.SplashScreenActivity
+import com.gdogaru.codecamp.view.splash.SplashActivity
 import com.gdogaru.codecamp.view.agenda.AgendaFragment
 import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment
 import com.gdogaru.codecamp.view.agenda.list.SessionsListFragment
@@ -38,7 +38,7 @@ import dagger.android.ContributesAndroidInjector
 interface ActivitiesModule {
 
     @ContributesAndroidInjector
-    fun contributeSplashScreenActivity(): SplashScreenActivity
+    fun contributeSplashScreenActivity(): SplashActivity
 
     @ContributesAndroidInjector(modules = [(MainActivityBuildersModule::class)])
     fun contributeMainActivity(): MainActivity

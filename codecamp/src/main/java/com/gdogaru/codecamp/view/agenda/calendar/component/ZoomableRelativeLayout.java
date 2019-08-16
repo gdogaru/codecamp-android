@@ -16,7 +16,7 @@
  *
  */
 
-package com.gdogaru.codecamp.view.agenda.calendar;
+package com.gdogaru.codecamp.view.agenda.calendar.component;
 
 import android.content.Context;
 import android.graphics.Canvas;

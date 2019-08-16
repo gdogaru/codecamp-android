@@ -26,7 +26,6 @@ import androidx.appcompat.widget.AppCompatImageView;
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
-
 public class SquareImageView extends AppCompatImageView {
     public SquareImageView(Context context) {
         super(context);

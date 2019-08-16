@@ -23,111 +23,74 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.databinding.DataBindingComponent
+import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import butterknife.BindView
-import butterknife.ButterKnife
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
+import androidx.recyclerview.widget.DiffUtil
+import com.android.example.github.ui.common.DataBoundListAdapter
 import com.gdogaru.codecamp.R
-import com.gdogaru.codecamp.api.model.Session
 import com.gdogaru.codecamp.api.model.Speaker
-import com.gdogaru.codecamp.api.model.Track
+import com.gdogaru.codecamp.databinding.SessionExpandedItemBinding
+import com.gdogaru.codecamp.databinding.SessionExpandedSpeakerItemBinding
 import com.gdogaru.codecamp.di.Injectable
-import com.gdogaru.codecamp.util.DateUtil
+import com.gdogaru.codecamp.util.AppExecutors
 import com.gdogaru.codecamp.view.BaseFragment
-import com.gdogaru.codecamp.view.MainViewModel
+import com.gdogaru.codecamp.view.util.autoCleared
 import com.google.firebase.analytics.FirebaseAnalytics
-import java.util.*
 import javax.inject.Inject
 
 class SessionInfoFragment : BaseFragment(), Injectable {
-    @BindView(R.id.sessionTitle)
-    lateinit var sessionTitle: TextView
-    @BindView(R.id.sessionTime)
-    lateinit var sessionTime: TextView
-    @BindView(R.id.sessionDescription)
-    lateinit var sessionDescription: TextView
-    @BindView(R.id.sessionTrack)
-    lateinit var sessionTrack: TextView
-    @BindView(R.id.speakerLayout)
-    lateinit var speakerLayout: ViewGroup
-    @BindView(R.id.sessionTrackLayout)
-    lateinit var sessionTrackLayout: LinearLayout
-    @BindView(R.id.speakerLayoutOuter)
-    lateinit var speakerLayoutOuter: ViewGroup
-
+    @Inject
+    lateinit var appExecutors: AppExecutors
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: SessionInfoViewModel
 
+    private var binding by autoCleared<SessionExpandedItemBinding>()
+    private var adapter by autoCleared<SpeakersAdapter>()
     lateinit var sessionId: String
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
-        sessionId = arguments!!.getString(SESSION_ID)!!
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.session_expanded_item, container, false)
+        binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.session_expanded_item,
+                container,
+                false,
+                dataBindingComponent
+        )
+        binding.lifecycleOwner = this
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        manage(ButterKnife.bind(this, view))
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SessionInfoViewModel::class.java)
+        sessionId = arguments!!.getString(SESSION_ID)!!
 
-        viewModel.getSession(sessionId).observe(this, androidx.lifecycle.Observer { s ->
-            s?.let { initView(it.session, it.speakers, it.track) }
+        adapter = SpeakersAdapter(dataBindingComponent, appExecutors)
+        binding.speakers.adapter = adapter
+
+        viewModel.getSession(sessionId).observe(this, Observer { s ->
+            s?.let {
+                binding.session = it.session
+                binding.track = it.track
+                adapter.submitList(it.speakers)
+
+                viewModel.isBookmarked(it.session.id).observe(this, Observer { b ->
+                    binding.bookmarked.isChecked = b
+                })
+                binding.bookmarked.setOnCheckedChangeListener { _, isChecked ->
+                    viewModel.setBookmarked(it.session.id, isChecked)
+                }
+            }
         })
-    }
 
-    fun initView(session: Session, speakers: List<Speaker>, track: Track?) {
 
-        sessionTitle.text = session.title;
-        sessionDescription.text = session.description;
-        val timeString = DateUtil.formatPeriod(session.startTime, session.endTime)
-        sessionTime.text = timeString
-
-        if (track != null) {
-            sessionTrack.text = String.format(Locale.getDefault(), "%s, %s seats, %s", track.name, track.capacity, track.description)
-        } else {
-            sessionTrack.text = ""
-        }
-
-        speakers.forEach { addSpeaker(it) }
-
-        val bundle = Bundle().also {
-            it.putString(FirebaseAnalytics.Param.VALUE, session.title)
-        }
-        firebaseAnalytics.logEvent("session_view", bundle);
-    }
-
-    private fun addSpeaker(speaker: Speaker) {
-        val speakerView = requireActivity().layoutInflater.inflate(R.layout.session_speaker_info, speakerLayout, false)
-        val speakerName = speakerView.findViewById<View>(R.id.speakerName) as TextView
-        val speakerDesc = speakerView.findViewById<View>(R.id.speakerDescription) as TextView
-        val company = speakerView.findViewById<View>(R.id.company) as TextView
-        val job = speakerView.findViewById<View>(R.id.job_title) as TextView
-        val picture = speakerView.findViewById<View>(R.id.speakerPhoto) as ImageView
-
-        speakerName.text = speaker.name
-        company.text = speaker.company
-        job.text = speaker.jobTitle
-        speakerDesc.text = speaker.bio
-        speakerLayout.addView(speakerView)
-
-        Glide.with(requireActivity())
-                .load(speaker.photoUrl)
-                .apply(RequestOptions()
-                        .centerCrop()
-                        .placeholder(R.drawable.person_icon))
-                .into(picture)
+//        firebaseAnalytics.logEvent("session_item", bundle);
     }
 
     companion object {
@@ -140,5 +103,35 @@ class SessionInfoFragment : BaseFragment(), Injectable {
             sessionInfoFragment.arguments!!.putString(SESSION_ID, id)
             return sessionInfoFragment
         }
+    }
+}
+
+class SpeakersAdapter(
+        private val dataBindingComponent: DataBindingComponent,
+        appExecutors: AppExecutors
+) : DataBoundListAdapter<Speaker, SessionExpandedSpeakerItemBinding>(
+        appExecutors = appExecutors,
+        diffCallback = object : DiffUtil.ItemCallback<Speaker>() {
+            override fun areItemsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
+                return oldItem.name == newItem.name
+            }
+
+            override fun areContentsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
+                return oldItem == newItem
+            }
+        }
+) {
+    override fun createBinding(parent: ViewGroup): SessionExpandedSpeakerItemBinding {
+        return DataBindingUtil.inflate(
+                LayoutInflater.from(parent.context),
+                R.layout.session_expanded_speaker_item,
+                parent,
+                false,
+                dataBindingComponent
+        )
+    }
+
+    override fun bind(binding: SessionExpandedSpeakerItemBinding, item: Speaker) {
+        binding.speaker = item
     }
 }

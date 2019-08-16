@@ -16,34 +16,18 @@
  *
  */
 
-package com.gdogaru.codecamp.view.agenda;
-
-import com.evernote.android.state.State;
-import com.gdogaru.codecamp.repository.BookmarkRepository;
-import com.gdogaru.codecamp.view.BaseFragment;
-
-import javax.inject.Inject;
-
-/**
- * @author Gabriel Dogaru (gdogaru@gmail.com)
- */
-
-public abstract class SessionsFragment extends BaseFragment {
-    @Inject
-    protected BookmarkRepository bookmarkingService;
-    @State
-    boolean favoritesOnly = false;
-
-    public Boolean getFavoritesOnly() {
-        return favoritesOnly;
-    }
-
-    public void setFavoritesOnly(Boolean favoritesOnly) {
-        this.favoritesOnly = favoritesOnly;
-        if (getView() != null) updateDisplay();
-    }
-
-    public abstract void updateDisplay();
+package com.gdogaru.codecamp.view.agenda.calendar.component
 
 
-}
+import org.threeten.bp.LocalTime
+
+data class CEvent(
+        val id: String,
+        val start: LocalTime,
+        val end: LocalTime,
+        val preferedIdx: Int,
+        val title: String,
+        val descLine1: String,
+        val descLine2: String,
+        val bookmarked:Boolean
+)

@@ -68,7 +68,7 @@ class DataUpdater @Inject constructor(
     fun update() {
         appPreferences.updateProgress = 0F
         val request = OneTimeWorkRequest.Builder(UpdateDataWorker::class.java).build()
-        val result = WorkManager.getInstance().enqueueUniqueWork(UpdateDataWorker::class.java.name, ExistingWorkPolicy.REPLACE, request)
+        val result = WorkManager.getInstance().enqueueUniqueWork(UpdateDataWorker::class.java.name, ExistingWorkPolicy.KEEP, request)
         appPreferences.activeJob = request.id.toString()
     }
 }

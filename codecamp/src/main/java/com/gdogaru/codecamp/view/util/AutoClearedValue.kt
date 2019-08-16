@@ -18,6 +18,7 @@
 
 package com.gdogaru.codecamp.view.util
 
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
@@ -53,7 +54,32 @@ class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Frag
     }
 }
 
+class AutoClearedActivityValue<T : Any>(val activity: AppCompatActivity) : ReadWriteProperty<AppCompatActivity, T> {
+    private var _value: T? = null
+
+    init {
+        activity.lifecycle.addObserver(object : LifecycleObserver {
+            @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+            fun onDestroy() {
+                _value = null
+            }
+        })
+    }
+
+    override fun getValue(thisRef: AppCompatActivity, property: KProperty<*>): T {
+        return _value ?: throw IllegalStateException(
+                "should never call auto-cleared-value get when it might not be available"
+        )
+    }
+
+    override fun setValue(thisRef: AppCompatActivity, property: KProperty<*>, value: T) {
+        _value = value
+    }
+}
+
 /**
  * Creates an [AutoClearedValue] associated with this fragment.
  */
 fun <T : Any> Fragment.autoCleared() = AutoClearedValue<T>(this)
+
+fun <T : Any> AppCompatActivity.autoCleared() = AutoClearedActivityValue<T>(this)

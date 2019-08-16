@@ -16,16 +16,26 @@
  *
  */
 
-package com.gdogaru.codecamp.view.agenda.calendar;
+package com.gdogaru.codecamp.view.home
+
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
+import com.gdogaru.codecamp.api.model.Codecamp
+import com.gdogaru.codecamp.repository.AppPreferences
+import com.gdogaru.codecamp.repository.CodecampRepository
+import javax.inject.Inject
+
+class HomeViewModel @Inject constructor(
+        val repository: CodecampRepository,
+        val preferences: AppPreferences
+) : ViewModel() {
+
+    val currentEvent: LiveData<Codecamp> = Transformations.switchMap(preferences.activeEventLiveData) { repository.eventData(it) }
 
 
-public class DisplayEvent {
-
-    public final CEvent event;
-    public int index = 0;
-    public int rowTotal = 0;
-
-    public DisplayEvent(CEvent event) {
-        this.event = event;
+    fun selectSchedule(idx: Int) {
+        preferences.activeSchedule = idx
     }
+
 }

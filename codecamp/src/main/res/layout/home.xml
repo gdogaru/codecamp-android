@@ -65,77 +65,81 @@
                 android:fillViewport="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-                <LinearLayout
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical"
-                        android:padding="@dimen/main_padding">
+                    <TextView
+                        android:id="@+id/eventTitle"
+                        style="@style/header_1"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="@dimen/main_padding"
+                        android:layout_marginEnd="@dimen/main_padding"
 
-                        <TextView
-                            android:id="@+id/eventTitle"
-                            style="@style/header_1"
-                            fontPath="@string/font_roboto_bold"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{summary.title}"
-                            tools:text="title" />
+                        fontPath="@string/font_roboto_bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{summary.title}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        tools:text="title" />
 
-                        <TextView
-                            android:id="@+id/eventDate"
-                            style="@style/field_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@{UiFormat.formatDayDate(summary.endDate)}"
-                            tools:text="10 November 2012" />
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/eventDate"
+                        style="@style/field_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{UiFormat.formatDayDate(summary.endDate)}"
+                        tools:text="10 November 2012"
+                        app:layout_constraintStart_toStartOf="@id/eventTitle"
+                        app:layout_constraintTop_toBottomOf="@id/eventTitle" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/agenda"
+                        android:layout_marginTop="@dimen/main_padding"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:nestedScrollingEnabled="false"
                         android:visibility="visible"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:context=".view.main.MainActivity"
-                        tools:listitem="@layout/main_schedule_item" />
+                        tools:listitem="@layout/main_schedule_item"
+                        tools:itemCount="3"
+                        app:layout_constraintTop_toBottomOf="@id/eventDate" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+
+                    <TextView
+                        android:id="@+id/location_label"
+                        style="@style/header_2"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintStart_toStartOf="@id/eventTitle"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingLeft="@dimen/main_padding"
-                        android:paddingRight="@dimen/main_padding">
+                        android:layout_marginTop="20dp"
+                        android:text="@string/location"
+                        app:layout_constraintTop_toBottomOf="@id/agenda" />
 
-                        <TextView
-                            style="@style/header_2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:text="@string/location" />
-
-                        <TextView
-                            android:id="@+id/location"
-                            style="@style/field_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            tools:text="hotel ramada" />
-                    </LinearLayout>
+                    <TextView
+                        android:id="@+id/location"
+                        style="@style/field_label"
+                        android:layout_width="wrap_content"
+                        app:layout_constraintStart_toStartOf="@id/eventTitle"
+                        android:layout_height="wrap_content"
+                        tools:text="hotel ramada"
+                        android:text="@{summary.venue.name}"
+                        app:layout_constraintTop_toBottomOf="@id/location_label" />
 
                     <fragment
                         android:id="@+id/map"
+                        app:layout_constraintTop_toBottomOf="@id/location"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
-                        android:layout_width="fill_parent"
+                        android:layout_width="match_parent"
                         android:layout_height="180dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginBottom="10dp"
                         android:orientation="vertical" />
 
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.core.widget.NestedScrollView>
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>

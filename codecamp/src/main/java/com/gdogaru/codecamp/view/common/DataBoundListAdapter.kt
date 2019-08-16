@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.AsyncDifferConfig
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.gdogaru.codecamp.util.AppExecutors
+import com.gdogaru.codecamp.view.common.DataBoundViewHolder
 
 /**
  * A generic RecyclerView adapter that uses Data Binding & DiffUtil.

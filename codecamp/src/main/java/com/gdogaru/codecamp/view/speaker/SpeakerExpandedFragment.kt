@@ -23,7 +23,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -32,12 +32,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.Speaker
+import com.gdogaru.codecamp.databinding.SpeakerExpandedBinding
 import com.gdogaru.codecamp.view.BaseFragment
 import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.MainViewModel
@@ -46,63 +44,48 @@ import javax.inject.Inject
 
 class SpeakerExpandedFragment : BaseFragment() {
 
-    @BindView(R.id.viewPager)
-    lateinit var viewPager: ViewPager
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+    private var binding by autoCleared<SpeakerExpandedBinding>()
     private val args: SpeakerExpandedFragmentArgs by navArgs()
-
     private lateinit var viewModel: MainViewModel
 
     private var adapter by autoCleared<SpeakerAdapter>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = DataBindingUtil.inflate(
+                inflater,
+                R.layout.speaker_expanded,
+                container,
+                false,
+                dataBindingComponent
+        )
+        binding.lifecycleOwner = this
+        return binding.root
     }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.speaker_expanded, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        manage(ButterKnife.bind(this, view))
+        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
 
         val ma = activity as MainActivity?
-        ma!!.setSupportActionBar(toolbar)
-        toolbar.title = ""
+        ma!!.setSupportActionBar(binding.toolbar)
+        binding.toolbar.title = ""
         ma.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         adapter = SpeakerAdapter(childFragmentManager)
-        viewPager.adapter = adapter
+        binding.viewPager.adapter = adapter
 
         viewModel.currentEvent.observe(this, Observer { initViews(it) })
     }
 
-
-    fun initViews(event: Codecamp) {
+    private fun initViews(event: Codecamp) {
         val speakers = event.speakers.orEmpty()
         adapter.updateItems(speakers)
 
         val index = speakers.indexOfFirst { input -> input.name == args.speakerId }
-        viewPager.currentItem = if (index < 0) 0 else index
+        binding.viewPager.currentItem = if (index < 0) 0 else index
     }
-
-    private fun restoreState(savedInstanceState: Bundle) {
-        //        if (savedInstanceState != null) {
-        //            if (savedInstanceState.containsKey(SPEAKER_ID)) {
-        //                speakerId = savedInstanceState.getString(SPEAKER_ID);
-        //            }
-        //        } else if (getIntent() != null && getIntent().hasExtra(SPEAKER_ID)) {
-        //            speakerId = getIntent().getStringExtra(SPEAKER_ID);
-        //        } else {
-        //            Timber.e("Could not show speaker");
-        //            finish();
-        //        }
-    }
-
 
     private inner class SpeakerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
         private var speakers = mutableListOf<Speaker>()

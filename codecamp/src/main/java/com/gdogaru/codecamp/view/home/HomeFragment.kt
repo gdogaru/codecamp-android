@@ -41,9 +41,9 @@ import com.gdogaru.codecamp.util.AnalyticsHelper
 import com.gdogaru.codecamp.util.AppExecutors
 import com.gdogaru.codecamp.util.RatingHelper
 import com.gdogaru.codecamp.util.Strings
+import com.gdogaru.codecamp.view.BaseActivity
 import com.gdogaru.codecamp.view.BaseFragment
 import com.gdogaru.codecamp.view.MainActivity
-import com.gdogaru.codecamp.view.MainViewModel
 import com.gdogaru.codecamp.view.util.autoCleared
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -58,31 +58,16 @@ import javax.inject.Inject
 
 
 class HomeFragment : BaseFragment(), OnMapReadyCallback {
-    var binding by autoCleared<HomeBinding>()
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
     @Inject
     lateinit var appExecutors: AppExecutors
-
-
-//    @BindView(R.id.eventTitle)
-//    lateinit var eventTitle: TextView
-//    @BindView(R.id.eventDate)
-//    lateinit var eventDate: TextView
-//    @BindView(R.id.location)
-//    lateinit var location: TextView
-//    @BindView(R.id.agenda)
-//    lateinit var agendaRecycler: RecyclerView
-//    @BindView(R.id.toolbar)
-//    lateinit var toolbar: Toolbar
-//    @BindView(R.id.drawer_layout)
-//    lateinit var drawerLayout: DrawerLayout
-
-    private var mapFragment: SupportMapFragment? = null
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    lateinit var viewModel: MainViewModel
+
+    private var mapFragment: SupportMapFragment? = null
+    private var binding by autoCleared<HomeBinding>()
+    lateinit var viewModel: HomeViewModel
 
     var adapter by autoCleared<BindingScheduleAdapter>()
 
@@ -101,13 +86,13 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
                 false,
                 dataBindingComponent
         )
+        binding.lifecycleOwner = this
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)
@@ -132,7 +117,6 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
 
         adapter = BindingScheduleAdapter(dataBindingComponent, appExecutors) { onItemClicked(it) }
         binding.agenda.adapter = adapter
-//        binding.agenda.setHasFixedSize(true)
 
         RatingHelper.logUsage(activity)
         setMap()
@@ -141,16 +125,10 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
     }
 
     private fun showEvent(currentEvent: Codecamp) {
-        val bundle = Bundle().apply { putString("event", currentEvent.title) }
-
-        firebaseAnalytics.logEvent(AnalyticsHelper.normalize("event_" + currentEvent.title), bundle)
+        firebaseAnalytics.logEvent(AnalyticsHelper.normalize("event_" + currentEvent.title),
+                Bundle().apply { putString("event", currentEvent.title) })
 
         binding.summary = currentEvent
-
-//        eventTitle.text = currentEvent.title
-//        eventDate.text = DATE_FORMAT.format(currentEvent.startDate)
-//        location.text = currentEvent.venue?.name
-//
         adapter.submitList(schedules(currentEvent))
 
         binding.drawerLayout.closeDrawer(Gravity.LEFT)
@@ -204,16 +182,9 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         if (!isNetworkConnected) {
             Toast.makeText(activity, R.string.no_internet_connection, Toast.LENGTH_SHORT).show()
         } else {
-//            todo fix this asap
-//            checkAndRequestPermissions()
+            (requireActivity() as BaseActivity).checkAndRequestPermissions()
         }
     }
-
-//    override fun onPermissionGranted() {
-//        LoadingDataActivity.startUpdate(activity)
-//        //        jobManager.addJob(new UpdateDataJob());
-//    }
-
 
     override fun onMapReady(googleMap: GoogleMap?) {
         Timber.i("On map ready %s", googleMap)

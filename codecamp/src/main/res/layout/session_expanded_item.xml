@@ -17,47 +17,62 @@
   ~  along with this program.  If not, see <http://www.gnu.org/licenses/>.
   ~
   -->
+<layout>
 
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
-
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:layout_height="fill_parent">
 
-        <TextView
-            android:id="@+id/sessionTitle"
-            style="@style/header_1"
-            fontPath="@string/font_roboto_medium"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:lineSpacingMultiplier="1.2"
-            tools:text="title" />
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <TextView
-            android:id="@+id/sessionTime"
-            style="@style/field_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="13.06.09 - 14.06.09" />
+            <CheckBox
+                android:id="@+id/bookmarked"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_bookmark"
 
-
-        <LinearLayout
-            android:id="@+id/sessionTrackLayout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
+                android:id="@+id/sessionTitle"
+                style="@style/header_1"
+                fontPath="@string/font_roboto_medium"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.2"
+                android:text="@{session.title}"
+                app:layout_constraintEnd_toStartOf="@id/bookmarked"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="title" />
+
+            <TextView
+                android:id="@+id/sessionTime"
+                style="@style/field_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{session.formattedInterval}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sessionTitle"
+                tools:text="13.06.09 - 14.06.09" />
+
+            <TextView
+                android:id="@+id/trackHeader"
                 style="@style/header_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/track"
-                android:textStyle="bold" />
+
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sessionTime" />
 
             <TextView
                 android:id="@+id/sessionTrack"
@@ -66,36 +81,58 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="3dp"
                 android:paddingTop="0dp"
+                android:text="@{track.fullDescription}"
+                app:layout_constraintBaseline_toBaselineOf="@id/trackHeader"
+                app:layout_constraintStart_toEndOf="@id/trackHeader"
                 tools:text="track" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/sessionDescription"
-            style="@style/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            tools:text="description sd" />
-
-        <LinearLayout
-            android:id="@+id/speakerLayoutOuter"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/sessionDescription"
+                style="@style/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@{session.description}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/trackHeader"
+                tools:text="description sd" />
+
+
+            <TextView
+                android:id="@+id/speakersHeader"
                 style="@style/header_2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="15dp"
                 android:paddingBottom="5dp"
-                android:text="@string/speakers" />
+                android:text="@string/speakers"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/sessionDescription" />
 
-            <LinearLayout
-                android:id="@+id/speakerLayout"
-                android:layout_width="wrap_content"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/speakers"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
-        </LinearLayout>
-    </LinearLayout>
-</androidx.core.widget.NestedScrollView>
+                android:nestedScrollingEnabled="false"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/speakersHeader"
+                tools:itemCount="2"
+                tools:listitem="@layout/session_expanded_speaker_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <data>
+
+        <variable
+            name="session"
+            type="com.gdogaru.codecamp.api.model.Session" />
+
+        <variable
+            name="track"
+            type="com.gdogaru.codecamp.api.model.Track" />
+
+    </data>
+</layout>

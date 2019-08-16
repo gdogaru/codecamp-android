@@ -52,7 +52,7 @@
         tools:replace="android:appComponentFactory">
 
         <activity
-            android:name=".view.SplashScreenActivity"
+            android:name=".view.splash.SplashActivity"
             android:noHistory="true"
             android:theme="@style/SplashTheme">
             <intent-filter>

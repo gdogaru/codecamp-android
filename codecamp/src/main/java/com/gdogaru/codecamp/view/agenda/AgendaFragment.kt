@@ -22,27 +22,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.TextView
-import androidx.appcompat.widget.Toolbar
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnCheckedChanged
 import com.evernote.android.state.State
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Codecamp
+import com.gdogaru.codecamp.databinding.AgendaBinding
 import com.gdogaru.codecamp.repository.AppPreferences
 import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.util.AnalyticsHelper
 import com.gdogaru.codecamp.util.DateUtil
 import com.gdogaru.codecamp.view.BaseFragment
 import com.gdogaru.codecamp.view.MainActivity
-import com.gdogaru.codecamp.view.MainViewModel
 import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment
 import com.gdogaru.codecamp.view.agenda.list.SessionsListFragment
+import com.gdogaru.codecamp.view.util.autoCleared
 import com.google.firebase.analytics.FirebaseAnalytics
 import javax.inject.Inject
 
@@ -50,15 +46,7 @@ import javax.inject.Inject
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
 class AgendaFragment : BaseFragment() {
-    @BindView(R.id.toolbar)
-    lateinit var toolbar: Toolbar
-    @BindView(R.id.view_switch)
-    lateinit var viewSwitch: CheckBox
-    @BindView(R.id.favorite_switch)
-    lateinit var favoriteSwitch: CheckBox
-    @BindView(R.id.title)
-    lateinit var titleView: TextView
-
+    private var binding by autoCleared<AgendaBinding>()
     @Inject
     lateinit var appPreferences: AppPreferences
     @Inject
@@ -66,74 +54,57 @@ class AgendaFragment : BaseFragment() {
     @Inject
     lateinit var bookmarkingService: BookmarkRepository
 
-    @State
-    var favoritesOnly = false
-
-
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MainViewModel
+    @State
+    var favoritesOnly = false
+    private lateinit var viewModel: AgendaViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.agenda, container, false, dataBindingComponent)
+        binding.lifecycleOwner = this
+        return binding.root
     }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) = inflater.inflate(R.layout.agenda_activity, container, false)
 
     private lateinit var event: Codecamp
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        ButterKnife.bind(this, view)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AgendaViewModel::class.java)
 
         val ma = activity as MainActivity?
-        ma!!.setSupportActionBar(toolbar)
+        ma!!.setSupportActionBar(binding.toolbar)
         ma.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
-        viewSwitch.isChecked = appPreferences.listViewList
+        binding.viewSwitch.isChecked = appPreferences.listViewList
+        binding.viewSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (appPreferences.listViewList != isChecked) {
+                appPreferences.listViewList = isChecked
+                showContent()
+            }
+        }
 
-        favoriteSwitch.isChecked = favoritesOnly
+        binding.favoriteSwitch.setOnCheckedChangeListener { _, checked ->
+            if (checked != favoritesOnly) {
+                favoritesOnly = checked
+                val f = childFragmentManager.findFragmentById(R.id.content) as AbstractSessionsListFragment?
+                f?.setFavoritesOnly(favoritesOnly)
+            }
+        }
 
-
-        val fragmentById = childFragmentManager.findFragmentById(R.id.content) as SessionsFragment?
+        val fragmentById = childFragmentManager.findFragmentById(R.id.content) as AbstractSessionsListFragment?
         if (fragmentById == null) {
-            showList()
+            showContent()
         } else {
             fragmentById.setFavoritesOnly(favoritesOnly)
         }
 
-        viewModel.currentEvent.observe(this, Observer {
-            val schedule = it.schedules!![0]
-            event = it
-            titleView.text = String.format("%s - %s", DateUtil.formatDay(schedule.date), it.venue!!.city)
+        viewModel.getSchedule().observe(this, Observer { schedule ->
+            schedule?.let { binding.title.text = String.format(DateUtil.formatDay(it.date)) }
         })
     }
 
-    @OnCheckedChanged(R.id.view_switch)
-    fun onViewTypeChange(checked: Boolean) {
-        if (appPreferences.listViewList != viewSwitch.isChecked) {
-            appPreferences.listViewList = viewSwitch.isChecked
-            showList()
-        }
-    }
-
-    @OnCheckedChanged(R.id.favorite_switch)
-    fun onFavoriteChecked(checked: Boolean) {
-//        if (checked != favoritesOnly) {
-//            if (checked && bookmarkingService.getBookmarked(event.title.orEmpty())) {
-//                favoritesOnly = false
-//                favoriteSwitch.isChecked = false
-//                Toast.makeText(activity, R.string.no_favorites_yet, Toast.LENGTH_SHORT).show()
-//                return
-//            }
-//
-//            favoritesOnly = checked
-//            val f = childFragmentManager.findFragmentById(R.id.content) as SessionsFragment?
-//            f?.setFavoritesOnly(favoritesOnly)
-//        }
-    }
-
-    private fun showList() {
+    private fun showContent() {
         val bundle = Bundle()
         val value = if (appPreferences.listViewList) "list" else "calendar"
         bundle.putString("view_type", value)
@@ -143,7 +114,7 @@ class AgendaFragment : BaseFragment() {
                 .beginTransaction()
                 .disallowAddToBackStack()
                 .setCustomAnimations(R.anim.fade_in, R.anim.fade_out) //, 0, R.anim.hold);
-        val sessionsFragment: SessionsFragment
+        val sessionsFragment: AbstractSessionsListFragment
         if (appPreferences.listViewList) {
             sessionsFragment = SessionsListFragment()
         } else {
@@ -153,8 +124,4 @@ class AgendaFragment : BaseFragment() {
         transaction.commit()
     }
 
-    companion object {
-
-        val FAVORITES_ONLY = "FAVORITES_ONLY"
-    }
 }

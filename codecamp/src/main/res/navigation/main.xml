@@ -62,7 +62,11 @@
 
         <action
             android:id="@+id/showSpeaker"
-            app:destination="@id/speakerInfo" />
+            app:destination="@id/speakerInfo"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -80,7 +84,7 @@
         android:id="@+id/agenda"
         android:name="com.gdogaru.codecamp.view.agenda.AgendaFragment"
         android:label="Agenda"
-        tools:layout="@layout/agenda_activity">
+        tools:layout="@layout/agenda">
 
         <action
             android:id="@+id/showSessionInfo"

@@ -36,7 +36,9 @@ class BindingScheduleAdapter(
         appExecutors = appExecutors,
         diffCallback = object : DiffUtil.ItemCallback<MainViewItem>() {
             override fun areItemsTheSame(oldItem: MainViewItem, newItem: MainViewItem): Boolean {
-                return oldItem.title == newItem.title && oldItem.subtitle == newItem.subtitle
+                return oldItem.javaClass == newItem.javaClass
+                        && oldItem.title == newItem.title
+                        && (oldItem !is MainViewItem.AgendaItem || oldItem.index == (newItem as MainViewItem.AgendaItem).index)
             }
 
             override fun areContentsTheSame(oldItem: MainViewItem, newItem: MainViewItem): Boolean {

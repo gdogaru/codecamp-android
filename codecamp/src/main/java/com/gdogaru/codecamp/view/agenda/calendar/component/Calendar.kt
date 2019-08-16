@@ -16,26 +16,24 @@
  *
  */
 
-package com.gdogaru.codecamp.view.agenda.calendar
+package com.gdogaru.codecamp.view.agenda.calendar.component
 
 import android.app.Activity
 import android.content.Context
-import android.graphics.Canvas
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.core.content.ContextCompat
 import com.gdogaru.codecamp.R
-import com.gdogaru.codecamp.util.Preconditions
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import java.io.Serializable
 import java.util.*
+import kotlin.math.max
 
 
 class Calendar : ScrollView {
@@ -44,7 +42,7 @@ class Calendar : ScrollView {
     lateinit var hourParent: RelativeLayout
     private var PX_PER_MINUTE: Double = 0.toDouble()
     private var HOUR_BAR_WIDTH: Int = 0
-    private var events: List<DisplayEvent>? = ArrayList()
+    private var events: List<DisplayEvent> = ArrayList()
     private var startDate: LocalTime? = null
     private var endDate: LocalTime? = null
     private var dateDiff: Long = 0
@@ -52,12 +50,7 @@ class Calendar : ScrollView {
     private var currentTime: LocalDateTime? = null
     private var maxInRow = 1
     private var currentTimeLayout: LinearLayout? = null
-    var bookmarked: Set<String> = HashSet()
-        set(bookmarked) {
-            Preconditions.checkNotNull(bookmarked)
-            field = bookmarked
-            drawEvents()
-        }
+
     private var hz: HorizontalScrollView? = null
     private var scheduleDate: LocalDateTime? = null
 
@@ -101,7 +94,7 @@ class Calendar : ScrollView {
         hourParent = RelativeLayout(context)
         val linearLayout = LinearLayout(context)
 
-        val lp = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val lp = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         addView(linearLayout, lp)
         linearLayout.addView(hourParent)
         hz = HorizontalScrollView(context)
@@ -114,19 +107,10 @@ class Calendar : ScrollView {
         return (dp * displayMetrics.density + 0.5).toInt()
     }
 
-    private fun pxToDp(px: Double): Int {
-        val r = resources
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, px.toFloat(), r.displayMetrics).toInt()
-    }
-
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
-    }
-
     private fun drawCurrentTime() {
         //        if (scheduleDate != null) currentTime = scheduleDate.toDateTime();
 
-        if (currentTime == null || scheduleDate == null || events == null || events!!.isEmpty()
+        if (currentTime == null || scheduleDate == null || events == null || events.isEmpty()
                 || LocalDate.from(currentTime!!) != scheduleDate!!.toLocalDate()) {
             return
         }
@@ -139,12 +123,12 @@ class Calendar : ScrollView {
         } else {
             lp = currentTimeLayout!!.layoutParams as RelativeLayout.LayoutParams
         }
-        val (_, _, end) = events!![events!!.size - 1].event
+        val (_, _, end) = events[events.size - 1].event
         val last = LocalDateTime.of(LocalDate.now(), end)
 
         if (currentTime!!.isAfter(last)) return
 
-        val dateDiffMinutes = Duration.between(currentTime, events!![0].event.start.withMinute(0).withSecond(0)).toMinutes() //.get.toDateTimeToday().withMinuteOfHour(0).withSecondOfMinute(0))
+        val dateDiffMinutes = Duration.between(currentTime, events[0].event.start.withMinute(0).withSecond(0)).toMinutes() //.get.toDateTimeToday().withMinuteOfHour(0).withSecondOfMinute(0))
         val top = (dateDiffMinutes * PX_PER_MINUTE).toInt()
         lp.setMargins(0, top, 0, 0)
 
@@ -164,15 +148,12 @@ class Calendar : ScrollView {
     }
 
     private fun recalculateDisplay() {
-        if (events!!.isEmpty()) {
-            return
-        }
         Collections.sort(events, EVENT_COMPARATOR)
         //        trimEvents(events);
-        startDate = events!![0].event.start
+        startDate = if (events.isNotEmpty()) events[0].event.start else LocalTime.NOON.withHour(9)
+        endDate = if (events.isNotEmpty()) events[events.size - 1].event.end else LocalTime.NOON.withHour(21)
+
         dateDiff = startDate!!.getMillisOfDay() % MILLIS_IN_DAY - startDate!!.getMillisOfDay() % MILLIS_IN_HOUR
-        val (_, _, end) = events!![events!!.size - 1].event
-        endDate = end
         //        if (endDate.isBefore(startDate)) {
         //            java.util.Calendar cal = GregorianCalendar.getInstance();
         //            cal.setTime(endDate);
@@ -187,12 +168,12 @@ class Calendar : ScrollView {
 
         val bag = HashSet<DisplayEvent>()
         maxInRow = 0
-        for (ev in events!!) {
+        for (ev in events) {
             removeExpired(bag, ev.event.start)
             ev.index = getNextFreeIdx(bag)
             bag.add(ev)
             updateTotals(bag)
-            maxInRow = Math.max(maxInRow, bag.size)
+            maxInRow = max(maxInRow, bag.size)
         }
     }
 
@@ -256,9 +237,6 @@ class Calendar : ScrollView {
     }
 
     private fun drawEvents() {
-        if (events!!.isEmpty()) {
-            return
-        }
         recalculateDisplay()
 
         parent.removeAllViews()
@@ -271,9 +249,9 @@ class Calendar : ScrollView {
 
         drawHours()
 
-        for (ev in events!!) {
+        for (ev in events) {
             val pxPerIdx = width / ev.rowTotal
-            val layout = LayoutInflater.from(context).inflate(R.layout.c_event_layout2, parent, false)
+            val layout = LayoutInflater.from(context).inflate(R.layout.calendar_event, parent, false)
             val title = layout.findViewById<View>(R.id.title) as TextView
             val desc1 = layout.findViewById<View>(R.id.desc1) as TextView
             val desc2 = layout.findViewById<View>(R.id.desc2) as TextView
@@ -282,7 +260,7 @@ class Calendar : ScrollView {
             title.text = trim(ev.event.title)
             desc1.text = ev.event.descLine1
             desc2.text = ev.event.descLine2
-            content.setBackgroundResource(if (this.bookmarked.contains(ev.event.id)) R.drawable.list_item_background_favorite else R.drawable.list_item_background)
+            content.setBackgroundResource(if (ev.event.bookmarked) R.drawable.list_item_background_favorite else R.drawable.list_item_background)
 
             var lp: RelativeLayout.LayoutParams? = layout.layoutParams as RelativeLayout.LayoutParams
             if (lp == null) {
@@ -311,16 +289,14 @@ class Calendar : ScrollView {
     }
 
     private fun drawHours() {
-        val cal = GregorianCalendar()
-        //        cal.setTime(startDate);
-        val startHour = startDate!!.hour //cal.get(java.util.Calendar.HOUR_OF_DAY);
-        //        cal.setTime(endDate);
-        var endHour = endDate!!.hour //cal.get(java.util.Calendar.HOUR_OF_DAY);
+        val startHour = startDate?.hour ?: 9
+        var endHour = endDate?.hour ?: 21
         if (endHour == 0 || endHour < startHour) {
             endHour = 23
         }
+        hourParent.removeAllViews()
         for (i in startHour..endHour) {
-            val layout = LayoutInflater.from(context).inflate(R.layout.c_hour, hourParent, false)
+            val layout = LayoutInflater.from(context).inflate(R.layout.calendar_hour, hourParent, false)
             val tv = layout.findViewById<View>(R.id.text) as TextView
             tv.text = i.toString()
             var lp: RelativeLayout.LayoutParams? = layout.layoutParams as RelativeLayout.LayoutParams
@@ -379,10 +355,10 @@ class Calendar : ScrollView {
 
     companion object {
         private val EVENT_COMPARATOR = DisplayEventComparator()
-        private val MINUTES_IN_DAY = 1440
-        private val MILLIS_IN_MINUTE: Long = 60000
-        private val MILLIS_IN_DAY: Long = 86400000
-        private val MILLIS_IN_HOUR: Long = 3600000
+        private const val MINUTES_IN_DAY = 1440
+        private const val MILLIS_IN_MINUTE: Long = 60000
+        private const val MILLIS_IN_DAY: Long = 86400000
+        private const val MILLIS_IN_HOUR: Long = 3600000
     }
 }
 

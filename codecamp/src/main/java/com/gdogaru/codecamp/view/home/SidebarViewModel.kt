@@ -16,17 +16,23 @@
  *
  */
 
-package com.gdogaru.codecamp.view.agenda.calendar
+package com.gdogaru.codecamp.view.home
+
+import androidx.lifecycle.ViewModel
+import com.gdogaru.codecamp.repository.AppPreferences
+import com.gdogaru.codecamp.repository.CodecampRepository
+import javax.inject.Inject
+
+class SidebarViewModel @Inject constructor(
+        val repository: CodecampRepository,
+        val preferences: AppPreferences)
+    : ViewModel() {
+
+    fun allEvents() = repository.events()
 
 
-import org.threeten.bp.LocalTime
+    fun setActiveEvent(refId: Long) {
+        preferences.activeEvent = refId
+    }
 
-data class CEvent(
-        val id: String,
-        val start: LocalTime,
-        val end: LocalTime,
-        val preferedIdx: Int,
-        val title: String,
-        val descLine1: String,
-        val descLine2: String
-)
+}

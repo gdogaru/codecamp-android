@@ -18,10 +18,8 @@
 
 package com.gdogaru.codecamp.view
 
-import android.os.Bundle
 import androidx.databinding.DataBindingComponent
 import androidx.fragment.app.Fragment
-import butterknife.Unbinder
 import com.gdogaru.codecamp.binding.FragmentDataBindingComponent
 import com.gdogaru.codecamp.di.Injectable
 
@@ -30,25 +28,6 @@ import com.gdogaru.codecamp.di.Injectable
  */
 abstract class BaseFragment : Fragment(), Injectable {
 
-    private var unbinder: Unbinder? = null
-
     var dataBindingComponent: DataBindingComponent = FragmentDataBindingComponent(this)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (unbinder != null) unbinder!!.unbind()
-    }
-
-    protected fun manage(unbinder: Unbinder) {
-        this.unbinder = unbinder
-    }
 
 }

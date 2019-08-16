@@ -38,8 +38,9 @@
     <color name="red">#ff0000</color>
     <color name="time_bar">#80ff0000</color>
     <color name="sec_list_item">#b3b3b3</color>
-    <color name="white">#fff3f3f3</color>
-    <color name="dark">#ff2f2f2f</color>
+    <color name="white">#ffffff</color>
+    <color name="text_white">#fff3f3f3</color>
+    <color name="text_dark">#ff2f2f2f</color>
     <color name="black">#000000</color>
     <color name="list_item_pressed_back">#b9ffffff</color>
     <color name="transparent">@android:color/transparent</color>

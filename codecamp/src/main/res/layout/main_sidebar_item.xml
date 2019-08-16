@@ -16,42 +16,59 @@
   ~
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/list_item_background_sidebar"
-    android:orientation="vertical"
-    android:paddingLeft="10dp"
-    android:paddingTop="6dp"
-    android:paddingRight="10dp"
-    android:paddingBottom="6dp"
-    app:paddingEnd="10dp">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/title"
-        style="@style/header_1"
-        fontPath="@string/font_roboto_bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:textSize="14sp"
-        tools:text="title" />
+    <data>
 
-    <TextView
-        android:id="@+id/date"
-        style="@style/field_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="12sp"
-        tools:text="10 November 2012" />
+        <import type="com.gdogaru.codecamp.view.common.UiFormat" />
 
-    <TextView
-        android:id="@+id/city"
-        style="@style/field_label"
-        android:layout_width="wrap_content"
+        <variable
+            name="summary"
+            type="com.gdogaru.codecamp.api.model.EventSummary" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="12sp"
-        tools:text="Iasi" />
-</LinearLayout>
+        android:background="@drawable/list_item_background_sidebar"
+        android:orientation="vertical"
+        android:paddingLeft="10dp"
+        android:paddingTop="6dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="6dp"
+        app:paddingEnd="10dp">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/header_1"
+            fontPath="@string/font_roboto_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="0dp"
+            android:text="@{summary.title}"
+            android:textSize="14sp"
+            tools:text="title" />
+
+        <TextView
+            android:id="@+id/date"
+            style="@style/field_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@{UiFormat.formatDayDate(summary.endDate)}"
+            tools:text="10 November 2012" />
+
+        <TextView
+            android:id="@+id/city"
+            style="@style/field_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:text="@{summary.venue.city}"
+            tools:text="Iasi" />
+    </LinearLayout>
+
+</layout>

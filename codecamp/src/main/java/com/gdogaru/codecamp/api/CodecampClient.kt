@@ -52,20 +52,20 @@ class CodecampClient
         try {
             Timber.i("Downloading %s to %s", url, outputFile)
             val request = Request.Builder().url(url).build()
-            val response = okHttpClient.newCall(request).execute()
+            okHttpClient.newCall(request).execute().use { response ->
 
-            if (myDir.exists().not() && myDir.mkdirs().not()) {
-                return ApiResponse.create(IllegalStateException("Could not create dir structure: " + myDir.path))
-            }
-            if (outputFile.exists().not() && outputFile.createNewFile().not()) {
-                return ApiResponse.create(IllegalStateException("Could not create events file: " + outputFile.path))
-            }
+                if (myDir.exists().not() && myDir.mkdirs().not()) {
+                    return ApiResponse.create(IllegalStateException("Could not create dir structure: " + myDir.path))
+                }
+                if (outputFile.exists().not() && outputFile.createNewFile().not()) {
+                    return ApiResponse.create(IllegalStateException("Could not create events file: " + outputFile.path))
+                }
 
-            val sink = Okio.buffer(Okio.sink(outputFile))
-            // you can access body of response
-            sink.writeAll(response.body()!!.source())
-            sink.close()
-            return ApiResponse.create(outputFile)
+                Okio.buffer(Okio.sink(outputFile)).use {
+                    it.writeAll(response.body()!!.source())
+                }
+                return ApiResponse.create(outputFile)
+            }
         } catch (t: Throwable) {
             return ApiResponse.create(t)
         }

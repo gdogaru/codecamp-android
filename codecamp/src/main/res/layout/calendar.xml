@@ -18,9 +18,14 @@
   ~
   -->
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scrollView"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-</ScrollView>
+    <fragment
+        android:id="@+id/viewer"
+        android:name="com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

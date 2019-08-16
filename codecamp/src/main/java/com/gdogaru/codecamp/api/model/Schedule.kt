@@ -20,8 +20,10 @@ package com.gdogaru.codecamp.api.model
 
 
 import com.fasterxml.jackson.annotation.JsonProperty
+import com.gdogaru.codecamp.util.DateUtil
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
+import java.util.*
 
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
@@ -52,7 +54,9 @@ data class Track(
 
         @JsonProperty("displayOrder")
         var displayOrder: Int = 0
-)
+) {
+    fun getFullDescription() = String.format(Locale.getDefault(), "%s, %s seats, %s", name, capacity, description)
+}
 
 
 data class Session(
@@ -87,10 +91,6 @@ data class Session(
     val id: String
         get() = startTime.toString() + track
 
-    companion object {
-
-        val SESSION_BY_DATE_COMPARATOR: java.util.Comparator<Session> = Comparator { object1, object2 ->
-            object1.startTime?.compareTo(object2.startTime) ?: -1
-        }
-    }
+    val formattedInterval: String
+        get() = DateUtil.formatPeriod(startTime, endTime)
 }
