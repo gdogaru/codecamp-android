@@ -19,7 +19,6 @@
 package com.gdogaru.codecamp.repository
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.EventSummary

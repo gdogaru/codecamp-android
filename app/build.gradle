@@ -49,16 +49,10 @@ android {
 
     signingConfigs {
         upload {
-            storeFile file('certificate/upload-keystore.jks')
-            storePassword "C0decamp"
-            keyAlias "upload"
-            keyPassword "C0decamp"
-        }
-        release {
-            storeFile file('certificate/codecamp2-release-key.keystore')
-            storePassword "C0decamp"
-            keyAlias "codecamp2"
-            keyPassword "C0decamp"
+            storeFile file('../certificate/dummy.jks')
+            storePassword "codecamp"
+            keyAlias "dummy"
+            keyPassword "codecamp"
         }
     }
 

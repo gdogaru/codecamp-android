@@ -16,4 +16,4 @@
  *
  */
 
-include ':codecamp'
+include ':app'

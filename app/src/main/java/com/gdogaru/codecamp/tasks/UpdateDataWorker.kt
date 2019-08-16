@@ -34,6 +34,7 @@ import com.gdogaru.codecamp.repository.InternalStorage
 import kotlinx.coroutines.runBlocking
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 
 class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
@@ -59,6 +60,7 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
         }
     }
 
+    @Suppress("RemoveExplicitTypeArguments")
     private fun fetchAllData(): ApiResponse<Float> {
         val startTime = Instant.now()
 
@@ -86,7 +88,7 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
             removeExpiredPreferences(eventList)
 
             //set first
-            eventList.sortedWith(compareBy(nullsLast()) { it.startDate })
+            eventList.sortedWith(compareBy(nullsLast<LocalDateTime>()) { it.startDate })
 
             //replace active if events changed
             if (eventList.map { it.refId }.contains(appPreferences.activeEvent).not()) {

@@ -30,8 +30,8 @@ import com.evernote.android.state.State
 import com.gdogaru.codecamp.api.model.Schedule
 import com.gdogaru.codecamp.api.model.Session
 import com.gdogaru.codecamp.di.Injectable
-import com.gdogaru.codecamp.view.agenda.AgendaFragmentDirections
 import com.gdogaru.codecamp.view.agenda.AbstractSessionsListFragment
+import com.gdogaru.codecamp.view.agenda.AgendaFragmentDirections
 import com.gdogaru.codecamp.view.agenda.calendar.component.CEvent
 import com.gdogaru.codecamp.view.agenda.calendar.component.Calendar
 import com.gdogaru.codecamp.view.agenda.calendar.component.DisplayEvent

@@ -19,7 +19,6 @@
 package com.gdogaru.codecamp.view.di
 
 import com.gdogaru.codecamp.view.MainActivity
-import com.gdogaru.codecamp.view.splash.SplashActivity
 import com.gdogaru.codecamp.view.agenda.AgendaFragment
 import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment
 import com.gdogaru.codecamp.view.agenda.list.SessionsListFragment
@@ -30,6 +29,7 @@ import com.gdogaru.codecamp.view.session.SessionInfoFragment
 import com.gdogaru.codecamp.view.speaker.SpeakerExpandedFragment
 import com.gdogaru.codecamp.view.speaker.SpeakerInfoFragment
 import com.gdogaru.codecamp.view.speaker.SpeakersFragment
+import com.gdogaru.codecamp.view.splash.SplashActivity
 import com.gdogaru.codecamp.view.sponsors.SponsorsFragment
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

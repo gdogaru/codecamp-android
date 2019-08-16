@@ -1,0 +1,23 @@
+ ![icon](art/codecamp_logo.jpeg)
+
+# Codecamp Android App
+
+<a href="https://play.google.com/store/apps/details?id=com.gdogaru.codecamp" target="_blank">
+<img src="https://play.google.com/intl/en_us/badges/images/generic/en-play-badge.png" alt="Get it on Google Play" height="90"/>
+</a>
+
+![SLicense](https://img.shields.io/badge/License-GPLv3-red.svg)
+[![CircleCI](https://circleci.com/gh/gdogaru/codecamp-android.svg?style=svg)](https://circleci.com/gh/gdogaru/spacescoop-android)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bbae2be525e4f3a9a747d5cfc591366)](https://www.codacy.com/app/gdogaru/spacescoop-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gdogaru/spacescoop-android&amp;utm_campaign=Badge_Grade)
+
+
+## About
+This is an android app to view the agenda and event information for [Codecamp Romania Conferences](https://codecamp.ro/)
+
+
+## Contributing
+ 
+Please contact me directly to discuss any improvements before starting, I have not set up a process yet and we will discuss it together.
+You should me familiar with [gitflow](https://github.com/nvie/gitflow) as code versioning methodology.
+
+The project should be kept inline with the latest android trends and use the [Github Browser Sample](https://github.com/googlesamples/android-architecture-components/tree/master/GithubBrowserSample) as a guideline.

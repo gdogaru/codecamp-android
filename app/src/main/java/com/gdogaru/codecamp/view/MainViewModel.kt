@@ -22,7 +22,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gdogaru.codecamp.api.model.*
+import com.gdogaru.codecamp.api.model.Codecamp
+import com.gdogaru.codecamp.api.model.Schedule
+import com.gdogaru.codecamp.api.model.Speaker
+import com.gdogaru.codecamp.api.model.Track
 import com.gdogaru.codecamp.repository.AppPreferences
 import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.repository.CodecampRepository
