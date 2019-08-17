@@ -40,8 +40,8 @@ android {
         targetSdkVersion build_versions.target_sdk
 
         applicationId "com.gdogaru.codecamp"
-        versionCode 29
-        versionName "4.8"
+        versionCode 1
+        versionName "0.0.1"
         multiDexEnabled true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -124,6 +124,15 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    applicationVariants.all { variant ->
+        if (variant.buildType.name == "release") {
+            variant.outputs.each { output ->
+                output.versionCodeOverride = androidAppVersionCode
+                output.versionNameOverride = androidAppVersionName
+            }
+        }
     }
 }
 
