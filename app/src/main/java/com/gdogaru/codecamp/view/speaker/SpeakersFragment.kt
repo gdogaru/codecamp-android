@@ -33,7 +33,6 @@ import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.Speaker
 import com.gdogaru.codecamp.databinding.SpeakersBinding
 import com.gdogaru.codecamp.util.AppExecutors
-import com.gdogaru.codecamp.util.ComparisonChain
 import com.gdogaru.codecamp.view.BaseFragment
 import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.MainViewModel
@@ -91,11 +90,7 @@ class SpeakersFragment : BaseFragment() {
 
     private fun initData(event: Codecamp) {
         var speakerList = event.speakers.orEmpty()
-        speakerList = speakerList.sortedWith(Comparator { o1, o2 ->
-            ComparisonChain.start()
-                    .compare(o1.displayOrder, o2.displayOrder)
-                    .result()
-        })
+        speakerList = speakerList.sortedBy { it.displayOrder }
         speakersAdapter.submitList(speakerList)
     }
 

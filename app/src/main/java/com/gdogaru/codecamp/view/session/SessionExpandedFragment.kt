@@ -118,8 +118,6 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
 
         override fun getCount() = trackSessions.size
 
-        fun getElement(idx: Int) = trackSessions[idx]
-
         override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
             super.destroyItem(container, position, `object`)
         }

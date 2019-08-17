@@ -40,7 +40,6 @@ import com.gdogaru.codecamp.databinding.HomeBinding
 import com.gdogaru.codecamp.util.AnalyticsHelper
 import com.gdogaru.codecamp.util.AppExecutors
 import com.gdogaru.codecamp.util.RatingHelper
-import com.gdogaru.codecamp.util.Strings
 import com.gdogaru.codecamp.view.BaseActivity
 import com.gdogaru.codecamp.view.BaseFragment
 import com.gdogaru.codecamp.view.MainActivity
@@ -198,7 +197,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
             try {
                 val d = c.venue!!.directions
                 Timber.i("Centering map to destination %s", d)
-                if (Strings.isNullOrEmpty(d).not()) {
+                if (d.isNotEmpty()) {
                     val dd = d.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                     val latitude = java.lang.Double.parseDouble(dd[0].trim { it <= ' ' })
                     val longitude = java.lang.Double.parseDouble(dd[1].trim { it <= ' ' })
@@ -227,10 +226,5 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
     override fun onResume() {
         super.onResume()
         RatingHelper.tryToRate(requireActivity())
-    }
-
-
-    companion object {
-        private val DATE_FORMAT = org.threeten.bp.format.DateTimeFormatter.ofPattern("dd MMMM yyyy")
     }
 }

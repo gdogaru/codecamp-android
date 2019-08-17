@@ -28,7 +28,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.evernote.android.state.State
 import com.gdogaru.codecamp.R
-import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.databinding.AgendaBinding
 import com.gdogaru.codecamp.repository.AppPreferences
 import com.gdogaru.codecamp.repository.BookmarkRepository
@@ -66,8 +65,6 @@ class AgendaFragment : BaseFragment() {
         binding.lifecycleOwner = this
         return binding.root
     }
-
-    private lateinit var event: Codecamp
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AgendaViewModel::class.java)

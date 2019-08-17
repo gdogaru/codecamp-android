@@ -16,24 +16,19 @@
  *
  */
 
-package com.gdogaru.codecamp.util;
+package com.gdogaru.codecamp.util
 
-import java.util.Iterator;
+import kotlin.math.min
 
-public class Iterables {
+/**
+ * @author Gabriel Dogaru (gdogaru@gmail.com)
+ */
 
-    public static <T> int indexOf(Iterable<T> iterable, Predicate<? super T> predicate) {
-        return indexOf(iterable.iterator(), predicate);
-    }
+object AnalyticsHelper {
 
-    public static <T> int indexOf(Iterator<T> iterator, Predicate<? super T> predicate) {
-        Preconditions.checkNotNull(predicate, "predicate");
-        for (int i = 0; iterator.hasNext(); i++) {
-            T current = iterator.next();
-            if (predicate.apply(current)) {
-                return i;
-            }
-        }
-        return -1;
+    fun normalize(input: String?): String {
+        if (input.isNullOrBlank()) return ""
+        val s = input.replace(" ".toRegex(), "_").replace("[^A-Za-z0-9_]".toRegex(), "")
+        return s.substring(0, min(32, s.length))
     }
 }

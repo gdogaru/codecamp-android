@@ -137,6 +137,6 @@ public class RatingHelper {
     private static void logEvent(String name) {
         Bundle bundle = new Bundle();
         bundle.putInt("value", 1);
-        FirebaseAnalytics.getInstance(App.Companion.instance()).logEvent(AnalyticsHelper.normalize(name), bundle);
+        FirebaseAnalytics.getInstance(App.Companion.instance()).logEvent(AnalyticsHelper.INSTANCE.normalize(name), bundle);
     }
 }

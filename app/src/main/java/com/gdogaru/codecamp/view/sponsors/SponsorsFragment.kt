@@ -24,6 +24,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -33,9 +34,7 @@ import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.Sponsor
 import com.gdogaru.codecamp.databinding.SponsorsBinding
 import com.gdogaru.codecamp.util.AppExecutors
-import com.gdogaru.codecamp.util.ComparisonChain
 import com.gdogaru.codecamp.view.BaseFragment
-import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.MainViewModel
 import com.gdogaru.codecamp.view.common.GridSpacingItemDecoration
 import com.gdogaru.codecamp.view.common.UiUtil
@@ -75,7 +74,7 @@ class SponsorsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
 
-        val act = activity as MainActivity
+        val act = activity as AppCompatActivity
         act.setSupportActionBar(binding.toolbar)
         act.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
@@ -101,14 +100,7 @@ class SponsorsFragment : BaseFragment() {
         for (p in packages) {
             ptoIdx[p.name.orEmpty()] = p.displayOrder
         }
-
-        sponsorList = sponsorList.orEmpty().sortedWith(Comparator { o1, o2 ->
-            ComparisonChain.start()
-                    .compare(ptoIdx[o1.sponsorshipPackage], ptoIdx[o2.sponsorshipPackage])
-                    .compare(o1.displayOrder, o2.displayOrder)
-                    .result()
-        })
-
+        sponsorList = sponsorList.orEmpty().sortedWith(compareBy({ it.sponsorshipPackage }, { it.displayOrder }))
         sponsorsAdapter.submitList(sponsorList.orEmpty())
     }
 }

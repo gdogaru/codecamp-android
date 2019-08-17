@@ -28,7 +28,6 @@ import com.gdogaru.codecamp.api.model.Track
 import com.gdogaru.codecamp.repository.AppPreferences
 import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.repository.CodecampRepository
-import com.gdogaru.codecamp.util.Joiner
 import com.gdogaru.codecamp.view.agenda.SESSION_BY_DATE_COMPARATOR
 import com.gdogaru.codecamp.view.agenda.calendar.component.CEvent
 import com.gdogaru.codecamp.view.agenda.scheduleFavMediator
@@ -91,9 +90,12 @@ class CalendarFragmentViewModel @Inject constructor(
         return null
     }
 
-    private fun createSpeakerName(session: Session): String {
-        return if (session.speakerIds == null || session.speakerIds!!.isEmpty()) "" else Joiner.on(", ").join(session.speakerIds!!)
-    }
+    private fun createSpeakerName(session: Session) =
+            if (session.speakerIds == null || session.speakerIds!!.isEmpty()) {
+                ""
+            } else {
+                session.speakerIds.orEmpty().joinToString(", ")
+            }
 
     fun setFavoritesOnly(favoritesOnly: Boolean) {
         this.favoritesOnly.value = favoritesOnly

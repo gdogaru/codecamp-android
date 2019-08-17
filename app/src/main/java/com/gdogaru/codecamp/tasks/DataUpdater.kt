@@ -23,7 +23,6 @@ import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.gdogaru.codecamp.repository.AppPreferences
-import com.gdogaru.codecamp.repository.BookmarkRepository
 import org.threeten.bp.Instant
 import org.threeten.bp.temporal.ChronoUnit
 import timber.log.Timber
@@ -33,10 +32,10 @@ import javax.inject.Singleton
 
 @Singleton
 class DataUpdater @Inject constructor(
-        val appPreferences: AppPreferences,
-        val bookmarkingService: BookmarkRepository) {
+        private val appPreferences: AppPreferences
+) {
 
-    fun shouldUpdate(): Boolean {
+    private fun shouldUpdate(): Boolean {
         return isDone() && appPreferences.lastUpdated.isBefore(Instant.now().minus(6, ChronoUnit.HOURS))
     }
 
@@ -68,7 +67,7 @@ class DataUpdater @Inject constructor(
     fun update() {
         appPreferences.updateProgress = 0F
         val request = OneTimeWorkRequest.Builder(UpdateDataWorker::class.java).build()
-        val result = WorkManager.getInstance().enqueueUniqueWork(UpdateDataWorker::class.java.name, ExistingWorkPolicy.KEEP, request)
+        WorkManager.getInstance().enqueueUniqueWork(UpdateDataWorker::class.java.name, ExistingWorkPolicy.KEEP, request)
         appPreferences.activeJob = request.id.toString()
     }
 }
