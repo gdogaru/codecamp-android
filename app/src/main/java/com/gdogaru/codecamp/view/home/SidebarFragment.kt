@@ -33,8 +33,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.android.example.github.ui.common.DataBoundListAdapter
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.EventSummary
-import com.gdogaru.codecamp.databinding.MainSidebarBinding
-import com.gdogaru.codecamp.databinding.MainSidebarItemBinding
+import com.gdogaru.codecamp.databinding.HomeSidebarBinding
+import com.gdogaru.codecamp.databinding.HomeSidebarItemBinding
 import com.gdogaru.codecamp.di.Injectable
 import com.gdogaru.codecamp.util.AppExecutors
 import com.gdogaru.codecamp.view.BaseFragment
@@ -53,13 +53,13 @@ class SidebarFragment : BaseFragment(), Injectable {
     lateinit var appExecutors: AppExecutors
     private lateinit var viewModel: SidebarViewModel
     private var eventsAdapter by autoCleared<EventsAdapter>()
-    private lateinit var binding: MainSidebarBinding
+    private lateinit var binding: HomeSidebarBinding
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = DataBindingUtil.inflate(
                 inflater,
-                R.layout.main_sidebar,
+                R.layout.home_sidebar,
                 container,
                 false,
                 dataBindingComponent
@@ -94,7 +94,7 @@ class SidebarFragment : BaseFragment(), Injectable {
 class EventsAdapter(private val dataBindingComponent: DataBindingComponent,
                     appExecutors: AppExecutors,
                     private val listener: (EventSummary) -> Unit)
-    : DataBoundListAdapter<EventSummary, MainSidebarItemBinding>(
+    : DataBoundListAdapter<EventSummary, HomeSidebarItemBinding>(
         appExecutors = appExecutors,
         diffCallback = object : DiffUtil.ItemCallback<EventSummary>() {
             override fun areItemsTheSame(oldItem: EventSummary, newItem: EventSummary): Boolean {
@@ -107,10 +107,10 @@ class EventsAdapter(private val dataBindingComponent: DataBindingComponent,
         }
 ) {
 
-    override fun createBinding(parent: ViewGroup): MainSidebarItemBinding {
-        val binding = DataBindingUtil.inflate<MainSidebarItemBinding>(
+    override fun createBinding(parent: ViewGroup): HomeSidebarItemBinding {
+        val binding = DataBindingUtil.inflate<HomeSidebarItemBinding>(
                 LayoutInflater.from(parent.context),
-                R.layout.main_sidebar_item,
+                R.layout.home_sidebar_item,
                 parent,
                 false,
                 dataBindingComponent
@@ -123,7 +123,7 @@ class EventsAdapter(private val dataBindingComponent: DataBindingComponent,
         return binding
     }
 
-    override fun bind(binding: MainSidebarItemBinding, item: EventSummary) {
+    override fun bind(binding: HomeSidebarItemBinding, item: EventSummary) {
         binding.summary = item
     }
 }

@@ -50,7 +50,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo"
-            tools:listitem="@layout/main_sidebar_item" />
+            tools:listitem="@layout/home_sidebar_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

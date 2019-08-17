@@ -48,26 +48,25 @@ android {
     }
 
     signingConfigs {
-        upload {
-            storeFile file('../certificate/dummy.jks')
-            storePassword "codecamp"
-            keyAlias "dummy"
-            keyPassword "codecamp"
+        release {
+            storeFile file(System.getenv('KEYSTORE') ?: '../certificate/dummy.jks')
+            storePassword System.getenv("KEYSTORE_PASSWORD") ?: "codecamp"
+            keyAlias System.getenv("KEY_ALIAS") ?: "dummy"
+            keyPassword System.getenv("KEY_PASSWORD") ?: "codecamp"
         }
     }
 
     buildTypes {
         debug {
-            signingConfig signingConfigs.upload
+            signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
             debuggable true
             ext.alwaysUpdateBuildId = false
-
         }
 
         release {
-            signingConfig signingConfigs.upload
+            signingConfig signingConfigs.release
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
@@ -78,7 +77,7 @@ android {
     productFlavors {
         dev {
             dimension "stage"
-            signingConfig signingConfigs.upload
+            signingConfig signingConfigs.release
             minSdkVersion 24
             applicationIdSuffix '.dev'
             versionNameSuffix "-dev"
@@ -88,7 +87,7 @@ android {
             resValue "string", "app_name", "Codecamp-DEV"
         }
         prod {
-            signingConfig signingConfigs.upload
+            signingConfig signingConfigs.release
             dimension "stage"
             resValue "string", "app_name", "Codecamp"
         }

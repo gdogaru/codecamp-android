@@ -59,7 +59,7 @@ class DataUpdater @Inject constructor(
                 try {
                     WorkManager.getInstance().getWorkInfoByIdLiveData(UUID.fromString(id))
                 } catch (e: java.lang.Exception) {
-                    Timber.w(e, "could not get status")
+                    Timber.w(e, "could not get status for id: %s", id)
                     null
                 }
             }

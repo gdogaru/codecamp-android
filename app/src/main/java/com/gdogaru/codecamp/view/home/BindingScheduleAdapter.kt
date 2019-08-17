@@ -25,14 +25,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import com.android.example.github.ui.common.DataBoundListAdapter
 import com.gdogaru.codecamp.R
-import com.gdogaru.codecamp.databinding.MainScheduleItemBinding
+import com.gdogaru.codecamp.databinding.HomeScheduleItemBinding
 import com.gdogaru.codecamp.util.AppExecutors
 
 class BindingScheduleAdapter(
         private val dataBindingComponent: DataBindingComponent,
         appExecutors: AppExecutors,
         private val repoClickCallback: ((MainViewItem) -> Unit)?
-) : DataBoundListAdapter<MainViewItem, MainScheduleItemBinding>(
+) : DataBoundListAdapter<MainViewItem, HomeScheduleItemBinding>(
         appExecutors = appExecutors,
         diffCallback = object : DiffUtil.ItemCallback<MainViewItem>() {
             override fun areItemsTheSame(oldItem: MainViewItem, newItem: MainViewItem): Boolean {
@@ -46,10 +46,10 @@ class BindingScheduleAdapter(
             }
         }
 ) {
-    override fun createBinding(parent: ViewGroup): MainScheduleItemBinding {
-        val binding = DataBindingUtil.inflate<MainScheduleItemBinding>(
+    override fun createBinding(parent: ViewGroup): HomeScheduleItemBinding {
+        val binding = DataBindingUtil.inflate<HomeScheduleItemBinding>(
                 LayoutInflater.from(parent.context),
-                R.layout.main_schedule_item,
+                R.layout.home_schedule_item,
                 parent,
                 false,
                 dataBindingComponent
@@ -62,7 +62,7 @@ class BindingScheduleAdapter(
         return binding
     }
 
-    override fun bind(binding: MainScheduleItemBinding, item: MainViewItem) {
+    override fun bind(binding: HomeScheduleItemBinding, item: MainViewItem) {
         binding.item = item
     }
 
