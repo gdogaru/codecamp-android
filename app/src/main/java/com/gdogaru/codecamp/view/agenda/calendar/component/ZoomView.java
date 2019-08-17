@@ -37,13 +37,13 @@ public class ZoomView extends ScrollView {
     private final Matrix m = new Matrix();
     private final Paint p = new Paint();
     // zooming
-    float zoom = 1.0f;
-    float maxZoom = 2.0f;
-    float smoothZoom = 1.0f;
-    float zoomX, zoomY;
-    float smoothZoomX, smoothZoomY;
+    private float zoom = 1.0f;
+    private float maxZoom = 2.0f;
+    private float smoothZoom = 1.0f;
+    private float zoomX, zoomY;
+    private float smoothZoomX, smoothZoomY;
     // listener
-    ZoomViewListener listener;
+    private ZoomViewListener listener;
     private boolean scrolling; // NOPMD by karooolek on 29.06.11 11:45
     // minimap variables
     private boolean showMinimap = false;

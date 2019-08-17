@@ -8,8 +8,7 @@
 
 ![SLicense](https://img.shields.io/badge/License-GPLv3-red.svg)
 [![CircleCI](https://circleci.com/gh/gdogaru/codecamp-android.svg?style=svg)](https://circleci.com/gh/gdogaru/codecamp-android)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/8bbae2be525e4f3a9a747d5cfc591366)](https://www.codacy.com/app/gdogaru/codecamp-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gdogaru/codecamp-android&amp;utm_campaign=Badge_Grade)
-
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/802390116f8a42a191d529999c571f6f)](https://www.codacy.com/app/gdogaru/codecamp-android?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=gdogaru/codecamp-android&amp;utm_campaign=Badge_Grade)
 
 ## About
 This is an android app to view the agenda and event information for [Codecamp Romania Conferences](https://codecamp.ro/)

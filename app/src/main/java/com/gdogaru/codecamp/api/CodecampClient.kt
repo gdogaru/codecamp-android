@@ -62,7 +62,7 @@ class CodecampClient
                 }
 
                 Okio.buffer(Okio.sink(outputFile)).use {
-                    it.writeAll(response.body()!!.source())
+                    response.body()?.let { b -> it.writeAll(b.source()) }
                 }
                 return ApiResponse.create(outputFile)
             }

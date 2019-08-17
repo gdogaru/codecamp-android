@@ -23,10 +23,9 @@ import android.view.ScaleGestureDetector;
 
 public class OnPinchListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {
 
-    float startingSpan;
-    float endSpan;
-    float startFocusX;
-    float startFocusY;
+    private float startingSpan;
+    private float startFocusX;
+    private float startFocusY;
     private ZoomableRelativeLayout mZoomableRelativeLayout;
 
     public OnPinchListener(ZoomableRelativeLayout mZoomableRelativeLayout) {

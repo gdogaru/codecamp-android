@@ -26,7 +26,6 @@ import android.widget.BaseAdapter
 import android.widget.TextView
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.util.DateUtil
-import com.gdogaru.codecamp.util.StringUtils
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter
 import java.util.*
 
@@ -61,12 +60,12 @@ class SessionsAdapter(context: Context) : BaseAdapter(), StickyListHeadersAdapte
             view.tag = holder
         }
         val holder = view.tag as ViewHolder
-        val (_, name, start, end, trackName, speakerNames1, isFavorite) = this.sessions[position]
+        val (_, name, start, end, trackName, speakerNamesList, isFavorite) = this.sessions[position]
         holder.title!!.text = name
         val timeString = DateUtil.formatPeriod(start, end)
         holder.time!!.text = timeString
         holder.place!!.text = trackName
-        val speakerNames = StringUtils.join(speakerNames1, ", ")
+        val speakerNames = speakerNamesList.orEmpty().joinToString(separator = ", ")
         holder.speaker!!.text = speakerNames
         if (isFavorite) {
             holder.root!!.setBackgroundResource(R.drawable.list_item_background_favorite)

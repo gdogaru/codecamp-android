@@ -22,8 +22,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
-import com.gdogaru.codecamp.util.IOUtils;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -74,15 +72,10 @@ public class SpeakerPhotoUtils {
     }
 
     public static void savePhoto(Context context, Bitmap bitmap, long id) {
-        FileOutputStream fos = null;
-        try {
-            fos = context.getApplicationContext().openFileOutput(String.format(Locale.US, FILENAME_MASK, id), Context.MODE_PRIVATE);
+        try (FileOutputStream fos = context.getApplicationContext().openFileOutput(String.format(Locale.US, FILENAME_MASK, id), Context.MODE_PRIVATE)) {
             bitmap.compress(Bitmap.CompressFormat.JPEG, 90, fos);
-            fos.close();
         } catch (Exception e) {
             Timber.e(e, "Error saving overview.");
-        } finally {
-            IOUtils.closeQuietly(fos);
         }
     }
 
