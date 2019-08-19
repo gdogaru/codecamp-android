@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -37,7 +38,6 @@ import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.Speaker
 import com.gdogaru.codecamp.databinding.SpeakerExpandedBinding
 import com.gdogaru.codecamp.view.BaseFragment
-import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.MainViewModel
 import com.gdogaru.codecamp.view.util.autoCleared
 import javax.inject.Inject
@@ -68,10 +68,12 @@ class SpeakerExpandedFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
 
-        val ma = activity as MainActivity?
-        ma!!.setSupportActionBar(binding.toolbar)
-        binding.toolbar.title = ""
-        ma.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val ma = activity as AppCompatActivity
+        ma.setSupportActionBar(binding.toolbar)
+        ma.supportActionBar?.apply {
+            setDisplayHomeAsUpEnabled(true)
+            title = ""
+        }
 
         adapter = SpeakerAdapter(childFragmentManager)
         binding.viewPager.adapter = adapter

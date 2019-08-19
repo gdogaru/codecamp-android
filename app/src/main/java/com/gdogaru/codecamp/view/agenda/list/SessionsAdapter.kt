@@ -51,26 +51,27 @@ class SessionsAdapter(context: Context) : BaseAdapter(), StickyListHeadersAdapte
             view = convertView
         else {
             view = inflater.inflate(R.layout.agenda_sessions_list_item, parent, false)
-            val holder = ViewHolder()
-            holder.title = view.findViewById<View>(R.id.sessionName) as TextView
-            holder.time = view.findViewById<View>(R.id.sessionTime) as TextView
-            holder.place = view.findViewById<View>(R.id.sessionPlace) as TextView
-            holder.speaker = view.findViewById<View>(R.id.sessionSpeaker) as TextView
-            holder.root = view.findViewById(R.id.root)
+            val holder = ViewHolder(
+                    view.findViewById<View>(R.id.sessionName) as TextView,
+                    view.findViewById<View>(R.id.sessionTime) as TextView,
+                    view.findViewById<View>(R.id.sessionPlace) as TextView,
+                    view.findViewById<View>(R.id.sessionSpeaker) as TextView,
+                    view.findViewById(R.id.root)
+            )
             view.tag = holder
         }
         val holder = view.tag as ViewHolder
         val (_, name, start, end, trackName, speakerNamesList, isFavorite) = this.sessions[position]
-        holder.title!!.text = name
+        holder.title.text = name
         val timeString = DateUtil.formatPeriod(start, end)
-        holder.time!!.text = timeString
-        holder.place!!.text = trackName
+        holder.time.text = timeString
+        holder.place.text = trackName
         val speakerNames = speakerNamesList.orEmpty().joinToString(separator = ", ")
-        holder.speaker!!.text = speakerNames
+        holder.speaker.text = speakerNames
         if (isFavorite) {
-            holder.root!!.setBackgroundResource(R.drawable.list_item_background_favorite)
+            holder.root.setBackgroundResource(R.drawable.list_item_background_favorite)
         } else {
-            holder.root!!.setBackgroundResource(R.drawable.list_item_background)
+            holder.root.setBackgroundResource(R.drawable.list_item_background)
         }
         return view
     }
@@ -79,18 +80,17 @@ class SessionsAdapter(context: Context) : BaseAdapter(), StickyListHeadersAdapte
         var view = convertView
         val holder: HeaderViewHolder
         if (view == null) {
-            holder = HeaderViewHolder()
             view = inflater.inflate(R.layout.agenda_sessions_list_header, parent, false)
-            holder.text = view as TextView?
-            view!!.tag = holder
+            holder = HeaderViewHolder(view as TextView)
+            view.tag = holder
         } else {
             holder = view.tag as HeaderViewHolder
         }
         //set header text as first char in name
         val (_, _, start, end) = this.sessions[position]
         val headerText = DateUtil.formatPeriod(start, end)
-        holder.text!!.text = headerText
-        return view!!
+        holder.text.text = headerText
+        return view
     }
 
     override fun getHeaderId(position: Int): Long {
@@ -99,16 +99,15 @@ class SessionsAdapter(context: Context) : BaseAdapter(), StickyListHeadersAdapte
         //        return sessions.get(i).getStart().getTime();
     }
 
-    internal inner class HeaderViewHolder {
-        var text: TextView? = null
-    }
+    data class HeaderViewHolder(
+            val text: TextView
+    )
 
-    internal inner class ViewHolder {
-        var title: TextView? = null
-        var time: TextView? = null
-        var place: TextView? = null
-        var speaker: TextView? = null
-        var root: View? = null
-    }
-
+    data class ViewHolder(
+            val title: TextView,
+            val time: TextView,
+            val place: TextView,
+            val speaker: TextView,
+            val root: View
+    )
 }

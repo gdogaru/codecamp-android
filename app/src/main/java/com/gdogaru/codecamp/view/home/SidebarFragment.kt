@@ -73,7 +73,7 @@ class SidebarFragment : BaseFragment(), Injectable {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SidebarViewModel::class.java)
 
         val decor = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-        decor.setDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.list_vertical_divider_sidebar)!!)
+        ContextCompat.getDrawable(requireActivity(), R.drawable.list_vertical_divider_sidebar)?.let { decor.setDrawable(it) }
         binding.events.addItemDecoration(decor)
 
         eventsAdapter = EventsAdapter(dataBindingComponent, appExecutors) { eventSummary -> onItemClicked(eventSummary) }

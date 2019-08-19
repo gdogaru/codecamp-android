@@ -57,11 +57,11 @@ class InternalStorage
     }
 
     fun readEvents(root: Instant): List<EventSummary> {
-        return mapper.readValue(file(root, FileType.EVENTS).readText(), EventList::class.java)!!
+        return mapper.readValue(file(root, FileType.EVENTS).readText(), EventList::class.java).orEmpty()
     }
 
     fun readEvent(root: Instant, id: Long): Codecamp {
-        return mapper.readValue(file(root, FileType.DETAILS, id.toString()).readText(), Codecamp::class.java)!!
+        return mapper.readValue(file(root, FileType.DETAILS, id.toString()).readText(), Codecamp::class.java)
     }
 
     fun deleteRoot(filename: String) {

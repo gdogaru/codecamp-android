@@ -95,10 +95,10 @@ class AppPreferences(private val app: Context) {
     }
 
 
-    fun setLastAutoSelect(value: Long?) {
+    fun setLastAutoSelect(value: Long) {
         Timber.i("Last autoselect set to %s", value)
         pref.edit()
-                .putLong(LAST_AUTO_SELECT, value!!)
+                .putLong(LAST_AUTO_SELECT, value)
                 .apply()
     }
 

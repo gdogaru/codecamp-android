@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +35,6 @@ import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.util.AnalyticsHelper
 import com.gdogaru.codecamp.util.DateUtil
 import com.gdogaru.codecamp.view.BaseFragment
-import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragment
 import com.gdogaru.codecamp.view.agenda.list.SessionsListFragment
 import com.gdogaru.codecamp.view.util.autoCleared
@@ -69,9 +69,9 @@ class AgendaFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(AgendaViewModel::class.java)
 
-        val ma = activity as MainActivity?
-        ma!!.setSupportActionBar(binding.toolbar)
-        ma.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val ma = activity as AppCompatActivity
+        ma.setSupportActionBar(binding.toolbar)
+        ma.supportActionBar?.apply { setDisplayHomeAsUpEnabled(true) }
 
         binding.viewSwitch.isChecked = appPreferences.listViewList
         binding.viewSwitch.setOnCheckedChangeListener { _, isChecked ->

@@ -76,7 +76,7 @@ class SponsorsFragment : BaseFragment() {
 
         val act = activity as AppCompatActivity
         act.setSupportActionBar(binding.toolbar)
-        act.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        act.supportActionBar?.apply { setDisplayHomeAsUpEnabled(true) }
 
         sponsorsAdapter = SponsorsAdapter(dataBindingComponent, appExecutors) { showSponsor(it) }
         binding.recycler.adapter = sponsorsAdapter
@@ -95,7 +95,7 @@ class SponsorsFragment : BaseFragment() {
 
     private fun showData(c: Codecamp) {
         var sponsorList = c.sponsors
-        val packages = c.sponsorshipPackages!!
+        val packages = c.sponsorshipPackages.orEmpty()
         val ptoIdx = HashMap<String, Int>()
         for (p in packages) {
             ptoIdx[p.name.orEmpty()] = p.displayOrder

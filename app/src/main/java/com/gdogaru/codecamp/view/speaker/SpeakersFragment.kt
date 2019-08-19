@@ -22,6 +22,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,7 +35,6 @@ import com.gdogaru.codecamp.api.model.Speaker
 import com.gdogaru.codecamp.databinding.SpeakersBinding
 import com.gdogaru.codecamp.util.AppExecutors
 import com.gdogaru.codecamp.view.BaseFragment
-import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.MainViewModel
 import com.gdogaru.codecamp.view.common.GridSpacingItemDecoration
 import com.gdogaru.codecamp.view.common.UiUtil
@@ -70,9 +70,9 @@ class SpeakersFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
 
-        val ma = activity as MainActivity?
-        ma!!.setSupportActionBar(binding.toolbar)
-        ma.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val ma = activity as AppCompatActivity
+        ma.setSupportActionBar(binding.toolbar)
+        ma.supportActionBar?.apply { setDisplayHomeAsUpEnabled(true) }
 
         speakersAdapter = SpeakersAdapter(dataBindingComponent, appExecutors) { id -> showSpeaker(id) }
         binding.recycler.adapter = speakersAdapter

@@ -27,6 +27,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
@@ -42,7 +43,6 @@ import com.gdogaru.codecamp.util.AppExecutors
 import com.gdogaru.codecamp.util.RatingHelper
 import com.gdogaru.codecamp.view.BaseActivity
 import com.gdogaru.codecamp.view.BaseFragment
-import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.util.autoCleared
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -97,11 +97,13 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         setHasOptionsMenu(true)
 
 
-        val ma = activity as MainActivity
+        val ma = activity as AppCompatActivity
         ma.setSupportActionBar(binding.toolbar)
-        ma.supportActionBar!!.title = ""
-        ma.supportActionBar!!.setLogo(R.drawable.codecamp_logo)
-        ma.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        ma.supportActionBar?.apply {
+            title = ""
+            setLogo(R.drawable.codecamp_logo)
+            setDisplayHomeAsUpEnabled(true)
+        }
 
         val toggle = ActionBarDrawerToggle(activity, binding.drawerLayout, binding.toolbar, R.string.open, R.string.close)
         toggle.isDrawerIndicatorEnabled = true
@@ -111,7 +113,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
 
 
         val decor = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-        decor.setDrawable(ContextCompat.getDrawable(requireActivity(), R.drawable.list_vertical_divider)!!)
+        ContextCompat.getDrawable(requireActivity(), R.drawable.list_vertical_divider)?.let { decor.setDrawable(it) }
         binding.agenda.addItemDecoration(decor)
 
         adapter = BindingScheduleAdapter(dataBindingComponent, appExecutors) { onItemClicked(it) }
@@ -120,7 +122,6 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         RatingHelper.logUsage(activity)
         setMap()
         viewModel.currentEvent.observe(this, androidx.lifecycle.Observer { showEvent(it) })
-
     }
 
     private fun showEvent(currentEvent: Codecamp) {
@@ -146,7 +147,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
     private fun setMap() {
         Timber.i("Adding map")
         mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment!!.getMapAsync(this)
+        mapFragment?.let { it.getMapAsync(this) }
     }
 
 
@@ -195,7 +196,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         }
         viewModel.currentEvent.observe(this@HomeFragment, androidx.lifecycle.Observer<Codecamp> { c ->
             try {
-                val d = c.venue!!.directions
+                val d = c.venue?.directions ?: ""
                 Timber.i("Centering map to destination %s", d)
                 if (d.isNotEmpty()) {
                     val dd = d.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()

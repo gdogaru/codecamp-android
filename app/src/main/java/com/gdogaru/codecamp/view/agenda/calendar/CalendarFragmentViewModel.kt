@@ -41,18 +41,18 @@ class CalendarFragmentViewModel @Inject constructor(
         preferences: AppPreferences)
     : ViewModel() {
 
-    val favoritesOnly = MutableLiveData<Boolean>(false)
-    val currentScheduleFav = scheduleFavMediator(repository, bookmarkRepository, preferences, favoritesOnly)
+    private val favoritesOnly = MutableLiveData<Boolean>(false)
+    private val currentScheduleFav = scheduleFavMediator(repository, bookmarkRepository, preferences, favoritesOnly)
 
     fun eventList(): LiveData<Pair<List<CEvent>, Schedule>> {
         return Transformations.map(currentScheduleFav) {
-            Pair(toCEvents(it.first!!, it.second), it.first!!)
+            Pair(toCEvents(it.first, it.second), it.first!!)
         }
     }
 
-    fun toCEvents(schedule: Schedule, bookmarked: Set<String>): List<CEvent> {
-        val sessions = schedule.sessions.toMutableList()
-        val tracks = schedule.tracks.toMutableList()
+    fun toCEvents(schedule: Schedule?, bookmarked: Set<String>): List<CEvent> {
+        val sessions = schedule?.sessions.orEmpty().toMutableList()
+        val tracks = schedule?.tracks.orEmpty().toMutableList()
 
         if (favoritesOnly.value == true) {
             sessions.removeAll { !bookmarked.contains(it.id) }

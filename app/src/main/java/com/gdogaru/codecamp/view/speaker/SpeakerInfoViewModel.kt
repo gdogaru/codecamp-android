@@ -42,7 +42,7 @@ class SpeakerInfoViewModel @Inject constructor(
     fun getSpeakerFull(speakerId: String): LiveData<FullSpeakerData?> {
         return Transformations.switchMap(repository.currentEvent) { event ->
             Transformations.map(bookmarkRepository.getBookmarked(event.refId.toString())) { favs ->
-                val speaker = event.speakers.orEmpty().firstOrNull { it.name == speakerId }!!
+                val speaker = event.speakers.orEmpty().firstOrNull { it.name == speakerId }
                 val allTracks = event.schedules.orEmpty().map { s -> s.tracks.map { t -> t to s } }.flatten().map { it.first.name to it }.toMap()
                 val sessions = event.schedules.orEmpty()
                         .map { it.sessions }.flatten().filter { it.speakerIds.orEmpty().contains(speakerId) }
@@ -53,7 +53,7 @@ class SpeakerInfoViewModel @Inject constructor(
                                     p?.second!!,
                                     favs.contains(it.id))
                         }
-                FullSpeakerData(speaker, sessions)
+                if (speaker == null) null else FullSpeakerData(speaker, sessions)
             }
         }
 

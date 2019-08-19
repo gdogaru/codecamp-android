@@ -105,7 +105,7 @@ class SpeakerInfoDataAdapter(
     private var data: FullSpeakerData? = null
 
     override fun getItemCount(): Int {
-        return if (data == null) 0 else data!!.sessions.size + 1
+        return data?.sessions?.size?.let { it + 1 } ?: 0
     }
 
     override fun getItemViewType(position: Int): Int {

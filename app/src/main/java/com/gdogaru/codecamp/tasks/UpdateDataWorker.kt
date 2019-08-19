@@ -97,8 +97,8 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
                             it.startDate?.toLocalDate()?.isBefore(LocalDate.now())?.not()
                                     ?: false
                         }
-                        .minBy { it.startDate!! }!!
-                        .refId
+                        .minBy { it.startDate ?: LocalDateTime.MAX }
+                        ?.refId ?: 0L
             }
         }
         postProgress(1F)

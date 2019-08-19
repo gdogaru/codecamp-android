@@ -69,7 +69,7 @@ class SessionInfoFragment : BaseFragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SessionInfoViewModel::class.java)
-        sessionId = arguments!!.getString(SESSION_ID)!!
+        sessionId = arguments?.getString(SESSION_ID) ?: ""
 
         adapter = SpeakersAdapter(dataBindingComponent, appExecutors)
         binding.speakers.adapter = adapter
@@ -99,8 +99,7 @@ class SessionInfoFragment : BaseFragment(), Injectable {
 
         fun newInstance(id: String): SessionInfoFragment {
             val sessionInfoFragment = SessionInfoFragment()
-            sessionInfoFragment.arguments = Bundle()
-            sessionInfoFragment.arguments!!.putString(SESSION_ID, id)
+            sessionInfoFragment.arguments = Bundle().apply { putString(SESSION_ID, id) }
             return sessionInfoFragment
         }
     }

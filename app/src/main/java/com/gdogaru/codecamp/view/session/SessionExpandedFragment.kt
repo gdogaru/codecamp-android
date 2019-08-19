@@ -23,6 +23,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -36,7 +37,6 @@ import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Schedule
 import com.gdogaru.codecamp.databinding.SessionExpandedActivityBinding
 import com.gdogaru.codecamp.view.BaseFragment
-import com.gdogaru.codecamp.view.MainActivity
 import com.gdogaru.codecamp.view.util.autoCleared
 import javax.inject.Inject
 
@@ -64,9 +64,9 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(SessionExpandedViewModel::class.java)
 
-        val ma = activity as MainActivity?
-        ma!!.setSupportActionBar(binding.toolbar)
-        ma.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val ma = requireActivity() as AppCompatActivity
+        ma.setSupportActionBar(binding.toolbar)
+        ma.supportActionBar?.apply { setDisplayHomeAsUpEnabled(true) }
 
         adapter = ExpandedSessionsAdapter(childFragmentManager)
         binding.viewPager.addOnPageChangeListener(this)

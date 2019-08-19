@@ -49,7 +49,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(System.getenv('KEYSTORE') ?: '../certificate/dummy.jks')
+            storeFile file(System.getenv('KEYSTORE') ?: '../certificate/dev-dummy.jks')
             storePassword System.getenv("KEYSTORE_PASSWORD") ?: "codecamp"
             keyAlias System.getenv("KEY_ALIAS") ?: "dummy"
             keyPassword System.getenv("KEY_PASSWORD") ?: "codecamp"

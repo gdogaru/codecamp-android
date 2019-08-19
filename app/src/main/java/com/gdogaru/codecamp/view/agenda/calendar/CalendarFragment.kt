@@ -73,19 +73,18 @@ class CalendarFragment : AbstractSessionsListFragment(), Injectable {
 
     override fun onResume() {
         super.onResume()
-        currentTimer = Timer()
-        currentTimer!!.schedule(object : TimerTask() {
-            override fun run() {
-                calendar.post { calendar.updateCurrentTime(LocalDateTime.now()) }
-            }
-        }, 500, 30000)
+        currentTimer = Timer().apply {
+            schedule(object : TimerTask() {
+                override fun run() {
+                    calendar.post { calendar.updateCurrentTime(LocalDateTime.now()) }
+                }
+            }, 500, 30000)
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        if (currentTimer != null) {
-            currentTimer!!.cancel()
-        }
+        currentTimer?.apply { cancel() }
         calendarState = calendar.state
     }
 
