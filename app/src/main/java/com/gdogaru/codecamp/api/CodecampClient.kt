@@ -22,7 +22,6 @@ import com.gdogaru.codecamp.App
 import com.google.firebase.perf.metrics.AddTrace
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okio.Okio
 import timber.log.Timber
 import java.io.File
 import javax.inject.Inject
@@ -42,7 +41,6 @@ class CodecampClient
 
     init {
         okHttpClient = OkHttpClient()
-//        okHttpClient.s
     }
 
     @AddTrace(name = "downloadEventData")
@@ -60,9 +58,8 @@ class CodecampClient
                 if (outputFile.exists().not() && outputFile.createNewFile().not()) {
                     return ApiResponse.create(IllegalStateException("Could not create events file: " + outputFile.path))
                 }
-
-                Okio.buffer(Okio.sink(outputFile)).use {
-                    response.body()?.let { b -> it.writeAll(b.source()) }
+                response.body?.bytes()?.let {
+                    outputFile.writeBytes(it)
                 }
                 return ApiResponse.create(outputFile)
             }

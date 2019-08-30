@@ -93,7 +93,7 @@
         <item name="android:paddingTop">5dp</item>
         <item name="android:maxLines">2</item>
         <item name="android:ellipsize">marquee</item>
-        <item name="fontPath">@string/font_roboto_medium</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
     <style name="session_item_time">
@@ -114,12 +114,13 @@
         <item name="android:textSize">@dimen/header_1</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
     </style>
 
     <style name="header_2">
         <item name="android:textSize">@dimen/header_2</item>
         <item name="android:textStyle">bold</item>
-        <item name="fontPath">@string/font_roboto_bold</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
     </style>
 
     <style name="user_input">
@@ -173,8 +174,8 @@
 
     <style name="Codecamp.AgendaToggle">
         <item name="android:buttonStyleToggle">@style/Codecamp.Widget.Button.Toggle</item>
-        <item name="android:textOn"></item>
-        <item name="android:textOff"></item>
+        <item name="android:textOn" />
+        <item name="android:textOff" />
     </style>
 
 
@@ -186,7 +187,7 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16sp</item>
         <item name="android:layout_marginRight">10dp</item>
-        <item name="fontPath">@string/font_roboto_regular</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:padding">10dp</item>
         <item name="android:textColor">@android:color/white</item>
@@ -201,7 +202,7 @@
         <item name="android:textStyle">normal</item>
         <item name="android:color">@color/black</item>
         <item name="android:textSize">18sp</item>
-        <item name="fontPath">@string/font_roboto_regular</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
         <item name="android:gravity">center</item>
     </style>
     <!-- Local copy of android:Theme.Holo.Dialog.Alert -->

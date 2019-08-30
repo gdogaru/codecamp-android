@@ -31,11 +31,9 @@ import com.crashlytics.android.core.CrashlyticsCore
 import com.evernote.android.state.StateSaver
 import com.gdogaru.codecamp.di.AppInjector
 import com.jakewharton.threetenabp.AndroidThreeTen
-import dagger.android.*
 import dagger.android.support.HasSupportFragmentInjector
 import io.fabric.sdk.android.Fabric
 import timber.log.Timber
-import uk.co.chrisjenx.calligraphy.CalligraphyConfig
 import javax.inject.Inject
 
 
@@ -64,7 +62,6 @@ class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInject
         AndroidThreeTen.init(this)
 
         initDebugState()
-        initCalligraphy()
         StateSaver.setEnabledForAllActivitiesAndSupportFragments(this, true)
 
         injectIfNecessary()
@@ -110,15 +107,6 @@ class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInject
     @Inject
     internal fun setInjected() {
         needToInject = false
-    }
-
-
-    private fun initCalligraphy() {
-        CalligraphyConfig.initDefault(CalligraphyConfig.Builder()
-                .setDefaultFontPath(getString(R.string.font_roboto_regular))
-                .setFontAttrId(R.attr.fontPath)
-                .build()
-        )
     }
 
     private fun initTimber() {

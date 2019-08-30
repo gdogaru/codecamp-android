@@ -78,7 +78,7 @@ android {
         dev {
             dimension "stage"
             signingConfig signingConfigs.release
-            minSdkVersion 24
+//            minSdkVersion 24
             applicationIdSuffix '.dev'
             versionNameSuffix "-dev"
 
@@ -181,15 +181,13 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
 
-    implementation "com.google.firebase:firebase-perf:18.0.1"
-    implementation "com.google.firebase:firebase-core:17.0.1"
+    implementation "com.google.firebase:firebase-perf:19.0.0"
+    implementation "com.google.firebase:firebase-core:17.2.0"
     implementation "com.crashlytics.sdk.android:crashlytics:$versions.crashlytics"
 
-    implementation "com.google.android.gms:play-services-maps:$versions.gmsVersion"
+    implementation "com.google.android.gms:play-services-maps:17.0.0"
     implementation "com.google.android.gms:play-services-base:$versions.gmsVersion"
-    implementation "com.google.android.gms:play-services-gcm:$versions.gmsVersion"
-
-    implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
+    implementation "com.google.android.gms:play-services-gcm:17.0.0"
 
     implementation "com.google.dagger:dagger:$versions.dagger"
     implementation "com.google.dagger:dagger-android:$versions.dagger"
@@ -201,16 +199,17 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:4.7.1"
 
-    implementation "com.squareup.okio:okio:1.17.2"
-    implementation "com.squareup.okhttp3:okhttp:3.14.1"
+    implementation "com.squareup.okio:okio:2.2.2"
+    implementation "com.squareup.okhttp3:okhttp:$versions.okHttp3"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp3"
 
     implementation 'com.jakewharton.threetenabp:threetenabp:1.2.0'
 
     implementation "com.github.bumptech.glide:glide:${versions.glide}"
     implementation "se.emilsjolander:stickylistheaders:2.7.0"
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.8'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.8'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6'
 
     implementation 'com.evernote:android-state:1.4.1'
     kapt 'com.evernote:android-state-processor:1.4.1'

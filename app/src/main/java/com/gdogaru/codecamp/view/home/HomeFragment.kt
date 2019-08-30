@@ -43,7 +43,6 @@ import com.gdogaru.codecamp.util.AppExecutors
 import com.gdogaru.codecamp.util.RatingHelper
 import com.gdogaru.codecamp.view.BaseActivity
 import com.gdogaru.codecamp.view.BaseFragment
-import com.gdogaru.codecamp.view.util.autoCleared
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -210,11 +209,10 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
                     googleMap.uiSettings.isZoomControlsEnabled = false
                     googleMap.uiSettings.isScrollGesturesEnabled = false
                     googleMap.setOnMapClickListener {
-                        //geo:latitude,longitude?z=zoom
-                        val uri = "geo:$latitude,$longitude?z=19"
-                        val intentMap = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-                        intentMap.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                        startActivity(intentMap)
+                        activity?.startActivity(
+                                Intent(Intent.ACTION_VIEW, Uri.parse("geo:$latitude,$longitude?z=19"))
+                                        .apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK }
+                        )
                     }
                 }
             } catch (e: Exception) {

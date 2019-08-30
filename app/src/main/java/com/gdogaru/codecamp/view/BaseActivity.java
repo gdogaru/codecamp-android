@@ -19,8 +19,6 @@
 package com.gdogaru.codecamp.view;
 
 import android.Manifest;
-import android.app.ActionBar;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -35,6 +33,8 @@ import androidx.fragment.app.Fragment;
 
 import com.gdogaru.codecamp.R;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,7 +44,6 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.support.HasSupportFragmentInjector;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 
 /**
@@ -68,30 +67,6 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
-
-    //    public void onEventMainThread(NoInternetEvent event) {
-//        Toast.makeText(this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-//    }
-    public void setChildActionBar(int textid) {
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayShowTitleEnabled(true);
-            actionBar.setTitle(textid);
-            actionBar.setIcon(R.drawable.icon_transparent);
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_HOME | ActionBar.DISPLAY_HOME_AS_UP | ActionBar.DISPLAY_SHOW_TITLE);
-        }
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
@@ -107,14 +82,9 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
         NavUtils.navigateUpFromSameTask(this);
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
     public void checkAndRequestPermissions() {
         permissionsNeeded = getPermissionsNeeded();
-        if (false && !permissionsNeeded.isEmpty()) {
+        if (!permissionsNeeded.isEmpty()) {
             allPermissionsGranted = false;
             ActivityCompat.requestPermissions(this, permissionsNeeded.toArray(new String[permissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
         } else {
@@ -127,9 +97,8 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
     }
 
     private ArrayList<String> getPermissionsNeeded() {
-        List<String> permissionsToCheck = ALL_PERMISSIONS;
         ArrayList<String> permissionsNeeded = new ArrayList<>();
-        for (String permission : permissionsToCheck) {
+        for (String permission : ALL_PERMISSIONS) {
             int permissionSendMessage = ContextCompat.checkSelfPermission(this, permission);
             if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
                 permissionsNeeded.add(permission);
@@ -147,31 +116,27 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_ID_MULTIPLE_PERMISSIONS: {
-                List<String> notGranted = new ArrayList<>(permissionsNeeded);
-                for (int i = 0; i < permissions.length; i++) {
-                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
-                        notGranted.remove(permissions[i]);
-                    }
+    public void onRequestPermissionsResult(int requestCode, @NotNull String permissions[], @NotNull int[] grantResults) {
+        if (requestCode == REQUEST_ID_MULTIPLE_PERMISSIONS) {
+            List<String> notGranted = new ArrayList<>(permissionsNeeded);
+            for (int i = 0; i < permissions.length; i++) {
+                if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                    notGranted.remove(permissions[i]);
                 }
-                if (notGranted.size() > 0) {
-                    if (getPermissionsNeeded().size() > 0) {
-                        showDialogOK("The app cannot function without these permissions.",
-                                (dialog, which) -> {
-                                    switch (which) {
-                                        case DialogInterface.BUTTON_POSITIVE:
-//                                            checkAndRequestPermissions();
-                                            break;
-                                    }
-                                });
-                    }
-                    allPermissionsGranted = false;
-                } else {
-                    allPermissionsGranted = true;
-                    onPermissionGranted();
+            }
+            if (notGranted.size() > 0) {
+                if (getPermissionsNeeded().size() > 0) {
+                    showDialogOK("The app cannot function without these permissions.",
+                            (dialog, which) -> {
+                                if (which == DialogInterface.BUTTON_POSITIVE) {
+                                    //checkAndRequestPermissions();
+                                }
+                            });
                 }
+                allPermissionsGranted = false;
+            } else {
+                allPermissionsGranted = true;
+                onPermissionGranted();
             }
         }
     }

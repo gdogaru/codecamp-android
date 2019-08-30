@@ -29,7 +29,6 @@ import androidx.navigation.fragment.findNavController
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.view.agenda.AbstractSessionsListFragment
 import com.gdogaru.codecamp.view.agenda.AgendaFragmentDirections
-import com.gdogaru.codecamp.view.util.autoCleared
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView
 import javax.inject.Inject
 
@@ -45,13 +44,17 @@ class SessionsListFragment : AbstractSessionsListFragment() {
     private lateinit var viewModel: SessionsListViewModel
     private var sessionsAdapter by autoCleared<SessionsAdapter>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.agenda_sessions_list, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SessionsListViewModel::class.java)
     }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
+            inflater.inflate(R.layout.agenda_sessions_list, container, false)!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SessionsListViewModel::class.java)
+
         listView = view.findViewById(android.R.id.list)
 
         sessionsAdapter = SessionsAdapter(requireActivity())
@@ -80,6 +83,6 @@ class SessionsListFragment : AbstractSessionsListFragment() {
     }
 
     companion object {
-        private val LIST_STATE = "LIST_STATE"
+        private const val LIST_STATE = "LIST_STATE"
     }
 }
