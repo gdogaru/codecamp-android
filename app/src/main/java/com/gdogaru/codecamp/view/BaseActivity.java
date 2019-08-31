@@ -66,14 +66,12 @@ public abstract class BaseActivity extends AppCompatActivity implements HasAndro
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                navigateHome();
-                overridePendingTransition(R.anim.hold, R.anim.act_slide_down);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        if (item.getItemId() == android.R.id.home) {
+            navigateHome();
+            overridePendingTransition(R.anim.hold, R.anim.act_slide_down);
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
     protected void navigateHome() {
@@ -97,8 +95,7 @@ public abstract class BaseActivity extends AppCompatActivity implements HasAndro
     private ArrayList<String> getPermissionsNeeded() {
         ArrayList<String> permissionsNeeded = new ArrayList<>();
         for (String permission : ALL_PERMISSIONS) {
-            int permissionSendMessage = ContextCompat.checkSelfPermission(this, permission);
-            if (permissionSendMessage != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 permissionsNeeded.add(permission);
             }
         }
