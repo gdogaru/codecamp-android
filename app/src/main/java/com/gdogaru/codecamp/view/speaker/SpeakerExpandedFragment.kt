@@ -28,9 +28,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.PagerAdapter
 import com.gdogaru.codecamp.R
@@ -48,17 +48,21 @@ class SpeakerExpandedFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private var binding by autoCleared<SpeakerExpandedBinding>()
     private val args: SpeakerExpandedFragmentArgs by navArgs()
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     private var adapter by autoCleared<SpeakerAdapter>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.speaker_expanded,
-                container,
-                false,
-                dataBindingComponent
+            inflater,
+            R.layout.speaker_expanded,
+            container,
+            false,
+            dataBindingComponent
         )
         binding.lifecycleOwner = this
         return binding.root
@@ -66,7 +70,6 @@ class SpeakerExpandedFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
 
         val ma = activity as AppCompatActivity
         ma.setSupportActionBar(binding.toolbar)

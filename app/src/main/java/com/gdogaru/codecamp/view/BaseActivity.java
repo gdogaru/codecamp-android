@@ -29,7 +29,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NavUtils;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.gdogaru.codecamp.R;
 
@@ -43,19 +42,18 @@ import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
-
+import dagger.android.HasAndroidInjector;
 
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
-public abstract class BaseActivity extends AppCompatActivity implements HasSupportFragmentInjector {
+public abstract class BaseActivity extends AppCompatActivity implements HasAndroidInjector {
     public static final List<String> ALL_PERMISSIONS = Arrays.asList(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE);
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 999;
 
     boolean allPermissionsGranted = false;
     @Inject
-    DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+    DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
     private ArrayList<String> permissionsNeeded = new ArrayList<>();
 
     @Override
@@ -147,7 +145,8 @@ public abstract class BaseActivity extends AppCompatActivity implements HasSuppo
     }
 
     @Override
-    public AndroidInjector<Fragment> supportFragmentInjector() {
+    public AndroidInjector<Object> androidInjector() {
         return dispatchingAndroidInjector;
     }
+
 }

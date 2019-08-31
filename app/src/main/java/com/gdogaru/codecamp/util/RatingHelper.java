@@ -18,6 +18,7 @@
 
 package com.gdogaru.codecamp.util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -65,26 +66,26 @@ public class RatingHelper {
         editor.apply();
     }
 
-    public static void tryToRate(Context context) {
+    public static void tryToRate(Activity activity) {
         if (!prefs().getBoolean(NEVER, false) && prefs().getInt(VIEWS, 0) >= VIEWS_UNTIL) {
-            showRateDialog(context);
+            showRateDialog(activity);
             setTimes(0);
         }
     }
 
-    public static void showRateDialog(Context context) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.Codecamp_AlertDialogThemeCompat);
-        View view = View.inflate(context, R.layout.rate_dialog, null);
-        Button rateButton = (Button) view.findViewById(R.id.rateButton);
-        Button laterButton = (Button) view.findViewById(R.id.laterButton);
-        Button neverButton = (Button) view.findViewById(R.id.neverButton);
+    public static void showRateDialog(Activity activity) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity, R.style.Codecamp_AlertDialogThemeCompat);
+        View view = View.inflate(activity, R.layout.rate_dialog, null);
+        Button rateButton = view.findViewById(R.id.rateButton);
+        Button laterButton = view.findViewById(R.id.laterButton);
+        Button neverButton = view.findViewById(R.id.neverButton);
         AlertDialog dialog = builder.create();
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setView(view, 1, 1, 1, 1);
-        setRateButtonClickListener(dialog, rateButton, context);
+        setRateButtonClickListener(dialog, rateButton, activity);
         setLaterButtonClickListener(dialog, laterButton);
         setNeverButtonClickListener(dialog, neverButton);
-        dialog.show();
+        if (!activity.isFinishing()) dialog.show();
     }
 
     public static void goToPlay(Context context) {
@@ -92,7 +93,7 @@ public class RatingHelper {
         Intent intent = new Intent(Intent.ACTION_VIEW);
         intent.setData(Uri.parse("market://details?id=" + context.getPackageName()));
 
-        PackageManager manager = App.Companion.instance().getPackageManager();
+        PackageManager manager = context.getPackageManager();
         List<ResolveInfo> list = manager.queryIntentActivities(intent, 0);
         if (list.size() > 0) {
             context.startActivity(intent);
@@ -102,13 +103,10 @@ public class RatingHelper {
     }
 
     private static void setRateButtonClickListener(final AlertDialog dialog, Button rateButton, final Context context) {
-        rateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                logEvent("rate_now");
-                dialog.dismiss();
-                goToPlay(context);
-            }
+        rateButton.setOnClickListener(v -> {
+            logEvent("rate_now");
+            dialog.dismiss();
+            goToPlay(context);
         });
     }
 

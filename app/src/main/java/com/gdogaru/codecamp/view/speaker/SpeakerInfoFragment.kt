@@ -26,9 +26,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Session
@@ -50,17 +50,21 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var viewModel: SpeakerInfoViewModel
+    private val viewModel: SpeakerInfoViewModel by viewModels { viewModelFactory }
     private var binding by autoCleared<SpeakersInfoBinding>()
     private var adapter by autoCleared<SpeakerInfoDataAdapter>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.speakers_info,
-                container,
-                false,
-                dataBindingComponent
+            inflater,
+            R.layout.speakers_info,
+            container,
+            false,
+            dataBindingComponent
         )
         binding.lifecycleOwner = this
         return binding.root
@@ -68,7 +72,6 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(SpeakerInfoViewModel::class.java)
 
         speakerId = arguments!!.getString(SPEAKER_ID)!!
 
@@ -76,7 +79,12 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
         bundle.putString("speaker", speakerId)
         firebaseAnalytics.logEvent("speaker_view", bundle)
 
-        adapter = SpeakerInfoDataAdapter(dataBindingComponent) { s, b -> viewModel.setBookmarked(s.id, b) }
+        adapter = SpeakerInfoDataAdapter(dataBindingComponent) { s, b ->
+            viewModel.setBookmarked(
+                s.id,
+                b
+            )
+        }
         binding.dataRecycler.adapter = adapter
 
         viewModel.getSpeakerFull(speakerId).observe(this, Observer { d ->
@@ -97,8 +105,8 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
 }
 
 class SpeakerInfoDataAdapter(
-        private val dataBindingComponent: DataBindingComponent,
-        private val sessionBookmarkListener: (Session, Boolean) -> Unit
+    private val dataBindingComponent: DataBindingComponent,
+    private val sessionBookmarkListener: (Session, Boolean) -> Unit
 ) : RecyclerView.Adapter<DataBoundViewHolder<ViewDataBinding>>() {
 
 
@@ -123,23 +131,30 @@ class SpeakerInfoDataAdapter(
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataBoundViewHolder<ViewDataBinding> {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): DataBoundViewHolder<ViewDataBinding> {
         return when (viewType) {
-            1 -> DataBoundViewHolder(DataBindingUtil.inflate(
+            1 -> DataBoundViewHolder(
+                DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
                     R.layout.session_expanded_speaker_item,
                     parent,
                     false,
                     dataBindingComponent
-            ))
+                )
+            )
 
-            2 -> DataBoundViewHolder(DataBindingUtil.inflate(
+            2 -> DataBoundViewHolder(
+                DataBindingUtil.inflate(
                     LayoutInflater.from(parent.context),
                     R.layout.session_item,
                     parent,
                     false,
                     dataBindingComponent
-            ))
+                )
+            )
             else -> throw IllegalStateException("unknown viewType $viewType")
         }
     }

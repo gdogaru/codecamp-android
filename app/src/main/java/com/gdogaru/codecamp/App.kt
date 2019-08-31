@@ -18,38 +18,28 @@
 
 package com.gdogaru.codecamp
 
-import android.app.Activity
 import android.app.Application
-import android.app.Service
-import android.content.BroadcastReceiver
 import android.os.StrictMode
 import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.multidex.MultiDexApplication
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
 import com.evernote.android.state.StateSaver
 import com.gdogaru.codecamp.di.AppInjector
 import com.jakewharton.threetenabp.AndroidThreeTen
-import dagger.android.support.HasSupportFragmentInjector
+import dagger.android.DaggerApplication
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasAndroidInjector
 import io.fabric.sdk.android.Fabric
 import timber.log.Timber
 import javax.inject.Inject
 
-
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
-class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInjector, HasServiceInjector, HasBroadcastReceiverInjector {
-
+class App : MultiDexApplication(), HasAndroidInjector {
     @Inject
-    lateinit var activityInjector: DispatchingAndroidInjector<Activity>
-    @Inject
-    lateinit var broadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
-    @Inject
-    lateinit var fragmentInjector: DispatchingAndroidInjector<Fragment>
-    @Inject
-    lateinit var serviceInjector: DispatchingAndroidInjector<Service>
+    lateinit var androidInjector: DispatchingAndroidInjector<Any>
     @Volatile
     private var needToInject = true
 
@@ -70,18 +60,20 @@ class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInject
     private fun initDebugState() {
         if (BuildConfig.DEBUG) {
             StrictMode.setThreadPolicy(
-                    StrictMode.ThreadPolicy.Builder()
-                            .detectAll()
-                            .penaltyLog()
+                StrictMode.ThreadPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
 //                            .penaltyDeath()
-                            .build())
+                    .build()
+            )
 
             StrictMode.setVmPolicy(
-                    StrictMode.VmPolicy.Builder()
-                            .detectAll()
-                            .penaltyLog()
+                StrictMode.VmPolicy.Builder()
+                    .detectAll()
+                    .penaltyLog()
 //                            .penaltyDeath()
-                            .build())
+                    .build()
+            )
         }
     }
 
@@ -104,6 +96,8 @@ class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInject
         }
     }
 
+    override fun androidInjector() = androidInjector
+
     @Inject
     internal fun setInjected() {
         needToInject = false
@@ -118,18 +112,10 @@ class App : MultiDexApplication(), HasActivityInjector, HasSupportFragmentInject
 
     private fun initCrashlytics() {
         val crashlyticsKit = Crashlytics.Builder()
-                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build()
+            .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+            .build()
         Fabric.with(this, crashlyticsKit)
     }
-
-    override fun activityInjector() = activityInjector
-
-    override fun supportFragmentInjector() = fragmentInjector
-
-    override fun broadcastReceiverInjector() = broadcastReceiverInjector
-
-    override fun serviceInjector() = serviceInjector
 
     companion object {
 

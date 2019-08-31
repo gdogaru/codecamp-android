@@ -24,9 +24,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.evernote.android.state.State
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.databinding.AgendaBinding
@@ -57,18 +57,26 @@ class AgendaFragment : BaseFragment() {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     @State
     var favoritesOnly = false
-    private lateinit var viewModel: AgendaViewModel
+    private val viewModel: AgendaViewModel by viewModels { viewModelFactory }
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.agenda, container, false, dataBindingComponent)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.agenda,
+            container,
+            false,
+            dataBindingComponent
+        )
         binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(AgendaViewModel::class.java)
-
         val ma = activity as AppCompatActivity
         ma.setSupportActionBar(binding.toolbar)
         ma.supportActionBar?.apply { setDisplayHomeAsUpEnabled(true) }
@@ -84,12 +92,14 @@ class AgendaFragment : BaseFragment() {
         binding.favoriteSwitch.setOnCheckedChangeListener { _, checked ->
             if (checked != favoritesOnly) {
                 favoritesOnly = checked
-                val f = childFragmentManager.findFragmentById(R.id.content) as AbstractSessionsListFragment?
+                val f =
+                    childFragmentManager.findFragmentById(R.id.content) as AbstractSessionsListFragment?
                 f?.setFavoritesOnly(favoritesOnly)
             }
         }
 
-        val fragmentById = childFragmentManager.findFragmentById(R.id.content) as AbstractSessionsListFragment?
+        val fragmentById =
+            childFragmentManager.findFragmentById(R.id.content) as AbstractSessionsListFragment?
         if (fragmentById == null) {
             showContent()
         } else {
@@ -108,9 +118,9 @@ class AgendaFragment : BaseFragment() {
         firebaseAnalytics.logEvent(AnalyticsHelper.normalize("agenda_view_$value"), bundle)
 
         val transaction = childFragmentManager
-                .beginTransaction()
-                .disallowAddToBackStack()
-                .setCustomAnimations(R.anim.fade_in, R.anim.fade_out) //, 0, R.anim.hold);
+            .beginTransaction()
+            .disallowAddToBackStack()
+            .setCustomAnimations(R.anim.fade_in, R.anim.fade_out) //, 0, R.anim.hold);
         val sessionsFragment: AbstractSessionsListFragment
         if (appPreferences.listViewList) {
             sessionsFragment = SessionsListFragment()

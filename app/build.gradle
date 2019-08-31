@@ -155,6 +155,12 @@ play {
     //If the deployment fails due to an API error, don't fail the CI Build
 }
 
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "500"
+        // increase the number of errors that javac will print
+    }
+}
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
@@ -165,16 +171,17 @@ dependencies {
     implementation "androidx.multidex:multidex:2.0.1"
     implementation "androidx.legacy:legacy-support-v4:1.0.0"
     implementation "androidx.appcompat:appcompat:1.0.2"
-    implementation "com.google.android.material:material:1.0.0"
     implementation "androidx.cardview:cardview:1.0.0"
     implementation "androidx.recyclerview:recyclerview:1.0.0"
     implementation "androidx.annotation:annotation:1.1.0"
     implementation "androidx.constraintlayout:constraintlayout:1.1.3"
-    implementation "androidx.core:core-ktx:$versions.ktx"
+    implementation "androidx.core:core-ktx:1.2.0-alpha03"
+    implementation "androidx.fragment:fragment-ktx:1.2.0-alpha02"
     implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
     implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
     implementation "android.arch.persistence.room:runtime:1.1.1"
+    implementation "com.google.android.material:material:1.0.0"
     kapt "android.arch.persistence.room:compiler:1.1.1"
     implementation "android.arch.work:work-runtime:1.0.1"
 
@@ -194,8 +201,6 @@ dependencies {
     implementation "com.google.dagger:dagger-android-support:$versions.dagger"
     kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
     kapt "com.google.dagger:dagger-compiler:$versions.dagger"
-    implementation 'org.glassfish:javax.annotation:10.0-b28'
-    //todo should be fixed by dagger in a future version
 
     implementation "com.jakewharton.timber:timber:4.7.1"
 
@@ -208,8 +213,8 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:${versions.glide}"
     implementation "se.emilsjolander:stickylistheaders:2.7.0"
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9'
 
     implementation 'com.evernote:android-state:1.4.1'
     kapt 'com.evernote:android-state-processor:1.4.1'

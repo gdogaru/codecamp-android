@@ -24,9 +24,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.gdogaru.codecamp.R
@@ -50,31 +50,34 @@ class SpeakersFragment : BaseFragment() {
     lateinit var appExecutors: AppExecutors
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MainViewModel
+    val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     private var binding by autoCleared<SpeakersBinding>()
     private var speakersAdapter by autoCleared<SpeakersAdapter>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.speakers,
-                container,
-                false,
-                dataBindingComponent
+            inflater,
+            R.layout.speakers,
+            container,
+            false,
+            dataBindingComponent
         )
         binding.lifecycleOwner = this
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
-
         val ma = activity as AppCompatActivity
         ma.setSupportActionBar(binding.toolbar)
         ma.supportActionBar?.apply { setDisplayHomeAsUpEnabled(true) }
 
-        speakersAdapter = SpeakersAdapter(dataBindingComponent, appExecutors) { id -> showSpeaker(id) }
+        speakersAdapter =
+            SpeakersAdapter(dataBindingComponent, appExecutors) { id -> showSpeaker(id) }
         binding.recycler.adapter = speakersAdapter
         binding.recycler.layoutManager = GridLayoutManager(activity, 3)
         binding.recycler.addItemDecoration(GridSpacingItemDecoration(3, UiUtil.dpToPx(5f), true))

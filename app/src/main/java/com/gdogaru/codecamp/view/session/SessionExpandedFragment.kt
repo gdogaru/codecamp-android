@@ -27,9 +27,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
@@ -45,16 +45,20 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
     lateinit var viewModelFactory: ViewModelProvider.Factory
     private val args: SessionExpandedFragmentArgs by navArgs()
     var binding by autoCleared<SessionExpandedActivityBinding>()
-    private var viewModel by autoCleared<SessionExpandedViewModel>()
+    val viewModel: SessionExpandedViewModel by viewModels { viewModelFactory }
     private var adapter by autoCleared<ExpandedSessionsAdapter>()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.session_expanded_activity,
-                container,
-                false,
-                dataBindingComponent
+            inflater,
+            R.layout.session_expanded_activity,
+            container,
+            false,
+            dataBindingComponent
         )
         binding.lifecycleOwner = this
         return binding.root
@@ -62,7 +66,6 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SessionExpandedViewModel::class.java)
 
         val ma = requireActivity() as AppCompatActivity
         ma.setSupportActionBar(binding.toolbar)
@@ -104,7 +107,8 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
     override fun onPageScrollStateChanged(state: Int) {
     }
 
-    private inner class ExpandedSessionsAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    private inner class ExpandedSessionsAdapter(fm: FragmentManager) :
+        FragmentStatePagerAdapter(fm) {
 
         private val trackSessions = mutableListOf<String>()
 
@@ -114,7 +118,8 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
             notifyDataSetChanged()
         }
 
-        override fun getItem(position: Int) = SessionInfoFragment.newInstance(trackSessions[position])
+        override fun getItem(position: Int) =
+            SessionInfoFragment.newInstance(trackSessions[position])
 
         override fun getCount() = trackSessions.size
 

@@ -30,8 +30,8 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.crashlytics.android.Crashlytics
@@ -43,6 +43,7 @@ import com.gdogaru.codecamp.util.AppExecutors
 import com.gdogaru.codecamp.util.RatingHelper
 import com.gdogaru.codecamp.view.BaseActivity
 import com.gdogaru.codecamp.view.BaseFragment
+import com.gdogaru.codecamp.view.util.autoCleared
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -65,24 +66,29 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
 
     private var mapFragment: SupportMapFragment? = null
     private var binding by autoCleared<HomeBinding>()
-    lateinit var viewModel: HomeViewModel
+    val viewModel: HomeViewModel by viewModels { viewModelFactory }
 
     var adapter by autoCleared<BindingScheduleAdapter>()
 
     private val isNetworkConnected: Boolean
         get() {
-            val cm = requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val cm =
+                requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val ni = cm.activeNetworkInfo
             return ni != null
         }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.home,
-                container,
-                false,
-                dataBindingComponent
+            inflater,
+            R.layout.home,
+            container,
+            false,
+            dataBindingComponent
         )
         binding.lifecycleOwner = this
         return binding.root
@@ -90,7 +96,6 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(HomeViewModel::class.java)
         binding.lifecycleOwner = this
 
         setHasOptionsMenu(true)
@@ -104,7 +109,13 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
             setDisplayHomeAsUpEnabled(true)
         }
 
-        val toggle = ActionBarDrawerToggle(activity, binding.drawerLayout, binding.toolbar, R.string.open, R.string.close)
+        val toggle = ActionBarDrawerToggle(
+            activity,
+            binding.drawerLayout,
+            binding.toolbar,
+            R.string.open,
+            R.string.close
+        )
         toggle.isDrawerIndicatorEnabled = true
         toggle.syncState()
 
@@ -112,7 +123,8 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
 
 
         val decor = DividerItemDecoration(activity, DividerItemDecoration.VERTICAL)
-        ContextCompat.getDrawable(requireActivity(), R.drawable.list_vertical_divider)?.let { decor.setDrawable(it) }
+        ContextCompat.getDrawable(requireActivity(), R.drawable.list_vertical_divider)
+            ?.let { decor.setDrawable(it) }
         binding.agenda.addItemDecoration(decor)
 
         adapter = BindingScheduleAdapter(dataBindingComponent, appExecutors) { onItemClicked(it) }
@@ -125,7 +137,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
 
     private fun showEvent(currentEvent: Codecamp) {
         firebaseAnalytics.logEvent(AnalyticsHelper.normalize("event_" + currentEvent.title),
-                Bundle().apply { putString("event", currentEvent.title) })
+            Bundle().apply { putString("event", currentEvent.title) })
 
         binding.summary = currentEvent
         adapter.submitList(schedules(currentEvent))
@@ -193,33 +205,39 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
             Timber.e("No map...")
             return
         }
-        viewModel.currentEvent.observe(this@HomeFragment, androidx.lifecycle.Observer<Codecamp> { c ->
-            try {
-                val d = c.venue?.directions ?: ""
-                Timber.i("Centering map to destination %s", d)
-                if (d.isNotEmpty()) {
-                    val dd = d.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                    val latitude = java.lang.Double.parseDouble(dd[0].trim { it <= ' ' })
-                    val longitude = java.lang.Double.parseDouble(dd[1].trim { it <= ' ' })
-                    val latLng = LatLng(latitude, longitude)
-                    Timber.d("Moving camera to %s", latLng)
-                    //            googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                    googleMap.addMarker(MarkerOptions().position(latLng))
-                    googleMap.uiSettings.isZoomControlsEnabled = false
-                    googleMap.uiSettings.isScrollGesturesEnabled = false
-                    googleMap.setOnMapClickListener {
-                        activity?.startActivity(
-                                Intent(Intent.ACTION_VIEW, Uri.parse("geo:$latitude,$longitude?z=19"))
-                                        .apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK }
-                        )
+        viewModel.currentEvent.observe(
+            this@HomeFragment,
+            androidx.lifecycle.Observer<Codecamp> { c ->
+                try {
+                    val d = c.venue?.directions ?: ""
+                    Timber.i("Centering map to destination %s", d)
+                    if (d.isNotEmpty()) {
+                        val dd =
+                            d.split(",".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                        val latitude = java.lang.Double.parseDouble(dd[0].trim { it <= ' ' })
+                        val longitude = java.lang.Double.parseDouble(dd[1].trim { it <= ' ' })
+                        val latLng = LatLng(latitude, longitude)
+                        Timber.d("Moving camera to %s", latLng)
+                        //            googleMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                        googleMap.addMarker(MarkerOptions().position(latLng))
+                        googleMap.uiSettings.isZoomControlsEnabled = false
+                        googleMap.uiSettings.isScrollGesturesEnabled = false
+                        googleMap.setOnMapClickListener {
+                            activity?.startActivity(
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    Uri.parse("geo:$latitude,$longitude?z=19")
+                                )
+                                    .apply { flags = Intent.FLAG_ACTIVITY_NEW_TASK }
+                            )
+                        }
                     }
+                } catch (e: Exception) {
+                    Timber.e(e, "Could not parse location")
+                    Crashlytics.log(Log.ERROR, "Map", "Could not parse location: " + e.message)
                 }
-            } catch (e: Exception) {
-                Timber.e(e, "Could not parse location")
-                Crashlytics.log(Log.ERROR, "Map", "Could not parse location: " + e.message)
-            }
-        })
+            })
     }
 
     override fun onResume() {

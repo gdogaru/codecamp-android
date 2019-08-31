@@ -26,8 +26,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Codecamp
@@ -52,17 +52,21 @@ class SponsorsFragment : BaseFragment() {
     lateinit var appExecutors: AppExecutors
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: MainViewModel
+    val viewModel: MainViewModel by viewModels { viewModelFactory }
     private var binding by autoCleared<SponsorsBinding>()
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.sponsors,
-                container,
-                false,
-                dataBindingComponent
+            inflater,
+            R.layout.sponsors,
+            container,
+            false,
+            dataBindingComponent
         )
         binding.lifecycleOwner = this
         return binding.root
@@ -72,7 +76,6 @@ class SponsorsFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity(), viewModelFactory).get(MainViewModel::class.java)
 
         val act = activity as AppCompatActivity
         act.setSupportActionBar(binding.toolbar)
@@ -100,7 +103,8 @@ class SponsorsFragment : BaseFragment() {
         for (p in packages) {
             ptoIdx[p.name.orEmpty()] = p.displayOrder
         }
-        sponsorList = sponsorList.orEmpty().sortedWith(compareBy({ it.sponsorshipPackage }, { it.displayOrder }))
+        sponsorList = sponsorList.orEmpty()
+            .sortedWith(compareBy({ it.sponsorshipPackage }, { it.displayOrder }))
         sponsorsAdapter.submitList(sponsorList.orEmpty())
     }
 }

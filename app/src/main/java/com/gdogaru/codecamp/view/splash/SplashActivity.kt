@@ -21,10 +21,10 @@ package com.gdogaru.codecamp.view.splash
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.gdogaru.codecamp.databinding.SplashBinding
 import com.gdogaru.codecamp.view.BaseActivity
 import com.gdogaru.codecamp.view.MainActivity
@@ -41,20 +41,20 @@ class SplashActivity : BaseActivity() {
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    private lateinit var viewModel: SplashViewModel
+    private val viewModel: SplashViewModel by viewModels { viewModelFactory }
     private var binding by autoCleared<SplashBinding>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SplashViewModel::class.java)
-
         binding = DataBindingUtil.setContentView(this, com.gdogaru.codecamp.R.layout.splash)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
 
         actionBar?.hide()
 
-        viewModel.jobState.observe(this, Observer { if (it == WorkerState.DONE) startMainActivity() })
+        viewModel.jobState.observe(
+            this,
+            Observer { if (it == WorkerState.DONE) startMainActivity() })
     }
 
     override fun onResume() {
@@ -67,7 +67,8 @@ class SplashActivity : BaseActivity() {
         val result = googleAPI.isGooglePlayServicesAvailable(this)
         if (result != ConnectionResult.SUCCESS) {
             if (googleAPI.isUserResolvableError(result)) {
-                val errorDialog = googleAPI.getErrorDialog(this, result, PLAY_SERVICES_RESOLUTION_REQUEST)
+                val errorDialog =
+                    googleAPI.getErrorDialog(this, result, PLAY_SERVICES_RESOLUTION_REQUEST)
                 errorDialog.setOnDismissListener { this@SplashActivity.finish() }
                 errorDialog.show()
             }
@@ -103,7 +104,10 @@ class SplashActivity : BaseActivity() {
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         startActivity(intent)
         finish()
-        overridePendingTransition(com.gdogaru.codecamp.R.anim.act_fade_in, com.gdogaru.codecamp.R.anim.act_fade_out)
+        overridePendingTransition(
+            com.gdogaru.codecamp.R.anim.act_fade_in,
+            com.gdogaru.codecamp.R.anim.act_fade_out
+        )
     }
 
     companion object {

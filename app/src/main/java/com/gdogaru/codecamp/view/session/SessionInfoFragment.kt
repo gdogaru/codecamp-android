@@ -25,9 +25,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.DiffUtil
 import com.android.example.github.ui.common.DataBoundListAdapter
 import com.gdogaru.codecamp.R
@@ -48,19 +48,23 @@ class SessionInfoFragment : BaseFragment(), Injectable {
     lateinit var firebaseAnalytics: FirebaseAnalytics
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: SessionInfoViewModel
+    val viewModel: SessionInfoViewModel by viewModels { viewModelFactory }
 
     private var binding by autoCleared<SessionExpandedItemBinding>()
     private var adapter by autoCleared<SpeakersAdapter>()
     lateinit var sessionId: String
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = DataBindingUtil.inflate(
-                inflater,
-                R.layout.session_expanded_item,
-                container,
-                false,
-                dataBindingComponent
+            inflater,
+            R.layout.session_expanded_item,
+            container,
+            false,
+            dataBindingComponent
         )
         binding.lifecycleOwner = this
         return binding.root
@@ -68,7 +72,7 @@ class SessionInfoFragment : BaseFragment(), Injectable {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SessionInfoViewModel::class.java)
+
         sessionId = arguments?.getString(SESSION_ID) ?: ""
 
         adapter = SpeakersAdapter(dataBindingComponent, appExecutors)
@@ -106,27 +110,27 @@ class SessionInfoFragment : BaseFragment(), Injectable {
 }
 
 class SpeakersAdapter(
-        private val dataBindingComponent: DataBindingComponent,
-        appExecutors: AppExecutors
+    private val dataBindingComponent: DataBindingComponent,
+    appExecutors: AppExecutors
 ) : DataBoundListAdapter<Speaker, SessionExpandedSpeakerItemBinding>(
-        appExecutors = appExecutors,
-        diffCallback = object : DiffUtil.ItemCallback<Speaker>() {
-            override fun areItemsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
-                return oldItem.name == newItem.name
-            }
-
-            override fun areContentsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
-                return oldItem == newItem
-            }
+    appExecutors = appExecutors,
+    diffCallback = object : DiffUtil.ItemCallback<Speaker>() {
+        override fun areItemsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
+            return oldItem.name == newItem.name
         }
+
+        override fun areContentsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
+            return oldItem == newItem
+        }
+    }
 ) {
     override fun createBinding(parent: ViewGroup): SessionExpandedSpeakerItemBinding {
         return DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.session_expanded_speaker_item,
-                parent,
-                false,
-                dataBindingComponent
+            LayoutInflater.from(parent.context),
+            R.layout.session_expanded_speaker_item,
+            parent,
+            false,
+            dataBindingComponent
         )
     }
 

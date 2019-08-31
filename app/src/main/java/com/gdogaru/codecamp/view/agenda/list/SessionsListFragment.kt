@@ -23,12 +23,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ListView
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.view.agenda.AbstractSessionsListFragment
 import com.gdogaru.codecamp.view.agenda.AgendaFragmentDirections
+import com.gdogaru.codecamp.view.util.autoCleared
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView
 import javax.inject.Inject
 
@@ -38,19 +39,17 @@ import javax.inject.Inject
 
 class SessionsListFragment : AbstractSessionsListFragment() {
 
-    lateinit var listView: StickyListHeadersListView
+    private lateinit var listView: StickyListHeadersListView
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
-    private lateinit var viewModel: SessionsListViewModel
+    val viewModel: SessionsListViewModel by viewModels { viewModelFactory }
     private var sessionsAdapter by autoCleared<SessionsAdapter>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, viewModelFactory).get(SessionsListViewModel::class.java)
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) =
-            inflater.inflate(R.layout.agenda_sessions_list, container, false)!!
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ) = inflater.inflate(R.layout.agenda_sessions_list, container, false)!!
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -59,7 +58,14 @@ class SessionsListFragment : AbstractSessionsListFragment() {
 
         sessionsAdapter = SessionsAdapter(requireActivity())
         listView.adapter = sessionsAdapter
-        listView.setOnItemClickListener { parent, v, position, id -> onListItemClick(parent as ListView, v, position, id) }
+        listView.setOnItemClickListener { parent, v, position, id ->
+            onListItemClick(
+                parent as ListView,
+                v,
+                position,
+                id
+            )
+        }
 
         viewModel.sessionItems().observe(this, androidx.lifecycle.Observer { s ->
             s?.let { sessionsAdapter.sessions = it }
