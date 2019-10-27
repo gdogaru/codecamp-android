@@ -57,11 +57,15 @@ class InternalStorage
     }
 
     fun readEvents(root: Instant): List<EventSummary> {
-        return mapper.readValue(file(root, FileType.EVENTS).readText(), EventList::class.java).orEmpty()
+        return mapper.readValue(file(root, FileType.EVENTS).readText(), EventList::class.java)
+            .orEmpty()
     }
 
     fun readEvent(root: Instant, id: Long): Codecamp {
-        return mapper.readValue(file(root, FileType.DETAILS, id.toString()).readText(), Codecamp::class.java)
+        return mapper.readValue(
+            file(root, FileType.DETAILS, id.toString()).readText(),
+            Codecamp::class.java
+        )
     }
 
     fun deleteRoot(filename: String) {
@@ -71,7 +75,7 @@ class InternalStorage
 
     private fun delete(f: File) {
         if (f.isDirectory) {
-            for (c in f.listFiles()) delete(c)
+            f.listFiles()?.forEach { delete(it) }
         } else {
             if (!f.delete()) Timber.w("Failed to delete file: %s", f)
         }

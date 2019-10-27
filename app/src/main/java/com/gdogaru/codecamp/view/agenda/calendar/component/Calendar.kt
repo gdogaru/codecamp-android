@@ -18,14 +18,16 @@
 
 package com.gdogaru.codecamp.view.agenda.calendar.component
 
-import android.app.Activity
 import android.content.Context
+import android.graphics.Point
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.core.view.updateLayoutParams
 import com.gdogaru.codecamp.R
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
@@ -36,70 +38,59 @@ import java.util.*
 import kotlin.math.max
 
 
-class Calendar : ScrollView {
-    private val context: Activity
-    lateinit var parent: RelativeLayout
-    lateinit var hourParent: RelativeLayout
-    private var PX_PER_MINUTE: Double = 0.toDouble()
-    private var HOUR_BAR_WIDTH: Int = 0
-    private var events: List<DisplayEvent> = ArrayList()
-    private var startDate: LocalTime? = null
-    private var endDate: LocalTime? = null
-    private var dateDiff: Long = 0
-    private var eventListener: EventListener? = null
-    private var currentTime: LocalDateTime? = null
-    private var maxInRow = 1
-    private var currentTimeLayout: LinearLayout? = null
+class Calendar @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : ScrollView(context, attrs, defStyleAttr) {
 
-    private var hz: HorizontalScrollView? = null
+    private lateinit var parent: RelativeLayout
+    private lateinit var hourParent: RelativeLayout
+    private lateinit var hz: HorizontalScrollView
+    private val PX_PER_MINUTE: Double
+    private val HOUR_BAR_WIDTH: Int
+    private var events: List<DisplayEvent> = ArrayList()
+    private var startDate: LocalTime = LocalTime.now()
+    private var endDate: LocalTime = LocalTime.now()
+    private var startHour = 9
+    private var endHour = 23
+    private var currentTime: LocalDateTime = LocalDateTime.now()
+    private var dateDiff: Long = 0
+    private var maxInRow = 1
+    private var eventListener: EventListener? = null
+
+    private var currentTimeLayout: View? = null
+
     private var scheduleDate: LocalDateTime? = null
 
     var state: CalendarState
         get() = CalendarState(
-                Point(scrollX, scrollY),
-                Point(if (hz == null) -1 else hz!!.scrollX, if (hz == null) -1 else hz!!.scrollY)
+            Point(scrollX, scrollY),
+            Point(hz.scrollX, hz.scrollY)
         )
         set(state) {
             scrollTo(state.vertical.x, state.vertical.y)
-            hz!!.scrollTo(state.horizontal.x, state.horizontal.y)
+            hz.scrollTo(state.horizontal.x, state.horizontal.y)
         }
 
-    constructor(context: Context) : super(context) {
-        this.context = context as Activity
-        initSizes()
-        addParent()
-        drawEvents()
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        this.context = context as Activity
-        initSizes()
-        addParent()
-        drawEvents()
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyle: Int) : super(context, attrs, defStyle) {
-        this.context = context as Activity
-        initSizes()
-        addParent()
-    }
-
-    private fun initSizes() {
+    init {
         HOUR_BAR_WIDTH = dptopx(15.0)
         PX_PER_MINUTE = dptopx(1.9).toDouble()
+
+        addParent()
+        drawEvents()
     }
 
-    internal fun addParent() {
+    private fun addParent() {
         parent = RelativeLayout(context)
         hourParent = RelativeLayout(context)
         val linearLayout = LinearLayout(context)
 
-        val lp = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        val lp =
+            LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         addView(linearLayout, lp)
         linearLayout.addView(hourParent)
         hz = HorizontalScrollView(context)
         linearLayout.addView(hz)
-        hz!!.addView(parent)
+        hz.addView(parent)
     }
 
     private fun dptopx(dp: Double): Int {
@@ -108,73 +99,86 @@ class Calendar : ScrollView {
     }
 
     private fun drawCurrentTime() {
-        //        if (scheduleDate != null) currentTime = scheduleDate.toDateTime();
-
-        if (currentTime == null || scheduleDate == null || events == null || events.isEmpty()
-                || LocalDate.from(currentTime!!) != scheduleDate!!.toLocalDate()) {
+        if (scheduleDate == null || events.isEmpty()
+            || LocalDate.from(currentTime) != scheduleDate!!.toLocalDate()
+        ) {
             return
         }
-        val lp: RelativeLayout.LayoutParams
-        if (currentTimeLayout == null) {
-            currentTimeLayout = LinearLayout(context)
-            currentTimeLayout!!.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.time_bar))
-            lp = RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, dptopx(3.0))
-            hourParent.addView(currentTimeLayout, lp)
-        } else {
-            lp = currentTimeLayout!!.layoutParams as RelativeLayout.LayoutParams
-        }
+
+        val timeLayout = currentTimeLayout ?: addCurrentTimeLayout()
+
         val (_, _, end) = events[events.size - 1].event
         val last = LocalDateTime.of(LocalDate.now(), end)
 
-        if (currentTime!!.isAfter(last)) return
+        if (currentTime.isAfter(last) || currentTime.hour < startHour) return
 
-        val dateDiffMinutes = Duration.between(currentTime, events[0].event.start.withMinute(0).withSecond(0)).toMinutes() //.get.toDateTimeToday().withMinuteOfHour(0).withSecondOfMinute(0))
+        val firstEventTime = LocalDateTime.of(
+            currentTime.toLocalDate(),
+            events[0].event.start.withMinute(0).withSecond(0)
+        )
+        val dateDiffMinutes = Duration.between(firstEventTime, currentTime).toMinutes()
+
         val top = (dateDiffMinutes * PX_PER_MINUTE).toInt()
-        lp.setMargins(0, top, 0, 0)
 
-        currentTimeLayout!!.layoutParams = lp
+        timeLayout.updateLayoutParams<RelativeLayout.LayoutParams> { setMargins(0, top, 0, 0) }
+
     }
 
+    private fun addCurrentTimeLayout() = View(context).also {
+        it.setBackgroundColor(ContextCompat.getColor(context, R.color.time_bar))
+        val lp = RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, dptopx(3.0))
+        hourParent.addView(it, lp)
+        currentTimeLayout = it
+    }
 
-    fun setEvents(events: List<CEvent>) {
-        val devs = ArrayList<DisplayEvent>()
-        for (ev in events) {
-            devs.add(DisplayEvent(ev))
-        }
-        this.events = devs
+    fun setEvents(scheduleDate: LocalDateTime, eventList: List<CEvent>) {
+        this.scheduleDate = scheduleDate
+        this.events = eventList.map { DisplayEvent(it) }
+
         recalculateDisplay()
-
         drawEvents()
     }
 
     private fun recalculateDisplay() {
         Collections.sort(events, EVENT_COMPARATOR)
         //        trimEvents(events);
-        startDate = if (events.isNotEmpty()) events[0].event.start else LocalTime.NOON.withHour(9)
-        endDate = if (events.isNotEmpty()) events[events.size - 1].event.end else LocalTime.NOON.withHour(21)
 
-        dateDiff = startDate!!.getMillisOfDay() % MILLIS_IN_DAY - startDate!!.getMillisOfDay() % MILLIS_IN_HOUR
-        //        if (endDate.isBefore(startDate)) {
-        //            java.util.Calendar cal = GregorianCalendar.getInstance();
-        //            cal.setTime(endDate);
-        //            cal.set(java.util.Calendar.HOUR_OF_DAY, 0);
-        //            cal.set(java.util.Calendar.MINUTE, 0);
-        //            cal.set(java.util.Calendar.SECOND, 0);
-        //            cal.set(java.util.Calendar.MILLISECOND, 0);
-        //            cal.add(java.util.Calendar.DAY_OF_MONTH, 1);//next day
-        //            cal.add(java.util.Calendar.SECOND, -11);
-        //            endDate = cal.getTime();
-        //        }
+        startDate = if (events.isNotEmpty()) {
+            events[0].event.start
+        } else {
+            LocalTime.NOON.withHour(9)
+        }
 
-        val bag = HashSet<DisplayEvent>()
+        endDate = if (events.isNotEmpty()) {
+            events[events.size - 1].event.end
+        } else {
+            LocalTime.NOON.withHour(21)
+        }
+
+        startHour = startDate.hour
+        endHour = endDate.hour
+
+        dateDiff =
+            startDate.getMillisOfDay() % MILLIS_IN_DAY - startDate.getMillisOfDay() % MILLIS_IN_HOUR
+
+        maxInRow = calculateMaxRowSize(events)
+    }
+
+    private fun calculateMaxRowSize(events: List<DisplayEvent>): Int {
+        val bag = mutableSetOf<DisplayEvent>()
         maxInRow = 0
         for (ev in events) {
-            removeExpired(bag, ev.event.start)
-            ev.index = getNextFreeIdx(bag)
+            //remove events that end before current start
+            bag.removeAll { !it.event.end.isAfter(ev.event.start) }
+            //set index to last element or missing index if gaps
+            ev.index = (0..bag.size).toMutableSet()
+                .also { s -> s.removeAll(bag.map { it.index }) }
+                .first()
             bag.add(ev)
-            updateTotals(bag)
+            bag.forEach { it.rowTotal = bag.size }
             maxInRow = max(maxInRow, bag.size)
         }
+        return maxInRow
     }
 
     //    /**
@@ -203,55 +207,23 @@ class Calendar : ScrollView {
     //        }
     //    }
 
-    private fun updateTotals(bag: Set<DisplayEvent>) {
-        var total = bag.size
-        for (ev in bag) {
-            if (ev.rowTotal > total) {
-                total = ev.rowTotal
-            }
-        }
-        for (ev in bag) {
-            ev.rowTotal = total
-        }
-    }
-
-    private fun getNextFreeIdx(bag: Set<DisplayEvent>): Int {
-        val idxs = ArrayList<Int>()
-        for (i in 0..bag.size) {
-            idxs.add(i)
-        }
-        for (ev in bag) {
-            idxs.remove(Integer.valueOf(ev.index))
-        }
-        return idxs.iterator().next()
-    }
-
-    private fun removeExpired(bag: MutableSet<DisplayEvent>, end: LocalTime) {
-        val iterator = bag.iterator()
-        while (iterator.hasNext()) {
-            val ev = iterator.next()
-            if (!ev.event.end.isAfter(end)) {
-                iterator.remove()
-            }
-        }
-    }
-
     private fun drawEvents() {
         recalculateDisplay()
 
         parent.removeAllViews()
 
-        val screenSize = android.graphics.Point()
-        context.windowManager.defaultDisplay.getSize(screenSize)
+        val screenSize = getScreenSize()
         var width = screenSize.x - HOUR_BAR_WIDTH
         val neededWidth = maxInRow * dptopx(100.0)
-        width = Math.max(width, neededWidth)
+        width = max(width, neededWidth)
 
         drawHours()
 
         for (ev in events) {
             val pxPerIdx = width / ev.rowTotal
-            val layout = LayoutInflater.from(context).inflate(R.layout.calendar_event, parent, false)
+            val layout =
+                LayoutInflater.from(context)
+                    .inflate(R.layout.calendar_event, parent, false)
             val title = layout.findViewById<View>(R.id.title) as TextView
             val desc1 = layout.findViewById<View>(R.id.desc1) as TextView
             val desc2 = layout.findViewById<View>(R.id.desc2) as TextView
@@ -262,44 +234,58 @@ class Calendar : ScrollView {
             desc2.text = ev.event.descLine2
             content.setBackgroundResource(if (ev.event.bookmarked) R.drawable.list_item_background_favorite else R.drawable.list_item_background)
 
-            var lp: RelativeLayout.LayoutParams? = layout.layoutParams as RelativeLayout.LayoutParams
-            if (lp == null) {
-                lp = RelativeLayout.LayoutParams(pxPerIdx, (getEventLengthMinutes(ev.event) * PX_PER_MINUTE).toInt())
-            }
+            val lp: RelativeLayout.LayoutParams =
+                layout.layoutParams as RelativeLayout.LayoutParams?
+                    ?: RelativeLayout.LayoutParams(
+                        pxPerIdx, (getEventLengthMinutes(ev.event) * PX_PER_MINUTE).toInt()
+                    )
+
             val offset = 0// HOUR_BAR_WIDTH;
-            lp.setMargins(offset + pxPerIdx * ev.index, (getEventStartDiffMinutes(ev.event) * PX_PER_MINUTE).toInt(), 0, 0)
+            lp.setMargins(
+                offset + pxPerIdx * ev.index,
+                (getEventStartDiffMinutes(ev.event) * PX_PER_MINUTE).toInt(),
+                0,
+                0
+            )
             lp.width = pxPerIdx
             lp.height = (getEventLengthMinutes(ev.event) * PX_PER_MINUTE).toInt()
             //            lp.setMargins(1, 1, 1, 1);
-            layout.setOnClickListener { view -> clicked(ev) }
+            layout.setOnClickListener { clicked(ev) }
             parent.addView(layout, lp)
         }
 
         drawCurrentTime()
     }
 
+    private fun getScreenSize() = Point().also {
+        val wm = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        wm.defaultDisplay.getSize(it)
+    }
+
+
     private fun trim(title: String): String {
-        return title.replace("<br/>".toRegex(), "\n").replace("\n".toRegex(), ".").replace(" ", "\u00A0")
+        return title.replace("<br/>".toRegex(), "\n")
+            .replace("\n".toRegex(), ".")
+            .replace(" ", "\u00A0")
     }
 
     private fun clicked(ev: DisplayEvent) {
-        if (eventListener != null) {
-            eventListener!!.eventCLicked(ev)
-        }
+        eventListener?.eventCLicked(ev)
     }
 
     private fun drawHours() {
-        val startHour = startDate?.hour ?: 9
-        var endHour = endDate?.hour ?: 21
         if (endHour == 0 || endHour < startHour) {
             endHour = 23
         }
         hourParent.removeAllViews()
         for (i in startHour..endHour) {
-            val layout = LayoutInflater.from(context).inflate(R.layout.calendar_hour, hourParent, false)
+            val layout =
+                LayoutInflater.from(context)
+                    .inflate(R.layout.calendar_hour, hourParent, false)
             val tv = layout.findViewById<View>(R.id.text) as TextView
             tv.text = i.toString()
-            var lp: RelativeLayout.LayoutParams? = layout.layoutParams as RelativeLayout.LayoutParams
+            var lp: RelativeLayout.LayoutParams? =
+                layout.layoutParams as RelativeLayout.LayoutParams
             if (lp == null) {
                 lp = RelativeLayout.LayoutParams(HOUR_BAR_WIDTH, (PX_PER_MINUTE * 60).toInt())
             } else {
@@ -310,6 +296,8 @@ class Calendar : ScrollView {
             layout.layoutParams = lp
             hourParent.addView(layout, lp)
         }
+
+        currentTimeLayout?.let { hourParent.addView(it) }
     }
 
     private fun getEventStartDiffMinutes(event: CEvent): Long {
@@ -324,19 +312,10 @@ class Calendar : ScrollView {
         this.eventListener = eventListener
     }
 
-    fun setCurrentTime(currentTime: LocalDateTime) {
-        this.currentTime = currentTime
-    }
-
     fun updateCurrentTime(date: LocalDateTime) {
         currentTime = date
         drawCurrentTime()
     }
-
-    fun setScheduleDate(scheduleDate: LocalDateTime) {
-        this.scheduleDate = scheduleDate
-    }
-
 
     private class DisplayEventComparator : Comparator<DisplayEvent> {
         override fun compare(e1: DisplayEvent, e2: DisplayEvent): Int {
@@ -348,8 +327,6 @@ class Calendar : ScrollView {
         }
     }
 
-
-    class Point(val x: Int, val y: Int) : Serializable
 
     class CalendarState(val vertical: Point, val horizontal: Point) : Serializable
 
@@ -367,5 +344,8 @@ interface EventListener {
 }
 
 private fun LocalTime.getMillisOfDay(): Long {
-    return Duration.between(LocalTime.MIN, this).get(org.threeten.bp.temporal.ChronoUnit.SECONDS) * 1000
+    return Duration.between(
+        LocalTime.MIN,
+        this
+    ).get(org.threeten.bp.temporal.ChronoUnit.SECONDS) * 1000
 }

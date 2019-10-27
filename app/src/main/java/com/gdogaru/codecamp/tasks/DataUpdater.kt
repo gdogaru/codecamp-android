@@ -18,6 +18,7 @@
 
 package com.gdogaru.codecamp.tasks
 
+import android.content.Context
 import androidx.lifecycle.Transformations
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequest
@@ -32,16 +33,22 @@ import javax.inject.Singleton
 
 @Singleton
 class DataUpdater @Inject constructor(
-        private val appPreferences: AppPreferences
+    context: Context,
+    private val appPreferences: AppPreferences
 ) {
 
+    private val workManager = WorkManager.getInstance(context)
+
     private fun shouldUpdate(): Boolean {
-        return isDone() && appPreferences.lastUpdated.isBefore(Instant.now().minus(6, ChronoUnit.HOURS))
+        return isDone() && appPreferences.lastUpdated.isBefore(
+            Instant.now().minus(6, ChronoUnit.HOURS)
+        )
     }
 
     private fun isDone(): Boolean {
         return try {
-            val status = WorkManager.getInstance().getWorkInfoById(UUID.fromString(appPreferences.activeJob))
+            val status =
+                workManager.getWorkInfoById(UUID.fromString(appPreferences.activeJob))
             status.isDone || status.isCancelled
         } catch (ignored: Exception) {
             true
@@ -53,21 +60,25 @@ class DataUpdater @Inject constructor(
     }
 
     fun lastJobStatus() = Transformations
-            .switchMap(appPreferences.activeJobLiveData)
-            { id ->
-                try {
-                    WorkManager.getInstance().getWorkInfoByIdLiveData(UUID.fromString(id))
-                } catch (e: java.lang.Exception) {
-                    Timber.w(e, "could not get status for id: %s", id)
-                    null
-                }
+        .switchMap(appPreferences.activeJobLiveData)
+        { id ->
+            try {
+                workManager.getWorkInfoByIdLiveData(UUID.fromString(id))
+            } catch (e: java.lang.Exception) {
+                Timber.w(e, "could not get status for id: %s", id)
+                null
             }
+        }
 
 
     fun update() {
         appPreferences.updateProgress = 0F
         val request = OneTimeWorkRequest.Builder(UpdateDataWorker::class.java).build()
-        WorkManager.getInstance().enqueueUniqueWork(UpdateDataWorker::class.java.name, ExistingWorkPolicy.KEEP, request)
+        workManager.enqueueUniqueWork(
+            UpdateDataWorker::class.java.name,
+            ExistingWorkPolicy.KEEP,
+            request
+        )
         appPreferences.activeJob = request.id.toString()
     }
 }

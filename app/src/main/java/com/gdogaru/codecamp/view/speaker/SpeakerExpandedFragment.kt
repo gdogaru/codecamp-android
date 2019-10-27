@@ -92,7 +92,9 @@ class SpeakerExpandedFragment : BaseFragment() {
         binding.viewPager.currentItem = if (index < 0) 0 else index
     }
 
-    private inner class SpeakerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    private inner class SpeakerAdapter(fm: FragmentManager) :
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
         private var speakers = mutableListOf<Speaker>()
 
         fun updateItems(value: List<Speaker>) {

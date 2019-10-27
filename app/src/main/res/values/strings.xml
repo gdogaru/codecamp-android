@@ -78,8 +78,6 @@
     </string-array>
 
     <string name="server_registering">%1$d from %2$d</string>
-    <string name="server_registered"></string>
-    <string name="server_register_error"></string>
     <string name="ok">OK</string>
     <string name="server_unregistered">Unregistered from server</string>
     <string name="server_unregister_error">Server unregister error</string>
@@ -107,7 +105,7 @@
     <string name="no_favorites_yet">No favorites defined yet!</string>
     <string name="no_internet_connection">No internet connnection!!!</string>
     <string name="retry">Retry</string>
-    <string name="there_was_a_problem_loading_events_data">There was a problem loading events data...</string>
+    <string name="there_was_a_problem_loading_events_data">There was a problem loading events data…</string>
     <string name="lorem_ipsum">\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exerc</string>
 
 </resources>

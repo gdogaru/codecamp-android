@@ -22,8 +22,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ListView
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.gdogaru.codecamp.R
@@ -39,7 +39,6 @@ import javax.inject.Inject
 
 class SessionsListFragment : AbstractSessionsListFragment() {
 
-    private lateinit var listView: StickyListHeadersListView
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     val viewModel: SessionsListViewModel by viewModels { viewModelFactory }
@@ -49,46 +48,32 @@ class SessionsListFragment : AbstractSessionsListFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = inflater.inflate(R.layout.agenda_sessions_list, container, false)!!
+    ): View = inflater.inflate(R.layout.agenda_sessions_list, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        listView = view.findViewById(android.R.id.list)
+        val listView = view.findViewById<StickyListHeadersListView>(android.R.id.list)
 
         sessionsAdapter = SessionsAdapter(requireActivity())
         listView.adapter = sessionsAdapter
-        listView.setOnItemClickListener { parent, v, position, id ->
-            onListItemClick(
-                parent as ListView,
-                v,
-                position,
-                id
-            )
+        listView.setOnItemClickListener { _, _, position, _ ->
+            onListItemClick(position)
         }
 
-        viewModel.sessionItems().observe(this, androidx.lifecycle.Observer { s ->
+        viewModel.sessionItems().observe(this, Observer { s ->
             s?.let { sessionsAdapter.sessions = it }
         })
     }
 
-    fun onListItemClick(l: ListView, v: View, position: Int, id: Long) {
+    private fun onListItemClick(position: Int) {
         val session = sessionsAdapter.getItem(position)
         session.id?.let {
             findNavController().navigate(AgendaFragmentDirections.showSessionInfo(it))
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable(LIST_STATE, listView.onSaveInstanceState())
-    }
-
     override fun setFavoritesOnly(favoritesOnly: Boolean) {
         viewModel.setFavoritesOnly(favoritesOnly)
-    }
-
-    companion object {
-        private const val LIST_STATE = "LIST_STATE"
     }
 }

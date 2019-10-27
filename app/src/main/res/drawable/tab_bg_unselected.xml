@@ -24,8 +24,8 @@
         <!--android:src="@drawable/tab_normal"-->
         <!--android:tileMode="repeat"/>-->
 
-        <shape xmlns:android="http://schemas.android.com/apk/res/android">
-            <gradient android:startColor="@color/navbar0" android:endColor="@color/navbar100" android:angle="90" />
+        <shape>
+            <gradient android:angle="90" android:endColor="@color/navbar100" android:startColor="@color/navbar0" />
         </shape>
     </item>
 </selector>

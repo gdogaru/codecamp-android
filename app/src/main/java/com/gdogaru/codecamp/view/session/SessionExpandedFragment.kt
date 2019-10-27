@@ -108,7 +108,7 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
     }
 
     private inner class ExpandedSessionsAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm) {
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         private val trackSessions = mutableListOf<String>()
 

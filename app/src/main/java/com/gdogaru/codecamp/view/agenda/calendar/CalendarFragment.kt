@@ -93,9 +93,7 @@ class CalendarFragment : AbstractSessionsListFragment(), Injectable {
 
     private fun updateDisplay(events: List<CEvent>, schedule: Schedule) {
         initSessionIds(schedule.sessions)
-        calendar.setCurrentTime(LocalDateTime.now())
-        calendar.setEvents(events)
-        calendar.setScheduleDate(schedule.date)
+        calendar.setEvents(schedule.date, events)
 
         calendar.setEventListener(object : EventListener {
             override fun eventCLicked(event: DisplayEvent) {

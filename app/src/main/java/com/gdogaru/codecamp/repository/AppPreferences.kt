@@ -27,10 +27,10 @@ import timber.log.Timber
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
-class AppPreferences(private val app: Context) {
+class AppPreferences(private val context: Context) {
 
     private val pref: SharedPreferences by lazy {
-        app.getSharedPreferences(CODECAMP, Context.MODE_PRIVATE)
+        context.getSharedPreferences(CODECAMP, Context.MODE_PRIVATE)
     }
 
     val lastAutoselect: Long
@@ -39,16 +39,16 @@ class AppPreferences(private val app: Context) {
     var activeJob: String
         get() = pref.getString(ACTIVE_JOB, "")!!
         set(id) = pref.edit()
-                .putString(ACTIVE_JOB, id)
-                .apply()
+            .putString(ACTIVE_JOB, id)
+            .apply()
     val activeJobLiveData: LiveData<String>
         get() = PreferencesLiveData(pref, ACTIVE_JOB) { activeJob }
 
     var activeSchedule: Int
         get() = pref.getInt(ACTIVE_SCHEDULE, 0)
         set(position) = pref.edit()
-                .putInt(ACTIVE_SCHEDULE, position)
-                .apply()
+            .putInt(ACTIVE_SCHEDULE, position)
+            .apply()
 
     val activeScheduleLiveData: LiveData<Int>
         get() = PreferencesLiveData(pref, ACTIVE_SCHEDULE) { activeSchedule }
@@ -56,14 +56,14 @@ class AppPreferences(private val app: Context) {
     var listViewList: Boolean
         get() = pref.getBoolean(LIST_VIEW, true)
         set(b) = pref.edit()
-                .putBoolean(LIST_VIEW, b)
-                .apply()
+            .putBoolean(LIST_VIEW, b)
+            .apply()
 
     var lastUpdated: Instant
         get() = Instant.ofEpochMilli(pref.getLong(LAST_UPDATE, 0))
         set(v) = pref.edit()
-                .putLong(LAST_UPDATE, v.toEpochMilli())
-                .apply()
+            .putLong(LAST_UPDATE, v.toEpochMilli())
+            .apply()
 
     val lastUpdatedLiveData: LiveData<Instant>
         get() = PreferencesLiveData(pref, LAST_UPDATE) { lastUpdated }
@@ -72,8 +72,8 @@ class AppPreferences(private val app: Context) {
     var activeEvent: Long
         get() = pref.getLong(ACTIVE_EVENT, 0)
         set(id) = pref.edit()
-                .putLong(ACTIVE_EVENT, id)
-                .apply()
+            .putLong(ACTIVE_EVENT, id)
+            .apply()
 
     val activeEventLiveData: LiveData<Long>
         get() = PreferencesLiveData(pref, ACTIVE_EVENT) { activeEvent }
@@ -81,25 +81,25 @@ class AppPreferences(private val app: Context) {
     var updateProgress: Float
         get() = pref.getFloat(UPDATE_STATUS, 0F)
         set(v) = pref.edit()
-                .putFloat(UPDATE_STATUS, v)
-                .apply()
+            .putFloat(UPDATE_STATUS, v)
+            .apply()
     val updateProgressLiveData: LiveData<Float>
         get() = PreferencesLiveData(pref, UPDATE_STATUS) { updateProgress }
 
-    private fun clear(context: Context) {
-        val settings = app.getSharedPreferences(DATA_UPDATE_SETTINGS, Context.MODE_PRIVATE)
+    private fun clear() {
+        val settings = context.getSharedPreferences(DATA_UPDATE_SETTINGS, Context.MODE_PRIVATE)
         settings.edit()
-                .remove(LAST_UPDATE)
-                .remove(LAST_AUTO_SELECT)
-                .apply()
+            .remove(LAST_UPDATE)
+            .remove(LAST_AUTO_SELECT)
+            .apply()
     }
 
 
     fun setLastAutoSelect(value: Long) {
         Timber.i("Last autoselect set to %s", value)
         pref.edit()
-                .putLong(LAST_AUTO_SELECT, value)
-                .apply()
+            .putLong(LAST_AUTO_SELECT, value)
+            .apply()
     }
 
     fun hasUpdated(): Boolean {
@@ -125,10 +125,10 @@ class AppPreferences(private val app: Context) {
 }
 
 class PreferencesLiveData<T>(
-        private val pref: SharedPreferences,
-        private val key: String,
-        private val getter: () -> T)
-    : LiveData<T>() {
+    private val pref: SharedPreferences,
+    private val key: String,
+    private val getter: () -> T
+) : LiveData<T>() {
 
     private var listener: SharedPreferences.OnSharedPreferenceChangeListener? = null
 
