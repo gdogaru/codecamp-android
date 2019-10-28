@@ -29,20 +29,24 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SessionInfoViewModel @Inject constructor(
-        private val repository: CodecampRepository,
-        private val bookmarkRepository: BookmarkRepository,
-        val preferences: AppPreferences
+    private val repository: CodecampRepository,
+    private val bookmarkRepository: BookmarkRepository,
+    val preferences: AppPreferences
 ) : ViewModel() {
 
-    fun getSession(sessionId: String): LiveData<FullSessionData?> {
-        return Transformations.map(repository.currentEvent) { event ->
-            val session = event.schedules.orEmpty().map { it.sessions }.flatten().firstOrNull { it.id == sessionId }
-                    ?: return@map null
-            val track = event.schedules.orEmpty().map { it.tracks }.flatten().firstOrNull { it.name == session.track }
-            val speakers = event.speakers.orEmpty().filter { session.speakerIds.orEmpty().contains(it.name) }
-            FullSessionData(session, track, speakers)
+    fun getSession(sessionId: String): LiveData<FullSessionData?> =
+        Transformations.map(repository.currentEvent) { event ->
+            event.schedules.orEmpty()
+                .map { it.sessions }.flatten()
+                .firstOrNull { it.id == sessionId }
+                ?.let { session ->
+                    val track = event.schedules.orEmpty().map { it.tracks }.flatten()
+                        .firstOrNull { it.name == session.track }
+                    val speakers = event.speakers.orEmpty()
+                        .filter { session.speakerIds.orEmpty().contains(it.name) }
+                    FullSessionData(session, track, speakers)
+                }
         }
-    }
 
     fun setBookmarked(element: String, checked: Boolean) {
         viewModelScope.launch {
@@ -52,12 +56,15 @@ class SessionInfoViewModel @Inject constructor(
 
     fun isBookmarked(s: String): LiveData<Boolean> {
         val ev = repository.currentEvent.value
-        return if (ev != null) bookmarkRepository.isBookmarked(ev.refId.toString(), s) else MutableLiveData(false)
+        return if (ev != null) bookmarkRepository.isBookmarked(
+            ev.refId.toString(),
+            s
+        ) else MutableLiveData(false)
     }
 }
 
 data class FullSessionData(
-        val session: Session,
-        val track: Track?,
-        val speakers: List<Speaker>
+    val session: Session,
+    val track: Track?,
+    val speakers: List<Speaker>
 )

@@ -40,8 +40,10 @@ public class ZoomView extends ScrollView {
     private float zoom = 1.0f;
     private float maxZoom = 2.0f;
     private float smoothZoom = 1.0f;
-    private float zoomX, zoomY;
-    private float smoothZoomX, smoothZoomY;
+    private float zoomX;
+    private float zoomY;
+    private float smoothZoomX;
+    private float smoothZoomY;
     // listener
     private ZoomViewListener listener;
     private boolean scrolling; // NOPMD by karooolek on 29.06.11 11:45
@@ -54,13 +56,17 @@ public class ZoomView extends ScrollView {
     private int miniMapCaptionColor = Color.WHITE;
     // touching variables
     private long lastTapTime;
-    private float touchStartX, touchStartY;
-    private float touchLastX, touchLastY;
-    private float startd;
+    private float touchStartX;
+    private float touchStartY;
+    private float touchLastX;
+    private float touchLastY;
+    private float startD;
     private boolean pinching;
-    private float lastd;
-    private float lastdx1, lastdy1;
-    private float lastdx2, lastdy2;
+    private float lastD;
+    private float lastDx1;
+    private float lastDy1;
+    private float lastDx2;
+    private float lastDy2;
     private Bitmap ch;
 
     public ZoomView(final Context context) {
@@ -287,28 +293,28 @@ public class ZoomView extends ScrollView {
 
     private void processDoubleTouchEvent(final MotionEvent ev) {
         final float x1 = ev.getX(0);
-        final float dx1 = x1 - lastdx1;
-        lastdx1 = x1;
+        final float dx1 = x1 - lastDx1;
+        lastDx1 = x1;
         final float y1 = ev.getY(0);
-        final float dy1 = y1 - lastdy1;
-        lastdy1 = y1;
+        final float dy1 = y1 - lastDy1;
+        lastDy1 = y1;
         final float x2 = ev.getX(1);
-        final float dx2 = x2 - lastdx2;
-        lastdx2 = x2;
+        final float dx2 = x2 - lastDx2;
+        lastDx2 = x2;
         final float y2 = ev.getY(1);
-        final float dy2 = y2 - lastdy2;
-        lastdy2 = y2;
+        final float dy2 = y2 - lastDy2;
+        lastDy2 = y2;
 
         // pointers distance
         final float d = (float) Math.hypot(x2 - x1, y2 - y1);
-        final float dd = d - lastd;
-        lastd = d;
-        final float ld = Math.abs(d - startd);
+        final float dd = d - lastD;
+        lastD = d;
+        final float ld = Math.abs(d - startD);
 
         Math.atan2(y2 - y1, x2 - x1);
         switch (ev.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                startd = d;
+                startD = d;
                 pinching = false;
                 break;
 

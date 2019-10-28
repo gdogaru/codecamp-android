@@ -13,7 +13,6 @@
 ## About
 This is an android app to view the agenda and event information for [Codecamp Romania Conferences](https://codecamp.ro/)
 
-
 ## Contributing
  
 Please contact me directly to discuss any improvements before starting, I have not set up a process yet and we will discuss it together.
