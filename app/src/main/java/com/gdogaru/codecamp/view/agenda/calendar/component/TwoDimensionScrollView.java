@@ -34,11 +34,13 @@ public class TwoDimensionScrollView extends FrameLayout {
     private VelocityTracker mVelocityTracker;
 
     /* Positions of the last motion event */
-    private float mLastTouchX, mLastTouchY;
+    private float mLastTouchX;
+    private float mLastTouchY;
     /* Drag threshold */
     private int mTouchSlop;
     /* Fling Velocity */
-    private int mMaximumVelocity, mMinimumVelocity;
+    private int mMaximumVelocity;
+    private int mMinimumVelocity;
     /* Drag Lock */
     private boolean mDragging = false;
 
