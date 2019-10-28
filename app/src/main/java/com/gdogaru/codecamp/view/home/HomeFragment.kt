@@ -100,7 +100,6 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
 
         setHasOptionsMenu(true)
 
-
         val ma = activity as AppCompatActivity
         ma.setSupportActionBar(binding.toolbar)
         ma.supportActionBar?.apply {
@@ -130,7 +129,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         adapter = BindingScheduleAdapter(dataBindingComponent, appExecutors) { onItemClicked(it) }
         binding.agenda.adapter = adapter
 
-        RatingHelper.logUsage(activity)
+        RatingHelper.logUsage()
         setMap()
         viewModel.currentEvent.observe(this, androidx.lifecycle.Observer { showEvent(it) })
     }

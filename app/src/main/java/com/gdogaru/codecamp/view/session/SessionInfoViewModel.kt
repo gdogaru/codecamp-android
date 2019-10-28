@@ -34,18 +34,19 @@ class SessionInfoViewModel @Inject constructor(
     val preferences: AppPreferences
 ) : ViewModel() {
 
-    fun getSession(sessionId: String): LiveData<FullSessionData?> {
-        return Transformations.map(repository.currentEvent) { event ->
-            val session =
-                event.schedules.orEmpty().map { it.sessions }.flatten().firstOrNull { it.id == sessionId }
-                    ?: return@map null
-            val track = event.schedules.orEmpty().map { it.tracks }.flatten()
-                .firstOrNull { it.name == session.track }
-            val speakers =
-                event.speakers.orEmpty().filter { session.speakerIds.orEmpty().contains(it.name) }
-            FullSessionData(session, track, speakers)
+    fun getSession(sessionId: String): LiveData<FullSessionData?> =
+        Transformations.map(repository.currentEvent) { event ->
+            event.schedules.orEmpty()
+                .map { it.sessions }.flatten()
+                .firstOrNull { it.id == sessionId }
+                ?.let { session ->
+                    val track = event.schedules.orEmpty().map { it.tracks }.flatten()
+                        .firstOrNull { it.name == session.track }
+                    val speakers = event.speakers.orEmpty()
+                        .filter { session.speakerIds.orEmpty().contains(it.name) }
+                    FullSessionData(session, track, speakers)
+                }
         }
-    }
 
     fun setBookmarked(element: String, checked: Boolean) {
         viewModelScope.launch {
