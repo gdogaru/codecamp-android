@@ -30,10 +30,13 @@ import kotlinx.coroutines.cancel
 import javax.inject.Inject
 
 class MainViewModel
-@Inject constructor(val repository: CodecampRepository,
-                    val preferences: AppPreferences) : ViewModel() {
+@Inject constructor(
+    val repository: CodecampRepository,
+    val preferences: AppPreferences
+) : ViewModel() {
 
-    val currentEvent: LiveData<Codecamp> = Transformations.switchMap(preferences.activeEventLiveData) { repository.eventData(it) }
+    val currentEvent: LiveData<Codecamp> =
+        Transformations.switchMap(preferences.activeEventLiveData) { repository.eventData(it) }
 
     fun loadingProgress() = preferences.updateProgressLiveData
 

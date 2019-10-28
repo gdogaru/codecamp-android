@@ -29,28 +29,29 @@ import com.gdogaru.codecamp.api.model.Speaker
 import com.gdogaru.codecamp.databinding.SpeakersItemBinding
 import com.gdogaru.codecamp.util.AppExecutors
 
-class SpeakersAdapter(private val dataBindingComponent: DataBindingComponent,
-                      appExecutors: AppExecutors,
-                      private val callback: (Speaker) -> Unit)
-    : DataBoundListAdapter<Speaker, SpeakersItemBinding>(
-        appExecutors = appExecutors,
-        diffCallback = object : DiffUtil.ItemCallback<Speaker>() {
-            override fun areItemsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
-                return oldItem.name == newItem.name
-            }
-
-            override fun areContentsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
-                return oldItem == newItem
-            }
+class SpeakersAdapter(
+    private val dataBindingComponent: DataBindingComponent,
+    appExecutors: AppExecutors,
+    private val callback: (Speaker) -> Unit
+) : DataBoundListAdapter<Speaker, SpeakersItemBinding>(
+    appExecutors = appExecutors,
+    diffCallback = object : DiffUtil.ItemCallback<Speaker>() {
+        override fun areItemsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
+            return oldItem.name == newItem.name
         }
+
+        override fun areContentsTheSame(oldItem: Speaker, newItem: Speaker): Boolean {
+            return oldItem == newItem
+        }
+    }
 ) {
     override fun createBinding(parent: ViewGroup): SpeakersItemBinding {
         val binding = DataBindingUtil.inflate<SpeakersItemBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.speakers_item,
-                parent,
-                false,
-                dataBindingComponent
+            LayoutInflater.from(parent.context),
+            R.layout.speakers_item,
+            parent,
+            false,
+            dataBindingComponent
         )
         binding.root.setOnClickListener {
             binding.speaker?.let {

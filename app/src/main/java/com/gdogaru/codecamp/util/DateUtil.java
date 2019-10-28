@@ -45,7 +45,7 @@ public class DateUtil {
         return String.format("%s - %s", formatTime(start), formatTime(end));
     }
 
-    public static String formatEventPeriod(org.threeten.bp.temporal.TemporalAccessor start, TemporalAccessor end) {
+    public static String formatEventPeriod(TemporalAccessor start, TemporalAccessor end) {
         if (start == null && end == null) {
             return "";
         }

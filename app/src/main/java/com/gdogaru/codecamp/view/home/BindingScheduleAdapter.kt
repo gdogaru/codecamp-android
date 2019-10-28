@@ -29,30 +29,30 @@ import com.gdogaru.codecamp.databinding.HomeScheduleItemBinding
 import com.gdogaru.codecamp.util.AppExecutors
 
 class BindingScheduleAdapter(
-        private val dataBindingComponent: DataBindingComponent,
-        appExecutors: AppExecutors,
-        private val repoClickCallback: ((MainViewItem) -> Unit)?
+    private val dataBindingComponent: DataBindingComponent,
+    appExecutors: AppExecutors,
+    private val repoClickCallback: ((MainViewItem) -> Unit)?
 ) : DataBoundListAdapter<MainViewItem, HomeScheduleItemBinding>(
-        appExecutors = appExecutors,
-        diffCallback = object : DiffUtil.ItemCallback<MainViewItem>() {
-            override fun areItemsTheSame(oldItem: MainViewItem, newItem: MainViewItem): Boolean {
-                return oldItem.javaClass == newItem.javaClass
-                        && oldItem.title == newItem.title
-                        && (oldItem !is MainViewItem.AgendaItem || oldItem.index == (newItem as MainViewItem.AgendaItem).index)
-            }
-
-            override fun areContentsTheSame(oldItem: MainViewItem, newItem: MainViewItem): Boolean {
-                return oldItem.title == newItem.title && oldItem.subtitle == newItem.subtitle
-            }
+    appExecutors = appExecutors,
+    diffCallback = object : DiffUtil.ItemCallback<MainViewItem>() {
+        override fun areItemsTheSame(oldItem: MainViewItem, newItem: MainViewItem): Boolean {
+            return oldItem.javaClass == newItem.javaClass
+                    && oldItem.title == newItem.title
+                    && (oldItem !is MainViewItem.AgendaItem || oldItem.index == (newItem as MainViewItem.AgendaItem).index)
         }
+
+        override fun areContentsTheSame(oldItem: MainViewItem, newItem: MainViewItem): Boolean {
+            return oldItem.title == newItem.title && oldItem.subtitle == newItem.subtitle
+        }
+    }
 ) {
     override fun createBinding(parent: ViewGroup): HomeScheduleItemBinding {
         val binding = DataBindingUtil.inflate<HomeScheduleItemBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.home_schedule_item,
-                parent,
-                false,
-                dataBindingComponent
+            LayoutInflater.from(parent.context),
+            R.layout.home_schedule_item,
+            parent,
+            false,
+            dataBindingComponent
         )
         binding.root.setOnClickListener {
             binding.item?.let {

@@ -28,14 +28,17 @@ import javax.inject.Inject
 
 class SplashViewModel
 @Inject constructor(
-        private val dataUpdater: DataUpdater,
-        private val preferences: AppPreferences)
-    : ViewModel() {
+    private val dataUpdater: DataUpdater,
+    private val preferences: AppPreferences
+) : ViewModel() {
 
 
-    var jobState: LiveData<WorkerState> = Transformations.map(dataUpdater.lastJobStatus()) { toWorkerState(it.state) }
-    var updateProgress: LiveData<Int> = Transformations.map(preferences.updateProgressLiveData) { (it * 100).toInt() }
-    var loadingState: LiveData<Boolean> = Transformations.map(jobState) { it == WorkerState.IN_PROGRESS }
+    var jobState: LiveData<WorkerState> =
+        Transformations.map(dataUpdater.lastJobStatus()) { toWorkerState(it.state) }
+    var updateProgress: LiveData<Int> =
+        Transformations.map(preferences.updateProgressLiveData) { (it * 100).toInt() }
+    var loadingState: LiveData<Boolean> =
+        Transformations.map(jobState) { it == WorkerState.IN_PROGRESS }
     var errorState: LiveData<Boolean> = Transformations.map(jobState) { it == WorkerState.ERROR }
 
     fun reloadData() {

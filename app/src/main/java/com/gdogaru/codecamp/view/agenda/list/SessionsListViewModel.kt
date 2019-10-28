@@ -32,16 +32,26 @@ import java.util.*
 import javax.inject.Inject
 
 class SessionsListViewModel @Inject constructor(
-        repository: CodecampRepository,
-        bookmarkRepository: BookmarkRepository,
-        preferences: AppPreferences)
-    : ViewModel() {
+    repository: CodecampRepository,
+    bookmarkRepository: BookmarkRepository,
+    preferences: AppPreferences
+) : ViewModel() {
 
     private val favoritesOnly = MutableLiveData(false)
-    private val currentScheduleFav = scheduleFavMediator(repository, bookmarkRepository, preferences, favoritesOnly)
+    private val currentScheduleFav =
+        scheduleFavMediator(repository, bookmarkRepository, preferences, favoritesOnly)
 
     fun sessionItems(): LiveData<List<SessionListItem>> {
-        return Transformations.map(currentScheduleFav) { s -> s?.let { it.first?.let { s -> listItems(s, it.second) } } }
+        return Transformations.map(currentScheduleFav) { s ->
+            s?.let {
+                it.first?.let { s ->
+                    listItems(
+                        s,
+                        it.second
+                    )
+                }
+            }
+        }
     }
 
     private fun listItems(schedule: Schedule, favorites: Set<String>): List<SessionListItem> {

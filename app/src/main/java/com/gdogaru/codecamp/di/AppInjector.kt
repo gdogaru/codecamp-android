@@ -38,8 +38,8 @@ object AppInjector {
 
     fun init(app: App) {
         appComponent = DaggerAppComponent.builder()
-                .applicationModule(ApplicationModule(app))
-                .build()
+            .applicationModule(ApplicationModule(app))
+            .build()
 
         appComponent.inject(app)
 
@@ -48,29 +48,12 @@ object AppInjector {
                 handleActivity(activity)
             }
 
-            override fun onActivityStarted(activity: Activity) {
-
-            }
-
-            override fun onActivityResumed(activity: Activity) {
-
-            }
-
-            override fun onActivityPaused(activity: Activity) {
-
-            }
-
-            override fun onActivityStopped(activity: Activity) {
-
-            }
-
-            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-
-            }
-
-            override fun onActivityDestroyed(activity: Activity) {
-
-            }
+            override fun onActivityStarted(activity: Activity) = Unit
+            override fun onActivityResumed(activity: Activity) = Unit
+            override fun onActivityPaused(activity: Activity) = Unit
+            override fun onActivityStopped(activity: Activity) = Unit
+            override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) = Unit
+            override fun onActivityDestroyed(activity: Activity) = Unit
         })
     }
 
@@ -79,14 +62,19 @@ object AppInjector {
             AndroidInjection.inject(activity)
         }
         (activity as? FragmentActivity)?.supportFragmentManager?.registerFragmentLifecycleCallbacks(
-                object : FragmentManager.FragmentLifecycleCallbacks() {
-                    override fun onFragmentPreCreated(fm: FragmentManager, f: Fragment, savedInstanceState: Bundle?) {
-                        super.onFragmentPreCreated(fm, f, savedInstanceState)
-                        if (f is Injectable) {
-                            AndroidSupportInjection.inject(f)
-                        }
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentPreCreated(
+                    fm: FragmentManager,
+                    f: Fragment,
+                    savedInstanceState: Bundle?
+                ) {
+                    super.onFragmentPreCreated(fm, f, savedInstanceState)
+                    if (f is Injectable) {
+                        AndroidSupportInjection.inject(f)
                     }
-                }, true)
+                }
+            }, true
+        )
     }
 }
 

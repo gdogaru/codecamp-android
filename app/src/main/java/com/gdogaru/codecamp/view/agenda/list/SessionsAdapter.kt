@@ -32,7 +32,8 @@ import java.util.*
 
 class SessionsAdapter(context: Context) : BaseAdapter(), StickyListHeadersAdapter {
 
-    private val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+    private val inflater: LayoutInflater =
+        context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
     var sessions: List<SessionListItem> = ArrayList()
         set(sessions) {
             field = sessions
@@ -52,11 +53,11 @@ class SessionsAdapter(context: Context) : BaseAdapter(), StickyListHeadersAdapte
         else {
             view = inflater.inflate(R.layout.agenda_sessions_list_item, parent, false)
             val holder = ViewHolder(
-                    view.findViewById<View>(R.id.sessionName) as TextView,
-                    view.findViewById<View>(R.id.sessionTime) as TextView,
-                    view.findViewById<View>(R.id.sessionPlace) as TextView,
-                    view.findViewById<View>(R.id.sessionSpeaker) as TextView,
-                    view.findViewById(R.id.root)
+                view.findViewById<View>(R.id.sessionName) as TextView,
+                view.findViewById<View>(R.id.sessionTime) as TextView,
+                view.findViewById<View>(R.id.sessionPlace) as TextView,
+                view.findViewById<View>(R.id.sessionSpeaker) as TextView,
+                view.findViewById(R.id.root)
             )
             view.tag = holder
         }
@@ -100,14 +101,14 @@ class SessionsAdapter(context: Context) : BaseAdapter(), StickyListHeadersAdapte
     }
 
     data class HeaderViewHolder(
-            val text: TextView
+        val text: TextView
     )
 
     data class ViewHolder(
-            val title: TextView,
-            val time: TextView,
-            val place: TextView,
-            val speaker: TextView,
-            val root: View
+        val title: TextView,
+        val time: TextView,
+        val place: TextView,
+        val speaker: TextView,
+        val root: View
     )
 }

@@ -32,24 +32,23 @@ import javax.inject.Singleton
  */
 @Singleton
 class CodecampRepository @Inject constructor(
-        val storage: InternalStorage,
-        val dataUpdater: DataUpdater,
-        val preferences: AppPreferences) {
-
-
+    val storage: InternalStorage,
+    val dataUpdater: DataUpdater,
+    val preferences: AppPreferences
+) {
 
 
     private val events: LiveData<List<EventSummary>> =
-            Transformations.map(preferences.lastUpdatedLiveData) {
-                storage.readEvents(it)
-            }
+        Transformations.map(preferences.lastUpdatedLiveData) {
+            storage.readEvents(it)
+        }
 
     fun eventData(id: Long): LiveData<Codecamp> {
         dataUpdater.updateIfNecessary()
         return Transformations
-                .map(preferences.lastUpdatedLiveData) {
-                    storage.readEvent(it, id)
-                }
+            .map(preferences.lastUpdatedLiveData) {
+                storage.readEvent(it, id)
+            }
     }
 
     fun events(): LiveData<List<EventSummary>> {
@@ -61,7 +60,8 @@ class CodecampRepository @Inject constructor(
         dataUpdater.update()
     }
 
-    val currentEvent: LiveData<Codecamp> = Transformations.switchMap(preferences.activeEventLiveData) { eventData(it) }
+    val currentEvent: LiveData<Codecamp> =
+        Transformations.switchMap(preferences.activeEventLiveData) { eventData(it) }
 
     fun currentSchedule(): LiveData<Schedule?> {
         return Transformations.switchMap(preferences.activeScheduleLiveData) { s ->

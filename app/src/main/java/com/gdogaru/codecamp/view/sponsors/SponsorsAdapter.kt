@@ -29,28 +29,29 @@ import com.gdogaru.codecamp.api.model.Sponsor
 import com.gdogaru.codecamp.databinding.SponsorsItemBinding
 import com.gdogaru.codecamp.util.AppExecutors
 
-class SponsorsAdapter(private val dataBindingComponent: DataBindingComponent,
-                      appExecutors: AppExecutors,
-                      private val listener: (Sponsor) -> Unit)
-    : DataBoundListAdapter<Sponsor, SponsorsItemBinding>(
-        appExecutors = appExecutors,
-        diffCallback = object : DiffUtil.ItemCallback<Sponsor>() {
-            override fun areItemsTheSame(oldItem: Sponsor, newItem: Sponsor): Boolean {
-                return oldItem.name == newItem.name
-            }
-
-            override fun areContentsTheSame(oldItem: Sponsor, newItem: Sponsor): Boolean {
-                return oldItem.websiteUrl == newItem.websiteUrl && oldItem.logoUrl == newItem.logoUrl
-            }
+class SponsorsAdapter(
+    private val dataBindingComponent: DataBindingComponent,
+    appExecutors: AppExecutors,
+    private val listener: (Sponsor) -> Unit
+) : DataBoundListAdapter<Sponsor, SponsorsItemBinding>(
+    appExecutors = appExecutors,
+    diffCallback = object : DiffUtil.ItemCallback<Sponsor>() {
+        override fun areItemsTheSame(oldItem: Sponsor, newItem: Sponsor): Boolean {
+            return oldItem.name == newItem.name
         }
+
+        override fun areContentsTheSame(oldItem: Sponsor, newItem: Sponsor): Boolean {
+            return oldItem.websiteUrl == newItem.websiteUrl && oldItem.logoUrl == newItem.logoUrl
+        }
+    }
 ) {
     override fun createBinding(parent: ViewGroup): SponsorsItemBinding {
         val binding = DataBindingUtil.inflate<SponsorsItemBinding>(
-                LayoutInflater.from(parent.context),
-                R.layout.sponsors_item,
-                parent,
-                false,
-                dataBindingComponent
+            LayoutInflater.from(parent.context),
+            R.layout.sponsors_item,
+            parent,
+            false,
+            dataBindingComponent
         )
         binding.root.setOnClickListener {
             binding.sponsor?.let {

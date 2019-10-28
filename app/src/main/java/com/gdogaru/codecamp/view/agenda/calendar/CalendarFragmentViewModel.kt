@@ -36,13 +36,14 @@ import java.util.*
 import javax.inject.Inject
 
 class CalendarFragmentViewModel @Inject constructor(
-        repository: CodecampRepository,
-        bookmarkRepository: BookmarkRepository,
-        preferences: AppPreferences)
-    : ViewModel() {
+    repository: CodecampRepository,
+    bookmarkRepository: BookmarkRepository,
+    preferences: AppPreferences
+) : ViewModel() {
 
     private val favoritesOnly = MutableLiveData<Boolean>(false)
-    private val currentScheduleFav = scheduleFavMediator(repository, bookmarkRepository, preferences, favoritesOnly)
+    private val currentScheduleFav =
+        scheduleFavMediator(repository, bookmarkRepository, preferences, favoritesOnly)
 
     fun eventList(): LiveData<Pair<List<CEvent>, Schedule>> {
         return Transformations.map(currentScheduleFav) {
@@ -70,13 +71,16 @@ class CalendarFragmentViewModel @Inject constructor(
                 if (track != null) preferedIdx = track.displayOrder
             }
             val descLine2 = ss.track
-            events.add(CEvent(ss.id, ss.startTime
-                    ?: LocalTime.MIN, ss.endTime
-                    ?: LocalTime.MIN, preferedIdx, ss.title,
+            events.add(
+                CEvent(
+                    ss.id, ss.startTime
+                        ?: LocalTime.MIN, ss.endTime
+                        ?: LocalTime.MIN, preferedIdx, ss.title,
                     createSpeakerName(ss),
                     if (descLine2 == null) "" else descLine2,
                     bookmarked.contains(ss.id)
-            ))
+                )
+            )
         }
         return events
     }
@@ -91,11 +95,11 @@ class CalendarFragmentViewModel @Inject constructor(
     }
 
     private fun createSpeakerName(session: Session) =
-            if (session.speakerIds == null || session.speakerIds!!.isEmpty()) {
-                ""
-            } else {
-                session.speakerIds.orEmpty().joinToString(", ")
-            }
+        if (session.speakerIds == null || session.speakerIds!!.isEmpty()) {
+            ""
+        } else {
+            session.speakerIds.orEmpty().joinToString(", ")
+        }
 
     fun setFavoritesOnly(favoritesOnly: Boolean) {
         this.favoritesOnly.value = favoritesOnly

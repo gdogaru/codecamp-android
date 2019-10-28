@@ -124,12 +124,13 @@ class SpeakerInfoDataAdapter(
         }
     }
 
-    private fun getItem(position: Int): Any {
-        return when (position) {
-            0 -> data!!.speaker
-            else -> data!!.sessions[position - 1].session
+    private fun getItem(position: Int): Any =
+        if (position == 0) {
+            data!!.speaker
+        } else {
+            data!!.sessions[position - 1].session
         }
-    }
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

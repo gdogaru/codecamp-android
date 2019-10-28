@@ -179,15 +179,14 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.refresh -> {
-                refreshData()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        if (item.itemId == R.id.refresh) {
+            refreshData()
+            true
+        } else {
+            super.onOptionsItemSelected(item)
         }
-    }
+
 
     private fun refreshData() {
         if (!isNetworkConnected) {

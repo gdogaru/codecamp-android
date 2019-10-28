@@ -37,7 +37,8 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 
-class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worker(context, workerParams) {
+class UpdateDataWorker(context: Context, workerParams: WorkerParameters) :
+    Worker(context, workerParams) {
 
     @Inject
     lateinit var appPreferences: AppPreferences
@@ -73,7 +74,10 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
         val eventList = storage.readEvents(startTime)
         var progress = 0.2F
         for (es in eventList) {
-            val er = client.downloadEvent(es.refId, storage.file(startTime, FileType.DETAILS, es.refId.toString()))
+            val er = client.downloadEvent(
+                es.refId,
+                storage.file(startTime, FileType.DETAILS, es.refId.toString())
+            )
             if (er is ApiErrorResponse) {
                 return ApiResponse.create(er.error)
             }
@@ -93,12 +97,12 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) : Worke
             //replace active if events changed
             if (eventList.map { it.refId }.contains(appPreferences.activeEvent).not()) {
                 appPreferences.activeEvent = eventList
-                        .filter {
-                            it.startDate?.toLocalDate()?.isBefore(LocalDate.now())?.not()
-                                    ?: false
-                        }
-                        .minBy { it.startDate ?: LocalDateTime.MAX }
-                        ?.refId ?: 0L
+                    .filter {
+                        it.startDate?.toLocalDate()?.isBefore(LocalDate.now())?.not()
+                            ?: false
+                    }
+                    .minBy { it.startDate ?: LocalDateTime.MAX }
+                    ?.refId ?: 0L
             }
         }
         postProgress(1F)

@@ -27,11 +27,12 @@ import com.gdogaru.codecamp.repository.CodecampRepository
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
-        val repository: CodecampRepository,
-        val preferences: AppPreferences
+    val repository: CodecampRepository,
+    val preferences: AppPreferences
 ) : ViewModel() {
 
-    val currentEvent: LiveData<Codecamp> = Transformations.switchMap(preferences.activeEventLiveData) { repository.eventData(it) }
+    val currentEvent: LiveData<Codecamp> =
+        Transformations.switchMap(preferences.activeEventLiveData) { repository.eventData(it) }
 
 
     fun selectSchedule(idx: Int) {

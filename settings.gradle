@@ -17,4 +17,4 @@
  */
 
 include ':app'
-rootProject.name='Codecamp'
+rootProject.name = 'Codecamp'

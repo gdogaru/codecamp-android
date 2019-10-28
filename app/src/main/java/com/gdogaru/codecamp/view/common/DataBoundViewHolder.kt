@@ -26,5 +26,5 @@ import androidx.recyclerview.widget.RecyclerView
  * @param <T> The type of the ViewDataBinding.
 </T> */
 class DataBoundViewHolder<out T : ViewDataBinding>(
-        val binding: T
+    val binding: T
 ) : RecyclerView.ViewHolder(binding.root)

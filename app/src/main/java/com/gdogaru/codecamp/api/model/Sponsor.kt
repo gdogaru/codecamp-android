@@ -26,24 +26,24 @@ import com.fasterxml.jackson.annotation.JsonProperty
  */
 data class Sponsor(
 
-        @JsonProperty("name")
-        var name: String,
+    @JsonProperty("name")
+    var name: String,
 
-        @JsonProperty("websiteUrl")
-        var websiteUrl: String? = null,
+    @JsonProperty("websiteUrl")
+    var websiteUrl: String? = null,
 
-        @JsonProperty("logoUrl")
-        var logoUrl: String? = null,
+    @JsonProperty("logoUrl")
+    var logoUrl: String? = null,
 
-        @JsonProperty("sponsorshipPackage")
-        var sponsorshipPackage: String? = null,
+    @JsonProperty("sponsorshipPackage")
+    var sponsorshipPackage: String? = null,
 
-        @JsonProperty("displayOrder")
-        var displayOrder: Int = 0
+    @JsonProperty("displayOrder")
+    var displayOrder: Int = 0
 )
 
 data class SponsorshipPackage(
-        var name: String? = null,
-        var displayOrder: Int = 0
+    var name: String? = null,
+    var displayOrder: Int = 0
 )
 

@@ -30,13 +30,17 @@ import org.threeten.bp.format.DateTimeFormatter
 import java.io.IOException
 
 val LOCAL_DATETIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-        .withZone(ZoneId.of("UTC"))
+    .withZone(ZoneId.of("UTC"))
 
 class LocalDateTimeSerializer : JsonSerializer<LocalDateTime>() {
 
 
     @Throws(IOException::class)
-    override fun serialize(value: LocalDateTime, gen: JsonGenerator, serializers: SerializerProvider) {
+    override fun serialize(
+        value: LocalDateTime,
+        gen: JsonGenerator,
+        serializers: SerializerProvider
+    ) {
         gen.writeString(LOCAL_DATETIME_FORMATTER.format(value))
     }
 }
