@@ -24,6 +24,7 @@ import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.EventSummary
 import com.gdogaru.codecamp.api.model.Schedule
 import com.gdogaru.codecamp.tasks.DataUpdater
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -40,14 +41,24 @@ class CodecampRepository @Inject constructor(
 
     private val events: LiveData<List<EventSummary>> =
         Transformations.map(preferences.lastUpdatedLiveData) {
-            storage.readEvents(it)
+            try {
+                storage.readEvents(it)
+            } catch (e: Exception) {
+                Timber.e(e, "Could not read saved events")
+                throw RuntimeException(e)
+            }
         }
 
     fun eventData(id: Long): LiveData<Codecamp> {
         dataUpdater.updateIfNecessary()
         return Transformations
             .map(preferences.lastUpdatedLiveData) {
-                storage.readEvent(it, id)
+                try {
+                    storage.readEvent(it, id)
+                } catch (e: Exception) {
+                    Timber.e(e, "Could not read saved data")
+                    throw RuntimeException(e)
+                }
             }
     }
 
