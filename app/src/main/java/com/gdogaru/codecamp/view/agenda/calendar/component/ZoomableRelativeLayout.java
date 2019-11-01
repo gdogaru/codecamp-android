@@ -25,9 +25,9 @@ import android.widget.RelativeLayout;
 
 
 public class ZoomableRelativeLayout extends RelativeLayout {
-    float mScaleFactor = 1;
-    float mPivotX;
-    float mPivotY;
+    private float mScaleFactor = 1;
+    private float mPivotX;
+    private float mPivotY;
 
     public ZoomableRelativeLayout(Context context) {
         super(context);

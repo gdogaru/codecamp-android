@@ -68,9 +68,11 @@ class CodecampClient
         }
     }
 
-    fun downloadEvents(file: File): ApiResponse<File> = downloadToFile("https://connect.codecamp.ro/api/Conferences", file)
+    fun downloadEvents(file: File): ApiResponse<File> =
+        downloadToFile("https://connect.codecamp.ro/api/Conferences", file)
 
-    fun downloadEvent(id: Long, file: File) = downloadToFile("https://connect.codecamp.ro/api/Conferences/$id", file)
+    fun downloadEvent(id: Long, file: File) =
+        downloadToFile("https://connect.codecamp.ro/api/Conferences/$id", file)
 
 
 }

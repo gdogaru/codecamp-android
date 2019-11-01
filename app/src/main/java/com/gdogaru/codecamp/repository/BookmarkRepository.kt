@@ -37,7 +37,9 @@ class BookmarkRepository
 @Inject constructor(val bookmarkDao: BookmarkDao) {
 
     fun getBookmarked(eventId: String): LiveData<Set<String>> {
-        return Transformations.map(bookmarkDao.listByEventId(eventId)) { s -> s.map { it.sessionId }.toSet() }
+        return Transformations.map(bookmarkDao.listByEventId(eventId)) { s ->
+            s.map { it.sessionId }.toSet()
+        }
     }
 
     fun addBookmarked(eventId: String, itemId: String) {
@@ -49,7 +51,8 @@ class BookmarkRepository
     }
 
     fun isBookmarked(eventId: String, sessionId: String): LiveData<Boolean> {
-        return Transformations.map(bookmarkDao.getBookmark(eventId, sessionId)
+        return Transformations.map(
+            bookmarkDao.getBookmark(eventId, sessionId)
         ) { it != null }
     }
 

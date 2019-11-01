@@ -24,24 +24,24 @@ import com.fasterxml.jackson.annotation.JsonProperty
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
 data class Speaker(
-        @JsonProperty("name")
-        var name: String,
+    @JsonProperty("name")
+    var name: String,
 
-        @JsonProperty("photoUrl")
-        var photoUrl: String? = null,
+    @JsonProperty("photoUrl")
+    var photoUrl: String? = null,
 
-        @JsonProperty("company")
-        var company: String? = null,
+    @JsonProperty("company")
+    var company: String? = null,
 
-        @JsonProperty("companyWebsiteUrl")
-        var companyWebsiteUrl: String? = null,
+    @JsonProperty("companyWebsiteUrl")
+    var companyWebsiteUrl: String? = null,
 
-        @JsonProperty("jobTitle")
-        var jobTitle: String? = null,
+    @JsonProperty("jobTitle")
+    var jobTitle: String? = null,
 
-        @JsonProperty("bio")
-        var bio: String? = null,
+    @JsonProperty("bio")
+    var bio: String? = null,
 
-        @JsonProperty("displayOrder")
-        var displayOrder: Int = 0
+    @JsonProperty("displayOrder")
+    var displayOrder: Int = 0
 )

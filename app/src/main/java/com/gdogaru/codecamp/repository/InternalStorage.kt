@@ -35,8 +35,10 @@ import javax.inject.Singleton
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
 @Singleton
-class InternalStorage
-@Inject constructor(val app: App, val mapper: ObjectMapper) {
+class InternalStorage @Inject constructor(
+    private val app: App,
+    private val mapper: ObjectMapper
+) {
 
     @Throws(Exception::class)
     private fun <T> readFromStorage(file: String, root: Instant, clazz: Class<T>): T {
@@ -57,15 +59,25 @@ class InternalStorage
     }
 
     fun readEvents(root: Instant): List<EventSummary> {
-        return mapper.readValue(file(root, FileType.EVENTS).readText(), EventList::class.java)
-            .orEmpty()
+        try {
+            return mapper.readValue(file(root, FileType.EVENTS).readText(), EventList::class.java)
+                .orEmpty()
+        } catch (e: Throwable) {
+            Timber.e(e, "Could not read storage events")
+            throw e
+        }
     }
 
     fun readEvent(root: Instant, id: Long): Codecamp {
-        return mapper.readValue(
-            file(root, FileType.DETAILS, id.toString()).readText(),
-            Codecamp::class.java
-        )
+        try {
+            return mapper.readValue(
+                file(root, FileType.DETAILS, id.toString()).readText(),
+                Codecamp::class.java
+            )
+        } catch (e: Throwable) {
+            Timber.e(e, "Could not read event with id %s", id)
+            throw e
+        }
     }
 
     fun deleteRoot(filename: String) {

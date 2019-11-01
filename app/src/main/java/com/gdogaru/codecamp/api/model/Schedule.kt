@@ -30,62 +30,63 @@ import java.util.*
  */
 
 data class Schedule(
-        var date: LocalDateTime,
-        var timeSlots: List<TimeSlot>,
-        var tracks: List<Track>,
-        var sessions: List<Session>
+    var date: LocalDateTime,
+    var timeSlots: List<TimeSlot>,
+    var tracks: List<Track>,
+    var sessions: List<Session>
 )
 
 
 data class TimeSlot(
-        var startTime: LocalTime?,
-        var endTime: LocalTime?
+    var startTime: LocalTime?,
+    var endTime: LocalTime?
 )
 
 data class Track(
-        @JsonProperty("name")
-        var name: String,
+    @JsonProperty("name")
+    var name: String,
 
-        @JsonProperty("capacity")
-        var capacity: String,
+    @JsonProperty("capacity")
+    var capacity: String,
 
-        @JsonProperty("description")
-        var description: String,
+    @JsonProperty("description")
+    var description: String,
 
-        @JsonProperty("displayOrder")
-        var displayOrder: Int = 0
+    @JsonProperty("displayOrder")
+    var displayOrder: Int = 0
 ) {
-    fun getFullDescription() = String.format(Locale.getDefault(), "%s, %s seats, %s", name, capacity, description)
+    fun getFullDescription() =
+        String.format(Locale.getDefault(), "%s, %s seats, %s", name, capacity, description)
 }
 
 
 data class Session(
-        @JsonProperty("title")
-        var title: String,
+    @JsonProperty("title")
+    var title: String,
 
-        @JsonProperty("description")
-        var description: String?,
+    @JsonProperty("description")
+    var description: String?,
 
-        @JsonProperty("startTime")
-        var startTime: LocalTime?,
+    @JsonProperty("startTime")
+    var startTime: LocalTime?,
 
-        @JsonProperty("endTime")
+    @JsonProperty("endTime")
 
-        var endTime: LocalTime?,
-        @JsonProperty("speakers")
-        var speakerIds: List<String>?,
+    var endTime: LocalTime?,
+    @JsonProperty("speakers")
+    var speakerIds: List<String>?,
 
-        @JsonProperty("speakingLang")
-        var speakingLang: String?,
+    @JsonProperty("speakingLang")
+    var speakingLang: String?,
 
-        @JsonProperty("level")
-        var level: String?,
+    @JsonProperty("level")
+    var level: String?,
 
-        @JsonProperty("allTracks")
-        var allTracks: Boolean? = null,
+    @JsonProperty("allTracks")
+    var allTracks: Boolean? = null,
 
-        @JsonProperty("track")
-        var track: String?
+    @JsonProperty("track")
+    var track: String?
 
 ) {
     val id: String

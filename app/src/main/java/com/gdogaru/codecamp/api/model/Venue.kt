@@ -25,24 +25,24 @@ import java.io.Serializable
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
 data class Venue(
-        @JsonProperty("Id")
-        var id: Long = 0,
+    @JsonProperty("Id")
+    var id: Long = 0,
 
-        @JsonProperty("name")
-        var name: String,
+    @JsonProperty("name")
+    var name: String,
 
-        @JsonProperty("city")
-        var city: String,
+    @JsonProperty("city")
+    var city: String,
 
-        @JsonProperty("latitude")
-        var latitude: Double = 0.toDouble(),
+    @JsonProperty("latitude")
+    var latitude: Double = 0.toDouble(),
 
-        @JsonProperty("longitude")
-        var longitude: Double = 0.toDouble(),
+    @JsonProperty("longitude")
+    var longitude: Double = 0.toDouble(),
 
-        @JsonProperty("country")
-        var country: String,
+    @JsonProperty("country")
+    var country: String,
 
-        @JsonProperty("directions")
-        var directions: String
+    @JsonProperty("directions")
+    var directions: String
 ) : Serializable

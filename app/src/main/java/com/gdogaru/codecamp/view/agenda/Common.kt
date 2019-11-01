@@ -27,7 +27,12 @@ import com.gdogaru.codecamp.repository.AppPreferences
 import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.repository.CodecampRepository
 
-fun scheduleFavMediator(repository: CodecampRepository, bookmarkRepository: BookmarkRepository, preferences: AppPreferences, favoritesOnly: MutableLiveData<Boolean>): LiveData<Pair<Schedule?, Set<String>>> {
+fun scheduleFavMediator(
+    repository: CodecampRepository,
+    bookmarkRepository: BookmarkRepository,
+    preferences: AppPreferences,
+    favoritesOnly: MutableLiveData<Boolean>
+): LiveData<Pair<Schedule?, Set<String>>> {
 
     val mediator = MediatorLiveData<Pair<Schedule?, Set<String>>>()
 
@@ -51,4 +56,5 @@ fun scheduleFavMediator(repository: CodecampRepository, bookmarkRepository: Book
     return mediator
 }
 
-val SESSION_BY_DATE_COMPARATOR = Comparator<Session> { lhs: Session, rhs: Session -> lhs.startTime!!.compareTo(rhs.startTime!!) }
+val SESSION_BY_DATE_COMPARATOR =
+    Comparator<Session> { lhs: Session, rhs: Session -> lhs.startTime!!.compareTo(rhs.startTime!!) }

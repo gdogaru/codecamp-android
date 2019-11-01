@@ -24,9 +24,9 @@ import com.gdogaru.codecamp.repository.CodecampRepository
 import javax.inject.Inject
 
 class SidebarViewModel @Inject constructor(
-        val repository: CodecampRepository,
-        val preferences: AppPreferences)
-    : ViewModel() {
+    val repository: CodecampRepository,
+    val preferences: AppPreferences
+) : ViewModel() {
 
     fun allEvents() = repository.events()
 

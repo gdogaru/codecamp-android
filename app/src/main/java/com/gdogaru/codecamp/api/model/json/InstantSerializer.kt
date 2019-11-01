@@ -32,7 +32,7 @@ import org.threeten.bp.format.DateTimeFormatter
 import java.io.IOException
 
 val INSTANT_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
-        .withZone(ZoneId.of("UTC"))
+    .withZone(ZoneId.of("UTC"))
 
 class InstantSerializer : JsonSerializer<Instant>() {
 

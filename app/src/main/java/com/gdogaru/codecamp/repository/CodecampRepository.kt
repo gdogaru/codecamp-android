@@ -24,6 +24,7 @@ import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.EventSummary
 import com.gdogaru.codecamp.api.model.Schedule
 import com.gdogaru.codecamp.tasks.DataUpdater
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,24 +33,33 @@ import javax.inject.Singleton
  */
 @Singleton
 class CodecampRepository @Inject constructor(
-        val storage: InternalStorage,
-        val dataUpdater: DataUpdater,
-        val preferences: AppPreferences) {
-
-
+    val storage: InternalStorage,
+    val dataUpdater: DataUpdater,
+    val preferences: AppPreferences
+) {
 
 
     private val events: LiveData<List<EventSummary>> =
-            Transformations.map(preferences.lastUpdatedLiveData) {
+        Transformations.map(preferences.lastUpdatedLiveData) {
+            try {
                 storage.readEvents(it)
+            } catch (e: Exception) {
+                Timber.e(e, "Could not read saved events")
+                throw RuntimeException(e)
             }
+        }
 
     fun eventData(id: Long): LiveData<Codecamp> {
         dataUpdater.updateIfNecessary()
         return Transformations
-                .map(preferences.lastUpdatedLiveData) {
+            .map(preferences.lastUpdatedLiveData) {
+                try {
                     storage.readEvent(it, id)
+                } catch (e: Exception) {
+                    Timber.e(e, "Could not read saved data")
+                    throw RuntimeException(e)
                 }
+            }
     }
 
     fun events(): LiveData<List<EventSummary>> {
@@ -61,7 +71,8 @@ class CodecampRepository @Inject constructor(
         dataUpdater.update()
     }
 
-    val currentEvent: LiveData<Codecamp> = Transformations.switchMap(preferences.activeEventLiveData) { eventData(it) }
+    val currentEvent: LiveData<Codecamp> =
+        Transformations.switchMap(preferences.activeEventLiveData) { eventData(it) }
 
     fun currentSchedule(): LiveData<Schedule?> {
         return Transformations.switchMap(preferences.activeScheduleLiveData) { s ->

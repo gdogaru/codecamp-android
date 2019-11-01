@@ -55,14 +55,14 @@ public class RatingHelper {
         return prefs;
     }
 
-    public static void logUsage(Context context) {
+    public static void logUsage() {
         int usage = prefs().getInt(VIEWS, 0);
-        setTimes(usage);
+        setTimes(usage + 1);
     }
 
     private static void setTimes(int usage) {
         SharedPreferences.Editor editor = prefs().edit();
-        editor.putInt(VIEWS, ++usage);
+        editor.putInt(VIEWS, usage);
         editor.apply();
     }
 

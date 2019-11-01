@@ -34,7 +34,8 @@ public class TwoDimensionGestureScrollView extends FrameLayout {
     private OverScroller mScroller;
 
     /* Positions of the last motion event */
-    private float mInitialX, mInitialY;
+    private float mInitialX;
+    private float mInitialY;
     /* Drag threshold */
     private int mTouchSlop;
     //Listener to handle all the touch events

@@ -45,7 +45,7 @@ class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Frag
 
     override fun getValue(thisRef: Fragment, property: KProperty<*>): T {
         return _value ?: throw IllegalStateException(
-                "should never call auto-cleared-value get when it might not be available"
+            "should never call auto-cleared-value get when it might not be available"
         )
     }
 
@@ -54,7 +54,8 @@ class AutoClearedValue<T : Any>(val fragment: Fragment) : ReadWriteProperty<Frag
     }
 }
 
-class AutoClearedActivityValue<T : Any>(val activity: AppCompatActivity) : ReadWriteProperty<AppCompatActivity, T> {
+class AutoClearedActivityValue<T : Any>(val activity: AppCompatActivity) :
+    ReadWriteProperty<AppCompatActivity, T> {
     private var _value: T? = null
 
     init {
@@ -68,7 +69,7 @@ class AutoClearedActivityValue<T : Any>(val activity: AppCompatActivity) : ReadW
 
     override fun getValue(thisRef: AppCompatActivity, property: KProperty<*>): T {
         return _value ?: throw IllegalStateException(
-                "should never call auto-cleared-value get when it might not be available"
+            "should never call auto-cleared-value get when it might not be available"
         )
     }
 

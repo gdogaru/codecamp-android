@@ -26,11 +26,12 @@ import com.gdogaru.codecamp.util.DateUtil
  */
 
 abstract class MainViewItem(
-        val title: String,
-        val subtitle: String?
+    val title: String,
+    val subtitle: String?
 ) {
 
-    class AgendaItem(title: String, val index: Int, val schedule: Schedule) : MainViewItem(title, DateUtil.formatDayOfYear(schedule.date))
+    class AgendaItem(title: String, val index: Int, val schedule: Schedule) :
+        MainViewItem(title, DateUtil.formatDayOfYear(schedule.date))
 
     class SpeakersItem(title: String) : MainViewItem(title, null)
 

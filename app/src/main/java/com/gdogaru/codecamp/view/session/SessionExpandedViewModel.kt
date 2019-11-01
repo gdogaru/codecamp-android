@@ -25,7 +25,7 @@ import com.gdogaru.codecamp.repository.CodecampRepository
 import javax.inject.Inject
 
 class SessionExpandedViewModel @Inject constructor(
-        private val repository: CodecampRepository
+    private val repository: CodecampRepository
 ) : ViewModel() {
 
     fun currentSchedule(): LiveData<Schedule?> {

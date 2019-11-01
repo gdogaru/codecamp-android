@@ -25,7 +25,7 @@ import com.gdogaru.codecamp.repository.CodecampRepository
 import javax.inject.Inject
 
 class AgendaViewModel @Inject constructor(
-        val repository: CodecampRepository
+    val repository: CodecampRepository
 ) : ViewModel() {
 
     fun getSchedule(): LiveData<Schedule?> {

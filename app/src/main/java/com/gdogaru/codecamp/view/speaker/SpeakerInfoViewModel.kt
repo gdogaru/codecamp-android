@@ -33,9 +33,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class SpeakerInfoViewModel @Inject constructor(
-        val repository: CodecampRepository,
-        val bookmarkRepository: BookmarkRepository,
-        val preferences: AppPreferences
+    val repository: CodecampRepository,
+    val bookmarkRepository: BookmarkRepository,
+    val preferences: AppPreferences
 ) : ViewModel() {
 
 
@@ -43,16 +43,21 @@ class SpeakerInfoViewModel @Inject constructor(
         return Transformations.switchMap(repository.currentEvent) { event ->
             Transformations.map(bookmarkRepository.getBookmarked(event.refId.toString())) { favs ->
                 val speaker = event.speakers.orEmpty().firstOrNull { it.name == speakerId }
-                val allTracks = event.schedules.orEmpty().map { s -> s.tracks.map { t -> t to s } }.flatten().map { it.first.name to it }.toMap()
+                val allTracks =
+                    event.schedules.orEmpty().map { s -> s.tracks.map { t -> t to s } }.flatten()
+                        .map { it.first.name to it }.toMap()
                 val sessions = event.schedules.orEmpty()
-                        .map { it.sessions }.flatten().filter { it.speakerIds.orEmpty().contains(speakerId) }
-                        .map {
-                            val p = allTracks[it.track]
-                            SessionData(it,
-                                    p?.first,
-                                    p?.second!!,
-                                    favs.contains(it.id))
-                        }
+                    .map { it.sessions }.flatten()
+                    .filter { it.speakerIds.orEmpty().contains(speakerId) }
+                    .map {
+                        val p = allTracks[it.track]
+                        SessionData(
+                            it,
+                            p?.first,
+                            p?.second!!,
+                            favs.contains(it.id)
+                        )
+                    }
                 if (speaker == null) null else FullSpeakerData(speaker, sessions)
             }
         }
@@ -68,14 +73,14 @@ class SpeakerInfoViewModel @Inject constructor(
 }
 
 data class FullSpeakerData(
-        val speaker: Speaker,
-        val sessions: List<SessionData>
+    val speaker: Speaker,
+    val sessions: List<SessionData>
 )
 
 data class SessionData(
-        val session: Session,
-        val track: Track?,
-        val schedule: Schedule,
-        val isBookmarked: Boolean
+    val session: Session,
+    val track: Track?,
+    val schedule: Schedule,
+    val isBookmarked: Boolean
 )
 

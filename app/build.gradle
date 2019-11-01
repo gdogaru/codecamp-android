@@ -197,7 +197,7 @@ dependencies {
 
     implementation "com.jakewharton.timber:timber:4.7.1"
 
-    implementation "com.squareup.okio:okio:2.4.0"
+    implementation "com.squareup.okio:okio:2.4.1"
     implementation "com.squareup.okhttp3:okhttp:$versions.okHttp3"
     implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp3"
 
@@ -206,15 +206,16 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:${versions.glide}"
     implementation "se.emilsjolander:stickylistheaders:2.7.0"
 
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.9'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.9'
+    //https://github.com/FasterXML/jackson-module-kotlin/issues/218 stay like this until api >=24
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6'
 
     implementation 'com.evernote:android-state:1.4.1'
     kapt 'com.evernote:android-state-processor:1.4.1'
 
 
     testImplementation "androidx.test.ext:junit:1.1.1"
-    testImplementation "org.mockito:mockito-core:3.0.0"
+    testImplementation "org.mockito:mockito-core:3.1.0"
     testImplementation "junit:junit:4.12"
     testImplementation "androidx.navigation:navigation-common:2.1.0"
     testImplementation "com.google.truth:truth:0.44"

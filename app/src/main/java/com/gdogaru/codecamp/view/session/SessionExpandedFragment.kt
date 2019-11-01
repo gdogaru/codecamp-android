@@ -98,14 +98,12 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
 
     }
 
-    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
-    }
+    override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) =
+        Unit
 
-    override fun onPageSelected(position: Int) {
-    }
+    override fun onPageSelected(position: Int) = Unit
 
-    override fun onPageScrollStateChanged(state: Int) {
-    }
+    override fun onPageScrollStateChanged(state: Int) = Unit
 
     private inner class ExpandedSessionsAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
