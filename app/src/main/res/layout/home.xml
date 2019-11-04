@@ -22,6 +22,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="com.gdogaru.codecamp.view.common.UiFormat" />
+
+        <variable
+            name="summary"
+            type="com.gdogaru.codecamp.api.model.EventSummary" />
+    </data>
+
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
@@ -146,12 +155,4 @@
 
     </androidx.drawerlayout.widget.DrawerLayout>
 
-    <data>
-
-        <import type="com.gdogaru.codecamp.view.common.UiFormat" />
-
-        <variable
-            name="summary"
-            type="com.gdogaru.codecamp.api.model.EventSummary" />
-    </data>
 </layout>

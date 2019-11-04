@@ -61,7 +61,7 @@
             android:layout_marginStart="10dp"
             android:textColor="@color/text_white"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/speakerPhoto"
+            app:layout_constraintStart_toEndOf="@id/speakerPhoto"
             android:text="@{speaker.name}"
             tools:text="sdsad" />
 
