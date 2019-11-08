@@ -33,9 +33,9 @@ import javax.inject.Singleton
  */
 @Singleton
 class CodecampRepository @Inject constructor(
-    val storage: InternalStorage,
-    val dataUpdater: DataUpdater,
-    val preferences: AppPreferences
+    private val storage: InternalStorage,
+    private val dataUpdater: DataUpdater,
+    private val preferences: AppPreferences
 ) {
 
 
@@ -74,11 +74,8 @@ class CodecampRepository @Inject constructor(
     val currentEvent: LiveData<Codecamp> =
         Transformations.switchMap(preferences.activeEventLiveData) { eventData(it) }
 
-    fun currentSchedule(): LiveData<Schedule?> {
-        return Transformations.switchMap(preferences.activeScheduleLiveData) { s ->
+    fun currentSchedule(): LiveData<Schedule?> =
+        Transformations.switchMap(preferences.activeScheduleLiveData) { s ->
             Transformations.map(currentEvent) { if (it.schedules?.size ?: 0 <= s) null else it.schedules!![s] }
         }
-    }
-
-
 }

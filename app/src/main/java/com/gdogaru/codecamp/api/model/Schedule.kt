@@ -19,8 +19,10 @@
 package com.gdogaru.codecamp.api.model
 
 
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.gdogaru.codecamp.util.DateUtil
+import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
 import java.util.*
@@ -29,19 +31,21 @@ import java.util.*
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
 
+@Parcelize
 data class Schedule(
     var date: LocalDateTime,
     var timeSlots: List<TimeSlot>,
     var tracks: List<Track>,
     var sessions: List<Session>
-)
+) : Parcelable
 
-
+@Parcelize
 data class TimeSlot(
     var startTime: LocalTime?,
     var endTime: LocalTime?
-)
+) : Parcelable
 
+@Parcelize
 data class Track(
     @JsonProperty("name")
     var name: String,
@@ -54,12 +58,12 @@ data class Track(
 
     @JsonProperty("displayOrder")
     var displayOrder: Int = 0
-) {
+) : Parcelable {
     fun getFullDescription() =
         String.format(Locale.getDefault(), "%s, %s seats, %s", name, capacity, description)
 }
 
-
+@Parcelize
 data class Session(
     @JsonProperty("title")
     var title: String,
@@ -88,7 +92,7 @@ data class Session(
     @JsonProperty("track")
     var track: String?
 
-) {
+) : Parcelable {
     val id: String
         get() = startTime.toString() + track
 

@@ -18,12 +18,14 @@
 
 package com.gdogaru.codecamp.api.model
 
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.io.Serializable
+import kotlinx.android.parcel.Parcelize
 
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
+@Parcelize
 data class Venue(
     @JsonProperty("Id")
     var id: Long = 0,
@@ -45,4 +47,4 @@ data class Venue(
 
     @JsonProperty("directions")
     var directions: String
-) : Serializable
+) : Parcelable

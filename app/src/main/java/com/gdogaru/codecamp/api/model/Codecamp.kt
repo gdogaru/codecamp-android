@@ -18,28 +18,29 @@
 
 package com.gdogaru.codecamp.api.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.LocalDateTime
-import java.io.Serializable
-import java.util.*
 
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
-class Codecamp : EventSummary(), Serializable {
-
-    var sponsorshipPackages: List<SponsorshipPackage>? = null
-    var sponsors: List<Sponsor>? = null
-    var schedules: List<Schedule>? = null
+@Parcelize
+class Codecamp(
+    var sponsorshipPackages: List<SponsorshipPackage>? = null,
+    var sponsors: List<Sponsor>? = null,
+    var schedules: List<Schedule>? = null,
     var speakers: List<Speaker>? = null
+) : EventSummary(), Parcelable
 
-}
+@Parcelize
+class EventList : Parcelable, ArrayList<EventSummary>()
 
-class EventList : ArrayList<EventSummary>()
-
-open class EventSummary {
-    var refId: Long = 0
-    var title: String? = null
-    var startDate: LocalDateTime? = null
-    var endDate: LocalDateTime? = null
+@Parcelize
+open class EventSummary(
+    var refId: Long = 0,
+    var title: String? = null,
+    var startDate: LocalDateTime? = null,
+    var endDate: LocalDateTime? = null,
     var venue: Venue? = null
-}
+) : Parcelable

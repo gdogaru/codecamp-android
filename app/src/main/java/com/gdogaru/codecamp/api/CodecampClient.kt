@@ -46,14 +46,14 @@ class CodecampClient
     @AddTrace(name = "downloadEventData")
     @Throws(Exception::class)
     private fun downloadToFile(url: String, outputFile: File): ApiResponse<File> {
-        val myDir = outputFile.parentFile
+        val myDir = checkNotNull(outputFile.parentFile)
         try {
             Timber.i("Downloading %s to %s", url, outputFile)
             val request = Request.Builder().url(url).build()
             okHttpClient.newCall(request).execute().use { response ->
 
                 if (myDir.exists().not() && myDir.mkdirs().not()) {
-                    return ApiResponse.create(IllegalStateException("Could not create dir structure: " + myDir.path))
+                    return ApiResponse.create<File>(IllegalStateException("Could not create dir structure: " + myDir.path))
                 }
                 if (outputFile.exists().not() && outputFile.createNewFile().not()) {
                     return ApiResponse.create(IllegalStateException("Could not create events file: " + outputFile.path))

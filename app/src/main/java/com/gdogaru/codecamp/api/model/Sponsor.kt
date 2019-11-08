@@ -18,12 +18,15 @@
 
 package com.gdogaru.codecamp.api.model
 
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.android.parcel.Parcelize
 
 
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
+@Parcelize
 data class Sponsor(
 
     @JsonProperty("name")
@@ -40,10 +43,11 @@ data class Sponsor(
 
     @JsonProperty("displayOrder")
     var displayOrder: Int = 0
-)
+) : Parcelable
 
+@Parcelize
 data class SponsorshipPackage(
     var name: String? = null,
     var displayOrder: Int = 0
-)
+) : Parcelable
 

@@ -16,16 +16,21 @@
  *
  */
 
-package com.gdogaru.codecamp.view.agenda.calendar.component;
+package com.gdogaru.codecamp.view.agenda.calendar.component
+
+import android.os.Parcelable
+import kotlinx.android.parcel.IgnoredOnParcel
+import kotlinx.android.parcel.Parcelize
 
 
-public class DisplayEvent {
+@Parcelize
+data class DisplayEvent(
+    val event: CEvent
+) : Parcelable {
+    @IgnoredOnParcel
+    var index: Int = 0
 
-    public final CEvent event;
-    public int index = 0;
-    public int rowTotal = 0;
-
-    public DisplayEvent(CEvent event) {
-        this.event = event;
-    }
+    @IgnoredOnParcel
+    var rowTotal: Int = 0
 }
+

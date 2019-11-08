@@ -18,11 +18,14 @@
 
 package com.gdogaru.codecamp.api.model
 
+import android.os.Parcelable
 import com.fasterxml.jackson.annotation.JsonProperty
+import kotlinx.android.parcel.Parcelize
 
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
+@Parcelize
 data class Speaker(
     @JsonProperty("name")
     var name: String,
@@ -44,4 +47,4 @@ data class Speaker(
 
     @JsonProperty("displayOrder")
     var displayOrder: Int = 0
-)
+) : Parcelable

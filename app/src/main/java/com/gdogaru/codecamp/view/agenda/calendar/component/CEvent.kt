@@ -19,15 +19,18 @@
 package com.gdogaru.codecamp.view.agenda.calendar.component
 
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.LocalTime
 
+@Parcelize
 data class CEvent(
-        val id: String,
-        val start: LocalTime,
-        val end: LocalTime,
-        val preferedIdx: Int,
-        val title: String,
-        val descLine1: String,
-        val descLine2: String,
-        val bookmarked:Boolean
-)
+    val id: String,
+    val start: LocalTime,
+    val end: LocalTime,
+    val preferredIdx: Int,
+    val title: String,
+    val descLine1: String,
+    val descLine2: String,
+    val bookmarked: Boolean
+) : Parcelable

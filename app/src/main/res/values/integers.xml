@@ -17,5 +17,5 @@
   -->
 
 <resources>
-    <integer name="screen_anim">400</integer>
+    <integer name="screen_anim">@android:integer/config_shortAnimTime</integer>
 </resources>

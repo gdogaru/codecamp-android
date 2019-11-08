@@ -20,6 +20,7 @@ package com.gdogaru.codecamp.view.agenda.calendar.component
 
 import android.content.Context
 import android.graphics.Point
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -29,11 +30,11 @@ import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import com.gdogaru.codecamp.R
+import kotlinx.android.parcel.Parcelize
 import org.threeten.bp.Duration
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import org.threeten.bp.LocalTime
-import java.io.Serializable
 import java.util.*
 import kotlin.math.max
 
@@ -323,12 +324,15 @@ class Calendar @JvmOverloads constructor(
             return if (r1 != 0)
                 r1
             else
-                e1.event.preferedIdx - e2.event.preferedIdx
+                e1.event.preferredIdx - e2.event.preferredIdx
         }
     }
 
-
-    class CalendarState(val vertical: Point, val horizontal: Point) : Serializable
+    @Parcelize
+    class CalendarState(
+        val vertical: Point,
+        val horizontal: Point
+    ) : Parcelable
 
     companion object {
         private val EVENT_COMPARATOR = DisplayEventComparator()
