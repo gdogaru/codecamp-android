@@ -37,6 +37,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start|left"
         android:foregroundGravity="left"
+        tools:ignore="ContentDescription"
         tools:context=".view.main.MainActivity">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout

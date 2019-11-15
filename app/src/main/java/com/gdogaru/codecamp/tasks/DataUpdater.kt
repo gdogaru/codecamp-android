@@ -62,12 +62,15 @@ class DataUpdater @Inject constructor(
     fun lastJobStatus() = Transformations
         .switchMap(appPreferences.activeJobLiveData)
         { id ->
-            try {
-                workManager.getWorkInfoByIdLiveData(UUID.fromString(id))
-            } catch (e: java.lang.Exception) {
-                Timber.w(e, "could not get status for id: %s", id)
-                null
-            }
+            id.takeIf { !it.isNullOrBlank() }
+                .let {
+                    try {
+                        workManager.getWorkInfoByIdLiveData(UUID.fromString(id))
+                    } catch (e: java.lang.Exception) {
+                        Timber.w(e, "could not get status for id: %s", id)
+                        null
+                    }
+                }
         }
 
 
