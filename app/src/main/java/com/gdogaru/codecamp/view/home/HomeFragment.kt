@@ -23,7 +23,6 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -34,7 +33,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.crashlytics.android.Crashlytics
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.databinding.HomeBinding
@@ -199,7 +197,6 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
         Timber.i("On map ready %s", googleMap)
 
         if (googleMap == null) {
-            Crashlytics.log("No map loaded")
             Timber.e("No map...")
             return
         }
@@ -233,7 +230,6 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
                     }
                 } catch (e: Exception) {
                     Timber.e(e, "Could not parse location")
-                    Crashlytics.log(Log.ERROR, "Map", "Could not parse location: " + e.message)
                 }
             })
     }

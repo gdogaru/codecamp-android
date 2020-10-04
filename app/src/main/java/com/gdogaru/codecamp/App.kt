@@ -22,15 +22,13 @@ import android.app.Application
 import android.os.StrictMode
 import android.util.Log
 import androidx.multidex.MultiDexApplication
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
 import com.evernote.android.state.StateSaver
 import com.gdogaru.codecamp.di.AppInjector
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.jakewharton.threetenabp.AndroidThreeTen
 import dagger.android.DaggerApplication
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasAndroidInjector
-import io.fabric.sdk.android.Fabric
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -40,6 +38,7 @@ import javax.inject.Inject
 class App : MultiDexApplication(), HasAndroidInjector {
     @Inject
     lateinit var androidInjector: DispatchingAndroidInjector<Any>
+
     @Volatile
     private var needToInject = true
 
@@ -48,7 +47,6 @@ class App : MultiDexApplication(), HasAndroidInjector {
         instance = this
 
         initTimber()
-        initCrashlytics()
         AndroidThreeTen.init(this)
 
         initDebugState()
@@ -110,13 +108,6 @@ class App : MultiDexApplication(), HasAndroidInjector {
         Timber.plant(CrashlyticsTree())
     }
 
-    private fun initCrashlytics() {
-        val crashlyticsKit = Crashlytics.Builder()
-            .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-            .build()
-        Fabric.with(this, crashlyticsKit)
-    }
-
     companion object {
 
         private var instance: App? = null
@@ -131,23 +122,15 @@ class App : MultiDexApplication(), HasAndroidInjector {
 
 class CrashlyticsTree : Timber.Tree() {
 
-    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
-        if (priority >= Log.WARN) {
-            if (t == null) {
-                Crashlytics.log(priority, CRASHLYTICS_KEY_TAG, message)
-            } else {
 
-                Crashlytics.setInt(CRASHLYTICS_KEY_PRIORITY, priority)
-                Crashlytics.setString(CRASHLYTICS_KEY_TAG, tag)
-                Crashlytics.setString("message", message)
-                Crashlytics.logException(t)
+    override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
+        if (priority >= Log.ERROR) {
+            val crashlytics = FirebaseCrashlytics.getInstance()
+            if (t == null) {
+                crashlytics.log(message)
+            } else {
+                crashlytics.recordException(t)
             }
         }
-    }
-
-    companion object {
-        private val CRASHLYTICS_KEY_MESSAGE = "message"
-        private val CRASHLYTICS_KEY_PRIORITY = "priority"
-        private val CRASHLYTICS_KEY_TAG = "proliq"
     }
 }

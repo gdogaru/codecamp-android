@@ -18,8 +18,9 @@
 
 plugins {
     id 'com.android.application'
-    id 'io.fabric'
+
     id 'com.google.firebase.firebase-perf'
+    id 'com.google.firebase.crashlytics'
 
     id 'kotlin-android'
     id 'kotlin-android-extensions'
@@ -29,12 +30,11 @@ plugins {
 
     id 'jacoco'
 
-    id 'com.github.triplet.play' version "2.6.1"
+    id 'com.github.triplet.play'
 }
 
 android {
     compileSdkVersion build_versions.target_sdk
-    buildToolsVersion build_versions.build_tools
 
     defaultConfig {
         minSdkVersion build_versions.min_sdk
@@ -120,9 +120,10 @@ android {
     dexOptions {
         javaMaxHeapSize "4g"
     }
-    dataBinding {
-        enabled = true
+    buildFeatures {
+        dataBinding = true
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -148,7 +149,7 @@ play {
     track = 'beta' // or internal or alpha...
     serviceAccountCredentials = file(System.getenv('PRIVATE_KEY') ?: '../certificate/private-key.json')
     defaultToAppBundles = true // Use App Bundle instead of APK
-    resolutionStrategy = "ignore"
+//    resolutionStrategy = "ignore"
     //If the deployment fails due to an API error, don't fail the CI Build
 }
 
@@ -162,77 +163,77 @@ gradle.projectsEvaluated {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$versions.kotlin"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7"
+    implementation "org.jetbrains.kotlin:kotlin-reflect"
 
-    implementation "androidx.multidex:multidex:2.0.1"
-    implementation "androidx.legacy:legacy-support-v4:1.0.0"
-    implementation "androidx.appcompat:appcompat:1.1.0"
-    implementation "androidx.cardview:cardview:1.0.0"
-    implementation "androidx.recyclerview:recyclerview:1.1.0"
-    implementation "androidx.annotation:annotation:1.1.0"
-    implementation "androidx.constraintlayout:constraintlayout:1.1.3"
-    implementation "androidx.core:core-ktx:1.3.0-alpha01"
-    implementation "androidx.fragment:fragment-ktx:1.2.2"
-    implementation "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
-    implementation "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-    implementation 'com.google.firebase:firebase-analytics:17.2.2'
-    implementation "androidx.room:room-runtime:$versions.room"
-    kapt "androidx.room:room-compiler:$versions.room"
-    implementation "androidx.work:work-runtime-ktx:2.3.2"
-    implementation "com.google.android.material:material:1.1.0"
+    implementation "androidx.multidex:multidex"
+    implementation "androidx.legacy:legacy-support-v4"
+    implementation "androidx.appcompat:appcompat"
+    implementation "androidx.cardview:cardview"
+    implementation "androidx.recyclerview:recyclerview"
+    implementation "androidx.annotation:annotation"
+    implementation "androidx.constraintlayout:constraintlayout"
+    implementation "androidx.core:core-ktx"
+    implementation "androidx.fragment:fragment-ktx"
+    implementation "androidx.navigation:navigation-fragment-ktx"
+    implementation "androidx.lifecycle:lifecycle-extensions"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx"
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation "androidx.room:room-runtime"
+    kapt "androidx.room:room-compiler"
+    implementation "androidx.work:work-runtime-ktx"
+    implementation "com.google.android.material:material"
 
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$versions.coroutines"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$versions.coroutines"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core"
 
-    implementation "com.google.firebase:firebase-perf:19.0.5"
-    implementation "com.google.firebase:firebase-core:17.2.2"
-    implementation "com.crashlytics.sdk.android:crashlytics:$versions.crashlytics"
+    implementation "com.google.firebase:firebase-perf"
+    implementation "com.google.firebase:firebase-core"
+    implementation 'com.google.firebase:firebase-crashlytics'
 
-    implementation "com.google.android.gms:play-services-maps:17.0.0"
-    implementation "com.google.android.gms:play-services-base:$versions.gmsVersion"
-    implementation "com.google.android.gms:play-services-gcm:17.0.0"
+    implementation "com.google.android.gms:play-services-maps"
+    implementation "com.google.android.gms:play-services-base"
+    implementation "com.google.android.gms:play-services-gcm"
 
-    implementation "com.google.dagger:dagger:$versions.dagger"
-    implementation "com.google.dagger:dagger-android:$versions.dagger"
-    implementation "com.google.dagger:dagger-android-support:$versions.dagger"
-    kapt "com.google.dagger:dagger-android-processor:$versions.dagger"
-    kapt "com.google.dagger:dagger-compiler:$versions.dagger"
+    implementation "com.google.dagger:dagger"
+    implementation "com.google.dagger:dagger-android"
+    implementation "com.google.dagger:dagger-android-support"
+    kapt "com.google.dagger:dagger-android-processor"
+    kapt "com.google.dagger:dagger-compiler"
 
-    implementation "com.jakewharton.timber:timber:4.7.1"
+    implementation "com.jakewharton.timber:timber"
 
-    implementation "com.squareup.okio:okio:2.4.1"
-    implementation "com.squareup.okhttp3:okhttp:$versions.okHttp3"
-    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp3"
+    implementation "com.squareup.okio:okio"
+    implementation "com.squareup.okhttp3:okhttp"
+    implementation "com.squareup.okhttp3:logging-interceptor"
 
-    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.2'
+    implementation 'com.jakewharton.threetenabp:threetenabp'
 
-    implementation "com.github.bumptech.glide:glide:${versions.glide}"
-    implementation "se.emilsjolander:stickylistheaders:2.7.0"
+    implementation "com.github.bumptech.glide:glide"
+    implementation "se.emilsjolander:stickylistheaders"
 
     //https://github.com/FasterXML/jackson-module-kotlin/issues/218 stay like this until api >=24
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.6'
-    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.6'
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 
-    implementation 'com.evernote:android-state:1.4.1'
-    kapt 'com.evernote:android-state-processor:1.4.1'
+    implementation 'com.evernote:android-state'
+    kapt 'com.evernote:android-state-processor'
 
 
-    testImplementation "androidx.test.ext:junit:1.1.1"
-    testImplementation "org.mockito:mockito-core:3.1.0"
-    testImplementation "junit:junit:4.12"
-    testImplementation "androidx.navigation:navigation-common:2.2.1"
-    testImplementation "com.google.truth:truth:0.44"
+    testImplementation "androidx.test.ext:junit"
+    testImplementation "org.mockito:mockito-core"
+    testImplementation "androidx.navigation:navigation-common"
+    testImplementation "junit:junit"
+    testImplementation "com.google.truth:truth"
 
-    androidTestImplementation "com.google.truth:truth:0.44"
-    androidTestImplementation "androidx.test:core:1.2.0"
-    androidTestImplementation "androidx.test.ext:junit:1.1.1"
-    androidTestImplementation "androidx.test.ext:truth:1.2.0"
-    androidTestImplementation "androidx.test:rules:1.2.0"
-    androidTestImplementation "androidx.test:runner:1.2.0"
-    androidTestImplementation "androidx.test:rules:1.2.0"
-    androidTestUtil "androidx.test:orchestrator:1.2.0"
+    androidTestImplementation "com.google.truth:truth"
+    androidTestImplementation "androidx.test:core"
+    androidTestImplementation "androidx.test.ext:junit"
+    androidTestImplementation "androidx.test.ext:truth"
+    androidTestImplementation "androidx.test:rules"
+    androidTestImplementation "androidx.test:runner"
+    androidTestImplementation "androidx.test:rules"
+    androidTestUtil "androidx.test:orchestrator"
 
 }
 
