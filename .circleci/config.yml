@@ -8,7 +8,7 @@ jobs:
     working_directory: ~/code
 
     environment:
-      _JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -Xmx2000m -XX:ParallelGCThreads=1 -XX:ConcGCThreads=1 -Djava.util.concurrent.ForkJoinPool.common.parallelism=1 -Dkotlin.compiler.execution.strategy=in-process"
+      _JAVA_OPTIONS: "-XX:+UnlockExperimentalVMOptions -XX:+UseContainerSupport -Xmx2000m -XX:ParallelGCThreads=1 -XX:ConcGCThreads=1 -Djava.util.concurrent.ForkJoinPool.common.parallelism=1 -Dkotlin.compiler.execution.strategy=in-process"
       GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx1000m"'
 
     steps:
