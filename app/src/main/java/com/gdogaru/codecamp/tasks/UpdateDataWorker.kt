@@ -19,7 +19,7 @@
 package com.gdogaru.codecamp.tasks
 
 import android.content.Context
-import androidx.work.Worker
+import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.gdogaru.codecamp.api.ApiErrorResponse
 import com.gdogaru.codecamp.api.ApiResponse
@@ -31,21 +31,26 @@ import com.gdogaru.codecamp.repository.AppPreferences
 import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.repository.FileType
 import com.gdogaru.codecamp.repository.InternalStorage
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.threeten.bp.Instant
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalDateTime
 import javax.inject.Inject
 
 class UpdateDataWorker(context: Context, workerParams: WorkerParameters) :
-    Worker(context, workerParams) {
+    CoroutineWorker(context, workerParams) {
 
     @Inject
     lateinit var appPreferences: AppPreferences
+
     @Inject
     lateinit var storage: InternalStorage
+
     @Inject
     lateinit var client: CodecampClient
+
     @Inject
     lateinit var bookmarkingService: BookmarkRepository
 
@@ -53,8 +58,8 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) :
         AppInjector.appComponent.inject(this)
     }
 
-    override fun doWork(): Result {
-        return when (val result = fetchAllData()) {
+    override suspend fun doWork() = withContext(Dispatchers.IO) {
+        when (val result = fetchAllData()) {
             is ApiSuccessResponse -> Result.success()
             is ApiErrorResponse -> Result.failure()
             else -> throw IllegalStateException("Unexpected result: $result")
@@ -114,7 +119,9 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) :
     }
 
     private fun removeExpiredPreferences(eventList: List<EventSummary>) {
-        runBlocking { bookmarkingService.keepOnlyEvents(eventList.map { it.title.orEmpty() }.toSet()) }
+        runBlocking {
+            bookmarkingService.keepOnlyEvents(eventList.map { it.title.orEmpty() }.toSet())
+        }
     }
 
 }
