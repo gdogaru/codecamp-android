@@ -23,12 +23,18 @@ import org.threeten.bp.LocalTime
 /**
  * @author Gabriel Dogaru (gdogaru@gmail.com)
  */
-data class SessionListItem(
-    var id: String? = null,
-    var name: String? = null,
-    var start: LocalTime? = null,
-    var end: LocalTime? = null,
-    var trackName: String? = null,
-    var speakerNames: List<String>? = null,
-    var bookmarked: Boolean = false
-)
+sealed class AgendaListItem {
+    data class HeaderListItem(
+        val text: String
+    ) : AgendaListItem()
+
+    data class SessionListItem(
+        var id: String? = null,
+        var name: String? = null,
+        var start: LocalTime? = null,
+        var end: LocalTime? = null,
+        var trackName: String? = null,
+        var speakerNames: List<String>? = null,
+        var bookmarked: Boolean = false
+    ) : AgendaListItem()
+}

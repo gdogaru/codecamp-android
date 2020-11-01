@@ -26,8 +26,10 @@ import com.gdogaru.codecamp.api.model.Schedule
 import com.gdogaru.codecamp.repository.AppPreferences
 import com.gdogaru.codecamp.repository.BookmarkRepository
 import com.gdogaru.codecamp.repository.CodecampRepository
+import com.gdogaru.codecamp.util.DateUtil
 import com.gdogaru.codecamp.view.agenda.SESSION_BY_DATE_COMPARATOR
 import com.gdogaru.codecamp.view.agenda.scheduleFavMediator
+import org.threeten.bp.LocalTime
 import java.util.*
 import javax.inject.Inject
 
@@ -41,27 +43,27 @@ class SessionsListViewModel @Inject constructor(
     private val currentScheduleFav =
         scheduleFavMediator(repository, bookmarkRepository, preferences, favoritesOnly)
 
-    fun sessionItems(): LiveData<List<SessionListItem>> {
+    fun sessionItems(): LiveData<List<AgendaListItem>> {
         return Transformations.map(currentScheduleFav) { s ->
             s?.let {
                 it.first?.let { s ->
-                    listItems(
-                        s,
-                        it.second
-                    )
+                    listItems(s, it.second)
                 }
             }
         }
     }
 
-    private fun listItems(schedule: Schedule, favorites: Set<String>): List<SessionListItem> {
+    private fun listItems(
+        schedule: Schedule,
+        favorites: Set<String>
+    ): List<AgendaListItem> {
         val sessions = schedule.sessions.orEmpty().sortedWith(SESSION_BY_DATE_COMPARATOR)
-        val sessionListItems = mutableListOf<SessionListItem>()
+        val sessionListItems = mutableListOf<AgendaListItem.SessionListItem>()
         val fav = favoritesOnly.value ?: false
 
         for (s in sessions) {
             if (!fav || favorites.contains(s.id)) {
-                val item = SessionListItem()
+                val item = AgendaListItem.SessionListItem()
                 item.name = s.title
                 item.id = s.id
                 item.end = s.endTime
@@ -72,7 +74,25 @@ class SessionsListViewModel @Inject constructor(
                 sessionListItems.add(item)
             }
         }
-        return sessionListItems
+
+        val result = mutableListOf<AgendaListItem>()
+        var prevSlot: Pair<LocalTime?, LocalTime?> = (null to null)
+        sessionListItems.forEach { session ->
+            val slot = session.start to session.end
+            if (slot != prevSlot) {
+                result.add(
+                    AgendaListItem.HeaderListItem(
+                        DateUtil.formatPeriod(
+                            slot.first,
+                            slot.second
+                        )
+                    )
+                )
+                prevSlot = slot
+            }
+            result.add(session)
+        }
+        return result
     }
 
     fun setFavoritesOnly(favoritesOnly: Boolean) {

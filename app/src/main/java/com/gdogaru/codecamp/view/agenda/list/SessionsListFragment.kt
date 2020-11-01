@@ -26,11 +26,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.view.agenda.AbstractSessionsListFragment
 import com.gdogaru.codecamp.view.agenda.AgendaFragmentDirections
 import com.gdogaru.codecamp.view.util.autoCleared
-import se.emilsjolander.stickylistheaders.StickyListHeadersListView
 import javax.inject.Inject
 
 /**
@@ -53,24 +53,20 @@ class SessionsListFragment : AbstractSessionsListFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val listView = view.findViewById<StickyListHeadersListView>(android.R.id.list)
+        val listView = view.findViewById<RecyclerView>(R.id.agendaList)
 
-        sessionsAdapter = SessionsAdapter(requireActivity())
+
+        sessionsAdapter = SessionsAdapter(requireActivity(), ::onSessionClicked)
         listView.adapter = sessionsAdapter
-        listView.setOnItemClickListener { _, _, position, _ ->
-            onListItemClick(position)
-        }
+        listView.addItemDecoration(StickHeaderItemDecoration(sessionsAdapter))
 
         viewModel.sessionItems().observe(this, Observer { s ->
             s?.let { sessionsAdapter.sessions = it }
         })
     }
 
-    private fun onListItemClick(position: Int) {
-        val session = sessionsAdapter.getItem(position)
-        session.id?.let {
-            findNavController().navigate(AgendaFragmentDirections.showSessionInfo(it))
-        }
+    private fun onSessionClicked(item: AgendaListItem.SessionListItem) {
+        item.id?.let { findNavController().navigate(AgendaFragmentDirections.showSessionInfo(it)) }
     }
 
     override fun setFavoritesOnly(favoritesOnly: Boolean) {

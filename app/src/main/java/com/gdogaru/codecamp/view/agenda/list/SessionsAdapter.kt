@@ -22,93 +22,141 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import com.gdogaru.codecamp.R
 import com.gdogaru.codecamp.util.DateUtil
-import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter
 import java.util.*
 
 
-class SessionsAdapter(context: Context) : BaseAdapter(), StickyListHeadersAdapter {
+class SessionsAdapter(
+    context: Context,
+    private val onSessionClicked: (AgendaListItem.SessionListItem) -> Unit
+) : RecyclerView.Adapter<AgendaViewHolder>(), StickHeaderItemDecoration.StickyHeaderInterface {
 
     private val inflater: LayoutInflater =
         context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-    var sessions: List<SessionListItem> = ArrayList()
+
+    var sessions: List<AgendaListItem> = ArrayList()
         set(sessions) {
             field = sessions
             notifyDataSetChanged()
         }
 
-    override fun getCount() = sessions.size
+    override fun getItemCount(): Int = sessions.size
 
-    override fun getItem(position: Int) = sessions[position]
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AgendaViewHolder =
+        when (viewType) {
+            AgendaViewHolder.Header.Type -> AgendaViewHolder.Header.create(inflater, parent)
+            AgendaViewHolder.Session.Type -> AgendaViewHolder.Session.create(inflater, parent)
+            else -> error("Unkown type $viewType")
+        }
+
+    override fun getHeaderPositionForItem(itemPosition: Int): Int {
+        var pos = itemPosition
+        while (pos > 0) {
+            if (sessions.getOrNull(pos) is AgendaListItem.HeaderListItem) {
+                return pos
+            } else {
+                pos--
+            }
+        }
+        return 0
+    }
+
+    override fun getHeaderLayout(headerPosition: Int): Int = R.layout.agenda_sessions_list_header
+
+    override fun bindHeaderData(header: View?, headerPosition: Int) {
+        val item = sessions[headerPosition] as AgendaListItem.HeaderListItem
+        (header as? TextView)?.text = item.text
+    }
+
+    override fun getItemViewType(position: Int): Int = when (sessions[position]) {
+        is AgendaListItem.HeaderListItem -> AgendaViewHolder.Header.Type
+        is AgendaListItem.SessionListItem -> AgendaViewHolder.Session.Type
+    }
+
+    override fun isHeader(itemPosition: Int): Boolean =
+        sessions[itemPosition] is AgendaListItem.HeaderListItem
+
+    override fun onBindViewHolder(holder: AgendaViewHolder, position: Int) {
+        when (holder) {
+            is AgendaViewHolder.Header -> holder.bindData(sessions[position] as AgendaListItem.HeaderListItem)
+            is AgendaViewHolder.Session -> holder.bindData(
+                sessions[position] as AgendaListItem.SessionListItem,
+                onSessionClicked
+            )
+        }
+    }
 
     override fun getItemId(position: Int) = position.toLong()
+}
 
-    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val view: View
-        if (convertView != null)
-            view = convertView
-        else {
-            view = inflater.inflate(R.layout.agenda_sessions_list_item, parent, false)
-            val holder = ViewHolder(
-                view.findViewById<View>(R.id.sessionName) as TextView,
-                view.findViewById<View>(R.id.sessionTime) as TextView,
-                view.findViewById<View>(R.id.sessionPlace) as TextView,
-                view.findViewById<View>(R.id.sessionSpeaker) as TextView,
-                view.findViewById(R.id.root)
-            )
-            view.tag = holder
+sealed class AgendaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+    class Header(
+        view: View
+    ) : AgendaViewHolder(view) {
+
+
+        val text: TextView = view as TextView
+
+        companion object {
+            fun create(inflater: LayoutInflater, parent: ViewGroup): AgendaViewHolder {
+                return AgendaViewHolder.Header(
+                    inflater.inflate(
+                        R.layout.agenda_sessions_list_header,
+                        parent,
+                        false
+                    )
+                )
+            }
+
+            const val Type = 1
         }
-        val holder = view.tag as ViewHolder
-        val (_, name, start, end, trackName, speakerNamesList, isFavorite) = this.sessions[position]
-        holder.title.text = name
-        val timeString = DateUtil.formatPeriod(start, end)
-        holder.time.text = timeString
-        holder.place.text = trackName
-        val speakerNames = speakerNamesList.orEmpty().joinToString(separator = ", ")
-        holder.speaker.text = speakerNames
-        if (isFavorite) {
-            holder.root.setBackgroundResource(R.drawable.list_item_background_favorite)
-        } else {
-            holder.root.setBackgroundResource(R.drawable.list_item_background)
+
+        fun bindData(agendaListItem: AgendaListItem.HeaderListItem) {
+            text.text = agendaListItem.text
         }
-        return view
     }
 
-    override fun getHeaderView(position: Int, convertView: View?, parent: ViewGroup): View {
-        var view = convertView
-        val holder: HeaderViewHolder
-        if (view == null) {
-            view = inflater.inflate(R.layout.agenda_sessions_list_header, parent, false)
-            holder = HeaderViewHolder(view as TextView)
-            view.tag = holder
-        } else {
-            holder = view.tag as HeaderViewHolder
+    class Session(
+        view: View
+    ) : AgendaViewHolder(view) {
+        val title: TextView = view.findViewById(R.id.sessionName)
+        val time: TextView = view.findViewById(R.id.sessionTime)
+        val place: TextView = view.findViewById(R.id.sessionPlace)
+        val speaker: TextView = view.findViewById(R.id.sessionSpeaker)
+
+        fun bindData(
+            agendaListItem: AgendaListItem.SessionListItem,
+            onSessionClicked: (AgendaListItem.SessionListItem) -> Unit
+        ) {
+            title.text = agendaListItem.name
+            time.text = DateUtil.formatPeriod(agendaListItem.start, agendaListItem.end)
+            place.text = agendaListItem.trackName
+            speaker.text = agendaListItem.speakerNames?.joinToString(separator = ", ")
+            itemView.setOnClickListener { onSessionClicked.invoke(agendaListItem) }
+
+            if (agendaListItem.bookmarked) {
+                itemView.setBackgroundResource(R.drawable.list_item_background_favorite)
+            } else {
+                itemView.setBackgroundResource(R.drawable.list_item_background)
+            }
         }
-        //set header text as first char in name
-        val (_, _, start, end) = this.sessions[position]
-        val headerText = DateUtil.formatPeriod(start, end)
-        holder.text.text = headerText
-        return view
+
+        companion object {
+            const val Type = 2
+
+            fun create(inflater: LayoutInflater, parent: ViewGroup): AgendaViewHolder {
+                return AgendaViewHolder.Session(
+                    inflater.inflate(
+                        R.layout.agenda_sessions_list_item,
+                        parent,
+                        false
+                    )
+                )
+            }
+        }
     }
-
-    override fun getHeaderId(position: Int): Long {
-        val (_, _, start, end) = this.sessions[position]
-        return DateUtil.formatPeriod(start, end).hashCode().toLong()
-        //        return sessions.get(i).getStart().getTime();
-    }
-
-    data class HeaderViewHolder(
-        val text: TextView
-    )
-
-    data class ViewHolder(
-        val title: TextView,
-        val time: TextView,
-        val place: TextView,
-        val speaker: TextView,
-        val root: View
-    )
 }

@@ -106,7 +106,7 @@ class UpdateDataWorker(context: Context, workerParams: WorkerParameters) :
                         it.startDate?.toLocalDate()?.isBefore(LocalDate.now())?.not()
                             ?: false
                     }
-                    .minBy { it.startDate ?: LocalDateTime.MAX }
+                    .minByOrNull { it.startDate ?: LocalDateTime.MAX }
                     ?.refId ?: 0L
             }
         }

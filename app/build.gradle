@@ -34,11 +34,11 @@ plugins {
 }
 
 android {
-    compileSdkVersion build_versions.target_sdk
+    compileSdkVersion 30
 
     defaultConfig {
-        minSdkVersion build_versions.min_sdk
-        targetSdkVersion build_versions.target_sdk
+        minSdkVersion 25
+        targetSdkVersion 30
 
         applicationId "com.gdogaru.codecamp"
         versionCode 1
@@ -210,9 +210,7 @@ dependencies {
     implementation 'com.jakewharton.threetenabp:threetenabp'
 
     implementation "com.github.bumptech.glide:glide"
-    implementation "se.emilsjolander:stickylistheaders"
 
-    //https://github.com/FasterXML/jackson-module-kotlin/issues/218 stay like this until api >=24
     implementation 'com.fasterxml.jackson.core:jackson-databind'
     implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
 

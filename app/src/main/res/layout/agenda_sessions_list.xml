@@ -18,12 +18,13 @@
   ~
   -->
 
-<se.emilsjolander.stickylistheaders.StickyListHeadersListView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@android:id/list"
-    tools:listitem="@layout/agenda_sessions_list_item"
+    android:id="@+id/agendaList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_weight="1"
-    android:divider="@drawable/list_divider"
-    android:dividerHeight="1dp" />
+    android:dividerHeight="1dp"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    tools:listitem="@layout/agenda_sessions_list_item" />
