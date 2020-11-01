@@ -16,7 +16,7 @@
  *
  */
 
-package com.firstpremier.mypremiercreditcard.ui.di
+package com.gdogaru.codecamp.view.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

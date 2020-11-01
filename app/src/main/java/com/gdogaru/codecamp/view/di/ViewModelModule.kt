@@ -20,8 +20,6 @@ package com.gdogaru.codecamp.view.di
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.firstpremier.mypremiercreditcard.ui.di.ViewModelFactory
-import com.firstpremier.mypremiercreditcard.ui.di.ViewModelKey
 import com.gdogaru.codecamp.view.MainViewModel
 import com.gdogaru.codecamp.view.agenda.AgendaViewModel
 import com.gdogaru.codecamp.view.agenda.calendar.CalendarFragmentViewModel
