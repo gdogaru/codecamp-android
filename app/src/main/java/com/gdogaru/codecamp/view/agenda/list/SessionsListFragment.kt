@@ -23,7 +23,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -60,7 +59,7 @@ class SessionsListFragment : AbstractSessionsListFragment() {
         listView.adapter = sessionsAdapter
         listView.addItemDecoration(StickHeaderItemDecoration(sessionsAdapter))
 
-        viewModel.sessionItems().observe(this, Observer { s ->
+        viewModel.sessionItems().observe(viewLifecycleOwner, { s ->
             s?.let { sessionsAdapter.sessions = it }
         })
     }

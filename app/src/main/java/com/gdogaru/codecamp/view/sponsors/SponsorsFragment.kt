@@ -50,6 +50,7 @@ class SponsorsFragment : BaseFragment() {
 
     @Inject
     lateinit var appExecutors: AppExecutors
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     val viewModel: MainViewModel by viewModels { viewModelFactory }
@@ -86,7 +87,7 @@ class SponsorsFragment : BaseFragment() {
         binding.recycler.layoutManager = GridLayoutManager(requireActivity(), 3)
         binding.recycler.addItemDecoration(GridSpacingItemDecoration(3, UiUtil.dpToPx(5f), true))
 
-        viewModel.currentEvent.observe(this, androidx.lifecycle.Observer { showData(it) })
+        viewModel.currentEvent.observe(viewLifecycleOwner, { showData(it) })
     }
 
     private fun showSponsor(s: Sponsor) {

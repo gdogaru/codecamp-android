@@ -29,7 +29,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.PagerAdapter
@@ -81,7 +80,7 @@ class SpeakerExpandedFragment : BaseFragment() {
         adapter = SpeakerAdapter(childFragmentManager)
         binding.viewPager.adapter = adapter
 
-        viewModel.currentEvent.observe(this, Observer { initViews(it) })
+        viewModel.currentEvent.observe(viewLifecycleOwner, { initViews(it) })
     }
 
     private fun initViews(event: Codecamp) {

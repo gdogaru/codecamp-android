@@ -27,7 +27,6 @@ import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.gdogaru.codecamp.R
@@ -45,8 +44,10 @@ import javax.inject.Inject
 
 class SpeakerInfoFragment : BaseFragment(), Injectable {
     lateinit var speakerId: String
+
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -58,7 +59,7 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.speakers_info,
@@ -73,7 +74,7 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        speakerId = arguments!!.getString(SPEAKER_ID)!!
+        speakerId = requireArguments().getString(SPEAKER_ID)!!
 
         val bundle = Bundle()
         bundle.putString("speaker", speakerId)
@@ -87,7 +88,7 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
         }
         binding.dataRecycler.adapter = adapter
 
-        viewModel.getSpeakerFull(speakerId).observe(this, Observer { d ->
+        viewModel.getSpeakerFull(speakerId).observe(viewLifecycleOwner, { d ->
             d?.let { adapter.submitData(it) }
         })
     }
@@ -97,8 +98,9 @@ class SpeakerInfoFragment : BaseFragment(), Injectable {
 
         fun newInstance(speakerName: String): SpeakerInfoFragment {
             val sessionInfoFragment = SpeakerInfoFragment()
-            sessionInfoFragment.arguments = Bundle()
-            sessionInfoFragment.arguments!!.putString(SPEAKER_ID, speakerName)
+            sessionInfoFragment.arguments = Bundle().apply {
+                putString(SPEAKER_ID, speakerName)
+            }
             return sessionInfoFragment
         }
     }

@@ -23,7 +23,7 @@
 
 
 def versions = [:]
-versions.kotlin = '1.4.10'
+versions.kotlin = '1.4.32'
 versions.ktx = '1.0.2'
 versions.gmsVersion = '17.1.0'
 versions.arch_core = "1.1.1"

@@ -57,8 +57,10 @@ import javax.inject.Inject
 class HomeFragment : BaseFragment(), OnMapReadyCallback {
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
+
     @Inject
     lateinit var appExecutors: AppExecutors
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
 
@@ -129,7 +131,7 @@ class HomeFragment : BaseFragment(), OnMapReadyCallback {
 
         RatingHelper.logUsage()
         setMap()
-        viewModel.currentEvent.observe(this, androidx.lifecycle.Observer { showEvent(it) })
+        viewModel.currentEvent.observe(viewLifecycleOwner, { showEvent(it) })
     }
 
     private fun showEvent(currentEvent: Codecamp) {

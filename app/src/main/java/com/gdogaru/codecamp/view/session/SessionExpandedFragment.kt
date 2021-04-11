@@ -28,7 +28,6 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import androidx.viewpager.widget.PagerAdapter
@@ -75,8 +74,8 @@ class SessionExpandedFragment : BaseFragment(), ViewPager.OnPageChangeListener {
         binding.viewPager.addOnPageChangeListener(this)
         binding.viewPager.adapter = adapter
 
-        viewModel.currentSchedule().observe(this, Observer { s ->
-            s?.let { initPager(it) }
+        viewModel.currentSchedule().observe(viewLifecycleOwner, {
+            it?.let { initPager(it) }
         })
     }
 

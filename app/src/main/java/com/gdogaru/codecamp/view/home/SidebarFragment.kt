@@ -26,7 +26,6 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -49,6 +48,7 @@ class SidebarFragment : BaseFragment(), Injectable {
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @Inject
     lateinit var appExecutors: AppExecutors
     val viewModel: SidebarViewModel by viewModels { viewModelFactory }
@@ -85,7 +85,7 @@ class SidebarFragment : BaseFragment(), Injectable {
         }
         binding.events.adapter = eventsAdapter
 
-        viewModel.allEvents().observe(this, Observer { list ->
+        viewModel.allEvents().observe(viewLifecycleOwner, { list ->
             eventsAdapter.submitList(list.sortedBy { it.startDate })
         })
     }

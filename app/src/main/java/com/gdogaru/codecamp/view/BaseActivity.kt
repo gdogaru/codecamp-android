@@ -109,6 +109,7 @@ abstract class BaseActivity : AppCompatActivity(), HasAndroidInjector {
         permissions: Array<String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_ID_MULTIPLE_PERMISSIONS) {
             val notGranted = ArrayList(permissionsNeeded)
             for (i in permissions.indices) {

@@ -35,7 +35,7 @@
         android:id="@+id/drawer_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="start|left"
+        android:layout_gravity="start"
         android:foregroundGravity="left"
         tools:ignore="ContentDescription"
         tools:context=".view.main.MainActivity">
@@ -115,7 +115,7 @@
                         tools:itemCount="3"
                         tools:listitem="@layout/home_schedule_item" />
 
-                    <fragment
+                    <androidx.fragment.app.FragmentContainerView
                         android:id="@+id/map"
                         android:name="com.google.android.gms.maps.SupportMapFragment"
                         android:layout_width="match_parent"
@@ -146,7 +146,7 @@
 
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-        <fragment
+        <androidx.fragment.app.FragmentContainerView
             android:id="@+id/left_drawer"
             android:name="com.gdogaru.codecamp.view.home.SidebarFragment"
             android:layout_width="300dp"

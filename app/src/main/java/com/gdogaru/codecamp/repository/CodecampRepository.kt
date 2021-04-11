@@ -19,6 +19,7 @@
 package com.gdogaru.codecamp.repository
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.gdogaru.codecamp.api.model.Codecamp
 import com.gdogaru.codecamp.api.model.EventSummary
@@ -56,7 +57,7 @@ class CodecampRepository @Inject constructor(
                 try {
                     storage.readEvent(it, id)
                 } catch (e: Exception) {
-                    Timber.e(e, "Could not read saved data")
+                    Timber.e(e, "Could not read saved data for id: $id")
                     throw RuntimeException(e)
                 }
             }
@@ -72,7 +73,20 @@ class CodecampRepository @Inject constructor(
     }
 
     val currentEvent: LiveData<Codecamp> =
-        Transformations.switchMap(preferences.activeEventLiveData) { eventData(it) }
+        Transformations.switchMap(preferences.activeEventLiveData) {
+            try {
+                eventData(it)
+            } catch (e: Exception) {
+                emptyEvent(it)
+            }
+        }
+
+    private fun emptyEvent(it: Long): LiveData<Codecamp> {
+        return MutableLiveData(Codecamp().apply {
+            refId = it
+            title = "No data available at the moment"
+        })
+    }
 
     fun currentSchedule(): LiveData<Schedule?> =
         Transformations.switchMap(preferences.activeScheduleLiveData) { s ->

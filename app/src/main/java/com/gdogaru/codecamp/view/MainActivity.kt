@@ -25,7 +25,6 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.ProgressBar
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gdogaru.codecamp.R
 import javax.inject.Inject
@@ -59,7 +58,7 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.main_activity)
         progressBar = findViewById(R.id.progress)
 
-        viewModel.loadingProgress().observe(this, Observer { p ->
+        viewModel.loadingProgress().observe(this, { p ->
             when {
                 p < 0 -> progressBar.visibility = View.GONE
                 p >= 1 -> progressBar.postDelayed({ progressBar.visibility = View.GONE }, 300)

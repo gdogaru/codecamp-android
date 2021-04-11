@@ -24,16 +24,16 @@ buildscript {
     addRepos(repositories)
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.0'
+        classpath 'com.android.tools.build:gradle:4.1.3'
 
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$versions.kotlin"
         classpath "org.jetbrains.kotlin:kotlin-allopen:$versions.kotlin"
-        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:2.3.5"
         classpath 'com.github.triplet.gradle:play-publisher:3.0.0'
-        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.3.0'
-        classpath 'com.google.firebase:perf-plugin:1.3.3'
-        classpath 'com.google.gms:google-services:4.3.4'
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.9.RELEASE"
+        classpath 'com.google.firebase:firebase-crashlytics-gradle:2.5.2'
+        classpath 'com.google.firebase:perf-plugin:1.3.5'
+        classpath 'com.google.gms:google-services:4.3.5'
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -59,7 +59,7 @@ allprojects {
                 entry 'kotlin-reflect'
             }
 
-            dependencySet(group: 'org.jetbrains.kotlinx', version: '1.4.0') {
+            dependencySet(group: 'org.jetbrains.kotlinx', version: '1.4.3') {
                 entry 'kotlinx-coroutines-core'
                 entry 'kotlinx-coroutines-android'
                 entry 'kotlinx-coroutines-test'
@@ -69,32 +69,32 @@ allprojects {
             dependency "androidx.legacy:legacy-support-v4:1.0.0"
             dependency "androidx.appcompat:appcompat:1.2.0"
             dependency "androidx.cardview:cardview:1.0.0"
-            dependency "androidx.recyclerview:recyclerview:1.1.0"
-            dependency "androidx.annotation:annotation:1.1.0"
-            dependency "androidx.constraintlayout:constraintlayout:2.0.3"
-            dependency "androidx.core:core-ktx:1.5.0-alpha04"
-            dependency "androidx.fragment:fragment-ktx:1.2.5"
-            dependency "androidx.navigation:navigation-fragment-ktx:$versions.navigation"
-            dependency "androidx.lifecycle:lifecycle-extensions:$versions.lifecycle"
-            dependency "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycle"
-            dependency 'com.google.firebase:firebase-analytics:18.0.0'
-            dependencySet(group: "androidx.room", version: "2.2.5") {
+            dependency "androidx.recyclerview:recyclerview:1.2.0"
+            dependency "androidx.annotation:annotation:1.2.0"
+            dependency "androidx.constraintlayout:constraintlayout:2.0.4"
+            dependency "androidx.core:core-ktx:1.6.0-alpha01"
+            dependency "androidx.fragment:fragment-ktx:1.3.2"
+            dependency "androidx.navigation:navigation-fragment-ktx:2.3.5"
+            dependency "androidx.lifecycle:lifecycle-extensions:2.2.0"
+            dependency "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+            dependency 'com.google.firebase:firebase-analytics:18.0.3'
+            dependencySet(group: "androidx.room", version: "2.2.6") {
                 entry "room-runtime"
                 entry "room-compiler"
             }
 
-            dependency "androidx.work:work-runtime-ktx:2.4.0"
-            dependency "com.google.android.material:material:1.2.1"
+            dependency "androidx.work:work-runtime-ktx:2.5.0"
+            dependency "com.google.android.material:material:1.3.0"
 
-            dependency "com.google.firebase:firebase-perf:19.0.9"
-            dependency "com.google.firebase:firebase-core:18.0.0"
-            dependency 'com.google.firebase:firebase-crashlytics:17.2.2'
+            dependency "com.google.firebase:firebase-perf:19.1.1"
+            dependency "com.google.firebase:firebase-core:18.0.3"
+            dependency 'com.google.firebase:firebase-crashlytics:17.4.1'
 
             dependency "com.google.android.gms:play-services-maps:17.0.0"
-            dependency "com.google.android.gms:play-services-base:$versions.gmsVersion"
+            dependency "com.google.android.gms:play-services-base:17.6.0"
             dependency "com.google.android.gms:play-services-gcm:17.0.0"
 
-            dependencySet(group: "com.google.dagger", version: "2.29.1") {
+            dependencySet(group: "com.google.dagger", version: "2.34") {
                 entry "dagger"
                 entry "dagger-android"
                 entry "dagger-android-support"
@@ -105,7 +105,7 @@ allprojects {
             dependency "com.jakewharton.timber:timber:4.7.1"
 
             dependency "com.squareup.okio:okio:2.8.0"
-            dependencySet(group: "com.squareup.okhttp3", version: '4.9.0') {
+            dependencySet(group: "com.squareup.okhttp3", version: '4.9.1') {
                 entry "okhttp"
                 entry "logging-interceptor"
             }
@@ -124,7 +124,7 @@ allprojects {
             dependency "androidx.test.ext:junit:1.1.2"
             dependency "org.mockito:mockito-core:3.1.0"
             dependency "junit:junit:4.13"
-            dependency "androidx.navigation:navigation-common:2.3.1"
+            dependency "androidx.navigation:navigation-common:2.3.5"
             dependency "com.google.truth:truth:1.0.1"
 
             dependency "com.google.truth:truth:1.0.1"

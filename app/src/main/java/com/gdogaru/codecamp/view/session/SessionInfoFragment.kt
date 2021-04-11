@@ -26,7 +26,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingComponent
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import com.android.example.github.ui.common.DataBoundListAdapter
@@ -44,8 +43,10 @@ import javax.inject.Inject
 class SessionInfoFragment : BaseFragment(), Injectable {
     @Inject
     lateinit var appExecutors: AppExecutors
+
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     val viewModel: SessionInfoViewModel by viewModels { viewModelFactory }
@@ -58,7 +59,7 @@ class SessionInfoFragment : BaseFragment(), Injectable {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(
             inflater,
             R.layout.session_expanded_item,
@@ -78,13 +79,13 @@ class SessionInfoFragment : BaseFragment(), Injectable {
         adapter = SpeakersAdapter(dataBindingComponent, appExecutors)
         binding.speakers.adapter = adapter
 
-        viewModel.getSession(sessionId).observe(this, Observer { s ->
+        viewModel.getSession(sessionId).observe(viewLifecycleOwner, { s ->
             s?.let {
                 binding.session = it.session
                 binding.track = it.track
                 adapter.submitList(it.speakers)
 
-                viewModel.isBookmarked(it.session.id).observe(this, Observer { b ->
+                viewModel.isBookmarked(it.session.id).observe(viewLifecycleOwner, { b ->
                     binding.bookmarked.isChecked = b
                 })
                 binding.bookmarked.setOnCheckedChangeListener { _, isChecked ->

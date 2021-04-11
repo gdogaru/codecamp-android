@@ -25,7 +25,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,6 +47,7 @@ import javax.inject.Inject
 class SpeakersFragment : BaseFragment() {
     @Inject
     lateinit var appExecutors: AppExecutors
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     val viewModel: MainViewModel by viewModels { viewModelFactory }
@@ -83,7 +83,7 @@ class SpeakersFragment : BaseFragment() {
         binding.recycler.addItemDecoration(GridSpacingItemDecoration(3, UiUtil.dpToPx(5f), true))
 
 
-        viewModel.currentEvent.observe(this, Observer { initData(it) })
+        viewModel.currentEvent.observe(viewLifecycleOwner, { initData(it) })
     }
 
     private fun showSpeaker(s: Speaker) {

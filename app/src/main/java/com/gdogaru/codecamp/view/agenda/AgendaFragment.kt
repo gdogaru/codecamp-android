@@ -25,7 +25,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.evernote.android.state.State
 import com.gdogaru.codecamp.R
@@ -46,15 +45,19 @@ import javax.inject.Inject
  */
 class AgendaFragment : BaseFragment() {
     private var binding by autoCleared<AgendaBinding>()
+
     @Inject
     lateinit var appPreferences: AppPreferences
+
     @Inject
     lateinit var firebaseAnalytics: FirebaseAnalytics
+
     @Inject
     lateinit var bookmarkingService: BookmarkRepository
 
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
+
     @State
     var favoritesOnly = false
     private val viewModel: AgendaViewModel by viewModels { viewModelFactory }
@@ -106,7 +109,7 @@ class AgendaFragment : BaseFragment() {
             fragmentById.setFavoritesOnly(favoritesOnly)
         }
 
-        viewModel.getSchedule().observe(this, Observer { schedule ->
+        viewModel.getSchedule().observe(viewLifecycleOwner, { schedule ->
             schedule?.let { binding.title.text = String.format(DateUtil.formatDay(it.date)) }
         })
     }

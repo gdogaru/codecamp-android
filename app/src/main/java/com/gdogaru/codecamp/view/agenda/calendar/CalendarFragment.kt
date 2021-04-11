@@ -45,10 +45,11 @@ class CalendarFragment : AbstractSessionsListFragment(), Injectable {
 
     private var sessIds = ArrayList<Int>()
     private var currentTimer: Timer? = null
-    private val offset: Int = 0
     private lateinit var calendar: Calendar
+
     @State
     lateinit var calendarState: Calendar.CalendarState
+
     @Inject
     lateinit var viewModelFactory: ViewModelProvider.Factory
     val viewModel: CalendarFragmentViewModel by viewModels { viewModelFactory }
@@ -57,14 +58,14 @@ class CalendarFragment : AbstractSessionsListFragment(), Injectable {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         calendar = Calendar(requireActivity())
         return calendar
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.eventList().observe(this, androidx.lifecycle.Observer { s ->
+        viewModel.eventList().observe(viewLifecycleOwner, { s ->
             s?.let { updateDisplay(it.first, it.second) }
         })
     }
